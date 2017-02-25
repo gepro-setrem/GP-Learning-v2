@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="/TemplateInstrutor.xhtml">
+
+            <ui:define name="menuhorizontal">
+                <li role="presentation" class="active"><a href="ListagemProjetosInstrutor.xhtml">Projetos</a></li>
+                <li role="presentation" ><a href="ListagemUsuarios.xhtml">Usuários</a></li>
+                <li role="presentation" ><a href="ListagemTurmas.xhtml">Turmas</a></li>
+            </ui:define>
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form>
+                        <div class="panel panel-default" style="width: 90%; text-align: center; margin: auto;">
+
+                            <div class="panel-heading" style="text-align: center;">
+                                <h4>Listagem de Projetos</h4>
+
+                            </div>
+
+                            <div class="panel-info">
+                                <div class="form-group" style="padding: 1%">
+                                    <p:dataTable var="proj" value="#{projetoBean.projetos}" widgetVar="projsTable"
+                                                 emptyMessage="Não há projetos criados por alunos desta turma" filteredValue="#{projetoBean.projetosfiltrados}">
+
+                                        
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Nome do Projeto"/>
+                                            </f:facet>
+                                            <h:outputText value="#{proj.nomeProjeto}"/>
+                                        </p:column>
+                                        
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Componentes"/>
+                                            </f:facet>
+                                            <h:outputText value="#{proj.componentes}" class="list-inline"/>
+                                        </p:column>
+
+
+                                        <p:column filterBy="#{proj.turmadoprojeto}" filterMatchMode="exact">
+                                            <f:facet name="filter">
+                                                <p:selectOneMenu onchange="PF('projsTable').filter()" >
+                                                    <f:selectItem itemLabel="Selecione uma turma" itemValue="#{null}" noSelectionOption="true" />
+                                                    <f:selectItems value="#{projetoBean.turmasdousuario}"/>
+                                                </p:selectOneMenu>
+                                            </f:facet>
+                                            <h:outputText value="#{proj.turmadoprojeto}" />
+                                        </p:column>
+
+                                        
+
+                                        <p:column headerText="Data de Criação" style="width: 200px">
+                                            <f:facet name="header">
+                                                <h:outputText value="Data de Modificação"/>
+                                            </f:facet>
+                                            <h:outputText value="#{proj.dataModificacao}">
+
+                                            </h:outputText>
+                                        </p:column>
+
+                                        <p:column headerText="Opções" style="width: 155px">
+                                            <f:facet name="header">
+                                                <h:outputText value="Opções"/>
+                                            </f:facet>
+                                            <h:commandLink action="#{projetoBean.acessarComentarios()}" class="navbar-link" value="Comentar Projeto"/>
+
+                                        </p:column>
+
+
+
+                                    </p:dataTable>
+
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,343 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="/TemplateInstrutor.xhtml">
+
+            <ui:define name="menuhorizontal">
+                <li role="presentation" class="active"><a href="ListagemProjetosInstrutor.xhtml">Projetos</a></li>
+                <li role="presentation" ><a href="ListagemUsuarios.xhtml">Usuários</a></li>
+                <li role="presentation" ><a href="ListagemTurmas.xhtml">Turmas</a></li>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <div class="form-horizontal" style="padding-left: 10%; padding-right: 10%">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="text-align: center">
+                                <h4>Informações Gerais sobre o Projeto</h4>
+                            </div>
+                            <div class="panel-info">
+                                <div class="form-group" style="padding-top: 4%; padding-right: 5%; padding-left: 5%">
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Nome:"/>
+                                        <div class="col-sm-10">
+                                            <h:outputText class="form" value="#{projetoBean.projeto.nomeProjeto}"  />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Descrição:"/>
+                                        <div class="col-sm-10">
+                                            <h:outputText class="form" value="#{projetoBean.projeto.descricaoGeral}" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Empresa:"/>
+                                        <div class="col-sm-10">
+                                            <h:outputText class="form" value="#{projetoBean.projeto.empresa}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Comentários:"/>
+                                        <div class="col-sm-10">
+                                            <h:inputTextarea class="form-control" rows="5" value="#{projetoBean.projeto.comentarioGeralInstrutor}"/>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="text-align: center">
+                                <h4>Informações Sobre o Termo de Abertura</h4>
+                            </div>
+                            <div class="panel-info">
+                                <div class="form-group" style="padding-top: 4%; padding-right: 5%; padding-left: 5%">
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Descrição do Projeto:"/>
+                                        <div class="col-sm-10">
+                                            <h:outputText class="form" value="#{projetoBean.termodeabertura.descricaoProjeto}" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Justificativa:"/>
+                                        <div class="col-sm-10">
+                                            <h:outputText class="form" value="#{projetoBean.termodeabertura.justificativaProjeto}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Comentários sobre Termo de Abertura:"/>
+                                        <div class="col-sm-10">
+                                            <h:inputTextarea class="form-control" rows="5" value="#{projetoBean.projeto.comentarioInfoBasicasTA}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Premissas:"/>
+                                        <div class="col-sm-10">
+                                            <p:dataTable class="table table" var="prem" value="#{projetoBean.premissas}" style="padding-top: 4%">
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Descrição Premissa"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{prem.descricaoPremissa}"/>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Comentários sobre as premissas"/>
+                                        <div class="col-sm-10">
+                                            <h:inputTextarea class="form-control" rows="5" value="#{projetoBean.projeto.comentarioPremissas}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Restrições:"/>
+                                        <div class="col-sm-10">
+                                            <p:dataTable class="table table-hover" var="rest" value="#{projetoBean.restricoes}" style="padding-top: 4%">
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Descrição Restrição"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{rest.descricaoRestricao}"/>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Comentários sobre as restrições:"/>
+                                        <div class="col-sm-10">
+                                            <h:inputTextarea class="form-control" rows="5" value="#{projetoBean.projeto.comentarioRestricoes}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Cronograma de Marcos:"/>
+                                        <div class="col-sm-10">
+                                            <p:dataTable class="table table-hover" var="mar" value="#{projetoBean.marcos}" style="padding-top: 4%">
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Descrição Marco"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{mar.objetivo}"/>
+                                                </p:column>
+
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Data Prevista"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{mar.dataPrevista}"/>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Comentários sobre o Cronograma de Marcos:"/>
+                                        <div class="col-sm-10">
+                                            <h:inputTextarea class="form-control" rows="5" value="#{projetoBean.projeto.comentarioMarcos}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Requisitos do Termo de Abertura:"/>
+                                        <div class="col-sm-10">
+                                            <p:dataTable class="table table-hover" var="rest" value="#{projetoBean.reqtosta}" style="padding-top: 4%">
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Descrição Requisito"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{rest.descricaorequisito}"/>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Comentários sobre os Requisitos do Termo de Abertura:"/>
+                                        <div class="col-sm-10">
+                                            <h:inputTextarea class="form-control" rows="5" value="#{projetoBean.projeto.comentarioRequisitosTermoAbertura}"/>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="text-align: center">
+                                <h4>Indentificação das partes interessadas</h4>
+                            </div>
+
+                            <div class="panel-info">
+                                <div class="form-group" style="padding-top: 4%; padding-right: 5%; padding-left: 5%">
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Lista das Partes Interessadas:"/>
+                                        <div class="col-sm-10">
+                                            <p:dataTable class="table table-hover" var="parte" value="#{projetoBean.partesinteressadas}" style="padding-top: 4%">
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Nome Parte Interessada"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{parte.nomeParteInteressada}"/>
+                                                </p:column>
+
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Papel no Projeto"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{parte.papelProjeto}"/>
+                                                </p:column>
+
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Contribuição no Projeto"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{parte.contribuicaoProjeto}"/>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Comentários:"/>
+                                        <div class="col-sm-10">
+                                            <h:inputTextarea class="form-control" rows="5" value="#{projetoBean.projeto.comentarioPartesInteressadas}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="text-align: center">
+                                <h4>Plano de Gerenciamento de Escopo</h4>
+                            </div>
+                            <div class="panel-info">
+                                <div class="form-group" style="padding-top: 4%; padding-right: 5%; padding-left: 5%">
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Plano de Gerenciamento de Escopo:"/>
+                                        <div class="col-sm-10">
+                                            <h:outputText class="form" value="#{projetoBean.projeto.planoGereEscopo}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Comentários:"/>
+                                        <div class="col-sm-10">
+                                            <h:inputTextarea class="form-control" rows="5" value="#{projetoBean.projeto.comentarioPlanoGereEscopo}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="text-align: center">
+                                <h4>Coleta de Requisitos</h4>
+                            </div>
+                            <div class="panel-info">
+                                <div class="form-group" style="padding-top: 4%; padding-right: 5%; padding-left: 5%">
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Requisitos Coletados"/>
+                                        <div class="col-sm-10">
+                                            <p:dataTable class="table table-hover" var="requi" value="#{projetoBean.requisitos}" style="padding-top: 4%">
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Nome"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{requi.nomeRequisito}"/>
+                                                </p:column>
+
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Descrição"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{requi.descricaoRequisito}"/>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Comentários:"/>
+                                        <div class="col-sm-10">
+                                            <h:inputTextarea class="form-control" rows="5" value="#{projetoBean.projeto.comentarioRequisitos}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="text-align: center">
+                                <h4>Definição do Escopo</h4>
+                            </div>
+                            <div class="panel-info">
+                                <div class="form-group" style="padding-top: 4%; padding-right: 5%; padding-left: 5%">
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Definição do Escopo:"/>
+                                        <div class="col-sm-10">
+                                            <h:outputText class="form" value="#{projetoBean.projeto.escopo}" style="text-align: justify;"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Comentários:"/>
+                                        <div class="col-sm-10">
+                                            <h:inputTextarea class="form-control" rows="5" value="#{projetoBean.projeto.comentarioEscopo}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="text-align: center">
+                                <h4>EAP</h4>
+                            </div>
+                            <div class="panel-info">
+                                <div class="form-group" style="padding-top: 4%; padding-right: 5%; padding-left: 5%">
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="EAP - Estrutura Analítica de Processos"/>
+                                        <div class="col-sm-10">
+                                            <p:graphicImage value="#{projetoBean.image}" style="width: 100%; height: 100%" cache="false"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Comentários sobre a EAP"/>
+                                        <div class="col-sm-10">
+                                            <h:inputTextarea class="form-control" rows="5" value="#{projetoBean.projeto.comentarioEAP}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align: center">
+                        <h:commandButton class="btn btn-primary" action="#{projetoBean.salvarComentarios()}" value="Salvar Comentários"/>
+                    </div>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

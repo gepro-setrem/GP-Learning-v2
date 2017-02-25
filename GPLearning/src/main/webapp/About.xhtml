@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./Template.xhtml">
+
+            <ui:define name="menuhorizontal">
+                <li><h:link outcome="/user/ProcessosIniciacao.xhtml"><b>Iniciação</b></h:link></li>
+                <li><h:link outcome="/user/ProcessosPlanejamento.xhtml">Planejamento</h:link></li>
+                <li><a href="#">Execuçao</a></li>
+                <li><a href="#">Monitoramento</a></li>
+                <li><a href="#">Encerramento</a></li>
+            </ui:define>
+
+            <ui:define name="content">
+                <f:view>
+
+                    <h:form class="form-horizontal" style="padding-left: 10%; padding-right: 10%">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="text-align: center">
+                                <h4>Sobre</h4>
+                            </div>
+                            <div class="panel-info">
+                                <div class="form-group" style="padding-top: 4%; padding-right: 5%; padding-left: 5%">
+                                    <h:outputLabel>
+                                        <p >
+                                                Este ambiente de Ensino e Aprendizagem de Gerenciamento de Projetos foi desenvolvido para auxiliar os professores de tal disciplina da Sociedade Educacional Três de Maio - SETREM a desenvolverem suas atividades de aula 
+                                            , possibilitando que os alunos façam as documentações concentrando-as em um só local, tornando fácil o acesso dos professores aos documentos desenvolvidos pelos alunos.
+                                            <br></br>
+                                            <br></br>
+                                            Esta é a primeira versão deste <i>software</i>, o qual foi objetivo do Trabalho de Conclusão de Curso do aluno Jean Luís Piccinini, do 9º Semestre do curso Bacharelado em Sistemas de Informação da Sociedade Educacional Três de Maio - SETREM.
+                                        </p>
+                                    </h:outputLabel>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

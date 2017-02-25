@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="/Template.xhtml">
+
+            <ui:define name="menuhorizontal">
+                <li><h:link outcome="ProcessosIniciacao.xhtml">Iniciação</h:link></li>
+                <li><h:link class="active" outcome="ProcessosPlanejamento.xhtml"><b>Planejamento</b></h:link></li>
+                <li><a href="#">Execuçao</a></li>
+                <li><a href="#">Monitoramento</a></li>
+                <li><a href="#">Encerramento</a></li>
+            </ui:define>
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form class="form-horizontal" style="padding-left: 10%; padding-right: 10%">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4>Planejar o Gerenciamento do Escopo</h4>
+                            </div>
+                            <h:outputLabel class="breadcrumb navbar-link" value="#{projetoBean.projeto.nomeProjeto}"/>
+                            <div class="panel-info">
+                                <div class="alert-warning">
+                                    <h:messages />
+                                </div>
+                                <div class="form-group" style="padding-top: 2%; padding-right: 5%; padding-left: 5%">
+                                    <h:outputLabel value="#{projetoBean.turma.descricaoTelaCriarPlanoGerenciamentoEscopo}" style="white-space: pre-wrap"/>
+                                    <h:inputTextarea class="form-control" rows="3" value="#{projetoBean.projeto.planoGereEscopo}"/>
+                                    <div id="comentario">
+                                        <p:commandButton value="Comentário" class="btn btn-primary" type="button" onclick="PF('dlg1').show();" />
+                                        <p:dialog header="Comentários sobre o Plano de Gerenciamento de Escopo" widgetVar="dlg1" minHeight="40">
+                                            <h:outputText value="#{projetoBean.projeto.comentarioPlanoGereEscopo}"/>
+                                        </p:dialog>
+                                    </div>
+
+                                    <div id="botoes" style="text-align: right; padding-top: 10px">
+                                        <h:commandButton class="btn btn-primary" action="#{projetoBean.salvarPlanoGereEscopo()}" value="Concluir Plano de Gerenciamento de Escopo"/>
+
+                                    </div>
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <title>GPLearning</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+        <h:outputStylesheet library="css/" name="bootstrap.min.css"/>
+    </h:head>
+
+    <h:body>
+        <div id="cabecalho" style="padding: 25px">
+            <h:link outcome="/user/index.xhtml">
+                <h:graphicImage library="img/" name="GPLearning.png" class="img-rounded" height="100%" width="70%"/>
+            </h:link>
+            <h:graphicImage library="img/" name="log_setrem-1 - SETREM.png" class="img-rounded" height="12%" width="12%" style="float: "/>
+            <h:graphicImage library="img/" name="usuario.png" class="img-rounded" height="5%" width="5%" style="float: right; padding-top: 20px"/>
+        </div>
+        <nav class="navbar navbar-default">
+            <div class="container" style="">
+                <div class="navbar-header">
+                    <a class="navbar-brand">Área do Professor</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <ui:insert name="menuhorizontal">
+
+                        </ui:insert>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><h:link outcome="/user/ListagemProjetos.xhtml">Meus Projetos</h:link></li>
+                        <li><p class="navbar-text navbar-right" style="">Olá, <h:outputText class="navbar-link" value="#{projetoBean.usuariologado.nome}"/>. <a href="/SistemaGPLearning/logout"> Sair</a></p></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <ui:insert name="content"></ui:insert>
+
+        <div id="rodape" style="float: right; width: 100%; display: inline; bottom: 0; padding-top: 1%;">
+            <nav class="navbar navbar-default" >
+                <div class="container-fluid">
+                    <div class="breadcrumb">
+                        <a class="breadcrumb">
+                            <li>Sociedade Educacional Três de Maio - SETREM - Bacharelado em Sistemas de Informação</li>
+                            <p class="breadcrumb navbar-right">
+                                <h:link class="navbar-link" outcome="/About.xhtml" value="About"/>
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+    </h:body>
+
+</html>

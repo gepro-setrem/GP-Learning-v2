@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="/Template.xhtml">
+
+            <ui:define name="menuhorizontal">
+                <li><a href="ProcessosIniciacao.xhtml" class="active"><b>Iniciação</b></a></li>
+                <li><h:link outcome="ProcessosPlanejamento.xhtml">Planejamento</h:link></li>
+                <li><a href="#">Execuçao</a></li>
+                <li><a href="#">Monitoramento</a></li>
+                <li><a href="#">Encerramento</a></li>
+            </ui:define>
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form class="form-horizontal" style="padding-left: 10%; padding-right: 10%">
+                        <h:inputHidden value="#{projetoBean.restricao.idRestricao}"/>
+                        <!-- Painel  que conterá listagem -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="text-align: center;">
+                                <h4>Listagem de Restricões</h4>
+                            </div>
+                            <h:outputLabel class="breadcrumb navbar-link" value="#{projetoBean.projeto.nomeProjeto}"/>
+                            <div class="panel-info">
+                                <div class="alert-warning">
+                                    <h:messages />
+                                </div>
+                                <div class="form-group" style="padding-top: 2%; padding-right: 5%; padding-left: 5%">
+                                    <h:outputLabel value="#{projetoBean.turma.descricaoTelaTermoAberturaRestricoes}" style="white-space: pre-wrap"/>
+                                    <div class="form form-inline" style="padding-top: 4%; margin: auto">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Descrição da Restrição"/>
+                                        <div class="col-sm-10">
+                                            <h:inputText class="form-control" value="#{projetoBean.restricao.descricaoRestricao}" style="width: 91%"/>
+                                            <h:commandButton action="#{projetoBean.salvarRestricao()}" class="btn btn-primary" value="Salvar"/>
+                                        </div>
+                                    </div>
+                                    <div class="panel-default" style="padding-top: 4%; margin: auto; ">
+                                        <p:dataTable class="table table-hover" var="rest" value="#{projetoBean.restricoes}" style="padding-top: 4%">
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Descrição Restrição"/>
+                                                </f:facet>
+                                                <h:outputText value="#{rest.descricaoRestricao}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Opções" style="width: 140px">
+                                                <f:facet name="header">
+                                                    <h:outputText value="Opções"/>
+                                                </f:facet>
+                                                <h:commandLink action="#{projetoBean.selectRestricao()}" class="navbar-link" value="Editar/"/>
+                                                <h:commandLink action="#{projetoBean.excluirRestricao()}" class="navbar-link" value=" Excluir" onclick="return confirm('Tem certeza que deseja excluir?')"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </div>
+                                    <div id="comentario">
+                                        <p:commandButton value="Comentário" class="btn btn-primary"  type="button" onclick="PF('dlg1').show();" />
+                                        <p:dialog header="Comentários sobre as Restrições" widgetVar="dlg1" minHeight="40">
+                                            <h:outputText value="#{projetoBean.projeto.comentarioRestricoes}" />
+                                        </p:dialog>
+                                    </div>
+                                    <nav>
+                                        <ul class="pagination" style="float: left">
+                                            <li>
+                                                <a href="TermoAberturaDescricao.xhtml" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                            <li><a href="TermoAberturaDescricao.xhtml">1</a></li>
+                                            <li><a href="JustificativaTermoAbertura.xhtml">2</a></li>
+                                            <li><a href="PremissasTermoAbertura.xhtml">3</a></li>
+                                            <li><a href="RestricoesTermoAbertura.xhtml">4</a></li>
+                                            <li><a href="MarcosTermoAbertura.xhtml">5</a></li>
+                                            <li><a href="RequisitosTermoAbertura.xhtml">6</a></li>
+                                            <li>
+                                                <a href="RequisitosTermoAbertura.xhtml" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                    <div style="text-align: center; float: right">
+                                        <h:button class="btn btn-inverse" outcome="PremissasTermoAbertura" value="Voltar"/>
+                                        <h:button outcome="MarcosTermoAbertura" class="btn btn-primary" value="Próximo"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="/TemplateInstrutor.xhtml">
+
+            <ui:define name="menuhorizontal">
+                <li role="presentation" ><a href="ListagemProjetosInstrutor.xhtml">Projetos</a></li>
+                <li role="presentation" class="active"><a href="ListagemUsuarios.xhtml">Usuários</a></li>
+                <li role="presentation" ><a href="ListagemTurmas.xhtml">Turmas</a></li>
+            </ui:define>
+
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form class="form-horizontal" style="padding-left: 10%; padding-right: 10%">
+                        <h:inputHidden value="#{usuarioBean.usuario.idUsuario}"/>
+                        <h:inputHidden value="#{usuarioBean.usuario.status}"/>
+                        <div class="panel panel-default" style="width: 90%; text-align: center; margin: auto;">
+
+                            <div class="panel-heading" style="text-align: center;">
+                                <h4>Manutenção de Usuários</h4>
+                            </div>
+                            <div class="panel-info" style="padding: 1%; padding-right: 10%; padding-left: 10%">
+                                <div class="alert-warning">
+                                    <h:messages />
+                                </div>
+                                <div class="form-group" >
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Nome"/>
+                                        <div class="col-sm-10">
+                                            <h:inputText class="form-control" pt:placeholder="Nome" value="#{usuarioBean.usuario.nome}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Email"/>
+                                        <div class="col-sm-10">
+                                            <h:inputText class="form-control" pt:placeholder="Email" value="#{usuarioBean.usuario.email}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Turma"/>
+                                        <div class="col-sm-10">
+                                            <h:selectOneMenu class="form-control" id="turma" converter="turmaConverter" value="#{usuarioBean.usuario.turma}">
+                                                
+                                                <f:selectItems var="turm" value="#{usuarioBean.turmas}"
+                                                               itemLabel="#{turm.nomeTurma}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Tipos de Usuário"/>
+                                        <div class="col-sm-10">
+
+                                            <h:selectOneMenu id="componentes" class="form-control"  converter="grupoConverter" value="#{usuarioBean.usuario.grupo}" style="margin: auto">
+
+                                                <f:selectItems var="group"  value="#{usuarioBean.grupos}" 
+                                                               itemLabel="#{group.nomeLabel}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel class="col-sm-2 control-label" value="Senha"/>
+                                        <div class="col-sm-10">
+                                            <p:password class="form-control" value="#{usuarioBean.usuario.senha}" />
+<!--                                            <h:inputSecret class="form-control" pt:placeholder="Senha" value="#{usuarioBean.usuario.senha}"/>-->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="botoes" style="text-align: right;">
+                                    <h:commandButton class="btn btn-primary" action="#{usuarioBean.salvar()}" value="Salvar"/>
+                                    <h:button class="btn btn-default" outcome="ListagemUsuarios" value="Cancelar"/>
+                                </div>
+
+                            </div>
+                        </div>
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

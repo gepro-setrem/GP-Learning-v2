@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="/Template.xhtml">
+            <ui:define name="menuhorizontal">
+                <li><h:link class="active" outcome="ProcessosIniciacao.xhtml"><b>Iniciação</b></h:link></li>
+                <li><h:link outcome="ProcessosPlanejamento.xhtml">Planejamento</h:link></li>
+                <li><a href="#">Execuçao</a></li>
+                <li><a href="#">Monitoramento</a></li>
+                <li><a href="#">Encerramento</a></li>
+            </ui:define>
+
+            <ui:define name="content">
+                <f:view>
+                    <p:graphicImage library="img/" name="legendas.png" class="img-rounded" height="8%" width="9%" style="float: left; padding-top: 8%; margin: auto" />
+                    <h:form class="form-horizontal" style="padding-left: 10%; padding-right: 10%">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="text-align: center">
+                                <h4>Grupo de Processos: Iniciação</h4>
+                            </div>
+                            <div class="panel-info">
+                                <div class="form-group" style="padding-top: 4%; padding-right: 5%; padding-left: 5%">
+                                    <h:outputLabel value="#{projetoBean.turma.descricaoTelaGrupoProcessosIniciacao}" style="white-space: pre-wrap"/>
+                                    <br />
+                                    <br />
+                                    <h:commandLink action="#{projetoBean.novoTermodeAbertura()}">
+                                        <h:graphicImage library="img/" name="Desenv TA.png" height="12%" width="18%"/>
+                                    </h:commandLink>
+                                    <h:graphicImage library="img/" name="flecha.jpg" height="6%" width="9%" style="padding-left: 5%"/>
+                                    <h:link outcome="IdentificarPartesInteressadas" style="padding-left: 5%">
+                                        <h:graphicImage library="img/" name="Identificar PI.png" height="12%" width="18%"/>
+                                    </h:link>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

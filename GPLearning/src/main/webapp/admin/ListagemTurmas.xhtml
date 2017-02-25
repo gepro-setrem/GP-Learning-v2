@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="/TemplateInstrutor.xhtml">
+
+            <ui:define name="menuhorizontal">
+                <li role="presentation" ><a href="ListagemProjetosInstrutor.xhtml">Projetos</a></li>
+                <li role="presentation" ><a href="ListagemUsuarios.xhtml">Usuários</a></li>
+                <li role="presentation" class="active"><a href="ListagemTurmas.xhtml">Turmas</a></li>
+            </ui:define>
+
+            <ui:define name="content">
+
+                <div id="content">
+                    <f:view>
+                        <h:form>
+
+                            <div class="panel panel-default" style="width: 90%; text-align: center; margin: auto;">
+
+                                <div class="panel-heading" style="text-align: center;">
+                                    <h4>Listagem de Turmas</h4>
+                                </div>
+                                <div class="panel-info">
+
+                                    <div class="form-group" style="padding: 1%">
+                                        <div class="alert-warning">
+                                            <h:messages />
+                                        </div>
+
+                                        <p:dataTable class="table table-hover" var="turma" value="#{turmaBean.turmas}">
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Nome da Turma"/>
+                                                </f:facet>
+                                                <h:outputText value="#{turma.nomeTurma}"/>
+                                            </p:column>
+                                            <p:column style="text-align: center; width: 260px">
+                                                <f:facet name="header">
+                                                    <h:outputText value="Ano"  />
+                                                </f:facet>
+                                                <h:outputText value="#{turma.ano}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Opções" style="width: 300px">
+                                                <f:facet name="header">
+                                                    <h:outputText value="Opções"/>
+                                                </f:facet>
+                                                <h:commandLink action="#{turmaBean.select()}" value="Editar "/>
+                                                <h:commandLink action="#{turmaBean.excluir()}" value="/Excluir " onclick="return confirm('Tem certeza que deseja excluir?')"/>
+                                                <h:commandLink action="#{turmaBean.duplicar()}" value="/ Duplicar" onclick="return confirm('Tem certeza que deseja duplicar Esta turma?')"/>
+                                            </p:column>
+
+
+
+                                        </p:dataTable>
+                                        <div id="botoes" style="text-align: right">
+                                            <h:commandButton action="#{turmaBean.novaTurma()}" class="btn btn-primary" value="Nova Turma" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </h:form>
+                    </f:view>
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
