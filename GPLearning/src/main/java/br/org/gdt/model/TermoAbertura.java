@@ -17,8 +17,8 @@ import javax.persistence.Table;
 @Table(name = "termo_aberturas")
 public class TermoAbertura implements Serializable {
 
-    @SequenceGenerator(name = "gentermodeabertura", sequenceName = "seqtermodeabertura", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gentermodeabertura")
+    @SequenceGenerator(name = "gentermoabertura", sequenceName = "seqtermoabertura", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gentermoabertura")
 
     @Id
     @Column("trb_id")

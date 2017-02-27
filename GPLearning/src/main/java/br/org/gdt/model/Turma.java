@@ -41,50 +41,9 @@ public class Turma implements Serializable {
     @Column(name = "tur_dalteracao")
     private Date alteracao;
 
-//    @Column(length = 10000)
-//    private String descricaoTelaInicialGerenciamentoProjetos;
-//
-//    @Column(length = 10000)
-//    private String descricaoTelaGrupoProcessosIniciacao;
-//
-//    @Column(length = 10000)
-//    private String descricaoTelaTermoAberturaDescricao;
-//
-//    @Column(length = 10000)
-//    private String descricaoTelaTermoAberturaJustificativa;
-//
-//    @Column(length = 10000)
-//    private String descricaoTelaTermoAberturaPremissas;
-//
-//    @Column(length = 10000)
-//    private String descricaoTelaTermoAberturaRestricoes;
-//
-//    @Column(length = 10000)
-//    private String descricaoTelaTermoAberturaCronogramaMarcos;
-//
-//    @Column(length = 10000)
-//    private String descricaoTelaTermoAberturaRequisitos;
-//
-//    @Column(length = 10000)
-//    private String descricaoTelaPartesInteressadas;
-//
-//    @Column(length = 10000)
-//    private String descricaoTelaGrupoProcessosPlanejamento;
-//
-//    @Column(length = 10000)
-//    private String descricaoTelaCriarPlanoGerenciamentoProjeto;
-//
-//    @Column(length = 10000)
-//    private String descricaoTelaCriarPlanoGerenciamentoEscopo;
-//
-//    @Column(length = 10000)
-//    private String descricaoTelaColetarRequisitos;
-//
-//    @Column(length = 10000)
-//    private String descricaoTelaDefinirEscopo;
-//
-//    @Column(length = 10000)
-//    private String descricaoTelaCriarEAP;
+    @OneToMany(mappedBy = "turma")
+    private List<TurmaParametro> turmaParametros;
+
     @OneToMany(mappedBy = "turma")
     private List<Usuario> academicos;
 
@@ -94,9 +53,87 @@ public class Turma implements Serializable {
     @OneToMany(mappedBy = "turmadoprojeto")
     private List<Projeto> projeto;
 
-    @Override
-    public String toString() {
+    public Turma() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNome() {
         return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    public Date getCriacao() {
+        return criacao;
+    }
+
+    public void setCriacao(Date criacao) {
+        this.criacao = criacao;
+    }
+
+    public Date getAlteracao() {
+        return alteracao;
+    }
+
+    public void setAlteracao(Date alteracao) {
+        this.alteracao = alteracao;
+    }
+
+    public List<TurmaParametro> getTurmaParametros() {
+        return turmaParametros;
+    }
+
+    public void setTurmaParametros(List<TurmaParametro> turmaParametros) {
+        this.turmaParametros = turmaParametros;
+    }
+
+    public List<Usuario> getAcademicos() {
+        return academicos;
+    }
+
+    public void setAcademicos(List<Usuario> academicos) {
+        this.academicos = academicos;
+    }
+
+    public Usuario getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Usuario professor) {
+        this.professor = professor;
+    }
+
+    public List<Projeto> getProjeto() {
+        return projeto;
+    }
+
+    public void setProjeto(List<Projeto> projeto) {
+        this.projeto = projeto;
     }
 
     @Override
@@ -125,4 +162,8 @@ public class Turma implements Serializable {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

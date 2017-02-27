@@ -33,7 +33,7 @@ public class Usuario implements Serializable {
 
     @Column(name = "usu_istatus")
     @Enumerated(EnumType.ORDINAL)
-    private Status staus;
+    private Status status;
 
     @Column(name = "usu_dcriacao")
     private Date criacao;
@@ -96,12 +96,12 @@ public class Usuario implements Serializable {
         this.telefone = telefone;
     }
 
-    public Status getStaus() {
-        return staus;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setStaus(Status staus) {
-        this.staus = staus;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Date getCriacao() {

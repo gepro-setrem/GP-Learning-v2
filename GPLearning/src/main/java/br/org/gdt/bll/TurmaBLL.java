@@ -1,13 +1,13 @@
 package br.org.gdt.bll;
 
-import br.org.gdt.dao.GrupoDAO;
-import br.org.gdt.model.Grupo;
+import br.org.gdt.dao.TurmaDAO;
+import br.org.gdt.model.Turma;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("grupoBLL")
-public class GrupoBLL extends BLL<Grupo> {
+@Service("turmaBLL")
+public class TurmaBLL extends BLL<Turma> {
 
     @Autowired
-    private GrupoDAO dao;
+    private TurmaDAO dao;
 }
