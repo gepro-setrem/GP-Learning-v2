@@ -11,27 +11,30 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "requisitos")
-public class Requisito implements Serializable {
+@Table(name = "stakeholders")
+public class Stakeholder implements Serializable {
 
-    @SequenceGenerator(name = "genrequisito", sequenceName = "seqrequisito", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genrequisito")
+    @SequenceGenerator(name = "genstakeholder", sequenceName = "seqstakeholder", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genstakeholder")
 
     @Id
-    @Column(name = "req_id")
+    @Column(name = "sta_id")
     private int id;
 
-    @Column(name = "req_vnome", length = 500)
+    @Column(name = "sta_vnome", length = 200)
     private String nome;
 
-    @Column(name = "req_tdescricao", length = 500)
-    private String descricao;
+    @Column(name = "sta_vcontribuicao", length = 500)
+    private String contribuicao;
+
+    @Column(name = "sta_vpapel", length = 500)
+    private String papel;
 
     @ManyToOne
     @Column(name = "pro_id")
     private Projeto projeto;
 
-    public Requisito() {
+    public Stakeholder() {
     }
 
     public int getId() {
@@ -50,12 +53,20 @@ public class Requisito implements Serializable {
         this.nome = nome;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getContribuicao() {
+        return contribuicao;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setContribuicao(String contribuicao) {
+        this.contribuicao = contribuicao;
+    }
+
+    public String getPapel() {
+        return papel;
+    }
+
+    public void setPapel(String papel) {
+        this.papel = papel;
     }
 
     public Projeto getProjeto() {
@@ -70,5 +81,4 @@ public class Requisito implements Serializable {
     public String toString() {
         return nome;
     }
-
 }

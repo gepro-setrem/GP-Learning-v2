@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.org.gdt.model;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.inject.Named;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,31 +9,42 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "restricoes")
 public class Restricao implements Serializable {
-    
+
     @SequenceGenerator(name = "genrestricao", sequenceName = "seqrestricao", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genrestricao")
     @Id
-    private int idRestricao;
+    @Column(name = "res_id")
+    private int id;
+
+    @Column(name = "res_tdescricao", length = 500)
+    private String descricao;
 
     @ManyToOne
-    @Named("trb_id")
+    @Column(name = "trb_id")
     private TermoAbertura termoabertura;
-
-    @Column(length = 500)
-    private String descricaoRestricao;
 
     public Restricao() {
     }
 
-    public int getIdRestricao() {
-        return idRestricao;
+    public int getId() {
+        return id;
     }
 
-    public void setIdRestricao(int idRestricao) {
-        this.idRestricao = idRestricao;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public TermoAbertura getTermoabertura() {
@@ -50,20 +55,12 @@ public class Restricao implements Serializable {
         this.termoabertura = termoabertura;
     }
 
-    public String getDescricaoRestricao() {
-        return descricaoRestricao;
-    }
-
-    public void setDescricaoRestricao(String descricaoRestricao) {
-        this.descricaoRestricao = descricaoRestricao;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + this.idRestricao;
+        hash = 97 * hash + this.id;
         hash = 97 * hash + Objects.hashCode(this.termoabertura);
-        hash = 97 * hash + Objects.hashCode(this.descricaoRestricao);
+        hash = 97 * hash + Objects.hashCode(this.descricao);
         return hash;
     }
 
@@ -76,20 +73,20 @@ public class Restricao implements Serializable {
             return false;
         }
         final Restricao other = (Restricao) obj;
-        if (this.idRestricao != other.idRestricao) {
+        if (this.id != other.id) {
             return false;
         }
         if (!Objects.equals(this.termoabertura, other.termoabertura)) {
             return false;
         }
-        if (!Objects.equals(this.descricaoRestricao, other.descricaoRestricao)) {
+        if (!Objects.equals(this.descricao, other.descricao)) {
             return false;
         }
         return true;
     }
 
-    
-    
-
-    
+    @Override
+    public String toString() {
+        return descricao;
+    }
 }

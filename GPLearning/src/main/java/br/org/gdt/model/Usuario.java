@@ -1,69 +1,75 @@
 package br.org.gdt.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "usuario")
 public class Usuario implements Serializable {
 
     @SequenceGenerator(name = "genusuario", sequenceName = "sequsuario", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genusuario")
     @Id
-    private int idUsuario;
-    @Column(unique = true)
+    @Column(name = "usu_id")
+    private int id;
+
+    @Column(name = "usu_vnome", length = 200)
     private String nome;
-    @Column(unique = true)
+
+    @Column(name = "usu_vemail", length = 200)
     private String email;
+
+    @Column(name = "usu_vtelefone", length = 20)
+    private String telefone;
+
+    @Column(name = "usu_istatus")
+    @Enumerated(EnumType.ORDINAL)
+    private Status staus;
+
+    @Column(name = "usu_dcriacao")
+    private Date criacao;
+
+    @Column(name = "usu_dalteracao")
+    private Date alteracao;
+
+    @Column(name = "usu_vsenha")
     private String senha;
-    private String status;
-    private String dataCadastro;
-    private String dataModificacao;
+
+    @Column(name = "usu_ikarma")
     private int karma;
-//    @OneToOne
-//    private Perfil perfil;
-//
-//    public Perfil getPerfil() {
-//        return perfil;
-//    }
-//
-//    public void setPerfil(Perfil perfil) {
-//        this.perfil = perfil;
-//    }
 
-    @ManyToOne
-    private Turma turma;
+    public enum Status {
+        Ativo(1),
+        Inativo(2);
+        private final int valor;
 
-    @OneToMany(mappedBy = "professor")
-    private List<Turma> turmasprofessor;
+        Status(int opt) {
+            valor = opt;
+        }
 
-    @OneToMany(mappedBy = "gerenteProjeto")
-    private List<Projeto> projetosgerente;
-
-    @ManyToMany(mappedBy = "componentes")
-    private List<Projeto> projetos;
-
-    @ManyToOne
-    private Grupo grupo;
+        public int getValor() {
+            return valor;
+        }
+    }
 
     public Usuario() {
     }
 
-    public int getIdUsuario() {
-        return idUsuario;
+    public int getId() {
+        return id;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -82,72 +88,44 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public Status getStaus() {
+        return staus;
+    }
+
+    public void setStaus(Status staus) {
+        this.staus = staus;
+    }
+
+    public Date getCriacao() {
+        return criacao;
+    }
+
+    public void setCriacao(Date criacao) {
+        this.criacao = criacao;
+    }
+
+    public Date getAlteracao() {
+        return alteracao;
+    }
+
+    public void setAlteracao(Date alteracao) {
+        this.alteracao = alteracao;
+    }
+
     public String getSenha() {
         return senha;
     }
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getDataCadastro() {
-        return dataCadastro;
-    }
-
-    public void setDataCadastro(String dataCadastro) {
-        this.dataCadastro = dataCadastro;
-    }
-
-    public String getDataModificacao() {
-        return dataModificacao;
-    }
-
-    public void setDataModificacao(String dataModificacao) {
-        this.dataModificacao = dataModificacao;
-    }
-
-    public Turma getTurma() {
-        return turma;
-    }
-
-    public void setTurma(Turma turma) {
-        this.turma = turma;
-    }
-
-    public List<Turma> getTurmasprofessor() {
-        return turmasprofessor;
-    }
-
-    public void setTurmasprofessor(List<Turma> turmasprofessor) {
-        this.turmasprofessor = turmasprofessor;
-    }
-
-    public List<Projeto> getProjetosgerente() {
-        return projetosgerente;
-    }
-
-    public void setProjetosgerente(List<Projeto> projetosgerente) {
-        this.projetosgerente = projetosgerente;
-    }
-
-    public List<Projeto> getProjetos() {
-        return projetos;
-    }
-
-    public void setProjetos(List<Projeto> projetos) {
-        this.projetos = projetos;
-    }
-
-    public Grupo getGrupo() {
-        return grupo;
     }
 
     public int getKarma() {
@@ -158,35 +136,8 @@ public class Usuario implements Serializable {
         this.karma = karma;
     }
 
-    public void setGrupo(Grupo grupo) {
-        this.grupo = grupo;
-    }
-
     @Override
     public String toString() {
         return nome;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 41 * hash + this.idUsuario;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Usuario other = (Usuario) obj;
-        if (this.idUsuario != other.idUsuario) {
-            return false;
-        }
-        return true;
-    }
-
 }

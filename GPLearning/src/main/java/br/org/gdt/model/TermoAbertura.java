@@ -11,23 +11,30 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "termo_aberturas")
 public class TermoAbertura implements Serializable {
 
     @SequenceGenerator(name = "gentermodeabertura", sequenceName = "seqtermodeabertura", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gentermodeabertura")
+
     @Id
     @Column("trb_id")
     private int id;
+
     @Column(name = "trb_tdescricao", length = 2500)
     private String descricao;
+
     @Column(name = "trb_tjustificativa", length = 2500)
     private String justificativa;
+
     @Column("trb_dcriacao")
     private Date criacao;
+
     @Column("trb_dalteracao")
-    private String alteracao;
+    private Date alteracao;
 
     @OneToOne
     @Column("pro_id")
@@ -48,7 +55,7 @@ public class TermoAbertura implements Serializable {
     public TermoAbertura() {
     }
 
-   public int getId() {
+    public int getId() {
         return id;
     }
 
@@ -80,11 +87,11 @@ public class TermoAbertura implements Serializable {
         this.criacao = criacao;
     }
 
-    public String getAlteracao() {
+    public Date getAlteracao() {
         return alteracao;
     }
 
-    public void setAlteracao(String alteracao) {
+    public void setAlteracao(Date alteracao) {
         this.alteracao = alteracao;
     }
 
@@ -128,6 +135,8 @@ public class TermoAbertura implements Serializable {
         this.requisitosTermoAberturas = requisitosTermoAberturas;
     }
 
-    
-
+    @Override
+    public String toString() {
+        return descricao;
+    }
 }

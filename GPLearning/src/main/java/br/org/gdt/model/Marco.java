@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.org.gdt.model;
 
 import java.io.Serializable;
@@ -14,39 +9,38 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "marcos")
 public class Marco implements Serializable {
 
-    @SequenceGenerator(name = "gencronmarco", sequenceName = "seqcronmarco", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gencronmarco")
+    @SequenceGenerator(name = "genmarco", sequenceName = "seqmarco", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genmarco")
+
     @Id
-    private int idMarco;
-    @Column(length = 2500)
+    @Column(name = "mar_id")
+    private int id;
+
+    @Column(name = "mar_tobjetivo", length = 2500)
     private String objetivo;
 
-    private String dataPrevista;
+    @Column(name = "mar_dprevisao")
+    private Date previsao;
 
     @ManyToOne
+    @Column(name = "trb_id")
     private TermoAbertura termoabertura;
 
     public Marco() {
     }
 
-    public int getIdMarco() {
-        return idMarco;
+    public int getId() {
+        return id;
     }
 
-    public void setIdMarco(int idMarco) {
-        this.idMarco = idMarco;
-    }
-
-    public TermoAbertura getTermoabertura() {
-        return termoabertura;
-    }
-
-    public void setTermoabertura(TermoAbertura termoabertura) {
-        this.termoabertura = termoabertura;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getObjetivo() {
@@ -57,12 +51,24 @@ public class Marco implements Serializable {
         this.objetivo = objetivo;
     }
 
-    public String getDataPrevista() {
-        return dataPrevista;
+    public Date getPrevisao() {
+        return previsao;
     }
 
-    public void setDataPrevista(String dataPrevista) {
-        this.dataPrevista = dataPrevista;
+    public void setPrevisao(Date previsao) {
+        this.previsao = previsao;
     }
 
+    public TermoAbertura getTermoabertura() {
+        return termoabertura;
+    }
+
+    public void setTermoabertura(TermoAbertura termoabertura) {
+        this.termoabertura = termoabertura;
+    }
+
+    @Override
+    public String toString() {
+        return objetivo;
+    }
 }

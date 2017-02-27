@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.org.gdt.model;
 
 import java.io.Serializable;
@@ -13,37 +8,43 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "requisitos_termo_abertura")
 public class RequisitoTermoAbertura implements Serializable {
 
     @SequenceGenerator(name = "genrequisitota", sequenceName = "seqrequisitota", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genrequisitota")
+
     @Id
-    private int idrequisitotermoabertura;
-    @Column(length = 500)
-    private String descricaorequisito;
+    @Column(name = "rtb_id")
+    private int id;
+
+    @Column(name = "rtb_tdescricao", length = 500)
+    private String descricao;
 
     @ManyToOne
+    @Column(name = "trb_id")
     private TermoAbertura termoabertura;
 
     public RequisitoTermoAbertura() {
     }
 
-    public int getIdrequisitotermoabertura() {
-        return idrequisitotermoabertura;
+    public int getId() {
+        return id;
     }
 
-    public void setIdrequisitotermoabertura(int idrequisitotermoabertura) {
-        this.idrequisitotermoabertura = idrequisitotermoabertura;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getDescricaorequisito() {
-        return descricaorequisito;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setDescricaorequisito(String descricaorequisito) {
-        this.descricaorequisito = descricaorequisito;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public TermoAbertura getTermoabertura() {
@@ -53,7 +54,9 @@ public class RequisitoTermoAbertura implements Serializable {
     public void setTermoabertura(TermoAbertura termoabertura) {
         this.termoabertura = termoabertura;
     }
-    
-    
 
+    @Override
+    public String toString() {
+        return descricao;
+    }
 }

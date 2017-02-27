@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.org.gdt.model;
 
 import java.io.Serializable;
@@ -13,27 +8,42 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "premissas")
 public class Premissa implements Serializable {
 
     @SequenceGenerator(name = "genpremissa", sequenceName = "seqpremissa", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genpremissa")
     @Id
-    private int idPremissa;
+    @Column(name = "pre_id")
+    private int id;
+
+    @Column(name = "pre_tdescricao", length = 500)
+    private String descricao;
 
     @ManyToOne
+    @Column(name = "trb_id")
     private TermoAbertura termoabertura;
 
-    @Column(length = 500)
-    private String descricaoPremissa;
-
-    public int getIdPremissa() {
-        return idPremissa;
+    public Premissa() {
     }
 
-    public void setIdPremissa(int idPremissa) {
-        this.idPremissa = idPremissa;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public TermoAbertura getTermoabertura() {
@@ -44,15 +54,8 @@ public class Premissa implements Serializable {
         this.termoabertura = termoabertura;
     }
 
-    public String getDescricaoPremissa() {
-        return descricaoPremissa;
+    @Override
+    public String toString() {
+        return descricao;
     }
-
-    public void setDescricaoPremissa(String descricaoPremissa) {
-        this.descricaoPremissa = descricaoPremissa;
-    }
-
-    public Premissa() {
-    }
-
 }

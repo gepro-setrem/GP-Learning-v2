@@ -14,38 +14,114 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "projetos")
 public class Projeto implements Serializable {
 
     @SequenceGenerator(name = "genprojeto", sequenceName = "seqprojeto", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genprojeto")
+
     @Id
-    private int pro_id;
-    @Column(length = 200)
-    private String pro_vnome;
-    @Column(length = 2500)
-    private String pro_tdescricao;
+    @Column(name = "pro_id")
+    private int id;
 
-    @Column(length = 200)
-    private String pro_vempresa;
+    @Column(name = "pro_vnome", length = 200)
+    private String nome;
 
-    private Date pro_dcriacao;
-    private Date pro_dalteracao;
-//    @ManyToOne
-//     private Usuario gerente;
-//    @ManyToOne
-    //    private Turma turma;
+    @Column(name = "pro_tdescricao", length = 2500)
+    private String descricao;
+
+    @Column(name = "pro_vempresa", length = 200)
+    private String empresa;
+
+    @Column(name = "pro_dcriacao")
+    private Date criacao;
+
+    @Column(name = "pro_dalteracao")
+    private Date alteracao;
+
+    @ManyToOne
+    @Column(name = "usu_id")
+    private Usuario gerente;
+    @ManyToOne
+    @Column(name = "tur_id")
+    private Turma turma;
 
     public Projeto() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
+    }
+
+    public Date getCriacao() {
+        return criacao;
+    }
+
+    public void setCriacao(Date criacao) {
+        this.criacao = criacao;
+    }
+
+    public Date getAlteracao() {
+        return alteracao;
+    }
+
+    public void setAlteracao(Date alteracao) {
+        this.alteracao = alteracao;
+    }
+
+    public Usuario getGerente() {
+        return gerente;
+    }
+
+    public void setGerente(Usuario gerente) {
+        this.gerente = gerente;
+    }
+
+    public Turma getTurma() {
+        return turma;
+    }
+
+    public void setTurma(Turma turma) {
+        this.turma = turma;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + this.pro_id;
-        hash = 97 * hash + Objects.hashCode(this.pro_vnome);
-        hash = 97 * hash + Objects.hashCode(this.pro_tdescricao);
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + Objects.hashCode(this.nome);
+        hash = 97 * hash + Objects.hashCode(this.descricao);
         return hash;
     }
 
@@ -58,13 +134,13 @@ public class Projeto implements Serializable {
             return false;
         }
         final Projeto other = (Projeto) obj;
-        if (this.pro_id != other.pro_id) {
+        if (this.id != other.id) {
             return false;
         }
-        if (!Objects.equals(this.pro_vnome, other.pro_vnome)) {
+        if (!Objects.equals(this.nome, other.nome)) {
             return false;
         }
-        if (!Objects.equals(this.pro_tdescricao, other.pro_tdescricao)) {
+        if (!Objects.equals(this.descricao, other.descricao)) {
             return false;
         }
         return true;
@@ -72,7 +148,7 @@ public class Projeto implements Serializable {
 
     @Override
     public String toString() {
-        return pro_vnome;
+        return nome;
     }
 
 }

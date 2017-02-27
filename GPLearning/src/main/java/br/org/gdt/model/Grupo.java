@@ -11,7 +11,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "grupo")
+@Table(name = "grupos")
 public class Grupo implements Serializable {
 
     @SequenceGenerator(name = "gengrupo", sequenceName = "seqgrupo", allocationSize = 1)
