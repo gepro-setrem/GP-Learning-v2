@@ -21,7 +21,7 @@ public class TermoAbertura implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gentermoabertura")
 
     @Id
-    @Column("trb_id")
+    @Column(name = "trb_id")
     private int id;
 
     @Column(name = "trb_tdescricao", length = 2500)
@@ -30,14 +30,14 @@ public class TermoAbertura implements Serializable {
     @Column(name = "trb_tjustificativa", length = 2500)
     private String justificativa;
 
-    @Column("trb_dcriacao")
+    @Column(name = "trb_dcriacao")
     private Date criacao;
 
-    @Column("trb_dalteracao")
+    @Column(name = "trb_dalteracao")
     private Date alteracao;
 
     @OneToOne
-    @Column("pro_id")
+    @Column(name = "pro_id")
     private Projeto projeto;
 
     @OneToMany(mappedBy = "termoabertura")

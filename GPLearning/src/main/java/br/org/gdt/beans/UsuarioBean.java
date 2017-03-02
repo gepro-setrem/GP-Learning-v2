@@ -1,11 +1,11 @@
 package br.org.gdt.beans;
 
 import br.org.gdt.model.Grupo;
-import br.org.gdt.model.Perfil;
+//import br.org.gdt.model.Perfil;
 import br.org.gdt.model.Turma;
 import br.org.gdt.model.Usuario;
 import br.org.gdt.bll.GrupoBLL;
-import br.org.gdt.bll.PerfilBLL;
+//import br.org.gdt.bll.PerfilBLL;
 import br.org.gdt.bll.TurmaBLL;
 import br.org.gdt.bll.UsuarioBLL;
 import java.text.DateFormat;
@@ -43,9 +43,9 @@ public class UsuarioBean {
     @ManagedProperty("#{grupoBLL}")
     private GrupoBLL grupoService;
 
-    private Perfil perfil;
-    @ManagedProperty("#{perfilService}")
-    private PerfilService perfilService;
+//    private Perfil perfil;
+//    @ManagedProperty("#{perfilService}")
+//    private PerfilService perfilService;
 
     public UsuarioBean() {
     }
@@ -125,33 +125,33 @@ public class UsuarioBean {
 
     //quando é clicado o botão inserir
     public String salvar() {
-        if (!usuario.getNome().equals("") && !usuario.getEmail().equals("") && !usuario.getTurma().equals("")) {
+        if (!usuario.getNome().isEmpty() && !usuario.getEmail().isEmpty()){// && !usuario.getTurma().equals("")) {
             System.out.println("Entrou no botão salvar");
             if (usuario.getId() > 0) {
                 System.out.println("Entrou para alterar");
 
-                usuario.setAlteracao(getDateTime());
+                usuario.setAlteracao(new Date());
                 service.update(usuario);
 
-                Perfil perfillocal = perfilService.findByUsuario(usuario);
-                perfillocal.setEmail(usuario.getEmail());
-                perfillocal.setNomeGrupo(usuario.getGrupo().getNomeGrupo());
-                perfilService.update(perfillocal);
+//                Perfil perfillocal = perfilService.findByUsuario(usuario);
+//                perfillocal.setEmail(usuario.getEmail());
+//                perfillocal.setNomeGrupo(usuario.getGrupo().getNome());
+//                perfilService.update(perfillocal);
             } else {
-                usuario.setAlteracao(getDateTime());
-                usuario.setCriacao(getDateTime());
+                usuario.setAlteracao(new Date());
+                usuario.setCriacao(new Date());
                 usuario.setStatus(Usuario.Status.Ativo);
                 service.insert(usuario);
 
-                System.out.println("É um usuário novo");
-                perfil = new Perfil();
-                perfil.setEmail(usuario.getEmail());
-                Grupo grupolocal = usuario.getGrupo();
-                String nomegrupo = grupolocal.getNomeGrupo();
-                perfil.setNomeGrupo(nomegrupo);
-                System.out.println("Grupo do perfil" + perfil.getNomeGrupo());
-                perfil.setUsuario(usuario);
-                perfilService.insert(perfil);
+//                System.out.println("É um usuário novo");
+//                perfil = new Perfil();
+//                perfil.setEmail(usuario.getEmail());
+//                Grupo grupolocal = usuario.getGrupo();
+//                String nomegrupo = grupolocal.getNome();
+//                perfil.setNomeGrupo(nomegrupo);
+//                System.out.println("Grupo do perfil" + perfil.getNomeGrupo());
+//                perfil.setUsuario(usuario);
+//                perfilService.insert(perfil);
 
             }
             return "ListagemUsuarios";

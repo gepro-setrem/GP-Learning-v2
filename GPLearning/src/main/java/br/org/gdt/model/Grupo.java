@@ -16,9 +16,11 @@ public class Grupo implements Serializable {
 
     @SequenceGenerator(name = "gengrupo", sequenceName = "seqgrupo", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gengrupo")
+    
     @Id
     @Column(name = "gro_id")
     private int id;
+    
     @Column(name = "gro_vnome", length = 200)
     private String nome;
 

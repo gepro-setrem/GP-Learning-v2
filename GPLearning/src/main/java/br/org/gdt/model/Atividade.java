@@ -1,37 +1,36 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.org.gdt.model;
 
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
-/**
- *
- * @author Mateus
- */
-public class atividade {
+//@Entity
+@Table(name = "atividade")
+public class Atividade {
 
     @SequenceGenerator(name = "genatividade", sequenceName = "seqatividade", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genatividade")
+    
     @Id
-    @Column("atv_id")
+    @Column(name = "atv_id")
     private int id;
 
-    @Column("atv_vnome")
+    @Column(name = "atv_vnome")
     private String nome;
-    @Column("atv_dcriacao")
+    
+    @Column(name = "atv_dcriacao")
     private Date Criacao;
-    @Column("atv_dtermino")
+    
+    @Column(name = "atv_dtermino")
     private Date termino;
-    @Column("atv_dconclusao")
+    
+    @Column(name = "atv_dconclusao")
     private Date conclusao;
 
     public String getNome() {
@@ -75,7 +74,7 @@ public class atividade {
 
     @Override
     public String toString() {
-        return  nome;
+        return nome;
     }
 
     @Override
@@ -89,7 +88,7 @@ public class atividade {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final atividade other = (atividade) obj;
+        final Atividade other = (Atividade) obj;
         if (this.id != other.id) {
             return false;
         }
@@ -98,7 +97,5 @@ public class atividade {
         }
         return true;
     }
-
-   
 
 }

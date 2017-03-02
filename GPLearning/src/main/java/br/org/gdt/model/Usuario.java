@@ -47,6 +47,9 @@ public class Usuario implements Serializable {
     @Column(name = "usu_ikarma")
     private int karma;
 
+    @Column(name = "gro_id")
+    private Grupo grupo;
+
     public enum Status {
         Ativo(1),
         Inativo(2);
@@ -134,6 +137,14 @@ public class Usuario implements Serializable {
 
     public void setKarma(int karma) {
         this.karma = karma;
+    }
+
+    public Grupo getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
     }
 
     @Override
