@@ -11,21 +11,24 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "requisitos_termo_abertura")
+@Table(name = "ta_requisitos")
 public class RequisitoTermoAbertura implements Serializable {
 
     @SequenceGenerator(name = "genrequisitota", sequenceName = "seqrequisitota", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genrequisitota")
 
     @Id
-    @Column(name = "rtb_id")
+    @Column(name = "req_id")
     private int id;
 
-    @Column(name = "rtb_tdescricao", length = 500)
+    @Column(name = "req_vnome", length = 200)
+    private String nome;
+
+    @Column(name = "req_tdescricao", length = 500)
     private String descricao;
 
     @ManyToOne
-    @Column(name = "trb_id")
+    @Column(name = "req_id")
     private TermoAbertura termoabertura;
 
     public RequisitoTermoAbertura() {

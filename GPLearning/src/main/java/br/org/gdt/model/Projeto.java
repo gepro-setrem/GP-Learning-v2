@@ -45,9 +45,22 @@ public class Projeto implements Serializable {
     @ManyToOne
     @Column(name = "usu_id")
     private Usuario gerente;
+
     @ManyToOne
     @Column(name = "tur_id")
     private Turma turma;
+
+    @OneToOne
+    private TermoAbertura termoabertura;
+
+    @OneToMany(mappedBy = "projeto")
+    private List<Stakeholder> stakeholders;
+
+    @OneToMany(mappedBy = "projeto")
+    private List<Requisito> requisitos;
+
+    @ManyToMany
+    private List<Usuario> componentes;
 
     public Projeto() {
     }
@@ -114,6 +127,38 @@ public class Projeto implements Serializable {
 
     public void setTurma(Turma turma) {
         this.turma = turma;
+    }
+
+    public TermoAbertura getTermoabertura() {
+        return termoabertura;
+    }
+
+    public void setTermoabertura(TermoAbertura termoabertura) {
+        this.termoabertura = termoabertura;
+    }
+
+    public List<Stakeholder> getStakeholders() {
+        return stakeholders;
+    }
+
+    public void setStakeholders(List<Stakeholder> stakeholders) {
+        this.stakeholders = stakeholders;
+    }
+
+    public List<Requisito> getRequisitos() {
+        return requisitos;
+    }
+
+    public void setRequisitos(List<Requisito> requisitos) {
+        this.requisitos = requisitos;
+    }
+
+    public List<Usuario> getComponentes() {
+        return componentes;
+    }
+
+    public void setComponentes(List<Usuario> componentes) {
+        this.componentes = componentes;
     }
 
     @Override

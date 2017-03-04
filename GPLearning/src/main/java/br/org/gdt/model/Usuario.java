@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "usuario")
+@Table(name = "usuarios")
 public class Usuario implements Serializable {
 
     @SequenceGenerator(name = "genusuario", sequenceName = "sequsuario", allocationSize = 1)
@@ -146,7 +146,6 @@ public class Usuario implements Serializable {
     public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
     }
-
     @Override
     public String toString() {
         return nome;

@@ -14,7 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "termo_aberturas")
+@Table(name = "termos_abertura")
 public class TermoAbertura implements Serializable {
 
     @SequenceGenerator(name = "gentermoabertura", sequenceName = "seqtermoabertura", allocationSize = 1)

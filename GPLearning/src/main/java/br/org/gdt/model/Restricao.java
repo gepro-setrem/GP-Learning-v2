@@ -12,7 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "restricoes")
+@Table(name = "ta_restricoes")
 public class Restricao implements Serializable {
 
     @SequenceGenerator(name = "genrestricao", sequenceName = "seqrestricao", allocationSize = 1)
