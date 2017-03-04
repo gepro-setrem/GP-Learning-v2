@@ -9,14 +9,37 @@ import br.org.gdt.model.Usuario;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("projetoBLL")
-public class ProjetoBLL extends BLL<Projeto> {
+public class ProjetoBLL {
 
     @Autowired
     private ProjetoDAO dao;
-    
-    
+
+    @Transactional
+    public void insert(Projeto item) {
+        dao.insert(item);
+    }
+
+    @Transactional
+    public void update(Projeto item) {
+        dao.update(item);
+    }
+
+    @Transactional
+    public void delete(long id) {
+        dao.delete(id);
+    }
+
+    public Projeto findById(long id) {
+        return (Projeto) dao.findById(id);
+    }
+
+    public List<Projeto> findAll() {
+        return dao.findAll();
+    }
+
     public List<Projeto> findbyaluno(Usuario usuario) {
         Usuario user = new UsuarioDAO().findById(usuario.getId());
         List<Projeto> projetos = user.getProjetos();

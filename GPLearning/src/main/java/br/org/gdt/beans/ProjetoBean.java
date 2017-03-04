@@ -11,7 +11,6 @@ import br.org.gdt.model.Restricao;
 import br.org.gdt.model.TermoAbertura;
 import br.org.gdt.model.Turma;
 import br.org.gdt.model.Usuario;
-import br.org.gdt.bll.GrupoBLL;
 import br.org.gdt.bll.MarcoBLL;
 import br.org.gdt.bll.StakeholderBLL;
 import br.org.gdt.bll.PremissaBLL;
@@ -78,8 +77,6 @@ public class ProjetoBean {
     private TermoAberturaBLL termoAberturaService;
 
     private Grupo grupo = new Grupo();
-    @ManagedProperty("#{grupoBLL}")
-    private GrupoBLL GrupoService;
 
     private Premissa premissa = new Premissa();
     @ManagedProperty("#{premissaBLL}")
@@ -922,14 +919,6 @@ public class ProjetoBean {
         this.termoAberturaService = termoAberturaService;
     }
 
-    public GrupoBLL getGrupoService() {
-        return GrupoService;
-    }
-
-    public void setGrupoService(GrupoBLL GrupoService) {
-        this.GrupoService = GrupoService;
-    }
-
     public PremissaBLL getPremissaService() {
         return premissaService;
     }
@@ -977,7 +966,5 @@ public class ProjetoBean {
     public void setRequisitoService(RequisitoBLL requisitoService) {
         this.requisitoService = requisitoService;
     }
-
-
 
 }
