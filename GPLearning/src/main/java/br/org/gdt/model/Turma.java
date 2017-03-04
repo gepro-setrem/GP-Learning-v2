@@ -50,7 +50,7 @@ public class Turma implements Serializable {
     @ManyToOne
     public Usuario professor;
 
-    @OneToMany(mappedBy = "turmadoprojeto")
+    @OneToMany(mappedBy = "turma")
     private List<Projeto> projeto;
 
     public Turma() {

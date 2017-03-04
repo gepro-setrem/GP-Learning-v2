@@ -2,6 +2,7 @@ package br.org.gdt.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,6 +10,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -47,8 +51,20 @@ public class Usuario implements Serializable {
     @Column(name = "usu_ikarma")
     private int karma;
 
-    @Column(name = "gro_id")
+    @ManyToOne
     private Grupo grupo;
+
+    @ManyToOne
+    private Turma turma;
+
+    @OneToMany(mappedBy = "professor")
+    private List<Turma> turmasprofessor;
+
+    @OneToMany(mappedBy = "gerente")
+    private List<Projeto> projetosgerente;
+
+    @ManyToMany(mappedBy = "componentes")
+    private List<Projeto> projetos;
 
     public enum Status {
         Ativo(1),
@@ -146,6 +162,39 @@ public class Usuario implements Serializable {
     public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
     }
+
+    public Turma getTurma() {
+        return turma;
+    }
+
+    public void setTurma(Turma turma) {
+        this.turma = turma;
+    }
+
+    public List<Turma> getTurmasprofessor() {
+        return turmasprofessor;
+    }
+
+    public void setTurmasprofessor(List<Turma> turmasprofessor) {
+        this.turmasprofessor = turmasprofessor;
+    }
+
+    public List<Projeto> getProjetosgerente() {
+        return projetosgerente;
+    }
+
+    public void setProjetosgerente(List<Projeto> projetosgerente) {
+        this.projetosgerente = projetosgerente;
+    }
+
+    public List<Projeto> getProjetos() {
+        return projetos;
+    }
+
+    public void setProjetos(List<Projeto> projetos) {
+        this.projetos = projetos;
+    }
+
     @Override
     public String toString() {
         return nome;

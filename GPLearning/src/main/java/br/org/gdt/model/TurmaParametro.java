@@ -24,7 +24,7 @@ public class TurmaParametro implements Serializable {
     private String valor;
 
     @ManyToOne
-    @Column(name = "tur_id")
+//    @Column(name = "tur_id")
     private Turma turma;
 
     public TurmaParametro() {

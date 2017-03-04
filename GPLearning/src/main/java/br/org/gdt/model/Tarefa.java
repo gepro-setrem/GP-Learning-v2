@@ -35,7 +35,7 @@ public class Tarefa implements Serializable {
     private Date conclusao;
 
     @ManyToOne
-    @Column(name = "eap_id")
+//    @Column(name = "eap_id")
     private EAP eap;
 
     public Tarefa() {

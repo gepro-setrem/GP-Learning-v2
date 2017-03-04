@@ -37,7 +37,7 @@ public class TermoAbertura implements Serializable {
     private Date alteracao;
 
     @OneToOne
-    @Column(name = "pro_id")
+//    @Column(name = "pro_id")
     private Projeto projeto;
 
     @OneToMany(mappedBy = "termoabertura")

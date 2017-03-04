@@ -11,7 +11,7 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-<!--    
+    <!--    
     <servlet>
         <servlet-name>CXFServlet</servlet-name>
         <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
@@ -51,7 +51,7 @@
         <display-name>admin_acess</display-name>
         <web-resource-collection>
             <web-resource-name>admin_pages</web-resource-name>
-            <description>telas que somente o administrador terá acesso</description>
+            <description>Telas do professor</description>
             <url-pattern>/faces/admin/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
@@ -63,7 +63,7 @@
         <display-name>user_acess</display-name>
         <web-resource-collection>
             <web-resource-name>user_pages</web-resource-name>
-            <description>Telas acessadas pelo usuário</description>
+            <description>Telas do aluno</description>
             <url-pattern>/faces/user/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>

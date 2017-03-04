@@ -28,7 +28,7 @@ public class Requisito implements Serializable {
     private String descricao;
 
     @ManyToOne
-    @Column(name = "pro_id")
+//    @Column(name = "pro_id")
     private Projeto projeto;
 
     public Requisito() {

@@ -24,7 +24,7 @@ public class Recurso implements Serializable {
     private String nome;
 
     @ManyToOne
-    @Column(name = "tar_id")
+//    @Column(name = "tar_id")
     private Tarefa tarefa;
 
     public Recurso() {

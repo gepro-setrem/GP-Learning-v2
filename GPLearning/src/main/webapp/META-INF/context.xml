@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/GPLearning">
-  <Realm className="org.apache.catalina.realm.JDBCRealm" connectionName="postgres" connectionPassword="postgres" connectionURL="jdbc:postgresql://localhost/GPLearning1" driverName="org.postgresql.Driver" roleNameCol="per_vgrupo" userCredCol="usu_vsenha" userNameCol="usu_vemail" userRoleTable="perfis" userTable="usuarios"/>
+    <Realm className="org.apache.catalina.realm.JDBCRealm"
+           driverName="org.postgresql.Driver"
+           connectionURL="jdbc:postgresql://localhost/GPLearning1"   
+           connectionName="postgres" 
+           connectionPassword="postgres" 
+           userTable="usuarios" userNameCol="usu_vemail" userCredCol="usu_vsenha"
+           userRoleTable="perfis" roleNameCol="per_vgrupo" />
 </Context>

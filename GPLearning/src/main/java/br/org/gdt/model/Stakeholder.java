@@ -31,7 +31,7 @@ public class Stakeholder implements Serializable {
     private String papel;
 
     @ManyToOne
-    @Column(name = "pro_id")
+//    @Column(name = "pro_id")
     private Projeto projeto;
 
     public Stakeholder() {

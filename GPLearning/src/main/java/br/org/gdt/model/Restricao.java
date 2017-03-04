@@ -17,6 +17,7 @@ public class Restricao implements Serializable {
 
     @SequenceGenerator(name = "genrestricao", sequenceName = "seqrestricao", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genrestricao")
+    
     @Id
     @Column(name = "res_id")
     private int id;
@@ -25,7 +26,7 @@ public class Restricao implements Serializable {
     private String descricao;
 
     @ManyToOne
-    @Column(name = "trb_id")
+//    @Column(name = "trb_id")
     private TermoAbertura termoabertura;
 
     public Restricao() {

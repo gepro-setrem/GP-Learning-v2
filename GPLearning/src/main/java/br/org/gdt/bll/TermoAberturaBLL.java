@@ -10,4 +10,8 @@ public class TermoAberturaBLL extends BLL<TermoAbertura> {
 
     @Autowired
     private TermoAberturaDAO dao;
+
+    public TermoAbertura findByIdRelatorio(int id) {
+        return dao.findByIdRelatorio(id);
+    }
 }

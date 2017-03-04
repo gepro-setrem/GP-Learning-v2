@@ -29,7 +29,7 @@ public class Marco implements Serializable {
     private Date previsao;
 
     @ManyToOne
-    @Column(name = "trb_id")
+//    @Column(name = "trb_id")
     private TermoAbertura termoabertura;
 
     public Marco() {

@@ -24,7 +24,7 @@ public class Premissa implements Serializable {
     private String descricao;
 
     @ManyToOne
-    @Column(name = "trb_id")
+//    @Column(name = "trb_id")
     private TermoAbertura termoabertura;
 
     public Premissa() {

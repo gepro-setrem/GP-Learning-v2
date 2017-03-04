@@ -36,6 +36,18 @@ public class Projeto implements Serializable {
     @Column(name = "pro_vempresa", length = 200)
     private String empresa;
 
+    @Column(name = "pro_vestado", length = 200)
+    private String estado;
+
+    @Column(name = "pro_tescopo", length = 2500)
+    private String escopo;
+
+    @Column(name = "pro_tplano_escopo", length = 2500)
+    private String planoEscopo;
+
+    @Column(name = "pro_tplano_projeto", length = 2500)
+    private String planoProjeto;
+
     @Column(name = "pro_dcriacao")
     private Date criacao;
 
@@ -43,11 +55,11 @@ public class Projeto implements Serializable {
     private Date alteracao;
 
     @ManyToOne
-    @Column(name = "usu_id")
+//    @Column(name = "usu_id")
     private Usuario gerente;
 
     @ManyToOne
-    @Column(name = "tur_id")
+//    @Column(name = "tur_id")
     private Turma turma;
 
     @OneToOne
@@ -159,6 +171,38 @@ public class Projeto implements Serializable {
 
     public void setComponentes(List<Usuario> componentes) {
         this.componentes = componentes;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getEscopo() {
+        return escopo;
+    }
+
+    public void setEscopo(String escopo) {
+        this.escopo = escopo;
+    }
+
+    public String getPlanoEscopo() {
+        return planoEscopo;
+    }
+
+    public void setPlanoEscopo(String planoEscopo) {
+        this.planoEscopo = planoEscopo;
+    }
+
+    public String getPlanoProjeto() {
+        return planoProjeto;
+    }
+
+    public void setPlanoProjeto(String planoProjeto) {
+        this.planoProjeto = planoProjeto;
     }
 
     @Override

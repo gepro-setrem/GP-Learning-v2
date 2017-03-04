@@ -12,24 +12,24 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "comentario")
+@Table(name = "comentarios")
 public class Comentario implements Serializable {
 
     @SequenceGenerator(name = "gencomentario", sequenceName = "seqcomentario", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gencomentario")
-    
+
     @Id
     @Column(name = "com_id")
     private int id;
 
-    @Column(name = "com_ttexto", length = 2500)
-    private String texto;
+    @Column(name = "com_tdescricao", length = 2500)
+    private String descricao;
 
     @Column(name = "com_dcriacao")
     private Date criacao;
 
     @ManyToOne
-    @Column(name = "usu_id")
+//    @Column(name = "usu_id")
     private Usuario aluno;
 
     public Comentario() {
@@ -43,12 +43,12 @@ public class Comentario implements Serializable {
         this.id = id;
     }
 
-    public String getTexto() {
-        return texto;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public Date getCriacao() {

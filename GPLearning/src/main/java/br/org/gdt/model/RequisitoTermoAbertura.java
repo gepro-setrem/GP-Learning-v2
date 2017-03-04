@@ -28,7 +28,7 @@ public class RequisitoTermoAbertura implements Serializable {
     private String descricao;
 
     @ManyToOne
-    @Column(name = "req_id")
+//    @Column(name = "trb_id")
     private TermoAbertura termoabertura;
 
     public RequisitoTermoAbertura() {

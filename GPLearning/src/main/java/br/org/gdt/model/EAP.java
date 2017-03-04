@@ -36,11 +36,11 @@ public class EAP implements Serializable {
     private double valor;
 
     @ManyToOne
-    @Column(name = "pro_id")
+//    @Column(name = "pro_id")
     private Projeto projeto;
 
     @ManyToOne
-    @Column(name = "eap_idpai")
+//    @Column(name = "eap_idpai")
     private EAP pai;
 
     public EAP() {
