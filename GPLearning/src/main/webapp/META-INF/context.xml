@@ -5,6 +5,6 @@
            connectionURL="jdbc:postgresql://localhost/GPLearning1"   
            connectionName="postgres" 
            connectionPassword="postgres" 
-           userTable="usuarios" userNameCol="usu_vemail" userCredCol="usu_vsenha"
-           userRoleTable="perfis" roleNameCol="per_vgrupo" />
+           userTable="perfil" userNameCol="per_vlogin" userCredCol="per_vsenha"
+           userRoleTable="perfil" roleNameCol="per_vgrupo" />
 </Context>

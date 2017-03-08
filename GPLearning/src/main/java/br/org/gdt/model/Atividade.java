@@ -8,28 +8,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
-//@Entity
-@Table(name = "atividade")
+@Entity
 public class Atividade {
 
     @SequenceGenerator(name = "genatividade", sequenceName = "seqatividade", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genatividade")
-    
+
     @Id
     @Column(name = "atv_id")
     private int id;
 
     @Column(name = "atv_vnome")
     private String nome;
-    
+
     @Column(name = "atv_dcriacao")
     private Date Criacao;
-    
+
     @Column(name = "atv_dtermino")
     private Date termino;
-    
+
     @Column(name = "atv_dconclusao")
     private Date conclusao;
 

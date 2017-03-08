@@ -6,12 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "recursos")
 public class Recurso implements Serializable {
 
     @SequenceGenerator(name = "genrecurso", sequenceName = "seqrecurso", allocationSize = 1)
@@ -24,7 +23,7 @@ public class Recurso implements Serializable {
     private String nome;
 
     @ManyToOne
-//    @Column(name = "tar_id")
+    @JoinColumn(name = "tar_id")
     private Tarefa tarefa;
 
     public Recurso() {

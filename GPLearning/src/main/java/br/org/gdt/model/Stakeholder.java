@@ -6,12 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "stakeholders")
 public class Stakeholder implements Serializable {
 
     @SequenceGenerator(name = "genstakeholder", sequenceName = "seqstakeholder", allocationSize = 1)
@@ -31,7 +30,7 @@ public class Stakeholder implements Serializable {
     private String papel;
 
     @ManyToOne
-//    @Column(name = "pro_id")
+    @JoinColumn(name = "pro_id")
     private Projeto projeto;
 
     public Stakeholder() {

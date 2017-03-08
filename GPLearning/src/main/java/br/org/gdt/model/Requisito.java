@@ -6,12 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "requisitos")
 public class Requisito implements Serializable {
 
     @SequenceGenerator(name = "genrequisito", sequenceName = "seqrequisito", allocationSize = 1)
@@ -28,7 +27,7 @@ public class Requisito implements Serializable {
     private String descricao;
 
     @ManyToOne
-//    @Column(name = "pro_id")
+    @JoinColumn(name = "pro_id")
     private Projeto projeto;
 
     public Requisito() {

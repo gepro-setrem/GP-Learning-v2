@@ -7,13 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "eap")
 public class EAP implements Serializable {
 
     @SequenceGenerator(name = "geneap", sequenceName = "seqeap", allocationSize = 1)
@@ -36,11 +35,11 @@ public class EAP implements Serializable {
     private double valor;
 
     @ManyToOne
-//    @Column(name = "pro_id")
+    @JoinColumn(name = "pro_id")
     private Projeto projeto;
 
     @ManyToOne
-//    @Column(name = "eap_idpai")
+    @JoinColumn(name = "eap_idpai")
     private EAP pai;
 
     public EAP() {

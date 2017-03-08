@@ -27,7 +27,10 @@ public class UsuarioDAO extends DAO<Usuario> {
     public Usuario findByEmail(String email) {
         List<Usuario> lsUsers = entityManager.createQuery("from Usuario where email=:p")
                 .setParameter("p", email).getResultList();
-        Usuario user = (Usuario) lsUsers.get(0);
+        Usuario user = new Usuario();
+        if (lsUsers.size() > 0) {
+            user = (Usuario) lsUsers.get(0);
+        }
         return user;
     }
 }

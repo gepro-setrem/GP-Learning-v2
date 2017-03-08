@@ -38,37 +38,11 @@ made subject to such option by the copyright holder.
 
 Contributor(s):
 -->
-<!--<!DOCTYPE hibernate-configuration PUBLIC
+<!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
 
     </session-factory>
-</hibernate-configuration>-->
-
-<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
-<hibernate-configuration>
-  <session-factory>
-    <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-    <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-    <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/GPLearning1</property>
-    <property name="hibernate.connection.username">postgres</property>
-    <property name="hibernate.connection.password">postgres</property>
-    <property name="hibernate.hbm2ddl.auto">update</property>
-<!--    <property name="hibernate.show_sql">true</property>
-    <property name="hibernate.format_sql">true</property>-->
-<!--    <mapping class="Model.Usuario"/>
-    <mapping class="Model.ParteInteressada"/>
-    <mapping class="Model.Projeto"/>
-    <mapping class="Model.Requisito"/>
-    <mapping class="Model.TermoAbertura"/>
-    <mapping class="Model.Premissa"/>
-    <mapping class="Model.Restricao"/>
-    <mapping class="Model.Marco"/>
-    <mapping class="Model.Turma"/>
-    <mapping class="Model.Grupo"/>
-    <mapping class="Model.RequisitoTermoAbertura"/>
-    <mapping class="Model.Perfil"/>-->
-  </session-factory>
 </hibernate-configuration>

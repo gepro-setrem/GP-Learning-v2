@@ -6,12 +6,11 @@ import javax.persistence.Entity;
 //import javax.persistence.GeneratedValue;
 //import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 //import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "turma_parametro")
 public class TurmaParametro implements Serializable {
 
 //    @SequenceGenerator(name = "genturmaparametro", sequenceName = "seqturmaparametro", allocationSize = 1)
@@ -24,7 +23,7 @@ public class TurmaParametro implements Serializable {
     private String valor;
 
     @ManyToOne
-//    @Column(name = "tur_id")
+    @JoinColumn(name = "tur_id")
     private Turma turma;
 
     public TurmaParametro() {

@@ -10,14 +10,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "usuarios")
 public class Usuario implements Serializable {
 
     @SequenceGenerator(name = "genusuario", sequenceName = "sequsuario", allocationSize = 1)
@@ -45,16 +44,15 @@ public class Usuario implements Serializable {
     @Column(name = "usu_dalteracao")
     private Date alteracao;
 
-    @Column(name = "usu_vsenha")
-    private String senha;
-
     @Column(name = "usu_ikarma")
     private int karma;
 
     @ManyToOne
+    @JoinColumn(name = "gru_id")
     private Grupo grupo;
 
     @ManyToOne
+    @JoinColumn(name = "tur_id")
     private Turma turma;
 
     @OneToMany(mappedBy = "professor")
@@ -137,14 +135,6 @@ public class Usuario implements Serializable {
 
     public void setAlteracao(Date alteracao) {
         this.alteracao = alteracao;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public int getKarma() {

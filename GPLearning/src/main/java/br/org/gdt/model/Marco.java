@@ -7,12 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "ta_marcos")
 public class Marco implements Serializable {
 
     @SequenceGenerator(name = "genmarco", sequenceName = "seqmarco", allocationSize = 1)
@@ -29,7 +28,7 @@ public class Marco implements Serializable {
     private Date previsao;
 
     @ManyToOne
-//    @Column(name = "trb_id")
+    @JoinColumn(name = "trb_id")
     private TermoAbertura termoabertura;
 
     public Marco() {

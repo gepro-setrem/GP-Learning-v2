@@ -7,12 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "comentarios")
 public class Comentario implements Serializable {
 
     @SequenceGenerator(name = "gencomentario", sequenceName = "seqcomentario", allocationSize = 1)
@@ -29,7 +28,7 @@ public class Comentario implements Serializable {
     private Date criacao;
 
     @ManyToOne
-//    @Column(name = "usu_id")
+    @JoinColumn(name = "usu_id")
     private Usuario aluno;
 
     public Comentario() {

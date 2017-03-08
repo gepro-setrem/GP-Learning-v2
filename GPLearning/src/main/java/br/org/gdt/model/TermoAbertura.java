@@ -8,13 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "termos_abertura")
 public class TermoAbertura implements Serializable {
 
     @SequenceGenerator(name = "gentermoabertura", sequenceName = "seqtermoabertura", allocationSize = 1)
@@ -37,7 +36,7 @@ public class TermoAbertura implements Serializable {
     private Date alteracao;
 
     @OneToOne
-//    @Column(name = "pro_id")
+    @JoinColumn(name = "pro_id")
     private Projeto projeto;
 
     @OneToMany(mappedBy = "termoabertura")

@@ -8,10 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "grupos")
 public class Grupo implements Serializable {
 
     @SequenceGenerator(name = "gengrupo", sequenceName = "seqgrupo", allocationSize = 1)

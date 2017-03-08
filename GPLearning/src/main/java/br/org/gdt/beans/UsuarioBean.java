@@ -134,7 +134,7 @@ public class UsuarioBean {
                 service.update(usuario);
 
                 Perfil perfillocal = perfilService.findByUsuario(usuario);
-                perfillocal.setEmail(usuario.getEmail());
+                perfillocal.setLogin(usuario.getEmail());
                 perfillocal.setGrupo(usuario.getGrupo().getNome());
                 perfilService.update(perfillocal);
             } else {
@@ -145,7 +145,7 @@ public class UsuarioBean {
 
                 System.out.println("É um usuário novo");
                 perfil = new Perfil();
-                perfil.setEmail(usuario.getEmail());
+                perfil.setLogin(usuario.getEmail());
                 Grupo grupolocal = usuario.getGrupo();
                 String nomegrupo = grupolocal.getNome();
                 perfil.setGrupo(nomegrupo);

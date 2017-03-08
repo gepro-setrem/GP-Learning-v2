@@ -7,12 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "ta_restricoes")
 public class Restricao implements Serializable {
 
     @SequenceGenerator(name = "genrestricao", sequenceName = "seqrestricao", allocationSize = 1)
@@ -26,7 +25,7 @@ public class Restricao implements Serializable {
     private String descricao;
 
     @ManyToOne
-//    @Column(name = "trb_id")
+    @JoinColumn(name = "trb_id")
     private TermoAbertura termoabertura;
 
     public Restricao() {

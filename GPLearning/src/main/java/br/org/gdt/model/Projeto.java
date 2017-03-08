@@ -9,15 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "projetos")
 public class Projeto implements Serializable {
 
     @SequenceGenerator(name = "genprojeto", sequenceName = "seqprojeto", allocationSize = 1)
@@ -55,11 +54,11 @@ public class Projeto implements Serializable {
     private Date alteracao;
 
     @ManyToOne
-//    @Column(name = "usu_id")
+    @JoinColumn(name = "usu_id")
     private Usuario gerente;
 
     @ManyToOne
-//    @Column(name = "tur_id")
+    @JoinColumn(name = "tur_id")
     private Turma turma;
 
     @OneToOne

@@ -7,12 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "tarefas")
 public class Tarefa implements Serializable {
 
     @SequenceGenerator(name = "gentarefa", sequenceName = "seqtarefa", allocationSize = 1)
@@ -35,7 +34,7 @@ public class Tarefa implements Serializable {
     private Date conclusao;
 
     @ManyToOne
-//    @Column(name = "eap_id")
+    @JoinColumn(name = "eap_id")
     private EAP eap;
 
     public Tarefa() {

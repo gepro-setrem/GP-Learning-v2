@@ -148,6 +148,7 @@ public class ProjetoBean {
     }
 
     public Usuario getUsuariologado() {
+        System.out.println("Inicio");
         ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
         HttpServletRequest request = (HttpServletRequest) external.getRequest();
         String emailuser = request.getRemoteUser();
