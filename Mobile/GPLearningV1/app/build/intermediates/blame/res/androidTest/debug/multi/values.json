@@ -1,0 +1,26 @@
+[
+    {
+        "outputFile": "C:\\Users\\Mateus\\Documents\\EstudosProjetos\\ProjetoTCC\\GP-Learning-v2.git\\trunk\\Mobile\\GPLearningV1\\app\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 45,
+                    "endOffset": 96
+                },
+                "from": {
+                    "file": "C:\\Users\\Mateus\\.android\\build-cache\\e144ef9bae01a72f5bc1947c0422a25b1d1d3cf6\\output\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 229,
+                        "endColumn": 45,
+                        "endOffset": 270
+                    }
+                }
+            }
+        ]
+    }
+]
