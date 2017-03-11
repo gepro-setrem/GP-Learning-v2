@@ -1,20 +1,32 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:2:1-24:12
+ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:2:1-46:12
 	package
-		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:3:5-40
-		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:3:5-40
+		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
 	android:versionName
-		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:2:11-69
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:2:11-69
 	android:versionCode
-		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
+uses-permission#android.permission.GET_ACCOUNTS
+ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:6:5-71
+	android:name
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:6:22-68
+uses-permission#android.permission.READ_PROFILE
+ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:7:5-71
+	android:name
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:7:22-68
+uses-permission#android.permission.READ_CONTACTS
+ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:8:5-72
+	android:name
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:8:22-69
 application
-ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:5:5-22:19
+ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:10:5-44:19
 MERGED from [com.android.support:design:25.2.0] C:\Users\Mateus\.android\build-cache\dacd0db053ceda92f16d146b0748461d3c3417d6\output\AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:appcompat-v7:25.2.0] C:\Users\Mateus\.android\build-cache\4807e111ff1928c0acb79d97821ffbe619565390\output\AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:animated-vector-drawable:25.2.0] C:\Users\Mateus\.android\build-cache\363be432543e655d5a5d75bd7c8c5b80929f5f59\output\AndroidManifest.xml:22:5-20
@@ -28,37 +40,51 @@ MERGED from [com.android.support:support-core-utils:25.2.0] C:\Users\Mateus\.and
 MERGED from [com.android.support:support-compat:25.2.0] C:\Users\Mateus\.android\build-cache\fdee2fe7860879ab0a9e9a80d7f03e585be00cfe\output\AndroidManifest.xml:25:5-20
 MERGED from [com.android.support.constraint:constraint-layout:1.0.1] C:\Users\Mateus\.android\build-cache\82d2b2bcbd842e38f36b5696e03f5e10d651f851\output\AndroidManifest.xml:9:5-20
 	android:label
-		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:8:9-41
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:13:9-41
 	android:supportsRtl
-		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:10:9-35
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:15:9-35
 	android:roundIcon
-		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:9:9-54
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:14:9-54
 	android:allowBackup
-		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:6:9-35
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:11:9-35
 	android:icon
-		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:7:9-43
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:12:9-43
 	android:theme
-		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:11:9-40
-activity#com.gplearning.gplearning.MainActivity
-ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:12:9-21:20
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:16:9-40
+activity#com.gplearning.gplearning.Controllers.MainActivity
+ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:17:9-26:20
 	android:label
-		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:14:13-45
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:19:13-45
 	android:theme
-		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:15:13-56
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:20:13-56
 	android:name
-		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:13:13-41
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:18:13-53
+activity#com.gplearning.gplearning.Controllers.LoginActivity
+ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:27:9-43:20
+	android:label
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:29:13-57
+	android:theme
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:30:13-56
+	android:name
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:28:13-54
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:16:13-20:29
-action#android.intent.action.MAIN
-ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:17:17-69
-	android:name
-		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:17:25-66
+ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:32:13-35:29
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:19:17-77
+ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:33:17-77
 	android:name
-		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:19:27-74
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:33:27-74
+action#android.intent.action.MAIN
+ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:34:17-69
+	android:name
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:34:25-66
+meta-data#android.support.PARENT_ACTIVITY
+ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:40:13-42:86
+	android:value
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:42:17-83
+	android:name
+		ADDED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml:41:17-63
 uses-sdk
-INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:design:25.2.0] C:\Users\Mateus\.android\build-cache\dacd0db053ceda92f16d146b0748461d3c3417d6\output\AndroidManifest.xml:21:5-23:62
 MERGED from [com.android.support:appcompat-v7:25.2.0] C:\Users\Mateus\.android\build-cache\4807e111ff1928c0acb79d97821ffbe619565390\output\AndroidManifest.xml:21:5-23:78
 MERGED from [com.android.support:animated-vector-drawable:25.2.0] C:\Users\Mateus\.android\build-cache\363be432543e655d5a5d75bd7c8c5b80929f5f59\output\AndroidManifest.xml:20:5-44
@@ -75,8 +101,8 @@ MERGED from [com.android.support.constraint:constraint-layout:1.0.1] C:\Users\Ma
 	tools:overrideLibrary
 		ADDED from [com.android.support:design:25.2.0] C:\Users\Mateus\.android\build-cache\dacd0db053ceda92f16d146b0748461d3c3417d6\output\AndroidManifest.xml:23:9-59
 	android:targetSdkVersion
-		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GP-Learning-v2.git\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Mateus\Documents\EstudosProjetos\ProjetoTCC\GPLearningV2\trunk\Mobile\GPLearningV1\app\src\main\AndroidManifest.xml

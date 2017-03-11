@@ -3,6 +3,8 @@ package com.gplearning.gplearning.Controllers;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -68,6 +70,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupActionBar();
+
+
+
+
+//salva as preferencias
+//        SharedPreferences pref;
+//        pref = getSharedPreferences("login",MODE_PRIVATE);
+//        SharedPreferences.Editor editor = pref.edit();
+//        editor.putString("user",mEmail);
+//        editor.commit();
+
+
+
+
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -146,7 +163,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private void setupActionBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             // Show the Up button in the action bar.
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
@@ -345,7 +362,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+
+
                 finish();
+                Intent secondActivity = new Intent(LoginActivity.this, MainActivity.class);
+                startActivityForResult(secondActivity,RESULT_OK);
+                finish();
+                overridePendingTransition(R.animator.push_left_in, R.animator.push_left_out);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
