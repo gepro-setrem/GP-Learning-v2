@@ -366,6 +366,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 finish();
                 Intent secondActivity = new Intent(LoginActivity.this, MainActivity.class);
+
                 startActivityForResult(secondActivity,RESULT_OK);
                 finish();
                 overridePendingTransition(R.animator.push_left_in, R.animator.push_left_out);

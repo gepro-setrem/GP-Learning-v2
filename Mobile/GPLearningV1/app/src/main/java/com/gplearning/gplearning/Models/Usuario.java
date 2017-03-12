@@ -1,5 +1,9 @@
 package com.gplearning.gplearning.Models;
 
+import com.gplearning.gplearning.Converters.PapelUsuarioConverter;
+import com.gplearning.gplearning.Enums.PapelUsuario;
+
+import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
@@ -15,10 +19,14 @@ public class Usuario {
     private String email;
     private String telefone;
     private int karma;
+//    @Convert(converter = PapelUsuarioConverter.class, columnType = String.class)
+//    private PapelUsuario papel;
 
     public Usuario(long _id) {
         this._id = _id;
     }
+
+
 
     public Usuario(long _id, long id, String nome, String email, String telefone, int karma) {
         this._id = _id;
@@ -76,4 +84,5 @@ public class Usuario {
     public void setKarma(int karma) {
         this.karma = karma;
     }
+
 }

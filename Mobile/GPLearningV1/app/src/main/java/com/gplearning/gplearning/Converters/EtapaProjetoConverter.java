@@ -1,7 +1,7 @@
 package com.gplearning.gplearning.Converters;
 
 
-import com.gplearning.gplearning.Models.EtapaProjeto;
+import com.gplearning.gplearning.Enums.EtapaProjeto;
 
 import org.greenrobot.greendao.converter.PropertyConverter;
 

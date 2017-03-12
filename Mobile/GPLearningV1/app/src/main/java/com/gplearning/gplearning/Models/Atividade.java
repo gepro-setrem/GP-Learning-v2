@@ -3,6 +3,7 @@ package com.gplearning.gplearning.Models;
 
 
 import com.gplearning.gplearning.Converters.EtapaProjetoConverter;
+import com.gplearning.gplearning.Enums.EtapaProjeto;
 
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Convert;
