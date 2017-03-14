@@ -1,10 +1,7 @@
 package com.gplearning.gplearning.Controllers;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -88,6 +85,15 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void AcessoAluno(View view){
+        Intent intent = new Intent(this, ProjetosActivity.class);
+        startActivity(intent);
+       // startActivityForResult(secondActivity,RESULT_OK);
+        finish();
+        overridePendingTransition(R.animator.push_left_in, R.animator.push_left_out);
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
