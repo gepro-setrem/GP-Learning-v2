@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,11 +42,11 @@ public class Turma implements Serializable {
     private List<TurmaParametro> turmaParametros;
 
     @OneToMany(mappedBy = "turma")
-    private List<Usuario> academicos;
+    private List<Pessoa> academicos;
 
     @ManyToOne
-    @JoinColumn(name = "use_id")
-    public Usuario professor;
+    @JoinColumn(name = "pes_id")
+    public Pessoa professor;
 
     @OneToMany(mappedBy = "turma")
     private List<Projeto> projeto;
@@ -112,19 +110,19 @@ public class Turma implements Serializable {
         this.turmaParametros = turmaParametros;
     }
 
-    public List<Usuario> getAcademicos() {
+    public List<Pessoa> getAcademicos() {
         return academicos;
     }
 
-    public void setAcademicos(List<Usuario> academicos) {
+    public void setAcademicos(List<Pessoa> academicos) {
         this.academicos = academicos;
     }
 
-    public Usuario getProfessor() {
+    public Pessoa getProfessor() {
         return professor;
     }
 
-    public void setProfessor(Usuario professor) {
+    public void setProfessor(Pessoa professor) {
         this.professor = professor;
     }
 

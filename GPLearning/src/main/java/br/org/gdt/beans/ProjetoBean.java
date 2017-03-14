@@ -1,6 +1,5 @@
 package br.org.gdt.beans;
 
-import br.org.gdt.model.Grupo;
 import br.org.gdt.model.Marco;
 import br.org.gdt.model.Stakeholder;
 import br.org.gdt.model.Premissa;
@@ -10,7 +9,7 @@ import br.org.gdt.model.RequisitoTermoAbertura;
 import br.org.gdt.model.Restricao;
 import br.org.gdt.model.TermoAbertura;
 import br.org.gdt.model.Turma;
-import br.org.gdt.model.Usuario;
+import br.org.gdt.model.Pessoa;
 import br.org.gdt.bll.MarcoBLL;
 import br.org.gdt.bll.StakeholderBLL;
 import br.org.gdt.bll.PremissaBLL;
@@ -20,7 +19,8 @@ import br.org.gdt.bll.RequisitoTermoAberturaBLL;
 import br.org.gdt.bll.RestricaoBLL;
 import br.org.gdt.bll.TermoAberturaBLL;
 import br.org.gdt.bll.TurmaBLL;
-import br.org.gdt.bll.UsuarioBLL;
+import br.org.gdt.bll.PessoaBLL;
+import br.org.gdt.enumerated.Role;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -67,16 +67,17 @@ public class ProjetoBean {
     private List<Projeto> projetosfiltrados;
     //private List<Projeto> projetos = new ArrayList<Projeto>();
 
-    private Usuario usuariologado;
-    @ManagedProperty("#{usuarioBLL}")
-    private UsuarioBLL usuarioService;
-    private List<Usuario> usuarios;
+    @ManagedProperty("#{turmaBLL}")
+    private TurmaBLL turmaService;
+
+    private Pessoa usuariologado;
+    @ManagedProperty("#{pessoaBLL}")
+    private PessoaBLL usuarioService;
+    private List<Pessoa> usuarios;
 
     private TermoAbertura termodeabertura = new TermoAbertura();
     @ManagedProperty("#{termoAberturaBLL}")
     private TermoAberturaBLL termoAberturaService;
-
-    private Grupo grupo = new Grupo();
 
     private Premissa premissa = new Premissa();
     @ManagedProperty("#{premissaBLL}")
@@ -124,18 +125,17 @@ public class ProjetoBean {
     public ProjetoBean() {
     }
 
-    public List<Usuario> getUsuarios() {
-        Usuario userlogado = usuariologado;
+    public List<Pessoa> getUsuarios() {
+        Pessoa userlogado = usuariologado;
         System.out.println("Usuário logado é " + usuariologado.getNome());
         turma = userlogado.getTurma();
-        grupo = userlogado.getGrupo();
         System.out.println("Carregando usuários...");
-        usuarios = usuarioService.findByUsers(turma, grupo);
+        usuarios = usuarioService.findByUsers(turma, Role.USER);
 
         return usuarios;
     }
 
-    public void setUsuarios(List<Usuario> usuarios) {
+    public void setUsuarios(List<Pessoa> usuarios) {
         this.usuarios = usuarios;
     }
 
@@ -147,8 +147,7 @@ public class ProjetoBean {
         this.projeto = projeto;
     }
 
-    public Usuario getUsuariologado() {
-        System.out.println("Inicio");
+    public Pessoa getUsuariologado() {
         ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
         HttpServletRequest request = (HttpServletRequest) external.getRequest();
         String emailuser = request.getRemoteUser();
@@ -159,10 +158,10 @@ public class ProjetoBean {
 
     public DataModel getProjetos() {
         //Obtenção do usuário logado
-        Usuario usuariolocal = usuariologado;
+        Pessoa usuariolocal = usuariologado;
         System.out.println("O usuário logado no get projetos é" + usuariolocal.getNome());
         //Verificação se usuário é administrador, então filtre pelas turmas do professor
-        if (usuariolocal.getGrupo().getId() == 1) {
+        if (true){//(usuariolocal.getLogin().getLoginRoles(). getGrupo().getId() == 1) {
 //            List<Usuario> alunosdasturmas = new ArrayList<>();
 //            List<Turma> turmasdoprofessor = new ArrayList<>();
 //            turmasdoprofessor = usuariologado.getTurmasprofessor();
@@ -200,14 +199,6 @@ public class ProjetoBean {
 
     public void setTermodeabertura(TermoAbertura termodeabertura) {
         this.termodeabertura = termodeabertura;
-    }
-
-    public Grupo getGrupo() {
-        return grupo;
-    }
-
-    public void setGrupo(Grupo grupo) {
-        this.grupo = grupo;
     }
 
     public Premissa getPremissa() {
@@ -356,7 +347,7 @@ public class ProjetoBean {
                 projetoService.update(projeto);
 
             } else {
-                Usuario userlogado = usuariologado;
+                Pessoa userlogado = usuariologado;
                 projeto.setTurma(userlogado.getTurma());
                 projeto.setAlteracao(new Date());
                 projeto.setCriacao(new Date());
@@ -729,7 +720,7 @@ public class ProjetoBean {
         HttpServletRequest request = (HttpServletRequest) external.getRequest();
         String emailuser = request.getRemoteUser();
         System.out.println("" + emailuser);
-        Usuario novousuario = usuarioService.findByEmail(emailuser);
+        Pessoa novousuario = usuarioService.findByEmail(emailuser);
         turma = novousuario.getTurma();
         return turma;
     }
@@ -887,7 +878,6 @@ public class ProjetoBean {
     }
 
     public List<Turma> getTurmasdousuario() {
-        TurmaBLL turmaService = new TurmaBLL();
         turmasdousuario = turmaService.findbyProfessor(usuariologado);
         return turmasdousuario;
     }
@@ -904,11 +894,11 @@ public class ProjetoBean {
         this.projetoService = projetoService;
     }
 
-    public UsuarioBLL getUsuarioService() {
+    public PessoaBLL getUsuarioService() {
         return usuarioService;
     }
 
-    public void setUsuarioService(UsuarioBLL usuarioService) {
+    public void setUsuarioService(PessoaBLL usuarioService) {
         this.usuarioService = usuarioService;
     }
 
@@ -966,6 +956,14 @@ public class ProjetoBean {
 
     public void setRequisitoService(RequisitoBLL requisitoService) {
         this.requisitoService = requisitoService;
+    }
+
+    public TurmaBLL getTurmaService() {
+        return turmaService;
+    }
+
+    public void setTurmaService(TurmaBLL turmaService) {
+        this.turmaService = turmaService;
     }
 
 }

@@ -36,7 +36,7 @@
                                             <f:facet name="header">
                                                 <h:outputText value="Nome do Projeto"/>
                                             </f:facet>
-                                            <h:outputText value="#{proj.nomeProjeto}"/>
+                                            <h:outputText value="#{proj.nome}"/>
                                         </p:column>
                                         
                                         <p:column>
@@ -47,14 +47,14 @@
                                         </p:column>
 
 
-                                        <p:column filterBy="#{proj.turmadoprojeto}" filterMatchMode="exact">
+                                        <p:column filterBy="#{proj.turma}" filterMatchMode="exact">
                                             <f:facet name="filter">
                                                 <p:selectOneMenu onchange="PF('projsTable').filter()" >
                                                     <f:selectItem itemLabel="Selecione uma turma" itemValue="#{null}" noSelectionOption="true" />
                                                     <f:selectItems value="#{projetoBean.turmasdousuario}"/>
                                                 </p:selectOneMenu>
                                             </f:facet>
-                                            <h:outputText value="#{proj.turmadoprojeto}" />
+                                            <h:outputText value="#{proj.turma}" />
                                         </p:column>
 
                                         
@@ -63,7 +63,7 @@
                                             <f:facet name="header">
                                                 <h:outputText value="Data de Modificação"/>
                                             </f:facet>
-                                            <h:outputText value="#{proj.dataModificacao}">
+                                            <h:outputText value="#{proj.alteracao}">
 
                                             </h:outputText>
                                         </p:column>

@@ -1,9 +1,9 @@
 package br.org.gdt.beans;
 
 import br.org.gdt.model.Turma;
-import br.org.gdt.model.Usuario;
+import br.org.gdt.model.Pessoa;
 import br.org.gdt.bll.TurmaBLL;
-import br.org.gdt.bll.UsuarioBLL;
+import br.org.gdt.bll.PessoaBLL;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -23,15 +23,15 @@ public class TurmaBean {
     private TurmaBLL service;
     private DataModel turmas;
 
-    private Usuario usuario = new Usuario();
-    @ManagedProperty("#{usuarioBLL}")
-    private UsuarioBLL userService;
+    private Pessoa usuario = new Pessoa();
+    @ManagedProperty("#{pessoaBLL}")
+    private PessoaBLL userService;
 
-    public Usuario getUsuario() {
+    public Pessoa getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(Pessoa usuario) {
         this.usuario = usuario;
     }
 
@@ -51,7 +51,7 @@ public class TurmaBean {
         HttpServletRequest request = (HttpServletRequest) external.getRequest();
         String emailuser = request.getRemoteUser();
         System.out.println("" + emailuser);
-        Usuario usuariologado = userService.findByEmail(emailuser);
+        Pessoa usuariologado = userService.findByEmail(emailuser);
 
         turmas = new ListDataModel(service.findbyProfessor(usuariologado));
         return turmas;
@@ -68,7 +68,7 @@ public class TurmaBean {
             HttpServletRequest request = (HttpServletRequest) external.getRequest();
             String emailuser = request.getRemoteUser();
             System.out.println("" + emailuser);
-            Usuario usuariologado = userService.findByEmail(emailuser);
+            Pessoa usuariologado = userService.findByEmail(emailuser);
 
             if (turma.getId() > 0) {
                 turma.setProfessor(usuariologado);

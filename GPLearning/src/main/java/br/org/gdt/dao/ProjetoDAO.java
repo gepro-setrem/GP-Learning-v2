@@ -5,7 +5,7 @@ import br.org.gdt.model.Requisito;
 import br.org.gdt.model.TermoAbertura;
 import br.org.gdt.model.Stakeholder;
 import br.org.gdt.model.Turma;
-import br.org.gdt.model.Usuario;
+import br.org.gdt.model.Pessoa;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
@@ -17,8 +17,8 @@ public class ProjetoDAO extends DAO<Projeto> {
         classe = Projeto.class;
     }
 
-    public List<Projeto> findbyaluno(Usuario usuario) {
-        Usuario user = new UsuarioDAO().findById(usuario.getId());
+    public List<Projeto> findbyaluno(Pessoa pessoa) {
+        Pessoa user = new PessoaDAO().findById(pessoa.getId());
         List<Projeto> projetos = user.getProjetos();
         return projetos;
     }
@@ -35,8 +35,9 @@ public class ProjetoDAO extends DAO<Projeto> {
         return projeto;
     }
 
-    public List<Projeto> findbyturmasprofessor(Usuario usuario) {
-        Usuario user = new UsuarioDAO().findById(usuario.getId());
+    public List<Projeto> findbyturmasprofessor(Pessoa pessoa) {
+        PessoaDAO usuDAO = new PessoaDAO();
+        Pessoa user = usuDAO.findById(pessoa.getId());
         //Temos a lista de turmas daquele professor, agora precisamos listas os alunos que pertencem aquelas turmas
         List<Projeto> projetosdaturma = new ArrayList<>();
         System.out.println("Turmas do Usuário" + user.getNome() + " são" + user.getTurmasprofessor());

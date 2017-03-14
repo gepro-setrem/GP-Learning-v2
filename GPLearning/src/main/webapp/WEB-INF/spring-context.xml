@@ -45,15 +45,13 @@
     <!-- Declara os recursos REST -->
 <!--    <import resource="classpath:META-INF/cxf/cxf.xml" />
     <context:property-placeholder />
-
     <bean
         class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer" />
     <bean
         class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer" />
-
     <jaxrs:server id="services" address="/">
         <jaxrs:serviceBeans>
-            <bean class="br.org.gdt.resource.GrupoResource" />
+            <bean class="br.org.gdt.resource.LoginResource" />
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />

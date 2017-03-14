@@ -1,8 +1,10 @@
 package br.org.gdt.model;
 
+import br.org.gdt.enumerated.Status;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,42 +16,42 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-public class Usuario implements Serializable {
+public class Pessoa implements Serializable {
 
-    @SequenceGenerator(name = "genusuario", sequenceName = "sequsuario", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genusuario")
+    @SequenceGenerator(name = "genpessoa", sequenceName = "seqpessoa", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genpessoa")
     @Id
-    @Column(name = "usu_id")
+    @Column(name = "pes_id")
     private int id;
 
-    @Column(name = "usu_vnome", length = 200)
+    @Column(name = "pes_vnome", length = 200)
     private String nome;
 
-    @Column(name = "usu_vemail", length = 200)
+    @Column(name = "pes_vemail", length = 200)
     private String email;
 
-    @Column(name = "usu_vtelefone", length = 20)
+    @Column(name = "pes_vtelefone", length = 20)
     private String telefone;
 
-    @Column(name = "usu_istatus")
-    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "pes_istatus")
+    @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Column(name = "usu_dcriacao")
+    @Column(name = "pes_dcriacao")
     private Date criacao;
 
-    @Column(name = "usu_dalteracao")
+    @Column(name = "pes_dalteracao")
     private Date alteracao;
 
-    @Column(name = "usu_ikarma")
+    @Column(name = "pes_ikarma")
     private int karma;
 
-    @ManyToOne
-    @JoinColumn(name = "gru_id")
-    private Grupo grupo;
+    @Column(name = "pes_bimagem")
+    private byte[] imagem;
 
     @ManyToOne
     @JoinColumn(name = "tur_id")
@@ -64,21 +66,10 @@ public class Usuario implements Serializable {
     @ManyToMany(mappedBy = "componentes")
     private List<Projeto> projetos;
 
-    public enum Status {
-        Ativo(1),
-        Inativo(2);
-        private final int valor;
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    private Login login;
 
-        Status(int opt) {
-            valor = opt;
-        }
-
-        public int getValor() {
-            return valor;
-        }
-    }
-
-    public Usuario() {
+    public Pessoa() {
     }
 
     public int getId() {
@@ -145,12 +136,12 @@ public class Usuario implements Serializable {
         this.karma = karma;
     }
 
-    public Grupo getGrupo() {
-        return grupo;
+    public byte[] getImagem() {
+        return imagem;
     }
 
-    public void setGrupo(Grupo grupo) {
-        this.grupo = grupo;
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
     }
 
     public Turma getTurma() {
@@ -183,6 +174,14 @@ public class Usuario implements Serializable {
 
     public void setProjetos(List<Projeto> projetos) {
         this.projetos = projetos;
+    }
+
+    public Login getLogin() {
+        return login;
+    }
+
+    public void setLogin(Login login) {
+        this.login = login;
     }
 
     @Override

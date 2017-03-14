@@ -1,13 +1,14 @@
 package br.org.gdt.beans;
 
-import br.org.gdt.model.Grupo;
-import br.org.gdt.model.Perfil;
+import br.org.gdt.model.Login;
 import br.org.gdt.model.Turma;
-import br.org.gdt.model.Usuario;
-import br.org.gdt.bll.GrupoBLL;
-import br.org.gdt.bll.PerfilBLL;
+import br.org.gdt.model.Pessoa;
+import br.org.gdt.bll.LoginBLL;
 import br.org.gdt.bll.TurmaBLL;
-import br.org.gdt.bll.UsuarioBLL;
+import br.org.gdt.bll.PessoaBLL;
+import br.org.gdt.enumerated.Role;
+import br.org.gdt.enumerated.Status;
+import br.org.gdt.model.LoginRole;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,33 +29,28 @@ import javax.servlet.http.HttpServletRequest;
 @RequestScoped
 public class UsuarioBean {
 
-    private Usuario usuario = new Usuario();
-    @ManagedProperty("#{usuarioBLL}")
-    private UsuarioBLL service;
+    private Pessoa usuario = new Pessoa();
+    @ManagedProperty("#{pessoaBLL}")
+    private PessoaBLL service;
     private DataModel usuarios;
-    private List<Usuario> usuariosfiltrados;
+    private List<Pessoa> usuariosfiltrados;
 
     @ManagedProperty("#{turmaBLL}")
     private TurmaBLL turmaService;
     private List<Turma> turmas;
 
-    private Grupo grupo = new Grupo();
-    private List<Grupo> grupos;
-    @ManagedProperty("#{grupoBLL}")
-    private GrupoBLL grupoService;
-
-    private Perfil perfil;
+    private Login perfil;
     @ManagedProperty("#{perfilBLL}")
-    private PerfilBLL perfilService;
+    private LoginBLL perfilService;
 
     public UsuarioBean() {
     }
 
-    public Usuario getUsuario() {
+    public Pessoa getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(Pessoa usuario) {
         this.usuario = usuario;
     }
 
@@ -63,13 +59,13 @@ public class UsuarioBean {
         HttpServletRequest request = (HttpServletRequest) external.getRequest();
         String emailuser = request.getRemoteUser();
         System.out.println("" + emailuser);
-        Usuario userlogado = service.findByEmail(emailuser);
+        Pessoa userlogado = service.findByEmail(emailuser);
         //sabemos qual é o professor, agora precisamos saber quais as turmas que esse professor tem
 
         turmas = turmaService.findbyProfessor(userlogado);
 
         System.out.println("" + turmas);
-        List<Usuario> usuariosdaturma = new ArrayList<>();
+        List<Pessoa> usuariosdaturma = new ArrayList<>();
 
         //Uma turma do tipo Turma, será preenchida com os objetos da datamodel turmas
         for (Turma turmafor : turmas) {
@@ -97,7 +93,7 @@ public class UsuarioBean {
         HttpServletRequest request = (HttpServletRequest) external.getRequest();
         String emailuser = request.getRemoteUser();
         System.out.println("" + emailuser);
-        Usuario usuarioturma = service.findByEmail(emailuser);
+        Pessoa usuarioturma = service.findByEmail(emailuser);
         turmas = turmaService.findbyProfessor(usuarioturma);
         return turmas;
     }
@@ -106,51 +102,35 @@ public class UsuarioBean {
         this.turmas = turmas;
     }
 
-    public Grupo getGrupo() {
-        return grupo;
-    }
-
-    public void setGrupo(Grupo grupo) {
-        this.grupo = grupo;
-    }
-
-    public List<Grupo> getGrupos() {
-        grupos = grupoService.findAll();
-        return grupos;
-    }
-
-    public void setGrupos(List<Grupo> grupos) {
-        this.grupos = grupos;
-    }
-
     //quando é clicado o botão inserir
     public String salvar() {
         if (!usuario.getNome().isEmpty() && !usuario.getEmail().isEmpty()) {// && !usuario.getTurma().equals("")) {
             System.out.println("Entrou no botão salvar");
+            Login perfillocal = perfilService.findPessoa(usuario);
+            LoginRole loginRole = new LoginRole();
+            loginRole.setLogin(perfil);
+            loginRole.setRole(Role.USER);
+            List<LoginRole> lsLoginRole = new ArrayList<>();
+            lsLoginRole.add(loginRole);
+            
             if (usuario.getId() > 0) {
                 System.out.println("Entrou para alterar");
-
                 usuario.setAlteracao(new Date());
                 service.update(usuario);
-
-                Perfil perfillocal = perfilService.findByUsuario(usuario);
-                perfillocal.setLogin(usuario.getEmail());
-                perfillocal.setGrupo(usuario.getGrupo().getNome());
+                perfillocal.setEmail(usuario.getEmail());
+                perfillocal.setLoginRoles(lsLoginRole);
                 perfilService.update(perfillocal);
             } else {
                 usuario.setAlteracao(new Date());
                 usuario.setCriacao(new Date());
-                usuario.setStatus(Usuario.Status.Ativo);
+                usuario.setStatus(Status.Ativo);
                 service.insert(usuario);
 
                 System.out.println("É um usuário novo");
-                perfil = new Perfil();
-                perfil.setLogin(usuario.getEmail());
-                Grupo grupolocal = usuario.getGrupo();
-                String nomegrupo = grupolocal.getNome();
-                perfil.setGrupo(nomegrupo);
-                System.out.println("Grupo do perfil" + perfil.getGrupo());
-                perfil.setUsuario(usuario);
+                perfil = new Login();
+                perfil.setEmail(usuario.getEmail());
+                perfil.setLoginRoles(lsLoginRole);
+                perfil.setPessoa(usuario);
                 perfilService.insert(perfil);
             }
             return "ListagemUsuarios";
@@ -161,7 +141,7 @@ public class UsuarioBean {
     }
 
     public String select() {
-        usuario = (Usuario) usuarios.getRowData();
+        usuario = (Pessoa) usuarios.getRowData();
         usuario = service.findById(usuario.getId());
         System.out.println("O nome do usuario selecionado para Edição é" + usuario.getNome());
         return "ManutencaoUsuarios";
@@ -169,9 +149,9 @@ public class UsuarioBean {
 
     public String inativar() {
         FacesContext context = FacesContext.getCurrentInstance();
-        usuario = (Usuario) usuarios.getRowData();
+        usuario = (Pessoa) usuarios.getRowData();
         usuario = service.findById(usuario.getId());
-        usuario.setStatus(Usuario.Status.Inativo);
+        usuario.setStatus(Status.Inativo);
         service.update(usuario);
         context.addMessage(null, new FacesMessage("Sucesso", "Usuário tornou-se inativo e não poderá criar novos projetos"));
         usuarios = null;
@@ -179,15 +159,15 @@ public class UsuarioBean {
     }
 
     public String novoUsuario() {
-        usuario = new Usuario();
+        usuario = new Pessoa();
         return "ManutencaoUsuarios";
     }
 
-    public List<Usuario> getUsuariosfiltrados() {
+    public List<Pessoa> getUsuariosfiltrados() {
         return usuariosfiltrados;
     }
 
-    public void setUsuariosfiltrados(List<Usuario> usuariosfiltrados) {
+    public void setUsuariosfiltrados(List<Pessoa> usuariosfiltrados) {
         this.usuariosfiltrados = usuariosfiltrados;
     }
 }

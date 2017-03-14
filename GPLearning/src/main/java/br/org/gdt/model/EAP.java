@@ -2,6 +2,7 @@ package br.org.gdt.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -25,8 +27,14 @@ public class EAP implements Serializable {
     @Column(name = "eap_vnome", length = 200)
     private String nome;
 
-    @Column(name = "eap_dentrega")
-    private Date entrega;
+    @Column(name = "eap_vdescricao", length = 2500)
+    private String descricao;
+
+    @Column(name = "eap_dinicio")
+    private Date inicio;
+
+    @Column(name = "eap_dtermino")
+    private Date termino;
 
     @Column(name = "eap_dconclusao")
     private Date conclusao;
@@ -41,6 +49,9 @@ public class EAP implements Serializable {
     @ManyToOne
     @JoinColumn(name = "eap_idpai")
     private EAP pai;
+
+    @OneToMany(mappedBy = "eap")
+    private List<Tarefa> tarefas;
 
     public EAP() {
     }
@@ -61,12 +72,28 @@ public class EAP implements Serializable {
         this.nome = nome;
     }
 
-    public Date getEntrega() {
-        return entrega;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setEntrega(Date entrega) {
-        this.entrega = entrega;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Date getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(Date inicio) {
+        this.inicio = inicio;
+    }
+
+    public Date getTermino() {
+        return termino;
+    }
+
+    public void setTermino(Date termino) {
+        this.termino = termino;
     }
 
     public Date getConclusao() {
@@ -99,6 +126,14 @@ public class EAP implements Serializable {
 
     public void setPai(EAP pai) {
         this.pai = pai;
+    }
+
+    public List<Tarefa> getTarefas() {
+        return tarefas;
+    }
+
+    public void setTarefas(List<Tarefa> tarefas) {
+        this.tarefas = tarefas;
     }
 
     @Override

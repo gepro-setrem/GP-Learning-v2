@@ -2,6 +2,7 @@ package br.org.gdt.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
@@ -24,8 +26,8 @@ public class Tarefa implements Serializable {
     @Column(name = "tar_vnome", length = 200)
     private String nome;
 
-    @Column(name = "tar_dcriacao")
-    private Date criacao;
+    @Column(name = "tar_dinicio")
+    private Date inicio;
 
     @Column(name = "tar_dtermino")
     private Date termino;
@@ -33,9 +35,19 @@ public class Tarefa implements Serializable {
     @Column(name = "tar_dconclusao")
     private Date conclusao;
 
+    @Column(name = "tar_bmarco")
+    private Boolean marco;
+
+    @ManyToOne
+    @JoinColumn(name = "tar_idpai")
+    private Tarefa pai;
+
     @ManyToOne
     @JoinColumn(name = "eap_id")
     private EAP eap;
+
+    @OneToMany(mappedBy = "tarefa")
+    private List<Recurso> recursos;
 
     public Tarefa() {
     }
@@ -56,12 +68,28 @@ public class Tarefa implements Serializable {
         this.nome = nome;
     }
 
-    public Date getCriacao() {
-        return criacao;
+    public Date getInicio() {
+        return inicio;
     }
 
-    public void setCriacao(Date criacao) {
-        this.criacao = criacao;
+    public void setInicio(Date inicio) {
+        this.inicio = inicio;
+    }
+
+    public Boolean getMarco() {
+        return marco;
+    }
+
+    public void setMarco(Boolean marco) {
+        this.marco = marco;
+    }
+
+    public Tarefa getPai() {
+        return pai;
+    }
+
+    public void setPai(Tarefa pai) {
+        this.pai = pai;
     }
 
     public Date getTermino() {
@@ -86,6 +114,14 @@ public class Tarefa implements Serializable {
 
     public void setEap(EAP eap) {
         this.eap = eap;
+    }
+
+    public List<Recurso> getRecursos() {
+        return recursos;
+    }
+
+    public void setRecursos(List<Recurso> recursos) {
+        this.recursos = recursos;
     }
 
     @Override

@@ -28,8 +28,16 @@ public class Comentario implements Serializable {
     private Date criacao;
 
     @ManyToOne
-    @JoinColumn(name = "usu_id")
-    private Usuario aluno;
+    @JoinColumn(name = "pes_idremetente")
+    private Pessoa remetente;
+
+    @ManyToOne
+    @JoinColumn(name = "pes_iddestinatario")
+    private Pessoa destinatario;
+
+    @ManyToOne
+    @JoinColumn(name = "act_id")
+    private Atividade atividade;
 
     public Comentario() {
     }
@@ -58,12 +66,28 @@ public class Comentario implements Serializable {
         this.criacao = criacao;
     }
 
-    public Usuario getAluno() {
-        return aluno;
+    public Pessoa getRemetente() {
+        return remetente;
     }
 
-    public void setAluno(Usuario aluno) {
-        this.aluno = aluno;
+    public void setRemetente(Pessoa remetente) {
+        this.remetente = remetente;
+    }
+
+    public Pessoa getDestinatario() {
+        return destinatario;
+    }
+
+    public void setDestinatario(Pessoa destinatario) {
+        this.destinatario = destinatario;
+    }
+
+    public Atividade getAtividade() {
+        return atividade;
+    }
+
+    public void setAtividade(Atividade atividade) {
+        this.atividade = atividade;
     }
 
 }

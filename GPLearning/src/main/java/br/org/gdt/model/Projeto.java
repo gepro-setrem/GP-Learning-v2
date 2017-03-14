@@ -54,8 +54,8 @@ public class Projeto implements Serializable {
     private Date alteracao;
 
     @ManyToOne
-    @JoinColumn(name = "usu_id")
-    private Usuario gerente;
+    @JoinColumn(name = "pes_id")
+    private Pessoa gerente;
 
     @ManyToOne
     @JoinColumn(name = "tur_id")
@@ -71,7 +71,7 @@ public class Projeto implements Serializable {
     private List<Requisito> requisitos;
 
     @ManyToMany
-    private List<Usuario> componentes;
+    private List<Pessoa> componentes;
 
     public Projeto() {
     }
@@ -124,11 +124,11 @@ public class Projeto implements Serializable {
         this.alteracao = alteracao;
     }
 
-    public Usuario getGerente() {
+    public Pessoa getGerente() {
         return gerente;
     }
 
-    public void setGerente(Usuario gerente) {
+    public void setGerente(Pessoa gerente) {
         this.gerente = gerente;
     }
 
@@ -164,11 +164,11 @@ public class Projeto implements Serializable {
         this.requisitos = requisitos;
     }
 
-    public List<Usuario> getComponentes() {
+    public List<Pessoa> getComponentes() {
         return componentes;
     }
 
-    public void setComponentes(List<Usuario> componentes) {
+    public void setComponentes(List<Pessoa> componentes) {
         this.componentes = componentes;
     }
 
