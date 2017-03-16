@@ -28,4 +28,10 @@ public class LoginResource {
         Login login = new Login(email, senha);
         return bll.findLogin(login) != null;
     }
+
+    @Produces("application/json")
+    @Path("/login2")
+    public List<Login> getLogin2() {
+        return bll.findAll();
+    }
 }

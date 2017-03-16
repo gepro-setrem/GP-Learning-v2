@@ -1,5 +1,5 @@
 package br.org.gdt.enumerated;
 
 public enum Role {
-    ADMIN, USER
+    admin, user
 }

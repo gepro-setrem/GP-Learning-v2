@@ -130,7 +130,7 @@ public class ProjetoBean {
         System.out.println("Usuário logado é " + usuariologado.getNome());
         turma = userlogado.getTurma();
         System.out.println("Carregando usuários...");
-        usuarios = usuarioService.findByUsers(turma, Role.USER);
+        usuarios = usuarioService.findByUsers(turma, Role.user);
 
         return usuarios;
     }

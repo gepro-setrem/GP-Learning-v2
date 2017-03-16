@@ -20,15 +20,15 @@
 
     <!-- Declara um datasource com pool de conexoes do Apache DBCP -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-              destroy-method="close" p:driverClassName="org.postgresql.Driver"
-              p:url="jdbc:postgresql://localhost:5432/GPLearning1" p:username="postgres"
-              p:password="postgres" />
+          destroy-method="close" p:driverClassName="org.postgresql.Driver"
+          p:url="jdbc:postgresql://localhost:5432/GPLearning1" p:username="postgres"
+          p:password="postgres" />
     
     <!-- Declara a fabrica de conexoes do Hibernate JPA -->
     <!-- As configuracoes da Persistence Unit sao declaradas em persistence.xml -->
     <!-- A fabrica de conexoes utiliza o dataSource -->
     <bean id="entityManagerFactory"
-              class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceUnitName" value="GPLearningPU" />
         <property name="dataSource" ref="dataSource" />
         <property name="jpaVendorAdapter">
@@ -42,8 +42,7 @@
     </bean>
     <tx:annotation-driven />
 
-    <!-- Declara os recursos REST -->
-<!--    <import resource="classpath:META-INF/cxf/cxf.xml" />
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
     <context:property-placeholder />
     <bean
         class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer" />
@@ -56,5 +55,5 @@
         <jaxrs:providers>
             <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
         </jaxrs:providers>
-    </jaxrs:server>-->
+    </jaxrs:server>
 </beans>

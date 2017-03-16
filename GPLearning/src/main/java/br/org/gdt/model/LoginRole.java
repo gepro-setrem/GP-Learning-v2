@@ -49,10 +49,11 @@ public class LoginRole implements Serializable {
     public static class LoginRolePK implements Serializable {
 
         @ManyToOne
-        @JoinColumn(name = "email")
+        @JoinColumn(name = "log_vemail")
         private Login login;
 
         @Enumerated(EnumType.STRING)
+        @Column(name = "lgr_vrole")
         private Role role;
 
         public LoginRolePK() {

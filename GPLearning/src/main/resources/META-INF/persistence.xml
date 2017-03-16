@@ -30,9 +30,9 @@
       <property name="hibernate.show_sql" value="true"/>
       <property name="hibernate.format_sql" value="true"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-      <!--<property name="hibernate.hbm2ddl.auto" value="update"/>-->
-      <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
-      <!--      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>-->
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
+       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
       <!--            <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             
@@ -42,6 +42,6 @@
             <property name="hibernate.connection.username">postgres</property>
             <property name="hibernate.connection.password">postgres</property>
             <property name="hibernate.hbm2ddl.auto">update</property>-->
-    </properties>
-  </persistence-unit>
+        </properties>
+    </persistence-unit>
 </persistence>

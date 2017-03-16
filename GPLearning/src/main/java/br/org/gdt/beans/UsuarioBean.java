@@ -109,7 +109,7 @@ public class UsuarioBean {
             Login perfillocal = perfilService.findPessoa(usuario);
             LoginRole loginRole = new LoginRole();
             loginRole.setLogin(perfil);
-            loginRole.setRole(Role.USER);
+            loginRole.setRole(Role.user);
             List<LoginRole> lsLoginRole = new ArrayList<>();
             lsLoginRole.add(loginRole);
             
