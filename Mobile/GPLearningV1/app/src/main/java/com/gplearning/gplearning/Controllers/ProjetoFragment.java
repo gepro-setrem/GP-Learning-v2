@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.gplearning.gplearning.Adapters.ProjetoRecyclerViewAdapter;
 import com.gplearning.gplearning.DAO.App;
@@ -34,7 +35,7 @@ public class ProjetoFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
-    private List<Projeto> lsProjetos;
+    private List<Projeto> lsProjetos= new ArrayList<>();
     private ProjetoDao projetoDao;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -78,19 +79,13 @@ public class ProjetoFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Log.i("Event","Chegou na ProjetoFragment");
-
-            // Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-//            if (mColumnCount <= 1) {
-//                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-//            } else {
-//                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-//            }
             lsProjetos = getProjetos();
             recyclerView.setAdapter(new ProjetoRecyclerViewAdapter(lsProjetos, mListener));
-
-
-
+            if(lsProjetos.size()==0){
+                ((RecyclerView)view.findViewById(R.id.projetoListview)).setVisibility(View.GONE);
+                ((TextView)  getActivity().findViewById(R.id.TxtNenhumRegistro)).setVisibility(View.VISIBLE);
+            }
         }
         return view;
     }
@@ -98,10 +93,6 @@ public class ProjetoFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
-
-
-
     }
 
     @Override
