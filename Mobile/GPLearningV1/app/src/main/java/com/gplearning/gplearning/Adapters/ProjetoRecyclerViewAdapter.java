@@ -32,7 +32,7 @@ public class ProjetoRecyclerViewAdapter extends RecyclerView.Adapter<ProjetoRecy
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_projeto, parent, false);
+                .inflate(R.layout.item_listview1, parent, false);
         return new ViewHolder(view);
     }
 
@@ -68,8 +68,8 @@ public class ProjetoRecyclerViewAdapter extends RecyclerView.Adapter<ProjetoRecy
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mIdView = (TextView) view.findViewById(R.id.itemListviewText1);
+            mContentView = (TextView) view.findViewById(R.id.itemListviewText2);
         }
 
         @Override

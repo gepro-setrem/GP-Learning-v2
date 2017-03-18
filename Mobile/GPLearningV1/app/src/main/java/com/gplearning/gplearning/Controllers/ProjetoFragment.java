@@ -68,6 +68,13 @@ public class ProjetoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_projeto_list, container, false);
         projetoDao = App.getDaoSessionApp(getActivity()).getProjetoDao();
 
+        mListener = new OnListFragmentInteractionListener() {
+            @Override
+            public void onListFragmentInteraction(Projeto item) {
+                Log.i("event", "clicou no projeto:"+ item.getNome());
+            }
+        };
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Log.i("Event","Chegou na ProjetoFragment");
@@ -81,10 +88,21 @@ public class ProjetoFragment extends Fragment {
 //            }
             lsProjetos = getProjetos();
             recyclerView.setAdapter(new ProjetoRecyclerViewAdapter(lsProjetos, mListener));
+
+
+
         }
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+
+
+    }
 
     @Override
     public void onAttach(Context context) {
