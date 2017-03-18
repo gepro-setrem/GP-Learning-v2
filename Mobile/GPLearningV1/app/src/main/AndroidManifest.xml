@@ -45,7 +45,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.gplearning.gplearning.Controllers.MainActivity" />
         </activity>
-        <activity android:name=".Controllers.ProjetosActivity"></activity>
+        <activity android:name=".Controllers.ProjetosActivity" />
+        <activity android:name=".Controllers.NivelAcessoActivity"></activity>
     </application>
 
 </manifest>

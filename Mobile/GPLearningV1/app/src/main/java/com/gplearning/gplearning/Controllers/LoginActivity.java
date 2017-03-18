@@ -72,14 +72,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setupActionBar();
 
 
+        SharedPreferences shared = getSharedPreferences("login",MODE_PRIVATE);
+        String string_temp = shared.getString("user",null);
+        if(string_temp!=null){
+            Intent intent = new Intent(this, NivelAcessoActivity.class);
+            startActivity(intent);
+        }
 
 
-//salva as preferencias
-//        SharedPreferences pref;
-//        pref = getSharedPreferences("login",MODE_PRIVATE);
-//        SharedPreferences.Editor editor = pref.edit();
-//        editor.putString("user",mEmail);
-//        editor.commit();
 
 
 
@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private void setupActionBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             // Show the Up button in the action bar.
-        //    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            //    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
@@ -364,9 +364,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
 
 
-                finish();
-                Intent secondActivity = new Intent(LoginActivity.this, MainActivity.class);
+                //salva as preferencias
+                SharedPreferences pref;
+                pref = getSharedPreferences("login",MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("user",mEmail);
+                editor.commit();
 
+                //  finish();
+                Intent secondActivity = new Intent(LoginActivity.this, NivelAcessoActivity.class);
                 startActivityForResult(secondActivity,RESULT_OK);
                 finish();
                 overridePendingTransition(R.animator.push_left_in, R.animator.push_left_out);
