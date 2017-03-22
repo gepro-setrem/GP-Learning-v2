@@ -1,0 +1,149 @@
+.HtmlExample{display: none;}
+textarea{max-width: 100%;}
+.block_item{
+    border: 1px solid #e7e7e7;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    padding: 20px 10px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 1px #e7e7e7;
+    display: inline-block;
+    margin: 10px;
+    position: relative;
+}
+
+.eapDelete, .eapEdit, .eapAdd{
+    cursor: pointer;
+    color: grey;
+    float: right; 
+}
+.eapDelete{
+    margin: -15px 0px;
+}
+.eapEdit{
+    margin: -15px 0px;
+}
+.eapAdd{
+    margin: -15px 20px;
+}
+.eapDelete:hover{
+    color: red;
+}
+.eapEdit:hover{
+    color: blue;
+}
+.eapAdd:hover{
+    color: #5cb85c;
+}
+.block_nome {
+    height: auto;
+    word-wrap: break-word;
+}
+.block_descricao{
+    margin-top: 1px;
+    font-size: 12px;
+    color: #808080;
+    text-align: left;
+}
+.block_descricao label{
+    height: auto;
+    word-wrap: break-word;
+    font-weight: normal;
+}
+.eapNumber{
+    float: left;
+    margin: -20px 0;
+}
+.block_column{
+    position: relative;
+    text-align: center;
+    float: left;
+    padding: 0px 20px;
+}
+.block_itens{
+    padding: 0;
+    list-style: none;
+    position: relative;
+}
+/*.block_itens:before{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    content: "";
+    background-color: #e0e0e0;
+}*/
+.block_row{
+    margin: 0;
+    position: relative;
+    min-height: 50px;
+    padding: 0;
+    list-style: none;
+}
+/*.block_row:before{
+    position: absolute;
+    top: 10px;
+    bottom: 0;
+    left: 10px;
+    height: 2px;
+    width: 100%;
+    content: "";
+    background-color: #ddd; 
+}*/
+.block_row .block_item:before{
+    position: absolute;
+    top: 50%;
+    bottom: 0;
+    left: -10px;
+    height: 2px;
+    width: 10px;
+    content: "";
+    background-color: #ddd;
+}
+.block_row .block_item:only-child:before{
+    width: 0;
+}
+.block_item:after{
+    position: absolute;
+    top: -50%;
+    bottom: -50%;
+    left: -10px;
+    width: 2px;
+    content: "";
+    background-color: #ddd;
+}
+.block_item:last-child:after{
+    bottom: 50%;  
+}
+.block_item:first-child:after{
+    top: 50%;  
+}
+.block_column:before{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    height: 10px;
+    content: "";
+    background-color: #ddd;
+}
+
+.block_column:after{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    content: "";
+    background-color: #ddd;
+}
+.block_column:last-child:after{
+    left: -50%;  
+}
+.block_column:first-child:after{
+    left: 50%;  
+}

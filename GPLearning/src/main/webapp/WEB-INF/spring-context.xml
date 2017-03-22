@@ -51,6 +51,7 @@
     <jaxrs:server id="services" address="/">
         <jaxrs:serviceBeans>
             <bean class="br.org.gdt.resource.LoginResource" />
+             <bean class="br.org.gdt.resource.EAPResource" />
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />

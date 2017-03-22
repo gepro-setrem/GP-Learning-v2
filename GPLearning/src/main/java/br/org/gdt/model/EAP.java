@@ -41,6 +41,8 @@ public class EAP implements Serializable {
 
     @Column(name = "eap_nvalor")
     private double valor;
+    @Column(name = "eap_iordem")
+    private int ordem;
 
     @ManyToOne
     @JoinColumn(name = "pro_id")
@@ -134,6 +136,14 @@ public class EAP implements Serializable {
 
     public void setTarefas(List<Tarefa> tarefas) {
         this.tarefas = tarefas;
+    }
+
+    public int getOrdem() {
+        return ordem;
+    }
+
+    public void setOrdem(int ordem) {
+        this.ordem = ordem;
     }
 
     @Override
