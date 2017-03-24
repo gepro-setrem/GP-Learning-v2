@@ -19,4 +19,12 @@ public class LoginBLL extends BLL<Login> {
     public Login findLogin(Login login) {
         return dao.findLogin(login);
     }
+
+    public LoginDAO getDao() {
+        return dao;
+    }
+
+    public void setDao(LoginDAO dao) {
+        this.dao = dao;
+    }
 }

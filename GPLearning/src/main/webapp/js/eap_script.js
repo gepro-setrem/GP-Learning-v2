@@ -7,20 +7,26 @@ $(function () {
     });
 });
 $(document).on('click', '.eapEdit', function () {
-    var item = $(this).parents('.block_item');
+    var item = $(this).parents('.eap:eq(0)');
+    var ordem = item.find('[name=ordem]').val();
     $('#eapModal').find('[name=id]').val(item.find('[name=id]').val());
-    $('#eapModal').find('[name=ordem]').val(item.find('[name=ordem]').val());
+    $('#eapModal').find('[name=ordem]').val(ordem);
     $('#eapModal').find('[name=nome]').val(item.find('[name=nome]').val());
     $('#eapModal').find('[name=descricao]').val(item.find('[name=descricao]').val());
     $('#eapModal').find('[name=inicio]').val(item.find('[name=inicio]').val());
     $('#eapModal').find('[name=termino]').val(item.find('[name=termino]').val());
     $('#eapModal').find('[name=valor]').val(item.find('[name=valor]').val());
+    $('#eapModal .modal-title').html('EAP - ' + ordem);
+    if (ordem == '1')
+        $('#eapModal .deletaEAP').hide();
+    else
+        $('#eapModal .deletaEAP').show();
     $('#eapModal').modal('show');
 });
 
 $(document).on('click', '#eapModal .salvaEAP', function () {
     var ordem = $('#eapModal').find('[name=ordem]').val();
-    var item = $('.block_row [name=ordem][value="' + ordem + '"]').parents('.block_item');
+    var item = $('.eap [name=ordem][value="' + ordem + '"]').parents('.eap:eq()');
     item.find('.block_nome').html($('#eapModal').find('[name=nome]').val());
     item.find('[name=nome]').val($('#eapModal').find('[name=nome]').val());
     item.find('[name=descricao]').val($('#eapModal').find('[name=descricao]').val());
@@ -32,65 +38,58 @@ $(document).on('click', '#eapModal .salvaEAP', function () {
 
 $(document).on('click', '#eapModal .deletaEAP', function () {
     var ordem = $('#eapModal').find('[name=ordem]').val();
-    var sub_pacote = $('.block_row [name=ordem][value="' + ordem + '"]').parents('.block_item');
-    var pacote = sub_pacote.parents('.block_column');
-    if (pacote.find('.block_item').length == 1) {
-        pacote.remove();
-        CalculaLargura()
-    } else
-        sub_pacote.remove();
+    var item = $('.eap [name=ordem][value="' + ordem + '"]').parents('.eap_item:eq(0)');
+    item.remove();
     ReloadNumbers();
     $('#eapModal').modal('hide');
 });
 
-$(document).on('click', '.block_all .addPacote', function () {
-    var html = $('.HtmlExample .block_column').clone();
-    $('.block_all .block_row').append(html);
-    CalculaLargura();
-    ReloadNumbers();
-});
 
-$(document).on('click', '.eapAdd', function () {
-    var item = $(this).parents('.block_item');
-    var html = $('.HtmlExample .block_column .block_item').clone();
+$(document).on('click', '.add_irmao', function () {
+    var item = $(this).parents('.eap_item:eq(0)');
+    var html = $('.HtmlExample .eap_item').clone();
     $(html).insertAfter(item);
     ReloadNumbers();
 });
 
-$(document).on('click', '.eapDelete', function () {
-    var sub_pacote = $(this).parents('.block_item');
-    var pacote = sub_pacote.parents('.block_column');
-    if (pacote.find('.block_item').length == 1) {
-        pacote.remove();
-        CalculaLargura()
-    } else
-        sub_pacote.remove();
+$(document).on('click', '.add_filho', function () {
+    var item = $(this).parents('.eap_item:eq(0)');
+    var html = $('.HtmlExample .eap_item').clone();
+    $(item).find('.eap_pai:eq(0)').append(html);
     ReloadNumbers();
 });
 
 function CalculaLargura() {
-    var pacotes = $('.block_all .block_row .block_column');
-    var length = pacotes.length;
-    var wid = 0;
-    if (length < 5)
-        wid = 19;
-    else
-        wid = 100 / length;
-    wid = Math.floor(wid);
-    pacotes.css('width', wid + '%');
+    var pacotes = $('.eap_list .eap_column');
+    pacotes.each(function (index, item) {
+        var pais = $(item).find('.eap_pai:not(:empty)').length;
+        $(item).children('.eap').css('marginRight', (pais * 15) + 'px');
+    });
+//    var length = pacotes.length;
+//    var wid = 0;
+//    if (length < 5)
+//        wid = 19;
+//    else
+//        wid = 100 / length;
+//    wid = Math.floor(wid);
+//    pacotes.css('width', wid + '%');
 }
 
 function ReloadNumbers() {
-    var column = $('.block_row .block_column');
-    $(column).each(function (index1, item1) {
-        $(item1).find('.block_item').each(function (index2, item2) {
-            var index_label = (index1 + 1) + '.' + (index2 + 1);
-            $(item2).find('.eapNumber').html(index_label);
-            $(item2).find('[name=ordem]').val(index_label);
-        });
-    });
+    LoadIndex($('.eap_pai:eq(0)'), '');
+    $('.eap_item.eap_column').removeClass('eap_column');
+    $('.eap_list .eap_pai:eq(1) > .eap_item').addClass('eap_column');
+    CalculaLargura();
 }
 
+function LoadIndex(pai, v_i) {
+    $(pai).children('.eap_item').each(function (index, item) {
+        var index_label = v_i + (index + 1);
+        $(item).children('.eap').find('.eapNumber').html(index_label);
+        $(item).children('.eap').find('[name=ordem]').val(index_label);
+        LoadIndex($(item).children('.eap_pai'), index_label + '.');
+    });
+}
 
 function Salvar() {
     $.ajax({
@@ -108,8 +107,19 @@ function loadEAP() {
         url: '/GPLearning/api/eap/index',
         data: {pro_id: 1},
         success: function (responser) {
+            $('.eap_list').html('');
+            if (responser && responser.length > 0) {
 
+            } else {
+                var html = $('.HtmlExample .eap_pai').clone();
+                html.find('.add_irmao').remove();
+                $('.eap_list').append(html);
+                ReloadNumbers();
+            }
         },
         error: function (error) {}
     });
 }
+$(function () {
+    loadEAP();
+});

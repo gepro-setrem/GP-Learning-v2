@@ -1,8 +1,24 @@
 .HtmlExample{display: none;}
+
 textarea{max-width: 100%;}
-.block_item{
+.eap_list{
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+.eap_pai{
+    padding: 0;
+    list-style: none;
+    right: -15px;
+    position: relative;
+    text-align: left;
+    margin: auto;
+}
+.eap_item{
+    position: relative;
+}
+.eap{
     border: 1px solid #e7e7e7;
-    width: 100%;
+    width: 200px;
     margin: auto;
     text-align: center;
     padding: 20px 10px;
@@ -11,116 +27,90 @@ textarea{max-width: 100%;}
     display: inline-block;
     margin: 10px;
     position: relative;
+    background-color: #fff;
 }
 
-.eapDelete, .eapEdit, .eapAdd{
+.eapEdit, .add_filho{
     cursor: pointer;
     color: grey;
-    float: right; 
+    position: absolute;
+    right: 5px;
+    top: 5px;
 }
-.eapDelete{
-    margin: -15px 0px;
-}
-.eapEdit{
-    margin: -15px 0px;
-}
-.eapAdd{
-    margin: -15px 20px;
-}
-.eapDelete:hover{
-    color: red;
-}
+
 .eapEdit:hover{
     color: blue;
 }
-.eapAdd:hover{
+
+.add_filho{
+    margin: 0 20px;
+}
+
+.add_filho:hover{
     color: #5cb85c;
 }
+
 .block_nome {
     height: auto;
     word-wrap: break-word;
 }
-.block_descricao{
-    margin-top: 1px;
-    font-size: 12px;
-    color: #808080;
-    text-align: left;
+
+.eap_item.eap_column{
+    position: relative;   
+    vertical-align: top;
+    /*display: inline-table;*/
+    /*display: inline-block;*/
+    display: table-cell;
+    /*width: 1%;*/
 }
-.block_descricao label{
-    height: auto;
-    word-wrap: break-word;
-    font-weight: normal;
+
+.eap_item:after{
+    position: absolute;
+    top: 40px;
+    bottom: 0;
+    left: 0;
+    width: 10px;
+    height: 100%;
+    content: "";
+    border: 2px solid #ddd;
+    border-right-width: 0;
+    border-bottom-width: 0;
 }
-.eapNumber{
-    float: left;
-    margin: -20px 0;
+/*.eap_item:not(.eap_column):first-child:after{
+    top: 50%;
+}*/
+.eap_item:not(.eap_column):last-child:after{
+    height: 0;
 }
-.block_column{
-    position: relative;
-    text-align: center;
-    float: left;
-    padding: 0px 20px;
+/*.eap_item:not(.eap_column):last-child > .eap:before{
+    border-left-width: 0;
+}*/
+.eap_item:not(.eap_column):only-child:after{
+    border: 0;
 }
-.block_itens{
-    padding: 0;
-    list-style: none;
-    position: relative;
+.eap_item:not(.eap_column):only-child > .eap:before{
+    border: 0;
 }
-/*.block_itens:before{
+.eap_column:before{
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
-    width: 2px;
-    content: "";
-    background-color: #e0e0e0;
-}*/
-.block_row{
-    margin: 0;
-    position: relative;
-    min-height: 50px;
-    padding: 0;
-    list-style: none;
-}
-/*.block_row:before{
-    position: absolute;
-    top: 10px;
-    bottom: 0;
-    left: 10px;
-    height: 2px;
     width: 100%;
-    content: "";
-    background-color: #ddd; 
-}*/
-.block_row .block_item:before{
-    position: absolute;
-    top: 50%;
-    bottom: 0;
-    left: -10px;
     height: 2px;
-    width: 10px;
     content: "";
     background-color: #ddd;
 }
-.block_row .block_item:only-child:before{
+.eap_column:first-child:before{
+    left: 50%;
+}
+.eap_column:last-child:before{
+    left: -50%;
+}
+.eap_column:only-child:before{
     width: 0;
 }
-.block_item:after{
-    position: absolute;
-    top: -50%;
-    bottom: -50%;
-    left: -10px;
-    width: 2px;
-    content: "";
-    background-color: #ddd;
-}
-.block_item:last-child:after{
-    bottom: 50%;  
-}
-.block_item:first-child:after{
-    top: 50%;  
-}
-.block_column:before{
+.eap_column:after{
     position: absolute;
     top: 0;
     bottom: 0;
@@ -130,20 +120,43 @@ textarea{max-width: 100%;}
     content: "";
     background-color: #ddd;
 }
+.eap_column > .eap:before{
+    border: 0;
+}
 
-.block_column:after{
+.eap_pai:before{
     position: absolute;
-    top: 0;
+    top: -10px;
     bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
+    left: 50%;
+    height: 20px;
+    border-left: 2px solid #ddd;
     content: "";
-    background-color: #ddd;
 }
-.block_column:last-child:after{
-    left: -50%;  
+.eap_pai:empty:before{
+    border: 0;
 }
-.block_column:first-child:after{
-    left: 50%;  
+
+.eapNumber{
+    position: absolute;
+    left: 3px;
+    top: 0;
+}
+
+.eap_list > .eap_pai:before{
+    border: 0;
+}
+
+.eap_list > .eap_pai{
+    left: -20px;
+    display: table;
+    text-align: center;
+}
+
+.eap_list > .eap_pai > .eap_item > .eap_pai{
+    display: table;
+} 
+
+.eap_list > .eap_pai > .eap_item > .eap_pai:before{
+    height: 10px;   
 }

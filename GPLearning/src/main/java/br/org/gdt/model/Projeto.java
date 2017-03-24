@@ -61,7 +61,7 @@ public class Projeto implements Serializable {
     @JoinColumn(name = "tur_id")
     private Turma turma;
 
-    @OneToOne
+    @OneToOne(mappedBy = "projeto")
     private TermoAbertura termoabertura;
 
     @OneToMany(mappedBy = "projeto")

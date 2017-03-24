@@ -24,40 +24,30 @@
             </ui:define>
 
             <ui:define name="content">
-                <div class="block_all">
-                    <div class="block_row2" style="margin-bottom: 20px;">
-                        <div class="block_item" style="display: block; margin: auto; width: 200px; ">
-                            <div class="block_nome"><label class="form-control">Projeto</label><input class="form-control" type="hidden" name="nome" value="Projeto"/></div>
-                        </div>
-                    </div>
-                    <ul class="block_row row">
-                    </ul>
-                    <a class="btn btn-success addPacote"><i class="fa-plus"></i>&nbsp;Pacote de Trabalho</a>
-                </div>
-
+                <div class="eap_list"></div>
 
                 <div class="HtmlExample">
-                    <li class="block_column" data="1">
-                        <ul class="block_itens">
-                            <li class="block_item">
-                                <input type="hidden" name="pai.id"/>
-                                <input type="hidden" name="id"/>
-                                <input type="hidden" name="ordem"/>
-                                <input type="hidden" name="nome"/>
-                                <input type="hidden" name="descricao"/>
-                                <input type="hidden" name="inicio"/>         
-                                <input type="hidden" name="termino"/>
-                                <input type="hidden" name="valor"/>
-
+                    <ul class="eap_pai">
+                        <li class="eap_item">
+                            <div class="eap">
                                 <span class="eapNumber"></span>
-                                <!--                                <i class="fa-remove eapDelete"></i>-->
                                 <i class="fa-pencil eapEdit"></i>
-                                <i class="fa-plus eapAdd"></i>
-                                <!--<i class="fa-remove eapDelete text-danger"></i>-->
-                                <div class="block_nome"></div>
-                            </li>
-                        </ul>
-                    </li>
+                                <i class="fa-plus add_filho"></i>
+                                <div class="block_nome">Add Nome</div>
+                                <div style="display: none;">
+                                    <input type="hidden" name="pai.id"/>
+                                    <input type="hidden" name="id"/>
+                                    <input type="hidden" name="ordem"/>
+                                    <input type="hidden" name="nome"/>
+                                    <input type="hidden" name="descricao"/>
+                                    <input type="hidden" name="inicio"/>         
+                                    <input type="hidden" name="termino"/>
+                                    <input type="hidden" name="valor"/>
+                                </div>
+                            </div>
+                            <ul class="eap_pai"></ul>
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="modal fade" id="eapModal" role="dialog" aria-labelledby="eapModal" aria-hidden="true" data-backdrop="static">
@@ -92,7 +82,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <a class="btn btn-link text-danger deletaEAP"><i class="fa-trash"></i>&nbsp;Excluir</a>
+                                <a class="btn btn-danger deletaEAP"><i class="fa-trash"></i>&nbsp;Excluir</a>
                                 <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
                                 <a class="btn btn-success salvaEAP"><i class="fa-check"></i>&nbsp;Salvar</a>
                             </div>

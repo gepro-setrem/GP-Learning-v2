@@ -29,6 +29,14 @@ public class LoginResource {
         return bll.findLogin(login) != null;
     }
 
+    public LoginBLL getBll() {
+        return bll;
+    }
+
+    public void setBll(LoginBLL bll) {
+        this.bll = bll;
+    }
+
     @Produces("application/json")
     @Path("/login2")
     public List<Login> getLogin2() {

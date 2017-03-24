@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public abstract class BLL<T> {
 
+    @Autowired
     protected DAO<T> dao;
 
     @Transactional
