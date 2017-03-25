@@ -1,6 +1,9 @@
 package com.gplearning.gplearning.Controllers;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -122,19 +125,13 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment=null;
         Bundle args = new Bundle();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_project) {
             // Handle the camera action
             fragment = new ProjetoFragment();
 
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_comments) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_area) {
 
         }
 
@@ -146,6 +143,30 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+
+
+    /**
+     * Check whether the device is connected, and if so, whether the connection
+     * is wifi or mobile (it could be something else).
+     */
+//    private void checkNetworkConnection() {
+//        // BEGIN_INCLUDE(connect)
+//        ConnectivityManager connMgr =
+//                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo activeInfo = connMgr.getActiveNetworkInfo();
+//        if (activeInfo != null && activeInfo.isConnected()) {
+//            wifiConnected = activeInfo.getType() == ConnectivityManager.TYPE_WIFI;
+//            mobileConnected = activeInfo.getType() == ConnectivityManager.TYPE_MOBILE;
+//            if(wifiConnected) {
+//                Log.i(TAG, getString(R.string.wifi_connection));
+//            } else if (mobileConnected){
+//                Log.i(TAG, getString(R.string.mobile_connection));
+//            }
+//        } else {
+//            Log.i(TAG, getString(R.string.no_wifi_or_mobile));
+//        }
+//        // END_INCLUDE(connect)
+//    }
 
 
 }

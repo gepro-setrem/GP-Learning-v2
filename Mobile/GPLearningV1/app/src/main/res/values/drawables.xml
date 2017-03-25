@@ -5,4 +5,12 @@
     <item name="ic_menu_manage" type="drawable">@android:drawable/ic_menu_manage</item>
     <item name="ic_menu_share" type="drawable">@android:drawable/ic_menu_share</item>
     <item name="ic_menu_send" type="drawable">@android:drawable/ic_menu_send</item>
+
+
+    <!--<item name="project" type="drawable">@drawable/ic_menu_projector_screen</item>-->
+    <!--<item name="last_comments" type="drawable">@drawable/ic_menu_message_text</item>-->
+    <!--<item name="choose_area" type="drawable">@drawable/ic_menu_account_switch</item>-->
+    <!--<item name="last_sync" type="drawable">@drawable/ic_menu_cloud_sync</item>-->
+
+
 </resources>

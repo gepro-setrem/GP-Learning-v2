@@ -17,7 +17,7 @@ public class NivelAcessoActivity extends AppCompatActivity {
 
     public void AcessoAluno(View view){
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("PAGE",R.id.nav_camera);
+        intent.putExtra("PAGE",R.id.nav_project);
         startActivity(intent);
         finish();
         overridePendingTransition(R.animator.push_left_in, R.animator.push_left_out);
