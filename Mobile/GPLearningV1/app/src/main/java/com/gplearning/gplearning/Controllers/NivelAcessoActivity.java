@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.gplearning.gplearning.Enums.Fragments;
 import com.gplearning.gplearning.R;
 
 public class NivelAcessoActivity extends AppCompatActivity {
@@ -17,7 +18,7 @@ public class NivelAcessoActivity extends AppCompatActivity {
 
     public void AcessoAluno(View view){
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("PAGE",R.id.nav_project);
+        intent.putExtra("PAGE", Fragments.projetos.toString());
         startActivity(intent);
         finish();
         overridePendingTransition(R.animator.push_left_in, R.animator.push_left_out);

@@ -73,6 +73,7 @@ public class ProjetoFragment extends Fragment {
             @Override
             public void onListFragmentInteraction(Projeto item) {
                 Log.i("event", "clicou no projeto:"+ item.getNome());
+
             }
         };
 

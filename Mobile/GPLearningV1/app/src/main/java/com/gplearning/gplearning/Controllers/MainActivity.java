@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.gplearning.gplearning.Enums.Fragments;
 import com.gplearning.gplearning.R;
 
 public class MainActivity extends AppCompatActivity
@@ -65,11 +66,11 @@ public class MainActivity extends AppCompatActivity
             if(bundle!=null){
                 Log.i("Event", "Tem bundle");
                 if(bundle.containsKey("PAGE")){
-                    Integer idLong = bundle.getInt("PAGE"); //intent.getLongExtra("ID", 0);
-                    changefragment(idLong.intValue());
+                    String page = bundle.getString("PAGE"); //intent.getLongExtra("ID", 0);
+                    changefragment(page);
                 }
             }else{
-                changefragment(0);
+                changefragment("");
             }
 
         }
@@ -115,25 +116,42 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        changefragment(item.getItemId());
+
+        if (item.getItemId() == R.id.nav_project) {
+            // Handle the camera action
+            changefragment(Fragments.projetos.toString());
+        } else if (item.getItemId() == R.id.nav_comments) {
+            changefragment(Fragments.comentarios.toString());
+        } else if (item.getItemId() == R.id.nav_area) {
+            // changefragment(Fragments.nivelAcesso);
+            Intent intent = new Intent(this, NivelAcessoActivity.class);
+            startActivity(intent);
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    public void changefragment(int id){
+    public void changefragment(String fragments){
         Fragment fragment=null;
         Bundle args = new Bundle();
 
-        if (id == R.id.nav_project) {
+        if (fragments.equals(Fragments.projetos.toString())) {
             // Handle the camera action
             fragment = new ProjetoFragment();
 
-        } else if (id == R.id.nav_comments) {
+        } else if (fragments == Fragments.comentarios.toString()) {
+            // Handle the camera action
+            //  fragment = new ProjetoFragment();
 
-        } else if (id == R.id.nav_area) {
+        } else if (fragments == Fragments.projetos.toString()) {
 
         }
+        //else if (fragments == Fragments.nivelAcesso) {
+//            fragment = new NivelAcessoActivity();
+//
+//        }
 
         if(fragment!=null){
             fragment.setArguments(args);
