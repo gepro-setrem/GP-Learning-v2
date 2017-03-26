@@ -72,12 +72,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setupActionBar();
 
 
-        SharedPreferences shared = getSharedPreferences("login",MODE_PRIVATE);
-        String string_temp = shared.getString("user",null);
-        if(string_temp!=null){
-            Intent intent = new Intent(this, NivelAcessoActivity.class);
-            startActivity(intent);
-        }
+//        SharedPreferences shared = getSharedPreferences("login",MODE_PRIVATE);
+//        String string_temp = shared.getString("user",null);
+//        if(string_temp!=null){
+//            Intent intent = new Intent(this, NivelAcessoActivity.class);
+//            startActivity(intent);
+//        }
 
 
         // Set up the login form.

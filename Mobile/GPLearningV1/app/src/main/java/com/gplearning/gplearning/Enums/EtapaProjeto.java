@@ -9,7 +9,7 @@ public enum EtapaProjeto {
     TermoAberturaRestricoes,
     TermoAberturaMarcos,
     TermoAberturaRequisitos,
-    PartesInterressadas,
+    PartesInteressadas,
 
     PlanejamentoEscopo,
     Requisitos,

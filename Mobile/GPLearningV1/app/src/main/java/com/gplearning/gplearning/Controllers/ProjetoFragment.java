@@ -1,8 +1,12 @@
 package com.gplearning.gplearning.Controllers;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
+//import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +22,7 @@ import com.gplearning.gplearning.Models.Projeto;
 import com.gplearning.gplearning.Models.ProjetoDao;
 import com.gplearning.gplearning.R;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,30 +42,31 @@ public class ProjetoFragment extends Fragment {
 
     private List<Projeto> lsProjetos= new ArrayList<>();
     private ProjetoDao projetoDao;
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public ProjetoFragment() {
-    }
-
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static ProjetoFragment newInstance(int columnCount) {
-        ProjetoFragment fragment = new ProjetoFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    /**
+//     * Mandatory empty constructor for the fragment manager to instantiate the
+//     * fragment (e.g. upon screen orientation changes).
+//     */
+//    public ProjetoFragment() {
+//    }
+//
+//    // TODO: Customize parameter initialization
+//    @SuppressWarnings("unused")
+//    public static ProjetoFragment newInstance(int columnCount) {
+//        ProjetoFragment fragment = new ProjetoFragment();
+//        Bundle args = new Bundle();
+//        args.putInt(ARG_COLUMN_COUNT, columnCount);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+//        if (getArguments() != null) {
+//            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+//        }
     }
 
     @Override
@@ -73,7 +79,13 @@ public class ProjetoFragment extends Fragment {
             @Override
             public void onListFragmentInteraction(Projeto item) {
                 Log.i("event", "clicou no projeto:"+ item.getNome());
-
+                Fragment fragment= new EtapasFragment();
+              //  FragmentManager manager = getActivity().getSupportFragmentManager();
+               // manager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.content_frame, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         };
 
@@ -110,7 +122,13 @@ public class ProjetoFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+        } catch (Exception e) {
+            Log.e("Error", e.toString());
+        }
     }
 
     private List<Projeto> getProjetos() {

@@ -1,14 +1,19 @@
 package com.gplearning.gplearning.Controllers;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
+//import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.gplearning.gplearning.R;
+
+import java.lang.reflect.Field;
 
 
 /**
@@ -16,7 +21,7 @@ import com.gplearning.gplearning.R;
  * Activities that contain this fragment must implement the
  * {@link EtapasFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link EtapasFragment#newInstance} factory method to
+ * Use the {@link EtapasFragment#} factory method to
  * create an instance of this fragment.
  */
 public class EtapasFragment extends Fragment {
@@ -31,35 +36,37 @@ public class EtapasFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public EtapasFragment() {
-        // Required empty public constructor
-    }
+//    public EtapasFragment() {
+//        // Required empty public constructor
+//    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment EtapasFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static EtapasFragment newInstance(String param1, String param2) {
-        EtapasFragment fragment = new EtapasFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    /**
+//     * Use this factory method to create a new instance of
+//     * this fragment using the provided parameters.
+//     *
+//     * @param param1 Parameter 1.
+//     * @param param2 Parameter 2.
+//     * @return A new instance of fragment EtapasFragment.
+//     */
+//    // TODO: Rename and change types and number of parameters
+//    public static EtapasFragment newInstance(String param1, String param2) {
+//        EtapasFragment fragment = new EtapasFragment();
+//        Bundle args = new Bundle();
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        setHasOptionsMenu(true);
+
+//        if (getArguments() != null) {
+//            mParam1 = getArguments().getString(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
+//        }
     }
 
     @Override
@@ -87,7 +94,13 @@ public class EtapasFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+        } catch (Exception e) {
+            Log.e("Error", e.toString());
+        }
     }
 
     /**

@@ -1,11 +1,14 @@
 package com.gplearning.gplearning.Controllers;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+//import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -32,12 +35,6 @@ public class MainActivity extends AppCompatActivity
 
 
 
-//        SharedPreferences shared = getSharedPreferences("login",MODE_PRIVATE);
-//        String string_temp = shared.getString("user",null);
-//        if(string_temp==null){
-//            Intent intent = new Intent(this, LoginActivity.class);
-//            startActivity(intent);
-//        }
 
 
 
@@ -60,6 +57,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        SharedPreferences shared = getSharedPreferences("login",MODE_PRIVATE);
+        String string_temp = shared.getString("user",null);
+        if(string_temp==null){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+
         Intent intent = getIntent();
         if(intent!=null){
             Bundle bundle = intent.getExtras();
@@ -78,10 +83,21 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+       // changefragment("");
+    }
+
+    @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
+//            super.onBackPressed();
+//        }
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
         }
@@ -123,13 +139,10 @@ public class MainActivity extends AppCompatActivity
         } else if (item.getItemId() == R.id.nav_comments) {
             changefragment(Fragments.comentarios.toString());
         } else if (item.getItemId() == R.id.nav_area) {
-            // changefragment(Fragments.nivelAcesso);
-            Intent intent = new Intent(this, NivelAcessoActivity.class);
-            startActivity(intent);
+             changefragment(Fragments.nivelAcesso.toString());
+
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -146,18 +159,26 @@ public class MainActivity extends AppCompatActivity
             //  fragment = new ProjetoFragment();
 
         } else if (fragments == Fragments.projetos.toString()) {
-
         }
-        //else if (fragments == Fragments.nivelAcesso) {
-//            fragment = new NivelAcessoActivity();
-//
-//        }
+        else{ //if (fragments == Fragments.nivelAcesso) {
+            Intent intent = new Intent(this, NivelAcessoActivity.class);
+            startActivity(intent);
+        }
 
         if(fragment!=null){
             fragment.setArguments(args);
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.content_frame, fragment);
+            transaction.addToBackStack(null);
+
+            // Commit the transaction
+            transaction.commit();
+
+            //FragmentManager manager = getSupportFragmentManager();
+           // manager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
         }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
     }
 
 
