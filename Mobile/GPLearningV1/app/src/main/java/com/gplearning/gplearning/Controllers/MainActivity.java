@@ -34,11 +34,6 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-
-
-
-
-
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -58,26 +53,26 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        SharedPreferences shared = getSharedPreferences("login",MODE_PRIVATE);
-        String string_temp = shared.getString("user",null);
-        if(string_temp==null){
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-        }
-
-        Intent intent = getIntent();
-        if(intent!=null){
-            Bundle bundle = intent.getExtras();
-            if(bundle!=null){
-                Log.i("Event", "Tem bundle");
-                if(bundle.containsKey("PAGE")){
-                    String page = bundle.getString("PAGE"); //intent.getLongExtra("ID", 0);
-                    changefragment(page);
+        SharedPreferences shared = getSharedPreferences("login", MODE_PRIVATE);
+        String string_temp = shared.getString("user", null);
+        if (string_temp == null) {
+            Intent intentL = new Intent(this, LoginActivity.class);
+            startActivity(intentL);
+        } else {
+            Intent intent = getIntent();
+            if (intent != null) {
+                Bundle bundle = intent.getExtras();
+                if (bundle != null) {
+                    Log.i("Event", "Tem bundle");
+                    if (bundle.containsKey("PAGE")) {
+                        String page = bundle.getString("PAGE"); //intent.getLongExtra("ID", 0);
+                        changefragment(page);
+                    }
+                } else {
+                    changefragment("");
                 }
-            }else{
-                changefragment("");
-            }
 
+            }
         }
 
     }
@@ -85,7 +80,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-       // changefragment("");
+        // changefragment("");
     }
 
     @Override
@@ -119,6 +114,12 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            SharedPreferences pref;
+            pref = getSharedPreferences("login",MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("user",null);
+            editor.commit();
             return true;
         }
 
@@ -139,15 +140,15 @@ public class MainActivity extends AppCompatActivity
         } else if (item.getItemId() == R.id.nav_comments) {
             changefragment(Fragments.comentarios.toString());
         } else if (item.getItemId() == R.id.nav_area) {
-             changefragment(Fragments.nivelAcesso.toString());
+            changefragment(Fragments.nivelAcesso.toString());
 
         }
 
         return true;
     }
 
-    public void changefragment(String fragments){
-        Fragment fragment=null;
+    public void changefragment(String fragments) {
+        Fragment fragment = null;
         Bundle args = new Bundle();
 
         if (fragments.equals(Fragments.projetos.toString())) {
@@ -159,13 +160,12 @@ public class MainActivity extends AppCompatActivity
             //  fragment = new ProjetoFragment();
 
         } else if (fragments == Fragments.projetos.toString()) {
-        }
-        else{ //if (fragments == Fragments.nivelAcesso) {
+        } else { //if (fragments == Fragments.nivelAcesso) {
             Intent intent = new Intent(this, NivelAcessoActivity.class);
             startActivity(intent);
         }
 
-        if(fragment!=null){
+        if (fragment != null) {
             fragment.setArguments(args);
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.content_frame, fragment);
@@ -175,13 +175,11 @@ public class MainActivity extends AppCompatActivity
             transaction.commit();
 
             //FragmentManager manager = getSupportFragmentManager();
-           // manager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
+            // manager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
-
-
 
 
     /**

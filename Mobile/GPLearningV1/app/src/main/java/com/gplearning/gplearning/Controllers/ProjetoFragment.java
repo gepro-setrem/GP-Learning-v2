@@ -40,7 +40,7 @@ public class ProjetoFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
-    private List<Projeto> lsProjetos= new ArrayList<>();
+    private List<Projeto> lsProjetos = new ArrayList<>();
     private ProjetoDao projetoDao;
 //    /**
 //     * Mandatory empty constructor for the fragment manager to instantiate the
@@ -78,10 +78,10 @@ public class ProjetoFragment extends Fragment {
         mListener = new OnListFragmentInteractionListener() {
             @Override
             public void onListFragmentInteraction(Projeto item) {
-                Log.i("event", "clicou no projeto:"+ item.getNome());
-                Fragment fragment= new EtapasFragment();
-              //  FragmentManager manager = getActivity().getSupportFragmentManager();
-               // manager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                Log.i("event", "clicou no projeto:" + item.getNome());
+                Fragment fragment = new EtapasFragment();
+                //  FragmentManager manager = getActivity().getSupportFragmentManager();
+                // manager.beginTransaction().replace(R.id.content_frame, fragment).commit();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.content_frame, fragment);
                 transaction.addToBackStack(null);
@@ -91,13 +91,13 @@ public class ProjetoFragment extends Fragment {
 
         // Set the adapter
         if (view instanceof RecyclerView) {
-            Log.i("Event","Chegou na ProjetoFragment");
+            Log.i("Event", "Chegou na ProjetoFragment");
             RecyclerView recyclerView = (RecyclerView) view;
             lsProjetos = getProjetos();
             recyclerView.setAdapter(new ProjetoRecyclerViewAdapter(lsProjetos, mListener));
-            if(lsProjetos.size()==0){
-                ((RecyclerView)view.findViewById(R.id.projetoListview)).setVisibility(View.GONE);
-                ((TextView)  getActivity().findViewById(R.id.TxtNenhumRegistro)).setVisibility(View.VISIBLE);
+            if (lsProjetos.size() == 0) {
+                ((RecyclerView) view.findViewById(R.id.projetoListview)).setVisibility(View.GONE);
+                ((TextView) getActivity().findViewById(R.id.TxtNenhumRegistro)).setVisibility(View.VISIBLE);
             }
         }
         return view;
@@ -132,15 +132,56 @@ public class ProjetoFragment extends Fragment {
     }
 
     private List<Projeto> getProjetos() {
-        List<Projeto>lsProjetos = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            Projeto pj = new Projeto();
-            pj.set_id(Long.valueOf(i+1));
-            pj.setNome("Projeto "+i);
-            pj.setGerente("Gerente "+i);
-            pj.setEmpresa("Empresa Oficial "+i);
-            lsProjetos.add(pj);
-        }
+        List<Projeto> lsProjetos = new ArrayList<>();
+//        for (int i = 0; i < 20; i++) {
+//            Projeto pj = new Projeto();
+//            pj.set_id(Long.valueOf(i+1));
+//            pj.setNome("Projeto "+i);
+//            pj.setGerente("Gerente "+i);
+//            pj.setEmpresa("Empresa Oficial "+i);
+//            lsProjetos.add(pj);
+//        }
+
+
+        Projeto pj = new Projeto();
+        pj.set_id(Long.valueOf(1));
+        pj.setNome("Projeto de melhoria de rede de computadores de uma fábrica de móveis");
+        pj.setGerente("Tiago Luis cesa Seibel");
+        pj.setEmpresa("Jaeli Móveis");
+        lsProjetos.add(pj);
+
+        pj = new Projeto();
+        pj.set_id(Long.valueOf(2));
+        pj.setNome("Instalação e Configuração da Rede de computadores");
+        pj.setGerente("Tiago Luis cesa Seibel");
+        pj.setEmpresa("Empresa CTT");
+        lsProjetos.add(pj);
+
+
+        pj = new Projeto();
+        pj.set_id(Long.valueOf(3));
+        pj.setNome("Projeto CTT Logística");
+        pj.setGerente("Tiago Luis cesa Seibel");
+        pj.setEmpresa("CTT Logística");
+        lsProjetos.add(pj);
+
+
+        pj = new Projeto();
+        pj.set_id(Long.valueOf(4));
+        pj.setNome("Projeto de software para empresa ABC");
+        pj.setGerente("Tiago Luis cesa Seibel");
+        pj.setEmpresa("Empresa ABC");
+        lsProjetos.add(pj);
+
+
+        pj = new Projeto();
+        pj.set_id(Long.valueOf(1));
+        pj.setNome("VesteFin");
+        pj.setGerente("Tiago Luis cesa Seibel");
+        pj.setEmpresa("VesteBem");
+        lsProjetos.add(pj);
+
+
         return lsProjetos;
     }
 
