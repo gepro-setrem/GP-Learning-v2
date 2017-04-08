@@ -31,8 +31,10 @@
                         <li class="eap_item">
                             <div class="eap">
                                 <span class="eapNumber"></span>
-                                <i class="fa-pencil eapEdit"></i>
-                                <i class="fa-plus add_filho"></i>
+                                <i class="fa-pencil eapIcon eapEdit"></i>
+                                <i class="fa-plus eapIcon add_filho"></i>
+<!--                                <i class="fa-chevron-up eapIcon eapUp"></i>
+                                <i class="fa-chevron-down eapIcon eapDown"></i>-->
                                 <div class="block_nome">Add Nome</div>
                                 <div style="display: none;">
                                     <input type="hidden" name="pai.id"/>
@@ -58,6 +60,7 @@
                                 <h4 class="modal-title">EAP</h4>
                             </div>
                             <div class="modal-body">
+                                <input type="hidden" name="pai.id"/>
                                 <input type="hidden" name="id"/>
                                 <input type="hidden" name="ordem"/>
                                 <div class="form-group">
@@ -77,8 +80,8 @@
                                     <input class="form-control" type="date" placeholder="Término" name="termino"/>
                                 </div>
                                 <div class="form-group">
-                                    <label>Valor:</label>
-                                    <input class="form-control" type="number" placeholder="Valor" name="valor"/>
+                                    <label>Custo:</label>
+                                    <input class="form-control" type="number" placeholder="Custo" name="valor"/>
                                 </div>
                             </div>
                             <div class="modal-footer">

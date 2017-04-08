@@ -6,7 +6,9 @@ import br.org.gdt.model.Projeto;
 import br.org.gdt.model.TermoAbertura;
 import br.org.gdt.model.Turma;
 import br.org.gdt.model.Pessoa;
+import java.util.ArrayList;
 import java.util.List;
+import javax.faces.bean.ManagedProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,10 @@ public class ProjetoBLL extends BLL<Projeto> {
 
     @Autowired
     private ProjetoDAO dao;
+
+    @Autowired
+    //@ManagedProperty("#{pessoaBLL}")
+    private PessoaBLL pessoaBLL;
 
     public List<Projeto> findbyaluno(Pessoa usuario) {
         Pessoa user = new PessoaDAO().findById(usuario.getId());
@@ -30,8 +36,13 @@ public class ProjetoBLL extends BLL<Projeto> {
         return dao.findByTermoAbertura(termoabertura);
     }
 
-    public List<Projeto> findbyturmasprofessor(Pessoa usuario) {
-        return dao.findbyturmasprofessor(usuario);
+    public List<Projeto> findbyturmasprofessor(Pessoa pessoa) {
+        Pessoa user = pessoaBLL.findById(pessoa.getId());
+        List<Projeto> projetos = new ArrayList<>();
+        for (Turma turma : user.getTurmasprofessor()) {
+            projetos.addAll(turma.getProjeto());
+        }
+        return projetos;
     }
 
     public Projeto findByIdRelatorio(int id) {

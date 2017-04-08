@@ -27,27 +27,28 @@ textarea{max-width: 100%;}
     display: inline-block;
     margin: 10px;
     position: relative;
-    background-color: #fff;
+    background-color: #f8f8f8;
 }
 
-.eapEdit, .add_filho{
+.eapIcon{
     cursor: pointer;
-    color: grey;
     position: absolute;
     right: 5px;
     top: 5px;
 }
 
-.eapEdit:hover{
-    color: blue;
+.eapIcon{
+    color: grey;
 }
 
 .add_filho{
-    margin: 0 20px;
+    margin-right: 20px;
 }
-
-.add_filho:hover{
-    color: #5cb85c;
+.eapUp{
+    margin-right: 60px;
+}
+.eapDown{
+    margin-right: 40px;
 }
 
 .block_nome {
@@ -132,6 +133,8 @@ textarea{max-width: 100%;}
     height: 20px;
     border-left: 2px solid #ddd;
     content: "";
+/*    left: 0%;
+    height: 50px;*/
 }
 .eap_pai:empty:before{
     border: 0;

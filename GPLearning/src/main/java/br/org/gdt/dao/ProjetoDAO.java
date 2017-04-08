@@ -35,22 +35,22 @@ public class ProjetoDAO extends DAO<Projeto> {
         return projeto;
     }
 
-    public List<Projeto> findbyturmasprofessor(Pessoa pessoa) {
-        PessoaDAO usuDAO = new PessoaDAO();
-        Pessoa user = usuDAO.findById(pessoa.getId());
-        //Temos a lista de turmas daquele professor, agora precisamos listas os alunos que pertencem aquelas turmas
-        List<Projeto> projetosdaturma = new ArrayList<>();
-        System.out.println("Turmas do Usuário" + user.getNome() + " são" + user.getTurmasprofessor());
-
-        for (Turma turminha : user.getTurmasprofessor()) {
-            projetosdaturma.addAll(turminha.getProjeto());
-        }
-        List<Projeto> projetos = projetosdaturma;
-//        for (Projeto pr : projetos) {
-//            Hibernate.initialize(pr.getComponentes());
+//    public List<Projeto> findbyturmasprofessor(Pessoa pessoa) {
+//        PessoaDAO usuDAO = new PessoaDAO();
+//        Pessoa user = usuDAO.findById(pessoa.getId());
+//        //Temos a lista de turmas daquele professor, agora precisamos listas os alunos que pertencem aquelas turmas
+//        List<Projeto> projetosdaturma = new ArrayList<>();
+//        System.out.println("Turmas do Usuário" + user.getNome() + " são" + user.getTurmasprofessor());
+//
+//        for (Turma turminha : user.getTurmasprofessor()) {
+//            projetosdaturma.addAll(turminha.getProjeto());
 //        }
-        return projetos;
-    }
+//        List<Projeto> projetos = projetosdaturma;
+////        for (Projeto pr : projetos) {
+////            Hibernate.initialize(pr.getComponentes());
+////        }
+//        return projetos;
+//    }
 
     public Projeto findByIdRelatorio(int id) {
 

@@ -19,12 +19,12 @@ public abstract class DAO<T> {
         entityManager.merge(item);
     }
 
-    public void delete(long id) {
+    public void delete(int id) {
         T item = entityManager.getReference(classe, id);
         entityManager.remove(item);
     }
 
-    public T findById(long id) {
+    public T findById(int id) {
         return entityManager.find(classe, id);
     }
 

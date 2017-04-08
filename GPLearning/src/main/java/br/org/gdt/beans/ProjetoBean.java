@@ -159,7 +159,7 @@ public class ProjetoBean {
     public DataModel getProjetos() {
         //Obtenção do usuário logado
         Pessoa usuariolocal = usuariologado;
-        System.out.println("O usuário logado no get projetos é" + usuariolocal.getNome());
+        System.out.println("O usuário logado no get projetos é " + usuariolocal.getNome());
         //Verificação se usuário é administrador, então filtre pelas turmas do professor
         if (true){//(usuariolocal.getLogin().getLoginRoles(). getGrupo().getId() == 1) {
 //            List<Usuario> alunosdasturmas = new ArrayList<>();
@@ -177,6 +177,7 @@ public class ProjetoBean {
             System.out.println("Entrou no Grupo 1");
             //Pesquisaremos de acordo com a turma selecionada
             //System.out.println("Turma Selecionada no combobox" + turma.getNomeTurma());
+            Pessoa pes = usuarioService.findById(usuariolocal.getId());
             projetos = new ListDataModel(projetoService.findbyturmasprofessor(usuariolocal));
             //projetos = (DataModel) projetosdosalunosdasturmas;
             //Caso não seja administrador, filtre por aluno
