@@ -113,7 +113,8 @@
             android:textAppearance="@style/TextAppearance.AppCompat"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            android:onClick="MostraEtapa"/>
 
         <Button
             android:id="@+id/etapaProjetoJustificativaTABtn"

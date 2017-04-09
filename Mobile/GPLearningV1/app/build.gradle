@@ -33,18 +33,17 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+    //compile("org.springframework.boot:spring-boot-starter")
+    //compile("org.springframework:spring-web")
+    //compile("com.fasterxml.jackson.core:jackson-databind")
+
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.support:design:25.3.0'
     compile 'org.greenrobot:greendao:3.2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.android.support:support-v4:25.3.0'
     compile 'com.android.support:recyclerview-v7:25.2.0'
-
     compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
-    //compile("org.springframework.boot:spring-boot-starter")
-    //compile("org.springframework:spring-web")
-    //compile("com.fasterxml.jackson.core:jackson-databind")
-
     testCompile 'junit:junit:4.12'
 }

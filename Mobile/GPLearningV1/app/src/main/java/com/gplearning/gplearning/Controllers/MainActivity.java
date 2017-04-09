@@ -1,17 +1,12 @@
 package com.gplearning.gplearning.Controllers;
 
-import android.app.Application;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 //import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.gplearning.gplearning.Enums.Fragments;
 import com.gplearning.gplearning.Models.Quote;
@@ -30,11 +26,8 @@ import com.gplearning.gplearning.R;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
 
 
     @Override
@@ -67,22 +60,31 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences shared = getSharedPreferences("login", MODE_PRIVATE);
         String string_temp = shared.getString("user", null);
         if (string_temp == null) {
+            Log.i("Event", "string null, vai para login");
             Intent intentL = new Intent(this, LoginActivity.class);
             startActivity(intentL);
         } else {
-            Intent intent = getIntent();
-            if (intent != null) {
-                Bundle bundle = intent.getExtras();
-                if (bundle != null) {
-                    Log.i("Event", "Tem bundle");
-                    if (bundle.containsKey("PAGE")) {
-                        String page = bundle.getString("PAGE"); //intent.getLongExtra("ID", 0);
-                        changefragment(page);
+            SharedPreferences shModo = getSharedPreferences("modoAcesso", MODE_PRIVATE);
+            String modoAcesso = shModo.getString("modoAcesso", null);
+            if (modoAcesso == null) {
+                changefragment(Fragments.nivelAcesso.toString());
+            } else {
+                Intent intent = getIntent();
+                if (intent != null) {
+                    Log.i("Event", "Tem Intent");
+                    Bundle bundle = intent.getExtras();
+                    if (bundle != null) {
+                        Log.i("Event", "Tem bundle");
+                        if (bundle.containsKey("PAGE")) {
+                            String page = bundle.getString("PAGE"); //intent.getLongExtra("ID", 0);
+                            Log.i("Event", "PAGE " + page);
+                            changefragment(page);
+                        }
+                    } else {
+                        Log.i("Event", "CArrega projetos");
+                        changefragment(Fragments.projetos.toString());
                     }
-                } else {
-                    changefragment("");
                 }
-
             }
         }
 
@@ -96,17 +98,17 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawer(GravityCompat.START);
-//        } else {
-//            super.onBackPressed();
-//        }
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
+//        if (getFragmentManager().getBackStackEntryCount() > 0) {
+//            getFragmentManager().popBackStack();
+//        } else {
+//            super.onBackPressed();
+//        }
     }
 
     @Override
@@ -161,7 +163,6 @@ public class MainActivity extends AppCompatActivity
             changefragment(Fragments.comentarios.toString());
         } else if (item.getItemId() == R.id.nav_area) {
             changefragment(Fragments.nivelAcesso.toString());
-
         }
 
         return true;
@@ -174,45 +175,49 @@ public class MainActivity extends AppCompatActivity
         if (fragments.equals(Fragments.projetos.toString())) {
             // Handle the camera action
             fragment = new ProjetoFragment();
-
         } else if (fragments == Fragments.comentarios.toString()) {
             // Handle the camera action
             //  fragment = new ProjetoFragment();
-
-        } else if (fragments == Fragments.projetos.toString()) {
-        } else { //if (fragments == Fragments.nivelAcesso) {
+        } else if (fragments == Fragments.nivelAcesso.toString()) {
             Intent intent = new Intent(this, NivelAcessoActivity.class);
             startActivity(intent);
         }
+//        else { //if (fragments == Fragments.nivelAcesso) {
+//            Intent intent = new Intent(this, NivelAcessoActivity.class);
+//            startActivity(intent);
+//        }
 
         if (fragment != null) {
             fragment.setArguments(args);
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.content_frame, fragment);
-            transaction.addToBackStack(null);
-
-            // Commit the transaction
-            transaction.commit();
-
-            //FragmentManager manager = getSupportFragmentManager();
-            // manager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
+//            FragmentTransaction transaction = getSupportFragmentManager(); //getFragmentManager().beginTransaction();
+//            transaction.add(R.id.content_frame, fragment);
+//           // transaction.addToBackStack(null);
+//            // Commit the transaction
+//            transaction.commit();
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
 
 
-    public class getAssync extends AsyncTask<String,Integer, String>{
+    public class getAssync extends AsyncTask<String, Integer, String> {
 
         @Override
         protected String doInBackground(String... strings) {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
-            Log.i("WB",quote.toString());
+            Log.i("WB", quote.toString());
             return null;
         }
 
+    }
+
+    public void MostraEtapa(View view) {
+        Intent intent = new Intent(this, EtapaActivity.class);
+        startActivity(intent);
     }
 
     /**

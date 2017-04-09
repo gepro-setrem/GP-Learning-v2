@@ -1,11 +1,12 @@
 package com.gplearning.gplearning.Controllers;
 
-import android.app.Fragment;
+//import android.app.Fragment;
+
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
-//import android.support.v4.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,9 +37,9 @@ public class EtapasFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-//    public EtapasFragment() {
-//        // Required empty public constructor
-//    }
+    public EtapasFragment() {
+        // Required empty public constructor
+    }
 
 //    /**
 //     * Use this factory method to create a new instance of
@@ -83,13 +84,13 @@ public class EtapasFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        }
-    }
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        }
+//    }
 
     @Override
     public void onDetach() {
@@ -117,4 +118,6 @@ public class EtapasFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }
