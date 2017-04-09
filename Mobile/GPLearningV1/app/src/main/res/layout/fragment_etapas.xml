@@ -81,12 +81,12 @@
             app:layout_constraintRight_toRightOf="parent" />
 
         <!--<TextView-->
-            <!--android:id="@+id/textView3"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="TextView"-->
-            <!--tools:layout_editor_absoluteX="139dp"-->
-            <!--tools:layout_editor_absoluteY="496dp" />-->
+        <!--android:id="@+id/textView3"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="TextView"-->
+        <!--tools:layout_editor_absoluteX="139dp"-->
+        <!--tools:layout_editor_absoluteY="496dp" />-->
 
         <TextView
             android:id="@+id/textView5"
@@ -106,13 +106,13 @@
             android:id="@+id/etapaprojetoDescricaoTABtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="24dp"
             android:text="Descrição Termo de Abertura"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:layout_marginLeft="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginRight="8dp"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="24dp"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <Button
@@ -197,16 +197,15 @@
             app:layout_constraintTop_toBottomOf="@+id/etapaprojetoRequisitosTABtn" />
 
 
-
         <!--<TextView-->
-            <!--android:id="@+id/EtapaProjetoPlanejamentoTxt"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Grupo de Processos de Planejamento"-->
-            <!--android:layout_marginLeft="8dp"-->
-            <!--android:layout_marginRight="8dp"-->
-            <!--android:layout_marginTop="32dp"-->
-            <!--app:layout_constraintTop_toBottomOf="@+id/button11" />-->
+        <!--android:id="@+id/EtapaProjetoPlanejamentoTxt"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Grupo de Processos de Planejamento"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginTop="32dp"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/button11" />-->
         <TextView
             android:id="@+id/EtapaProjetoPlanejamentoTxt"
             android:layout_width="wrap_content"
@@ -258,6 +257,23 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRequisitosBtn" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="186dp"
+            android:src="@drawable/ic_supervisor_account_black_24px"
+            android:tint="@color/accent"
+            app:elevation="4dp"
+            app:fabSize="auto"
+            app:layout_constraintHorizontal_bias="0.973"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:rippleColor="@color/primary_dark"
+            tools:layout_editor_absoluteX="286dp" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>
