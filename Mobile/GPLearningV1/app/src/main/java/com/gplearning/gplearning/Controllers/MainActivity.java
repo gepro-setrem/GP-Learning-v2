@@ -1,5 +1,6 @@
 package com.gplearning.gplearning.Controllers;
 
+import android.app.Application;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 //import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,10 +23,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.gplearning.gplearning.Enums.Fragments;
+import com.gplearning.gplearning.Models.Quote;
 import com.gplearning.gplearning.R;
+
+
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,11 +128,20 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
-            SharedPreferences pref;
-            pref = getSharedPreferences("login",MODE_PRIVATE);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString("user",null);
-            editor.commit();
+//            SharedPreferences pref;
+//            pref = getSharedPreferences("login",MODE_PRIVATE);
+//            SharedPreferences.Editor editor = pref.edit();
+//            editor.putString("user",null);
+//            editor.commit();
+
+            new getAssync().execute();
+
+//            Error:Execution failed for task ':app:transformResourcesWithMergeJavaResForDebug'.
+//                    > com.android.build.api.transform.TransformException: com.android.builder.packaging.DuplicateFileException: Duplicate files copied in APK META-INF/LICENSE
+//            File1: C:\Users\Mateus\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.3.2\559b70ac8a0d5cad611da4223137a920147201ba\jackson-core-2.3.2.jar
+//            File2: C:\Users\Mateus\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-databind\2.3.2\c75edc740a6d8cb1cef6fa82fa594e0bce561916\jackson-databind-2.3.2.jar
+//            File3: C:\Users\Mateus\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-annotations\2.3.0\f5e853a20b60758922453d56f9ae1e64af5cb3da\jackson-annotations-2.3.0.jar
+//
             return true;
         }
 
@@ -181,6 +203,19 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
     }
 
+
+    public class getAssync extends AsyncTask<String,Integer, String>{
+
+        @Override
+        protected String doInBackground(String... strings) {
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
+            Log.i("WB",quote.toString());
+            return null;
+        }
+
+    }
 
     /**
      * Check whether the device is connected, and if so, whether the connection

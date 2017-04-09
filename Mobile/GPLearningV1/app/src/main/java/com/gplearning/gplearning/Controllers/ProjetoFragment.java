@@ -20,6 +20,7 @@ import com.gplearning.gplearning.Adapters.ProjetoRecyclerViewAdapter;
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.Models.Projeto;
 import com.gplearning.gplearning.Models.ProjetoDao;
+import com.gplearning.gplearning.Models.UsuarioDao;
 import com.gplearning.gplearning.R;
 
 import java.lang.reflect.Field;
@@ -42,6 +43,7 @@ public class ProjetoFragment extends Fragment {
 
     private List<Projeto> lsProjetos = new ArrayList<>();
     private ProjetoDao projetoDao;
+
 //    /**
 //     * Mandatory empty constructor for the fragment manager to instantiate the
 //     * fragment (e.g. upon screen orientation changes).
@@ -74,6 +76,8 @@ public class ProjetoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_projeto_list, container, false);
         projetoDao = App.getDaoSessionApp(getActivity()).getProjetoDao();
+
+
 
         mListener = new OnListFragmentInteractionListener() {
             @Override
