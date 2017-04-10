@@ -1,5 +1,7 @@
 package com.gplearning.gplearning.Models;
 
+import android.support.annotation.Nullable;
+
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -10,10 +12,11 @@ import java.util.Date;
 
 @Entity(nameInDb = "comentario")
 public class Comentario {
-    @Id(autoincrement = true)
-    private long _id;
 
-    private long id;
+    @Id(autoincrement = true)
+    private Long _id;
+
+    private Long id;
     private String texto;
     private Date criacao;
 
@@ -43,8 +46,8 @@ public class Comentario {
         this.texto = texto;
     }
 
-    @Generated(hash = 36337182)
-    public Comentario(long _id, long id, String texto, Date criacao, Long atv_id, Long use_id) {
+    @Generated(hash = 2099606645)
+    public Comentario(Long _id, Long id, String texto, Date criacao, Long atv_id, Long use_id) {
         this._id = _id;
         this.id = id;
         this.texto = texto;
@@ -57,12 +60,8 @@ public class Comentario {
     public Comentario() {
     }
 
-    public long get_id() {
+    public Long get_id() {
         return _id;
-    }
-
-    public void set_id(long _id) {
-        this._id = _id;
     }
 
     public long getId() {
@@ -197,6 +196,14 @@ public class Comentario {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
+    }
+
+    public void set_id(Long _id) {
+        this._id = _id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     /** called by internal mechanisms, do not call yourself. */

@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Models.ComentarioDao;
+import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 
@@ -25,6 +26,7 @@ public class ComentarioActivity extends AppCompatActivity {
 
     private List<Comentario> lsComentario  =new ArrayList<>();
     private ComentarioDao dao;
+private ArrayAdapter<Comentario> comentarioAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class ComentarioActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.comentarioListView);
 
         new CarregaComentarios().execute();
-        ArrayAdapter<Comentario> comentarioAdapter = new ArrayAdapter<Comentario>(this, android.R.layout.simple_list_item_1, lsComentario);
+        comentarioAdapter = new ArrayAdapter<Comentario>(this, android.R.layout.simple_list_item_1, lsComentario);
         listView.setAdapter(comentarioAdapter);
     }
 
@@ -55,12 +57,19 @@ public class ComentarioActivity extends AppCompatActivity {
 
     public void SalvaComentario(View view){
         EditText coment = (EditText)findViewById(R.id.comentarioNovo);
+        try{
         if(!coment.getText().toString().isEmpty()){
-            Comentario COM = new Comentario();
-            COM.setTexto(coment.getText().toString());
-            COM.setCriacao(new Date());
-            COM.setUse_id(Long.valueOf(1));
-            dao.insert(COM);
+            Comentario COM = new Comentario(null,null,coment.getText().toString(),new Date(),null,null);
+            DaoSession daoSession = ((App) getApplication()).getDaoSession();
+          ComentarioDao  cDao = daoSession.getComentarioDao();
+            Log.i("Event","id:"+COM.get_id());
+           long id = cDao.insert(COM);
+            if(id>0){
+                coment.setText("");
+            }
+
+        }}catch (Exception e){
+            Log.e("ERROR",e.toString());
         }
     }
 
@@ -75,12 +84,14 @@ public class ComentarioActivity extends AppCompatActivity {
 
             //.where(ComentarioDao.Properties..eq("Joe"))
             lsComentario = dao.queryBuilder().orderAsc(ComentarioDao.Properties.Criacao).list();
+
             return null;
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            comentarioAdapter.notifyDataSetChanged();
 
         }
     }
