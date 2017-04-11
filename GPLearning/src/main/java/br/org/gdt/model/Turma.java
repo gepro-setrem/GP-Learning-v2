@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,15 +42,15 @@ public class Turma implements Serializable {
     @OneToMany(mappedBy = "turma")
     private List<TurmaParametro> turmaParametros;
 
-    @OneToMany(mappedBy = "turma")
+    @OneToMany(mappedBy = "turma", fetch = FetchType.EAGER)
     private List<Pessoa> academicos;
 
     @ManyToOne
     @JoinColumn(name = "pes_id")
     public Pessoa professor;
 
-    @OneToMany(mappedBy = "turma")
-    private List<Projeto> projeto;
+    @OneToMany(mappedBy = "turma", fetch = FetchType.EAGER)
+    private List<Projeto> projetos;
 
     public Turma() {
     }
@@ -126,12 +127,12 @@ public class Turma implements Serializable {
         this.professor = professor;
     }
 
-    public List<Projeto> getProjeto() {
-        return projeto;
+    public List<Projeto> getProjetos() {
+        return projetos;
     }
 
-    public void setProjeto(List<Projeto> projeto) {
-        this.projeto = projeto;
+    public void setProjetos(List<Projeto> projetos) {
+        this.projetos = projetos;
     }
 
     @Override

@@ -21,6 +21,7 @@ import br.org.gdt.bll.TermoAberturaBLL;
 import br.org.gdt.bll.TurmaBLL;
 import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.enumerated.Role;
+import br.org.gdt.enumerated.Status;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -127,11 +128,8 @@ public class ProjetoBean {
 
     public List<Pessoa> getUsuarios() {
         Pessoa userlogado = usuariologado;
-        System.out.println("Usuário logado é " + usuariologado.getNome());
         turma = userlogado.getTurma();
-        System.out.println("Carregando usuários...");
         usuarios = usuarioService.findByUsers(turma, Role.user);
-
         return usuarios;
     }
 
@@ -161,7 +159,7 @@ public class ProjetoBean {
         Pessoa usuariolocal = usuariologado;
         System.out.println("O usuário logado no get projetos é " + usuariolocal.getNome());
         //Verificação se usuário é administrador, então filtre pelas turmas do professor
-        if (true){//(usuariolocal.getLogin().getLoginRoles(). getGrupo().getId() == 1) {
+        if (true) {//(usuariolocal.getLogin().getLoginRoles(). getGrupo().getId() == 1) {
 //            List<Usuario> alunosdasturmas = new ArrayList<>();
 //            List<Turma> turmasdoprofessor = new ArrayList<>();
 //            turmasdoprofessor = usuariologado.getTurmasprofessor();
@@ -177,14 +175,13 @@ public class ProjetoBean {
             System.out.println("Entrou no Grupo 1");
             //Pesquisaremos de acordo com a turma selecionada
             //System.out.println("Turma Selecionada no combobox" + turma.getNomeTurma());
-            Pessoa pes = usuarioService.findById(usuariolocal.getId());
             projetos = new ListDataModel(projetoService.findbyturmasprofessor(usuariolocal));
             //projetos = (DataModel) projetosdosalunosdasturmas;
             //Caso não seja administrador, filtre por aluno
         } else {
             System.out.println("Entrou No grupo 2");
             //Queremos a listagem de projetos que aparecem o usuario como componente
-            projetos = new ListDataModel(projetoService.findbyaluno(usuariolocal));
+            projetos = new ListDataModel(projetoService.findMyProjects(usuariolocal));
         }
         return projetos;
     }
@@ -409,7 +406,7 @@ public class ProjetoBean {
     }
 
     public String novoProjeto() {
-        if (usuariologado.getStatus().equals("Inativo")) {
+        if (usuariologado.getStatus().equals(Status.Inativo)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Você consta como usuário inativo, não podendo fazer novas alterações no sistema!"));
             return "ListagemProjetos";
         } else {

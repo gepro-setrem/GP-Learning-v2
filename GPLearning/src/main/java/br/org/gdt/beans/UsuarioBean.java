@@ -102,7 +102,6 @@ public class UsuarioBean {
         this.turmas = turmas;
     }
 
-    //quando é clicado o botão inserir
     public String salvar() {
         if (!usuario.getNome().isEmpty() && !usuario.getEmail().isEmpty()) {// && !usuario.getTurma().equals("")) {
             System.out.println("Entrou no botão salvar");
@@ -112,7 +111,7 @@ public class UsuarioBean {
             loginRole.setRole(Role.user);
             List<LoginRole> lsLoginRole = new ArrayList<>();
             lsLoginRole.add(loginRole);
-            
+
             if (usuario.getId() > 0) {
                 System.out.println("Entrou para alterar");
                 usuario.setAlteracao(new Date());
@@ -133,18 +132,17 @@ public class UsuarioBean {
                 perfil.setPessoa(usuario);
                 perfilService.insert(perfil);
             }
-            return "ListagemUsuarios";
+            return "usuariolst";
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para salvar, é necessário preencher todos os campos!"));
-            return "ManutencaoUsuarios";
+            return "usuariofrm";
         }
     }
 
-    public String select() {
+    public String editar() {
         usuario = (Pessoa) usuarios.getRowData();
         usuario = service.findById(usuario.getId());
-        System.out.println("O nome do usuario selecionado para Edição é" + usuario.getNome());
-        return "ManutencaoUsuarios";
+        return "usuariofrm";
     }
 
     public String inativar() {
@@ -155,12 +153,12 @@ public class UsuarioBean {
         service.update(usuario);
         context.addMessage(null, new FacesMessage("Sucesso", "Usuário tornou-se inativo e não poderá criar novos projetos"));
         usuarios = null;
-        return "ListagemUsuarios";
+        return "usuariolst";
     }
 
-    public String novoUsuario() {
+    public String novo() {
         usuario = new Pessoa();
-        return "ManutencaoUsuarios";
+        return "usuariofrm";
     }
 
     public List<Pessoa> getUsuariosfiltrados() {
@@ -170,4 +168,37 @@ public class UsuarioBean {
     public void setUsuariosfiltrados(List<Pessoa> usuariosfiltrados) {
         this.usuariosfiltrados = usuariosfiltrados;
     }
+
+    public PessoaBLL getService() {
+        return service;
+    }
+
+    public void setService(PessoaBLL service) {
+        this.service = service;
+    }
+
+    public TurmaBLL getTurmaService() {
+        return turmaService;
+    }
+
+    public void setTurmaService(TurmaBLL turmaService) {
+        this.turmaService = turmaService;
+    }
+
+    public Login getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Login perfil) {
+        this.perfil = perfil;
+    }
+
+    public LoginBLL getPerfilService() {
+        return perfilService;
+    }
+
+    public void setPerfilService(LoginBLL perfilService) {
+        this.perfilService = perfilService;
+    }
+
 }

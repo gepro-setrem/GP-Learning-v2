@@ -17,11 +17,11 @@ public class ProjetoDAO extends DAO<Projeto> {
         classe = Projeto.class;
     }
 
-    public List<Projeto> findbyaluno(Pessoa pessoa) {
-        Pessoa user = new PessoaDAO().findById(pessoa.getId());
-        List<Projeto> projetos = user.getProjetos();
-        return projetos;
-    }
+//    public List<Projeto> findbyaluno(Pessoa pessoa) {
+//        Pessoa user = new PessoaDAO().findById(pessoa.getId());
+//        List<Projeto> projetos = user.getProjetos();
+//        return projetos;
+//    }
 
     public List<Projeto> findbyturma(Turma turma) {
         return entityManager.createQuery("from Projeto where turma = :p")

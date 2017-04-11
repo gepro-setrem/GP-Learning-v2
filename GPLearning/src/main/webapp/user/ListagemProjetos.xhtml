@@ -35,7 +35,7 @@
                                             <f:facet name="header">
                                                 <h:outputText value="Nome do Projeto"/>
                                             </f:facet>
-                                            <h:outputText value="#{proj.nomeProjeto}"/>
+                                            <h:outputText value="#{proj.nome}"/>
 
                                         </p:column>
 
@@ -43,7 +43,7 @@
                                             <f:facet name="header">
                                                 <h:outputText value="Data de Criação"/>
                                             </f:facet>
-                                            <h:outputText value="#{proj.dataCriacao}">
+                                            <h:outputText value="#{proj.criacao}">
                                             </h:outputText>
                                         </p:column>
 
@@ -63,8 +63,6 @@
                                             <h:commandLink action="#{projetoBean.acessar()}" value="/Gerenciar"/>
                                         </p:column>
 
-
-
                                     </p:dataTable>
                                     <div id="botoes" style="text-align: right">
                                         <h:commandButton action="#{projetoBean.novoProjeto()}" class="btn btn-primary" value="Novo Projeto"/>
@@ -74,12 +72,7 @@
                         </div>
                     </h:form>
                 </f:view>
-
-
-
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>

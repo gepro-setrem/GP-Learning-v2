@@ -13,12 +13,20 @@
     </h:head>
 
     <h:body>
-        <div id="cabecalho" style="padding: 25px">
-            <h:link outcome="/user/index.xhtml">
-                <h:graphicImage library="img/" name="GPLearning.png" class="img-rounded" height="100%" width="70%"/>
-            </h:link>
-            <h:graphicImage library="img/" name="log_setrem-1 - SETREM.png" class="img-rounded" height="12%" width="12%" style="float: "/>
-            <h:graphicImage library="img/" name="usuario.png" class="img-rounded" height="5%" width="5%" style="float: right; padding-top: 20px"/>
+        <div class="row" style="padding: 10px; text-align: center;">
+            <div class="col-xs-7">
+                <h:link outcome="/Index.xhtml">
+                    <h:graphicImage library="img/" name="GPLearning.png" style="height: 60px;"/>
+                </h:link>
+            </div>
+            <div class="col-xs-3">
+                <h:graphicImage library="img/" name="log_setrem-1 - SETREM.png" style="height: 60px;"/>
+            </div>
+            <div class="col-xs-2">
+                <h:link outcome="/Perfil.xhtml">
+                    <h:graphicImage library="img/" name="usuario.png" style="height: 60px;"/>
+                </h:link>
+            </div>
         </div>
         <nav class="navbar navbar-default">
             <div class="container" style="">

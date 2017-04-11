@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,7 +38,7 @@ public class Pessoa implements Serializable {
     @Column(name = "pes_vtelefone", length = 20)
     private String telefone;
 
-    @Column(name = "pes_istatus")
+    @Column(name = "pes_vstatus")
     @Enumerated(EnumType.STRING)
     private Status status;
 
@@ -57,7 +58,7 @@ public class Pessoa implements Serializable {
     @JoinColumn(name = "tur_id")
     private Turma turma;
 
-    @OneToMany(mappedBy = "professor")
+    @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
     private List<Turma> turmasprofessor;
 
     @OneToMany(mappedBy = "gerente")

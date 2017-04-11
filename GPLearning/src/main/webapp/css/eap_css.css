@@ -21,7 +21,7 @@ textarea{max-width: 100%;}
     width: 200px;
     margin: auto;
     text-align: center;
-    padding: 20px 10px;
+    padding: 25px 10px 15px;
     border-radius: 5px;
     box-shadow: 1px 1px 1px 1px #e7e7e7;
     display: inline-block;
@@ -31,17 +31,21 @@ textarea{max-width: 100%;}
 }
 
 .eapIcon{
-    cursor: pointer;
+    margin: 0 5px;
+    /*    cursor: pointer;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        color: grey;*/
+}
+.eap_header{
     position: absolute;
-    right: 5px;
-    top: 5px;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    text-align: center;
 }
-
-.eapIcon{
-    color: grey;
-}
-
-.add_filho{
+/*.eapAdd{
     margin-right: 20px;
 }
 .eapUp{
@@ -49,9 +53,9 @@ textarea{max-width: 100%;}
 }
 .eapDown{
     margin-right: 40px;
-}
+}*/
 
-.block_nome {
+.eap_nome {
     height: auto;
     word-wrap: break-word;
 }
@@ -133,18 +137,18 @@ textarea{max-width: 100%;}
     height: 20px;
     border-left: 2px solid #ddd;
     content: "";
-/*    left: 0%;
-    height: 50px;*/
+    /*    left: 0%;
+        height: 50px;*/
 }
 .eap_pai:empty:before{
     border: 0;
 }
 
-.eapNumber{
+/*.eap_number{
     position: absolute;
     left: 3px;
     top: 0;
-}
+}*/
 
 .eap_list > .eap_pai:before{
     border: 0;

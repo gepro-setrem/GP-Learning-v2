@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -20,7 +21,7 @@ public class Login implements Serializable {
     @Id
     @Column(name = "log_vemail", length = 200)
     private String email;
-    
+
     @Column(name = "log_vsenha", length = 200)
     private String senha;
 
@@ -100,4 +101,11 @@ public class Login implements Serializable {
         return true;
     }
 
+//    @Override
+//    public String toString() {
+//        if (this.loginRoles != null && !this.loginRoles.isEmpty()) {
+//            return this.loginRoles.get(0).getRole().toString();
+//        }
+//        return "";
+//    }
 }

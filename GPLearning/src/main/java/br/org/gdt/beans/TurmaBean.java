@@ -77,17 +77,17 @@ public class TurmaBean {
                 turma.setProfessor(usuariologado);
                 service.insert(turma);
             }
-            return "ListagemTurmas";
+            return "turmalst";
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para salvar, é necessário preencher o nome e ano da turma!"));
-            return "ManutencaoTurmas";
+            return "turmafrm";
         }
     }
 
     public String select() {
         turma = (Turma) turmas.getRowData();
         turma = service.findById(turma.getId());
-        return "ManutencaoTurmas";
+        return "turmafrm";
     }
 
     public String duplicar() {
@@ -112,7 +112,7 @@ public class TurmaBean {
 //        copia.setDescricaoTelaTermoAberturaRestricoes(turma.getDescricaoTelaTermoAberturaRestricoes());
 //        copia.setProfessor(turma.getProfessor());
         service.insert(copia);
-        return "ListagemTurmas";
+        return "turmalst";
     }
 
     public String excluir() throws Exception {
@@ -123,12 +123,28 @@ public class TurmaBean {
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
         }
-        return "ListagemTurmas";
+        return "turmalst";
     }
 
     public String novaTurma() {
         turma = new Turma();
-        return "ManutencaoTurmas";
+        return "turmafrm";
+    }
+
+    public TurmaBLL getService() {
+        return service;
+    }
+
+    public void setService(TurmaBLL service) {
+        this.service = service;
+    }
+
+    public PessoaBLL getUserService() {
+        return userService;
+    }
+
+    public void setUserService(PessoaBLL userService) {
+        this.userService = userService;
     }
 
 }

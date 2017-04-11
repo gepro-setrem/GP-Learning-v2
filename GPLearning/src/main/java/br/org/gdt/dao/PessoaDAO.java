@@ -14,7 +14,7 @@ public class PessoaDAO extends DAO<Pessoa> {
     }
 
     public List<Pessoa> findByUsers(Turma turma, Role grupo) {
-        return entityManager.createQuery("from Pessoa as p where p.turma = :p and p.login.role = :q")
+        return entityManager.createQuery("from Pessoa as p left join p.login.loginRoles as r where p.turma = :p and r.role = :q")
                 .setParameter("p", turma)
                 .setParameter("q", grupo).getResultList();
     }

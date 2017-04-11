@@ -22,8 +22,8 @@ public class ProjetoBLL extends BLL<Projeto> {
     //@ManagedProperty("#{pessoaBLL}")
     private PessoaBLL pessoaBLL;
 
-    public List<Projeto> findbyaluno(Pessoa usuario) {
-        Pessoa user = new PessoaDAO().findById(usuario.getId());
+    public List<Projeto> findMyProjects(Pessoa usuario) {
+        Pessoa user = pessoaBLL.findById(usuario.getId());
         List<Projeto> projetos = user.getProjetos();
         return projetos;
     }
@@ -40,7 +40,7 @@ public class ProjetoBLL extends BLL<Projeto> {
         Pessoa user = pessoaBLL.findById(pessoa.getId());
         List<Projeto> projetos = new ArrayList<>();
         for (Turma turma : user.getTurmasprofessor()) {
-            projetos.addAll(turma.getProjeto());
+            projetos.addAll(turma.getProjetos());
         }
         return projetos;
     }
