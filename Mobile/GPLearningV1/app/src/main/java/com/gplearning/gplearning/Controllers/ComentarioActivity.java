@@ -15,6 +15,8 @@ import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.Value;
+import com.gplearning.gplearning.Models.ValueDao;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 
@@ -24,19 +26,25 @@ import java.util.List;
 
 public class ComentarioActivity extends AppCompatActivity {
 
-    private List<Comentario> lsComentario  =new ArrayList<>();
+    private List<Comentario> lsComentario = new ArrayList<>();
     private ComentarioDao dao;
-private ArrayAdapter<Comentario> comentarioAdapter;
+    private ValueDao valueDao;
+    private ArrayAdapter<Comentario> comentarioAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comentario);
-        dao = App.getDaoSessionApp(this).getComentarioDao();
-
+        DaoSession daoSession = ((App) getApplication()).getDaoSession();
+        //   ComentarioDao cDao
+        dao = daoSession.getComentarioDao();
+        //dao = App.getDaoSessionApp(this).getComentarioDao();
+        valueDao=daoSession.getValueDao();
         ListView listView = (ListView) findViewById(R.id.comentarioListView);
 
-        new CarregaComentarios().execute();
+       // new CarregaComentarios().execute();
+        lsComentario = dao.queryBuilder().orderAsc(ComentarioDao.Properties.Criacao).list();
+
         comentarioAdapter = new ArrayAdapter<Comentario>(this, android.R.layout.simple_list_item_1, lsComentario);
         listView.setAdapter(comentarioAdapter);
     }
@@ -55,21 +63,23 @@ private ArrayAdapter<Comentario> comentarioAdapter;
     }
 
 
-    public void SalvaComentario(View view){
-        EditText coment = (EditText)findViewById(R.id.comentarioNovo);
-        try{
-        if(!coment.getText().toString().isEmpty()){
-            Comentario COM = new Comentario(null,null,coment.getText().toString(),new Date(),null,null);
-            DaoSession daoSession = ((App) getApplication()).getDaoSession();
-          ComentarioDao  cDao = daoSession.getComentarioDao();
-            Log.i("Event","id:"+COM.get_id());
-           long id = cDao.insert(COM);
-            if(id>0){
-                coment.setText("");
-            }
+    public void SalvaComentario(View view) {
+        EditText coment = (EditText) findViewById(R.id.comentarioNovo);
+        try {
+            if (!coment.getText().toString().isEmpty()) {
+                Comentario COM = new Comentario(null, coment.getText().toString(), new Date());
 
-        }}catch (Exception e){
-            Log.e("ERROR",e.toString());
+                Value val = new Value(null,coment.getText().toString());
+                long id = dao.insert(COM);
+                Log.i("Event", "id:" + COM.get_id());
+                if (id > 0) {
+                    coment.setText("");
+                    lsComentario = dao.queryBuilder().orderAsc(ComentarioDao.Properties.Criacao).list();
+                    comentarioAdapter.notifyDataSetChanged();
+                }
+            }
+        } catch (Exception e) {
+            Log.e("ERROR", e.toString());
         }
     }
 
