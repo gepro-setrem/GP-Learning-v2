@@ -57,7 +57,7 @@ public class HomeBean {
         ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
         HttpServletRequest request = (HttpServletRequest) external.getRequest();
         String email = request.getRemoteUser();
-        hasSession = !email.isEmpty();
+        hasSession = email != null && !email.isEmpty();
         return hasSession;
     }
 

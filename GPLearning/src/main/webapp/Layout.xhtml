@@ -15,7 +15,7 @@
     <h:body>
         <div class="row" style="padding: 10px; text-align: center;">
             <div class="col-xs-7">
-                <h:link outcome="/Index.xhtml">
+                <h:link outcome="/user/Index.xhtml">
                     <h:graphicImage library="img/" name="GPLearning.png" style="height: 60px;"/>
                 </h:link>
             </div>
@@ -23,7 +23,7 @@
                 <h:graphicImage library="img/" name="log_setrem-1 - SETREM.png" style="height: 60px;"/>
             </div>
             <div class="col-xs-2">
-                <h:link outcome="/Perfil.xhtml">
+                <h:link outcome="/user/Perfil.xhtml">
                     <h:graphicImage library="img/" name="usuario.png" style="height: 60px;"/>
                 </h:link>
             </div>
@@ -38,12 +38,9 @@
                         <ui:insert name="menuhorizontal">
                         </ui:insert>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right" style="display: #{homeBean.hasSession ? "block" : "none"}">
+                    <ul class="nav navbar-nav navbar-right" style="display: #{homeBean.hasSession ? 'block' : 'none'}">
                         <li><h:link outcome="/user/ListagemProjetos.xhtml">Meus Projetos</h:link></li>
-                        <li><p class="navbar-text navbar-right" style="">Olá, <h:outputText class="navbar-link" value="#{homeBean.usuario.nome}"/>. 
-                                <h:link outcome="/logout">Sair</h:link>
-                                <a href="/logout"> Sair</a>
-                            </p></li>
+                        <li><p class="navbar-text navbar-right" style="">Olá, <h:outputText class="navbar-link" value="#{homeBean.usuario.nome}"/>. <h:outputLink value="logout">Sair</h:outputLink></p></li>
                     </ul>
                 </div>
             </div>
