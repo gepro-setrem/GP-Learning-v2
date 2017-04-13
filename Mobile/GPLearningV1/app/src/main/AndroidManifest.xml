@@ -55,12 +55,18 @@
         <activity
             android:name=".Controllers.EtapaActivity"
             android:parentActivityName=".Controllers.MainActivity">
-
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gplearning.gplearning.Controllers.MainActivity" />
             <!-- <meta-data -->
             android:name="android.support.PARENT_ACTIVITY"
             android:value="com.gplearning.gplearning.Controllers.MainActivity" />
         </activity>
-        <activity android:name=".Controllers.ComentarioActivity"></activity>
+        <activity android:name=".Controllers.ComentarioActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gplearning.gplearning.Controllers.EtapaActivity" />
+        </activity>
     </application>
 
 </manifest>

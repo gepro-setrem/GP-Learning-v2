@@ -1,14 +1,11 @@
 package com.gplearning.gplearning.Models;
 
 
-import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
-import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.NotNull;
-import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
 
@@ -20,7 +17,8 @@ public class Comentario {
     @Id
     private Long _id;
 
-    //private Long id;
+    private Long idExterno;
+
     @NotNull
     private String texto;
     private Date criacao;
@@ -38,9 +36,11 @@ public class Comentario {
         this.texto = texto;
     }
 
-    @Generated(hash = 109456261)
-    public Comentario(Long _id, @NotNull String texto, Date criacao) {
+    @Generated(hash = 719587414)
+    public Comentario(Long _id, Long idExterno, @NotNull String texto,
+            Date criacao) {
         this._id = _id;
+        this.idExterno = idExterno;
         this.texto = texto;
         this.criacao = criacao;
     }
@@ -89,6 +89,13 @@ public class Comentario {
         this._id = _id;
     }
 
+    public Long getIdExterno() {
+        return idExterno;
+    }
+
+    public void setIdExterno(Long idExterno) {
+        this.idExterno = idExterno;
+    }
 //    public Long getUse_id() {
 //        return this.use_id;
 //    }

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="8dp"
+    android:maxHeight="100dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -42,9 +43,5 @@
         android:id="@+id/itemListviewComentTexto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="123 123123123/n123123
-        1
-        2
-        3asd
-        4" />
+        android:text="" />
 </LinearLayout>

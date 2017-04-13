@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.gplearning.gplearning.Enums.Fragments;
+import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.Quote;
 import com.gplearning.gplearning.R;
 
@@ -209,6 +210,9 @@ public class MainActivity extends AppCompatActivity
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
+
+
+
             Log.i("WB", quote.toString());
             return null;
         }
