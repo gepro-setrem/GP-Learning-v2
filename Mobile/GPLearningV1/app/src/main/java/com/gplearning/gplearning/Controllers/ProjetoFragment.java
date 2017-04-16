@@ -6,6 +6,7 @@ package com.gplearning.gplearning.Controllers;
 import android.content.Context;
 import android.os.Bundle;
 
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
@@ -43,7 +44,7 @@ public class ProjetoFragment extends Fragment {
     private OnListFragmentInteractionListener mListener;
     private View view;
     private List<Projeto> lsProjetos = new ArrayList<>();
-    private ProjetoDao projetoDao;
+   // private ProjetoDao projetoDao;
 
 //    /**
 //     * Mandatory empty constructor for the fragment manager to instantiate the
@@ -78,14 +79,15 @@ public class ProjetoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_projeto_list, container, false);
-        projetoDao = App.getDaoSessionApp(getActivity()).getProjetoDao();
+      //  projetoDao = App.getDaoSessionApp(getActivity()).getProjetoDao();
+
 
 
         mListener = new OnListFragmentInteractionListener() {
             @Override
             public void onListFragmentInteraction(Projeto item) {
                 Log.i("event", "clicou no projeto:" + item.getNome());
-                Fragment fragment = new EtapasFragment();
+                Fragment fragment = EtapasFragment.newInstance(item.get_id());
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 manager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 //                FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -106,6 +108,7 @@ public class ProjetoFragment extends Fragment {
                 ((TextView) getActivity().findViewById(R.id.TxtNenhumRegistro)).setVisibility(View.VISIBLE);
             }
         }
+
         return view;
     }
 

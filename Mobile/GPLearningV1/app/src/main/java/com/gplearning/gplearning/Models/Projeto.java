@@ -14,7 +14,7 @@ public class Projeto {
     @Id(autoincrement = true)
     private Long _id;
 
-    private Long id;
+    private Long idExterno;
     private String nome;
     private String descricao;
     private String gerente;
@@ -30,11 +30,11 @@ public class Projeto {
     }
 
     @Keep
-    public Projeto(long _id, long id, String nome, String descricao,
+    public Projeto(long _id, long idExterno, String nome, String descricao,
                    String gerente, String empresa, Date criacao, Date alteracao,
                    String comentarioInstrutor) {
         this._id = _id;
-        this.id = id;
+        this.idExterno = idExterno;
         this.nome = nome;
         this.descricao = descricao;
         this.gerente = gerente;
@@ -44,12 +44,11 @@ public class Projeto {
         this.comentarioInstrutor = comentarioInstrutor;
     }
 
-    @Generated(hash = 2061687054)
-    public Projeto(Long _id, Long id, String nome, String descricao, String gerente,
-                   String empresa, Date criacao, Date alteracao,
-                   String comentarioInstrutor) {
+    @Generated(hash = 174373330)
+    public Projeto(Long _id, Long idExterno, String nome, String descricao, String gerente,
+            String empresa, Date criacao, Date alteracao, String comentarioInstrutor) {
         this._id = _id;
-        this.id = id;
+        this.idExterno = idExterno;
         this.nome = nome;
         this.descricao = descricao;
         this.gerente = gerente;
@@ -68,11 +67,11 @@ public class Projeto {
     }
 
     public Long getId() {
-        return id;
+        return idExterno;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long idExterno) {
+        this.idExterno = idExterno;
     }
 
     public String getNome() {
@@ -129,6 +128,14 @@ public class Projeto {
 
     public void setComentarioInstrutor(String comentarioInstrutor) {
         this.comentarioInstrutor = comentarioInstrutor;
+    }
+
+    public Long getIdExterno() {
+        return this.idExterno;
+    }
+
+    public void setIdExterno(Long idExterno) {
+        this.idExterno = idExterno;
     }
 
 

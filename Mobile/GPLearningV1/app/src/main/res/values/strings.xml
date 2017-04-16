@@ -26,6 +26,10 @@
     <string name="project">Projetos</string>
     <string name="last_comments">Últimos comentários</string>
     <string name="choose_area">Escolher área</string>
+    <string name="no_comments">Nenhum comentário realizado, seja o primeiro a comentar!</string>
+    <string name="project_detail">Detalhes do Projeto</string>
+    <string name="inicitiation_process">Processos de Iniciação</string>
+
 
     <string name="last_sync">Última sincronização</string>
 

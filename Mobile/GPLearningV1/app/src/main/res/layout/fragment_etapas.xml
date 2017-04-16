@@ -95,7 +95,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="32dp"
-            android:text="Processos de Iniciação"
+            android:text="@string/inicitiation_process"
             android:textSize="18sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -259,22 +259,21 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRequisitosBtn" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="186dp"
-            android:src="@drawable/ic_supervisor_account_black_24px"
-            android:tint="@color/accent"
-            app:elevation="4dp"
-            app:fabSize="auto"
-            app:layout_constraintHorizontal_bias="0.973"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:rippleColor="@color/primary_dark"
-            tools:layout_editor_absoluteX="286dp" />
+        <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="80dp"-->
+            <!--android:layout_marginLeft="8dp"-->
+            <!--android:layout_marginRight="8dp"-->
+            <!--android:layout_marginTop="188dp"-->
+            <!--android:src="@drawable/ic_supervisor_account_black_24px"-->
+            <!--android:tint="@color/accent"-->
+            <!--app:elevation="4dp"-->
+            <!--app:fabSize="auto"-->
+            <!--app:layout_constraintHorizontal_bias="0.964"-->
+            <!--app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--app:layout_constraintRight_toRightOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent"-->
+            <!--app:rippleColor="@color/primary_dark" />-->
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

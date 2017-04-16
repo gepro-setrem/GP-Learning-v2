@@ -2,6 +2,7 @@ package com.gplearning.gplearning.Controllers;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -58,7 +59,7 @@ public class ComentarioActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+        recyclerView.addOnItemTouchListener(new MetodosPublicos.RecyclerItemClickListener(this, recyclerView, new MetodosPublicos.RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Log.i("Event", "Clicou");
@@ -67,7 +68,7 @@ public class ComentarioActivity extends AppCompatActivity {
             @Override
             public void onLongItemClick(View view, int position) {
                 Log.i("Event", "Long Click");
-
+                PopupDeletaComentario(position);
             }
         }));
     }
@@ -101,8 +102,9 @@ public class ComentarioActivity extends AppCompatActivity {
                 Log.i("Event", "id:" + COM.get_id());
                 if (id > 0) {
                     coment.setText("");
-                    comentarioAdapter.swap(dao.queryBuilder().orderAsc(ComentarioDao.Properties.Criacao).list());
-
+                 //   comentarioAdapter.swap(dao.queryBuilder().orderAsc(ComentarioDao.Properties.Criacao).list());
+                    lsComentario.add(COM);
+                    comentarioAdapter.notifyItemInserted(lsComentario.size()-1);
                 }
             }
         } catch (Exception e) {
@@ -132,61 +134,27 @@ public class ComentarioActivity extends AppCompatActivity {
 //    }
 
 
-    public void showPopup() {
+    public void PopupDeletaComentario(final int position) {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Deletar comentário?");
-        alert.setCancelable(false);
-
-
-    }
-
-
-    public static class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
-        private OnItemClickListener mListener;
-
-        public interface OnItemClickListener {
-            public void onItemClick(View view, int position);
-
-            public void onLongItemClick(View view, int position);
-        }
-
-        GestureDetector mGestureDetector;
-
-        public RecyclerItemClickListener(Context context, final RecyclerView recyclerView, OnItemClickListener listener) {
-            mListener = listener;
-            mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                    if (child != null && mListener != null) {
-                        mListener.onLongItemClick(child, recyclerView.getChildAdapterPosition(child));
-                    }
-                }
-            });
-        }
-
-        @Override
-        public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {
-            View childView = view.findChildViewUnder(e.getX(), e.getY());
-            if (childView != null && mListener != null && mGestureDetector.onTouchEvent(e)) {
-                mListener.onItemClick(childView, view.getChildAdapterPosition(childView));
-                return true;
+        alert.setCancelable(true);
+        alert.setNeutralButton("Cancelar",null);
+        alert.setNegativeButton("Deletar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                try {
+                    Log.i("Event", "Vai deletar o comet id:" + comentarioAdapter.getItemId(position));
+                    dao.deleteByKey(comentarioAdapter.getItemId(position));
+                    lsComentario.remove(position);
+                    comentarioAdapter.notifyItemRemoved(position);
+                }catch (Exception e){Log.e("ERROR", e.toString());};
             }
-            return false;
-        }
+        });
+        alert.show();
 
-        @Override
-        public void onTouchEvent(RecyclerView view, MotionEvent motionEvent) {
-        }
-
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-        }
     }
+
+
+
 
 }
