@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="/user/layout.xhtml">
+            <ui:define name="menuhorizontal">
+                <li role="presentation" ><a href="projetolst.xhtml">Projetos</a></li>
+                <li role="presentation" class="active"><a href="usuariolst.xhtml">Usuários</a></li>
+                <li role="presentation" ><a href="turmalst.xhtml">Turmas</a></li>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <style>
+                        .control_label{
+                            text-align: right;
+                        }
+                        .control_form{
+
+                        }
+                    </style>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="text-align: center;">
+                            <h:commandLink action="#{perfilBean.editar()}" class="btn btn-primary"><i class="fa-pencil"></i> Editar</h:commandLink>
+<!--                            <h:commandButton action="#{perfilBean.editar()}" class="btn btn-primary" value="Editar" style="float: right;"/>-->
+                            <h4>Perfil do Usuário</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-5">
+                                    <p:graphicImage value="#{perfilBean.usuario.imagem}" name="img/usuario.png"  style="width: 100%; height: 100%" cache="false"/>
+                                </div>
+                                <div class="col-lg-10 col-md-9 col-sm-8 col-xs-7">
+                                    <div class="row">
+                                        <label class="col-sm-6 col-xs-4 control_label">Nome:</label>
+                                        <div class="col-sm-6 col-xs-8 control_form">#{perfilBean.usuario.nome}</div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-6 col-xs-4 control_label">Email:</label>
+                                        <div class="col-sm-6 col-xs-8 control_form">#{perfilBean.usuario.email}</div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-6 col-xs-4 control_label">Telefone:</label>
+                                        <div class="col-sm-6 col-xs-8 control_form">#{perfilBean.usuario.telefone}</div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-6 col-xs-4 control_label">Turma:</label>
+                                        <div class="col-sm-6 col-xs-8 control_form">#{perfilBean.usuario.turma}</div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-6 col-xs-4 control_label">Status:</label>
+                                        <div class="col-sm-6 col-xs-8 control_form">#{perfilBean.usuario.status}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

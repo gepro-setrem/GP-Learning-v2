@@ -40,15 +40,26 @@ $(document).on('click', '#eapModal .salvaEAP', function () {
         eap.find('[name="' + name + '"]').val(value);
     });
     eap.find('.eap_nome').html($('#eapModal [name=nome]').val());
-    $('#eapModal').modal('hide');
+    Salvar();
 });
 
 $(document).on('click', '#eapModal .deletaEAP', function () {
-    var ordem = $('#eapModal').find('[name=ordem]').val();
-    var item = $('.eap [name=ordem][value="' + ordem + '"]').parents('.eap_item:eq(0)');
-    item.remove();
-    ReloadNumbers();
-    $('#eapModal').modal('hide');
+    var id = parseInt($('#eapModal').find('[name=id]').val()) || 0;
+    if (id > 0) {
+        $.ajax({
+            type: 'POST',
+            url: '/GPLearning/api/eap/excluir',
+            data: {eap_id: id},
+            success: function (responser) {
+                if (responser) {
+                    var item = $('.eap [name=id][value="' + id + '"]').parents('.eap_item:eq(0)');
+                    item.remove();
+                    ReloadNumbers();
+                    $('#eapModal').modal('hide');
+                }
+            }, error: function (error) {}
+        });
+    }
 });
 
 $(document).on('click', '.eapAdd', function () {
@@ -99,29 +110,39 @@ function Salvar() {
         url: '/GPLearning/api/eap/salvar',
         data: form.serialize(),
         success: function (responser) {
-
+            if (responser && responser > 0) {
+                $('#eapModal').modal('hide');
+            }
         }, error: function (error) {}
     });
 }
 
 function loadEAP() {
-    $.ajax({
-        type: 'GET',
-        url: '/GPLearning/api/eap/index',
-        data: {pro_id: 1},
-        success: function (responser) {
-            $('.eap_list').html('');
-            if (responser && responser.length > 0) {
+    var id = parseInt("1") || 0;
+    if (id > 0) {
+        $.ajax({
+            type: 'GET',
+            url: '/GPLearning/api/eap/index/' + id,
+            //data: {pro_id: 1},
+            success: function (responser) {
+                $('.eap_list').html('');
+                if (responser && responser.length > 0) {
 
-            } else {
-                var html = $('.HtmlExample .eap_pai').clone();
-                html.find('[name=id]').val(number());
-                $('.eap_list').append(html);
-                ReloadNumbers();
-            }
-        },
-        error: function (error) {}
-    });
+                } else {
+                    var html = $('.HtmlExample .eap_pai').clone();
+                    var pro_id = parseInt($('#pro_id').val()) || 0;//number()
+                    var pro_nome = $('#pro_nome').val();
+                    pro_nome = pro_nome && $.trim(pro_nome) != '' ? pro_nome : 'Nome do Projeto';
+                    html.find('[name=id]').val(pro_id);
+                    html.find('[name=nome]').val(pro_nome);
+                    html.find('.eap_nome').html(pro_nome);
+                    $('.eap_list').append(html);
+                    ReloadNumbers();
+                }
+            },
+            error: function (error) {}
+        });
+    }
 }
 $(function () {
     loadEAP();

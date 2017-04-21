@@ -1,0 +1,80 @@
+<ui:composition template="/Layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <style>
+            .control-label{
+                text-align: right;
+            }
+        </style>
+
+        <h:form enctype="multipart/form-data">
+            <h:inputHidden value="#{usuarioBean.usuario.id}"/>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Manutenção de Usuários</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="alert-warning"><h:messages /></div>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-12">
+                            <div class="form-group row">
+                                <label class="col-sm-2 control-label">Nome:</label>
+                                <div class="col-sm-10">
+                                    <h:inputText class="form-control" pt:placeholder="Nome" value="#{perfilBean.usuario.nome}" required="true" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xs-12">
+                            <div class="form-group row">
+                                <label class="col-sm-2 control-label">E-mail:</label>
+                                <div class="col-sm-10">
+                                    <h:inputText class="form-control" pt:placeholder="Email" value="#{perfilBean.usuario.email}" required="true" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xs-12">
+                            <div class="form-group row">
+                                <label class="col-sm-2 control-label">Telefone:</label>
+                                <div class="col-sm-10">
+                                    <p:inputMask class="form-control" value="#{perfilBean.usuario.telefone}" mask="(999) 99999-9999"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xs-12">
+                            <div class="form-group row">
+                                <label class="col-sm-2 control-label">Senha:</label>
+                                <div class="col-sm-10">
+                                    <p:password class="form-control" value="#{perfilBean.usuario.login.senha}" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xs-12">
+                            <div class="form-group row">
+                                <label class="col-sm-2 control-label">Imagem:</label>
+                                <div class="col-sm-10">
+                                    <p:fileUpload  mode="simple"  auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" value="#{perfilBean.userImage}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div style="text-align: right;">
+                        <h:button class="btn btn-default" outcome="perfil" value="Cancelar" style="margin-right: 5px;"/>
+                        <h:commandLink class="btn btn-success" action="#{perfilBean.salvar()}"><i class="fa-plus"></i> Salvar</h:commandLink>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

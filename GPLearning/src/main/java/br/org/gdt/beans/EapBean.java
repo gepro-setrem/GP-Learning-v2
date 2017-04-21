@@ -1,7 +1,9 @@
 package br.org.gdt.beans;
 
 import br.org.gdt.bll.EAPBLL;
+import br.org.gdt.bll.ProjetoBLL;
 import br.org.gdt.model.EAP;
+import br.org.gdt.model.Projeto;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -15,6 +17,10 @@ public class EapBean {
     @ManagedProperty("#{eapBLL}")
     private EAPBLL eapBLL;
     private DataModel eaps;
+
+    private Projeto projeto;
+    @ManagedProperty("#{projetoBLL}")
+    private ProjetoBLL projetoBLL;
 
     public EapBean() {
     }
@@ -46,6 +52,22 @@ public class EapBean {
 
     public void setEaps(DataModel eaps) {
         this.eaps = eaps;
+    }
+
+    public Projeto getProjeto() {
+        return projeto;
+    }
+
+    public void setProjeto(Projeto projeto) {
+        this.projeto = projeto;
+    }
+
+    public ProjetoBLL getProjetoBLL() {
+        return projetoBLL;
+    }
+
+    public void setProjetoBLL(ProjetoBLL projetoBLL) {
+        this.projetoBLL = projetoBLL;
     }
 
 }

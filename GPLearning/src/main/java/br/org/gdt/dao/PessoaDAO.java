@@ -25,12 +25,20 @@ public class PessoaDAO extends DAO<Pessoa> {
     }
 
     public Pessoa findByEmail(String email) {
-        List<Pessoa> lsUsers = entityManager.createQuery("from Pessoa where email=:p")
-                .setParameter("p", email).getResultList();
         Pessoa user = new Pessoa();
-        if (lsUsers.size() > 0) {
-            user = (Pessoa) lsUsers.get(0);
+        if (email != null && !email.isEmpty()) {
+            user = (Pessoa) entityManager.createQuery("from Pessoa where email=:p")
+                    .setParameter("p", email).getSingleResult();
         }
+//        Pessoa user = new Pessoa();
+//        if (lsUsers.size() > 0) {
+//            user = (Pessoa) lsUsers.get(0);
+//        }
         return user;
+    }
+
+    public List<Pessoa> findAllUsers(Pessoa pessoa) {
+        return entityManager.createQuery("from Pessoa as p where p.turma.professor = :p")
+                .setParameter("p", pessoa).getResultList();
     }
 }

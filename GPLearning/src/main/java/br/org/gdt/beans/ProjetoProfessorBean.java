@@ -33,6 +33,8 @@ public class ProjetoProfessorBean {
     private TurmaBLL turmaBLL;
     private List<Turma> turmas;
 
+    private List<Projeto> projetosfiltrados;
+
     public ProjetoProfessorBean() {
     }
 
@@ -53,11 +55,8 @@ public class ProjetoProfessorBean {
     }
 
     public DataModel getProjetos() {
-        if (true) {//(usuariolocal.getLogin().getLoginRoles(). getGrupo().getId() == 1) {
-            projetos = new ListDataModel(projetoBLL.findbyturmasprofessor(usuario));
-        } else {
-            projetos = new ListDataModel(projetoBLL.findMyProjects(usuario));
-        }
+        usuario = getUsuario();
+        projetos = new ListDataModel(projetoBLL.findbyturmasprofessor(usuario));
         return projetos;
     }
 
@@ -65,15 +64,11 @@ public class ProjetoProfessorBean {
         this.projetos = projetos;
     }
 
-    public Pessoa getUsuariologado() {
+    public Pessoa getUsuario() {
         ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
         HttpServletRequest request = (HttpServletRequest) external.getRequest();
         String email = request.getRemoteUser();
         usuario = pessoaBLL.findByEmail(email);
-        return usuario;
-    }
-
-    public Pessoa getUsuario() {
         return usuario;
     }
 
@@ -98,12 +93,21 @@ public class ProjetoProfessorBean {
     }
 
     public List<Turma> getTurmas() {
+        usuario = getUsuario();
         turmas = turmaBLL.findbyProfessor(usuario);
         return turmas;
     }
 
     public void setTurmas(List<Turma> turmas) {
         this.turmas = turmas;
+    }
+
+    public List<Projeto> getProjetosfiltrados() {
+        return projetosfiltrados;
+    }
+
+    public void setProjetosfiltrados(List<Projeto> projetosfiltrados) {
+        this.projetosfiltrados = projetosfiltrados;
     }
 
 }

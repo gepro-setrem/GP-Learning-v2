@@ -59,7 +59,8 @@ import org.primefaces.model.UploadedFile;
 @SessionScoped
 public class ProjetoBean {
 
-    private Projeto projeto = new Projeto();
+    private Pessoa usuario;
+    private Projeto projeto;
     @ManagedProperty("#{projetoBLL}")
     private ProjetoBLL projetoService;
     private DataModel projetos;
@@ -71,7 +72,6 @@ public class ProjetoBean {
     @ManagedProperty("#{turmaBLL}")
     private TurmaBLL turmaService;
 
-    private Pessoa usuariologado;
     @ManagedProperty("#{pessoaBLL}")
     private PessoaBLL usuarioService;
     private List<Pessoa> usuarios;
@@ -115,6 +115,9 @@ public class ProjetoBean {
     private Turma turma;
     private List<Turma> turmasdousuario;
 
+    public ProjetoBean() {
+    }
+
     public List<Projeto> getProjetosparainstrutor() {
         return projetosparainstrutor;
     }
@@ -123,12 +126,8 @@ public class ProjetoBean {
         this.projetosparainstrutor = projetosparainstrutor;
     }
 
-    public ProjetoBean() {
-    }
-
     public List<Pessoa> getUsuarios() {
-        Pessoa userlogado = usuariologado;
-        turma = userlogado.getTurma();
+        turma = usuario.getTurma();
         usuarios = usuarioService.findByUsers(turma, Role.user);
         return usuarios;
     }
@@ -145,44 +144,9 @@ public class ProjetoBean {
         this.projeto = projeto;
     }
 
-    public Pessoa getUsuariologado() {
-        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) external.getRequest();
-        String emailuser = request.getRemoteUser();
-        System.out.println("" + emailuser);
-        usuariologado = usuarioService.findByEmail(emailuser);
-        return usuariologado;
-    }
-
     public DataModel getProjetos() {
-        //Obtenção do usuário logado
-        Pessoa usuariolocal = usuariologado;
-        System.out.println("O usuário logado no get projetos é " + usuariolocal.getNome());
-        //Verificação se usuário é administrador, então filtre pelas turmas do professor
-        if (true) {//(usuariolocal.getLogin().getLoginRoles(). getGrupo().getId() == 1) {
-//            List<Usuario> alunosdasturmas = new ArrayList<>();
-//            List<Turma> turmasdoprofessor = new ArrayList<>();
-//            turmasdoprofessor = usuariologado.getTurmasprofessor();
-//            //Uma turma do tipo Turma, será preenchida com os objetos da datamodel turmas
-//            for (Turma turma : turmasdoprofessor) {
-//                alunosdasturmas.addAll(turma.getAcademicos());
-//            }
-//
-//            List<Projeto> projetosdosalunosdasturmas = new ArrayList<>();
-//            for (Usuario usuariosdalista : alunosdasturmas) {
-//                projetosdosalunosdasturmas.addAll(usuariosdalista.getProjetos());
-//            }
-            System.out.println("Entrou no Grupo 1");
-            //Pesquisaremos de acordo com a turma selecionada
-            //System.out.println("Turma Selecionada no combobox" + turma.getNomeTurma());
-            projetos = new ListDataModel(projetoService.findbyturmasprofessor(usuariolocal));
-            //projetos = (DataModel) projetosdosalunosdasturmas;
-            //Caso não seja administrador, filtre por aluno
-        } else {
-            System.out.println("Entrou No grupo 2");
-            //Queremos a listagem de projetos que aparecem o usuario como componente
-            projetos = new ListDataModel(projetoService.findMyProjects(usuariolocal));
-        }
+        usuario = getUsuario();
+        projetos = new ListDataModel(projetoService.findByAluno(usuario));
         return projetos;
     }
 
@@ -338,6 +302,7 @@ public class ProjetoBean {
 
     //quando é clicado o botão inserir
     public String salvar() {
+        usuario = getUsuario();
         if (!projeto.getDescricao().equals("") && !projeto.getEmpresa().equals("") && !projeto.getNome().equals("")) {
             //Caso já tenha sido criado
             if (projeto.getId() > 0) {
@@ -345,8 +310,7 @@ public class ProjetoBean {
                 projetoService.update(projeto);
 
             } else {
-                Pessoa userlogado = usuariologado;
-                projeto.setTurma(userlogado.getTurma());
+                projeto.setTurma(usuario.getTurma());
                 projeto.setAlteracao(new Date());
                 projeto.setCriacao(new Date());
                 projeto.setEstado("Iniciação");
@@ -359,14 +323,15 @@ public class ProjetoBean {
         }
     }
 
-    public String select() {
-        if (usuariologado.getStatus().equals("Inativo")) {
+    public String editar() {
+        usuario = getUsuario();
+        if (usuario.getStatus().equals(Status.Inativo)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Você consta como usuário inativo, não podendo fazer novas alterações no sistema!"));
-            return "ListagemProjetos";
+            return "produtolst";
         } else {
             projeto = (Projeto) projetos.getRowData();
             projeto = projetoService.findById(projeto.getId());
-            return "ManutencaoProjetos";
+            return "produtofrm";
         }
 
     }
@@ -380,11 +345,12 @@ public class ProjetoBean {
         projeto = (Projeto) projetos.getRowData();
         projetoService.delete(projeto.getId());
         projetos = null;
-        return "ListagemProjetos";
+        return "produtolst";
     }
 
     public String acessar() {
-        if (usuariologado.getStatus().equals("Inativo")) {
+        usuario = getUsuario();
+        if (usuario.getStatus().equals(Status.Inativo)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Você consta como usuário inativo, não podendo fazer novas alterações no sistema!"));
             return "ListagemProjetos";
         } else {
@@ -405,13 +371,14 @@ public class ProjetoBean {
         return "ComentarProjetos";
     }
 
-    public String novoProjeto() {
-        if (usuariologado.getStatus().equals(Status.Inativo)) {
+    public String novo() {
+        usuario = getUsuario();
+        if (usuario.getStatus().equals(Status.Inativo)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Você consta como usuário inativo, não podendo fazer novas alterações no sistema!"));
-            return "ListagemProjetos";
+            return "projetolst";
         } else {
             projeto = new Projeto();
-            return "ManutencaoProjetos";
+            return "projetofrm";
         }
     }
 
@@ -714,12 +681,8 @@ public class ProjetoBean {
     private Turma turmacombobox;
 
     public Turma getTurma() {
-        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) external.getRequest();
-        String emailuser = request.getRemoteUser();
-        System.out.println("" + emailuser);
-        Pessoa novousuario = usuarioService.findByEmail(emailuser);
-        turma = novousuario.getTurma();
+        usuario = getUsuario();
+        turma = usuario.getTurma();
         return turma;
     }
 
@@ -876,7 +839,8 @@ public class ProjetoBean {
     }
 
     public List<Turma> getTurmasdousuario() {
-        turmasdousuario = turmaService.findbyProfessor(usuariologado);
+        usuario = getUsuario();
+        turmasdousuario = turmaService.findbyProfessor(usuario);
         return turmasdousuario;
     }
 
@@ -962,6 +926,18 @@ public class ProjetoBean {
 
     public void setTurmaService(TurmaBLL turmaService) {
         this.turmaService = turmaService;
+    }
+
+    public Pessoa getUsuario() {
+        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) external.getRequest();
+        String email = request.getRemoteUser();
+        usuario = usuarioService.findByEmail(email);
+        return usuario;
+    }
+
+    public void setUsuario(Pessoa usuario) {
+        this.usuario = usuario;
     }
 
 }

@@ -8,15 +8,16 @@
     <ui:define name="menuhorizontal">
         <li><a href="projetolst.xhtml">Projetos</a></li>
         <li><a href="usuariolst.xhtml">Usuários</a></li>
-        <li class="active"><a href="turmalst.xhtml">Turmas</a></li>
+        <li><a href="turmalst.xhtml">Turmas</a></li>
+        <li class="active"><a href="indicadorlst.xhtml">Indicadores</a></li>
     </ui:define>
 
     <ui:define name="content">
         <h:form>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h:commandLink action="#{turmaBean.novo()}" class="btn btn-primary"><i class="fa-plus"></i> Nova Turma</h:commandLink>
-                    <h4>Listagem de Turmas</h4>
+                    <h:commandLink action="#{indicadorBean.novo()}" class="btn btn-primary"><i class="fa-plus"></i> Novo Indicador</h:commandLink>
+                    <h4>Listagem de Indicadores</h4>
                 </div>
                 <div class="panel-body">
 
@@ -24,21 +25,20 @@
                         <h:messages />
                     </div>
 
-                    <p:dataTable class="table table-hover" var="turma" value="#{turmaBean.turmas}">
+                    <p:dataTable class="table table-hover" var="item" value="#{indicadorBean.indicadores}">
                         <p:column>
-                            <f:facet name="header">Nome da Turma</f:facet>
-                            <h:outputText value="#{turma.nome}"/>
+                            <f:facet name="header">Nome do Indicador</f:facet>
+                            <h:outputText value="#{item.nome}"/>
                         </p:column>
                         <p:column style="text-align: center; width: 260px">
-                            <f:facet name="header">Ano</f:facet>
-                            <h:outputText value="#{turma.ano}"/>
+                            <f:facet name="header">Valor</f:facet>
+                            <h:outputText value="#{item.valor}"/>
                         </p:column>
 
                         <p:column headerText="Opções" style="width: 300px">
                             <f:facet name="header">Opções</f:facet>
-                            <h:commandLink action="#{turmaBean.editar()}" value="Editar "/>
-                            <h:commandLink action="#{turmaBean.excluir()}" value="/Excluir " onclick="return confirm('Tem certeza que deseja excluir?')"/>
-                            <h:commandLink action="#{turmaBean.duplicar()}" value="/ Duplicar" onclick="return confirm('Tem certeza que deseja duplicar esta turma?')"/>
+                            <h:commandLink action="#{indicadorBean.editar()}" value="Editar "/>
+                            <h:commandLink action="#{indicadorBean.excluir()}" value="/Excluir " onclick="return confirm('Tem certeza que deseja excluir?')"/>
                         </p:column>
 
                     </p:dataTable>

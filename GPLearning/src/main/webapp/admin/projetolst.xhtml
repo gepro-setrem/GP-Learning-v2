@@ -8,7 +8,7 @@
 
     <body>
 
-        <ui:composition template="/Layout.xhtml">
+        <ui:composition template="/admin/layout.xhtml">
 
             <ui:define name="menuhorizontal">
                 <li role="presentation" class="active"><a href="projetolst.xhtml">Projetos</a></li>
@@ -29,11 +29,11 @@
                             <div class="panel-info">
                                 <div class="form-group" style="padding: 1%">
                                     <p:dataTable var="proj" value="#{projetoProfessorBean.projetos}" widgetVar="projsTable"
-                                                 emptyMessage="Não há projetos criados por alunos desta turma" filteredValue="#{projetoBean.projetosfiltrados}">
+                                                 emptyMessage="Não há projetos criados por alunos desta turma" filteredValue="#{projetoProfessorBean.projetosfiltrados}">
 
 
-                                        <p:column>
-                                            <f:facet name="header">
+                                        <p:column filterMatchMode="contains">
+                                            <f:facet name="header" >
                                                 <h:outputText value="Nome do Projeto"/>
                                             </f:facet>
                                             <h:outputText value="#{proj.nome}"/>

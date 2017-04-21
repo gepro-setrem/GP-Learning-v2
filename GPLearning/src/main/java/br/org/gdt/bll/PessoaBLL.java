@@ -25,4 +25,8 @@ public class PessoaBLL extends BLL<Pessoa> {
     public Pessoa findByEmail(String email) {
         return dao.findByEmail(email);
     }
+
+    public List<Pessoa> findAllUsers(Pessoa pessoa) {
+        return dao.findAllUsers(pessoa);
+    }
 }

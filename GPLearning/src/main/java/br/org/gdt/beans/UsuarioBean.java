@@ -28,108 +28,104 @@ import javax.servlet.http.HttpServletRequest;
 @ManagedBean
 @RequestScoped
 public class UsuarioBean {
-
-    private Pessoa usuario = new Pessoa();
+    
+    private Pessoa usuario;
+    private Pessoa pessoa;
     @ManagedProperty("#{pessoaBLL}")
-    private PessoaBLL service;
+    private PessoaBLL pessoaBLL;
     private DataModel usuarios;
     private List<Pessoa> usuariosfiltrados;
-
+    
     @ManagedProperty("#{turmaBLL}")
     private TurmaBLL turmaService;
     private List<Turma> turmas;
-
+    
     private Login perfil;
     @ManagedProperty("#{perfilBLL}")
     private LoginBLL perfilService;
-
+    
+    private Status[] status;
+    private Role[] roles;
+    private Role role;
+    
     public UsuarioBean() {
     }
-
+    
     public Pessoa getUsuario() {
+        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) external.getRequest();
+        String email = request.getRemoteUser();
+        usuario = pessoaBLL.findByEmail(email);
         return usuario;
     }
-
+    
     public void setUsuario(Pessoa usuario) {
         this.usuario = usuario;
     }
-
+    
     public DataModel getUsuarios() {
-        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) external.getRequest();
-        String emailuser = request.getRemoteUser();
-        System.out.println("" + emailuser);
-        Pessoa userlogado = service.findByEmail(emailuser);
-        //sabemos qual é o professor, agora precisamos saber quais as turmas que esse professor tem
+        usuario = getUsuario();
+//        turmas = turmaService.findbyProfessor(usuario);
+//        List<Pessoa> usuariosdaturma = new ArrayList<>();
+//
+//        //Uma turma do tipo Turma, será preenchida com os objetos da datamodel turmas
+//        for (Turma turmafor : turmas) {
+//            usuariosdaturma.addAll(turmafor.getAcademicos());
+//        }
 
-        turmas = turmaService.findbyProfessor(userlogado);
-
-        System.out.println("" + turmas);
-        List<Pessoa> usuariosdaturma = new ArrayList<>();
-
-        //Uma turma do tipo Turma, será preenchida com os objetos da datamodel turmas
-        for (Turma turmafor : turmas) {
-            usuariosdaturma.addAll(turmafor.getAcademicos());
-        }
-
-        usuarios = new ListDataModel(usuariosdaturma);
+        usuarios = new ListDataModel(pessoaBLL.findAllUsers(usuario));
         // usuarios = new ListDataModel(dao.findByTurma(turmas));
         return usuarios;
     }
-
+    
     public void setUsuarios(DataModel usuarios) {
         this.usuarios = usuarios;
     }
-
+    
     private String getDateTime() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         return dateFormat.format(date);
     }
-
+    
     public List<Turma> getTurmas() {
-
-        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) external.getRequest();
-        String emailuser = request.getRemoteUser();
-        System.out.println("" + emailuser);
-        Pessoa usuarioturma = service.findByEmail(emailuser);
-        turmas = turmaService.findbyProfessor(usuarioturma);
+        usuario = getUsuario();
+        turmas = turmaService.findbyProfessor(usuario);
         return turmas;
     }
-
+    
     public void setTurmas(List<Turma> turmas) {
         this.turmas = turmas;
     }
-
+    
     public String salvar() {
-        if (!usuario.getNome().isEmpty() && !usuario.getEmail().isEmpty()) {// && !usuario.getTurma().equals("")) {
+        if (!pessoa.getNome().isEmpty() && !pessoa.getEmail().isEmpty()) {// && !pessoa.getTurma().equals("")) {
             System.out.println("Entrou no botão salvar");
-            Login perfillocal = perfilService.findPessoa(usuario);
+            Login perfillocal = perfilService.findPessoa(pessoa);
             LoginRole loginRole = new LoginRole();
             loginRole.setLogin(perfil);
             loginRole.setRole(Role.user);
             List<LoginRole> lsLoginRole = new ArrayList<>();
             lsLoginRole.add(loginRole);
-
-            if (usuario.getId() > 0) {
+            
+            if (pessoa.getId() > 0) {
                 System.out.println("Entrou para alterar");
-                usuario.setAlteracao(new Date());
-                service.update(usuario);
-                perfillocal.setEmail(usuario.getEmail());
+                pessoa.setAlteracao(new Date());
+                pessoaBLL.update(pessoa);
+                perfillocal.setEmail(pessoa.getEmail());
                 perfillocal.setLoginRoles(lsLoginRole);
                 perfilService.update(perfillocal);
             } else {
-                usuario.setAlteracao(new Date());
-                usuario.setCriacao(new Date());
-                usuario.setStatus(Status.Ativo);
-                service.insert(usuario);
-
+                pessoa.setAlteracao(new Date());
+                pessoa.setCriacao(new Date());
+                pessoa.setStatus(Status.Ativo);
+                pessoaBLL.insert(pessoa);
+                
                 System.out.println("É um usuário novo");
                 perfil = new Login();
-                perfil.setEmail(usuario.getEmail());
+                perfil.setEmail(pessoa.getEmail());
                 perfil.setLoginRoles(lsLoginRole);
-                perfil.setPessoa(usuario);
+                perfil.setPessoa(pessoa);
                 perfilService.insert(perfil);
             }
             return "usuariolst";
@@ -138,67 +134,103 @@ public class UsuarioBean {
             return "usuariofrm";
         }
     }
-
+    
     public String editar() {
-        usuario = (Pessoa) usuarios.getRowData();
-        usuario = service.findById(usuario.getId());
+        pessoa = (Pessoa) usuarios.getRowData();
+        pessoa = pessoaBLL.findById(pessoa.getId());
         return "usuariofrm";
     }
-
+    
     public String inativar() {
         FacesContext context = FacesContext.getCurrentInstance();
-        usuario = (Pessoa) usuarios.getRowData();
-        usuario = service.findById(usuario.getId());
-        usuario.setStatus(Status.Inativo);
-        service.update(usuario);
+        pessoa = (Pessoa) usuarios.getRowData();
+        pessoa = pessoaBLL.findById(pessoa.getId());
+        pessoa.setStatus(Status.Inativo);
+        pessoaBLL.update(pessoa);
         context.addMessage(null, new FacesMessage("Sucesso", "Usuário tornou-se inativo e não poderá criar novos projetos"));
         usuarios = null;
         return "usuariolst";
     }
-
+    
     public String novo() {
-        usuario = new Pessoa();
+        pessoa = new Pessoa();
         return "usuariofrm";
     }
-
+    
     public List<Pessoa> getUsuariosfiltrados() {
         return usuariosfiltrados;
     }
-
+    
     public void setUsuariosfiltrados(List<Pessoa> usuariosfiltrados) {
         this.usuariosfiltrados = usuariosfiltrados;
     }
-
-    public PessoaBLL getService() {
-        return service;
+    
+    public PessoaBLL getPessoaBLL() {
+        return pessoaBLL;
     }
-
-    public void setService(PessoaBLL service) {
-        this.service = service;
+    
+    public void setPessoaBLL(PessoaBLL pessoaBLL) {
+        this.pessoaBLL = pessoaBLL;
     }
-
+    
     public TurmaBLL getTurmaService() {
         return turmaService;
     }
-
+    
     public void setTurmaService(TurmaBLL turmaService) {
         this.turmaService = turmaService;
     }
-
+    
     public Login getPerfil() {
         return perfil;
     }
-
+    
     public void setPerfil(Login perfil) {
         this.perfil = perfil;
     }
-
+    
     public LoginBLL getPerfilService() {
         return perfilService;
     }
-
+    
     public void setPerfilService(LoginBLL perfilService) {
         this.perfilService = perfilService;
     }
-
+    
+    public Status[] getStatus() {
+        return Status.values();
+    }
+    
+    public void setStatus(Status[] status) {
+        this.status = status;
+    }
+    
+    public Role[] getRoles() {
+        return Role.values();
+    }
+    
+    public void setRoles(Role[] roles) {
+        this.roles = roles;
+    }
+    
+    public Role getRole() {
+        if (pessoa != null && pessoa.getLogin() != null && pessoa.getLogin().getLoginRoles() != null && pessoa.getLogin().getLoginRoles().size() > 0) {
+            return pessoa.getLogin().getLoginRoles().get(0).getRole();
+        } else {
+            return getRoles()[0];
+        }
+    }
+    
+    public void setRole(Role role) {
+        this.role = role;
+    }
+    
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+    
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
+    }
+    
 }

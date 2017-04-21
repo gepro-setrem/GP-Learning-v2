@@ -17,11 +17,15 @@ public class ProjetoDAO extends DAO<Projeto> {
         classe = Projeto.class;
     }
 
-//    public List<Projeto> findbyaluno(Pessoa pessoa) {
-//        Pessoa user = new PessoaDAO().findById(pessoa.getId());
-//        List<Projeto> projetos = user.getProjetos();
-//        return projetos;
-//    }
+    public List<Projeto> findByAluno(Pessoa pessoa) {
+        return entityManager.createQuery("from Projeto as p left join p.componentes as c where c = :p")
+                .setParameter("p", pessoa).getResultList();
+    }
+
+    public List<Projeto> findByGerente(Pessoa pessoa) {
+        return entityManager.createQuery("from Projeto as p where p.gerente = :p")
+                .setParameter("p", pessoa).getResultList();
+    }
 
     public List<Projeto> findbyturma(Turma turma) {
         return entityManager.createQuery("from Projeto where turma = :p")
@@ -51,7 +55,6 @@ public class ProjetoDAO extends DAO<Projeto> {
 ////        }
 //        return projetos;
 //    }
-
     public Projeto findByIdRelatorio(int id) {
 
         Projeto projeto = (Projeto) entityManager.createQuery("from Projeto as p where p.idProjeto = :p")

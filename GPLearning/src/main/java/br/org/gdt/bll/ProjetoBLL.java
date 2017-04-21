@@ -9,6 +9,7 @@ import br.org.gdt.model.Pessoa;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedProperty;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +22,14 @@ public class ProjetoBLL extends BLL<Projeto> {
     @Autowired
     //@ManagedProperty("#{pessoaBLL}")
     private PessoaBLL pessoaBLL;
+    private TurmaBLL turmaBLL;
 
-    public List<Projeto> findMyProjects(Pessoa usuario) {
-        Pessoa user = pessoaBLL.findById(usuario.getId());
-        List<Projeto> projetos = user.getProjetos();
-        return projetos;
+    public List<Projeto> findByAluno(Pessoa pessoa) {
+        return dao.findByAluno(pessoa);
+    }
+
+    public List<Projeto> findByGerente(Pessoa pessoa) {
+        return dao.findByGerente(pessoa);
     }
 
     public List<Projeto> findbyturma(Turma turma) {
@@ -37,10 +41,13 @@ public class ProjetoBLL extends BLL<Projeto> {
     }
 
     public List<Projeto> findbyturmasprofessor(Pessoa pessoa) {
-        Pessoa user = pessoaBLL.findById(pessoa.getId());
+        //Pessoa user = pessoaBLL.findById(pessoa.getId());
+        List<Turma> lsTurmas = turmaBLL.findbyProfessor(pessoa);
         List<Projeto> projetos = new ArrayList<>();
-        for (Turma turma : user.getTurmasprofessor()) {
-            projetos.addAll(turma.getProjetos());
+        //Hibernate.initialize(user.getTurmasprofessor());
+        for (Turma turma : lsTurmas) {
+            List<Projeto> lsProjetos = dao.findbyturma(turma);
+            projetos.addAll(lsProjetos);
         }
         return projetos;
     }

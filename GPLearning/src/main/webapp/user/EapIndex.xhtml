@@ -7,13 +7,15 @@
       xmlns:p="http://primefaces.org/ui">
     <body>
 
-        <ui:composition template="/Template.xhtml">
+        <ui:composition template="/layout.xhtml">
             <ui:define name="head"> 
-                <script src="../js/jquery-3.2.0.min.js" type="text/javascript"></script>
-                <script src="../js/bootstrap.min.js" type="text/javascript"></script>
-                <link href="../css/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-                <script src="../js/eap_script.js" type="text/javascript"></script>
-                <link href="../css/eap_css.css" rel="stylesheet" type="text/css"/>
+                <h:outputScript name="./js/eap_script.js"/>
+                <h:outputStylesheet name="./css/eap_css.css"/>
+                <!--<script src="../js/jquery-3.2.0.min.js" type="text/javascript"></script>
+                                <script src="../js/bootstrap.min.js" type="text/javascript"></script>
+                                <link href="../css/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>-->
+                <!--<script src="../js/eap_script.js" type="text/javascript"></script>
+                                <link href="../css/eap_css.css" rel="stylesheet" type="text/css"/>-->
             </ui:define>
             <ui:define name="menuhorizontal">
                 <li><h:link outcome="ProcessosIniciacao.xhtml">Iniciação</h:link></li>

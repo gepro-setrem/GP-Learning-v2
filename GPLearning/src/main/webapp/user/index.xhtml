@@ -6,21 +6,18 @@
 
     <body>
 
-        <ui:composition template="/Layout.xhtml">
+        <ui:composition template="/user/layout.xhtml">
 
-            <ui:define name="menuhorizontal">
+<!--            <ui:define name="menuhorizontal">
                 <li><a>Iniciação</a></li>
                 <li><a>Planejamento</a></li>
-                <li><a>Execuçao</a></li>
-                <li><a>Monitoramento</a></li>
-                <li><a>Encerramento</a></li>
-            </ui:define>
+            </ui:define>-->
 
             <ui:define name="content">
-                <div class="panel panel-default" style=" height: 50%; width: 30%; margin: auto; margin-bottom: 90px; margin-top: 90px; text-align: center">
-                    <div class="panel-heading" style="text-align: center">Escolha a sua área</div>
+                <div class="panel panel-default" style="width: 30%; margin: auto;">
+                    <div class="panel-heading"><h4>Escolha a sua área</h4></div>
                     <div class="panel-body">
-                        <h:button class="btn btn-primary btn-lg btn-block" value="Área do Estudante" outcome="/user/ListagemProjetos.xhtml"/>
+                        <h:button class="btn btn-primary btn-lg btn-block" value="Área do Estudante" outcome="/user/projetolst.xhtml"/>
                         <h:button class="btn btn-default btn-lg btn-block" value="Área do Professor" outcome="/admin/projetolst.xhtml" />
                     </div>
                 </div>

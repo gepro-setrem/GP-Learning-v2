@@ -9,7 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
+//import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -58,8 +58,11 @@ public class Pessoa implements Serializable {
     @JoinColumn(name = "tur_id")
     private Turma turma;
 
-    @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "professor")//, fetch = FetchType.EAGER)
     private List<Turma> turmasprofessor;
+
+    @OneToMany(mappedBy = "professor", cascade = CascadeType.REMOVE)//, fetch = FetchType.EAGER)
+    private List<Indicador> indicadoresprofessor;
 
     @OneToMany(mappedBy = "gerente")
     private List<Projeto> projetosgerente;
@@ -159,6 +162,14 @@ public class Pessoa implements Serializable {
 
     public void setTurmasprofessor(List<Turma> turmasprofessor) {
         this.turmasprofessor = turmasprofessor;
+    }
+
+    public List<Indicador> getIndicadoresprofessor() {
+        return indicadoresprofessor;
+    }
+
+    public void setIndicadoresprofessor(List<Indicador> indicadoresprofessor) {
+        this.indicadoresprofessor = indicadoresprofessor;
     }
 
     public List<Projeto> getProjetosgerente() {

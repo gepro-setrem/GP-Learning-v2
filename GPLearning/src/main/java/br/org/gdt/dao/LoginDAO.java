@@ -1,5 +1,6 @@
 package br.org.gdt.dao;
 
+import br.org.gdt.enumerated.Status;
 import br.org.gdt.model.Login;
 import br.org.gdt.model.Pessoa;
 import org.springframework.stereotype.Repository;
@@ -17,10 +18,15 @@ public class LoginDAO extends DAO<Login> {
                 .getSingleResult();
     }
 
-    public Login findLogin(Login login) {
-        return (Login) entityManager.createQuery("from Login where email = :email and senha = :senha")
-                .setParameter("email", login.getEmail())
-                .setParameter("senha", login.getSenha())
-                .getSingleResult();
+    public Pessoa findLogin(String email, String senha) {
+        Pessoa user = null;
+        if (email != null && !email.isEmpty() && senha != null && !senha.isEmpty()) {
+            user = (Pessoa) entityManager.createQuery("from Pessoa p join fetch p.login.loginRoles lr where p.login.email = :email and p.login.senha = :senha and p.status = :status")
+                    .setParameter("email", email)
+                    .setParameter("senha", senha)
+                    .setParameter("status", Status.Ativo)
+                    .getSingleResult();
+        }
+        return user;
     }
 }

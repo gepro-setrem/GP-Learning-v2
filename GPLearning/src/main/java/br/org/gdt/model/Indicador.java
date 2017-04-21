@@ -10,7 +10,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
@@ -29,9 +31,9 @@ public class Indicador implements Serializable {
     @Column(name = "ind_ivalor")
     private int valor;
 
-    @Column(name = "ind_vtipo")
-    @Enumerated(EnumType.STRING)
-    private Etapa tipo;
+    @ManyToOne
+    @JoinColumn(name = "pes_id")
+    public Pessoa professor;
 
     @ManyToMany
     private List<Atividade> atividades;
@@ -63,12 +65,12 @@ public class Indicador implements Serializable {
         this.valor = valor;
     }
 
-    public Etapa getTipo() {
-        return tipo;
+    public Pessoa getProfessor() {
+        return professor;
     }
 
-    public void setTipo(Etapa tipo) {
-        this.tipo = tipo;
+    public void setProfessor(Pessoa professor) {
+        this.professor = professor;
     }
 
     public List<Atividade> getAtividades() {

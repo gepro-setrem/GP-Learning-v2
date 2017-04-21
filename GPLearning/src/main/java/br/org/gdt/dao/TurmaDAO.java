@@ -13,11 +13,11 @@ public class TurmaDAO extends DAO<Turma> {
     }
 
     public List<Turma> findbyProfessor(Pessoa pessoa) {
-        List<Turma> turminha = entityManager.createQuery("from Turma as t where t.professor = :p")
+        List<Turma> lsTurma = entityManager.createQuery("from Turma as t where t.professor = :p")
                 .setParameter("p", pessoa).getResultList();
 //        for (Turma turma : turminha) {
 //            Hibernate.initialize(turma.getAcademicos());
 //        }
-        return turminha;
+        return lsTurma;
     }
 }

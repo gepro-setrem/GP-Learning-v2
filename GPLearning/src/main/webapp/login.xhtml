@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+        <title>GPLearning</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet name="./css/bootstrap.min.css"/>
+        <link href="resources/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body>
+        <div class="row" style="padding: 10px; text-align: center;">
+            <div class="col-md-7 col-xs-12">
+                <h:link outcome="/user/index.xhtml">
+                    <h:graphicImage library="img/" name="GPLearning.png" style="max-height: 60px; max-width: 100%"/>
+                </h:link>
+            </div>
+            <div class="col-md-3 col-xs-7">
+                <h:graphicImage library="img/" name="log_setrem-1 - SETREM.png" style="max-height: 60px;"/>
+            </div>
+            <div class="col-md-2 col-xs-5">
+                <h:link outcome="/user/perfil.xhtml">
+                    <h:graphicImage library="img/" name="usuario.png" style="max-height: 60px;"/>
+                </h:link>
+            </div>
+        </div>
+        <nav class="navbar navbar-default">
+            <div class="container" style="">
+                <div class="navbar-header">
+                    <a class="navbar-brand">#{homeBean.layoutTitle}</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">Iniciação</a></li>
+                        <li><a href="#">Planejamento</a></li>
+                        <li><a href="#">Execuçao</a></li>
+                        <li><a href="#">Monitoramento</a></li>
+                        <li><a href="#">Encerramento</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right" style="display: #{homeBean.hasSession ? 'block' : 'none'}">
+                        <li><h:link outcome="/user/ListagemProjetos.xhtml">Meus Projetos</h:link></li>
+                        <li><p class="navbar-text navbar-right" style="">Olá, <h:outputText class="navbar-link" value="#{homeBean.usuario.nome}"/>. <h:outputLink value="logout">Sair</h:outputLink></p></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="panel panel-default" style="width: 30%; margin: auto;">
+            <div class="panel-heading" style="text-align: center;">Entre com seu usuário e senha</div>
+            <div class="panel-body">
+                <form name="formlogin" method="POST" action="j_security_check">
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Usuário:</label>
+                        <div class="col-sm-10">
+                            <input type="email" name="j_username" class="form-control" id="inputEmail3" placeholder="Usuário" value=""/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-2 control-label">Senha:</label>
+                        <div class="col-sm-10">
+                            <input type="password" name="j_password" class="form-control" id="inputPassword3" placeholder="Password"/>
+                        </div>
+                    </div>
+                    <!--<div class="form-group">
+                                                    <div class="col-xs-12" style="text-align: center">
+                                                        <input type="checkbox"/><lable> Me lembre</lable>
+                                                    </div>
+                                                </div>-->
+                    <div class="form-group row">
+                        <div class="col-xs-12" style="text-align: center">
+                            <button type="submit" class="btn btn-success"><i class="fa-sign-in"></i> Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12" style="margin-bottom: 20px;">
+                <div style="padding: 0 15px;">
+                    <ui:insert name="content"></ui:insert>
+                </div>
+            </div>
+
+            <div class="col-xs-12">
+                <div style="padding: 10px 30px 30px; background-color: #f5f5f5; border: 1px solid #e7e7e7;">
+                    <h:link class="btn btn-link" outcome="/About.xhtml" value="About" style="float: right;"/>
+                    <a style="text-decoration: none;">Sociedade Educacional Três de Maio - SETREM - Bacharelado em Sistemas de Informação</a>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>

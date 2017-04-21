@@ -18,24 +18,28 @@ import javax.servlet.http.HttpServletRequest;
 @RequestScoped
 public class TurmaBean {
 
-    private Turma turma = new Turma();
+    private Turma turma;
     @ManagedProperty("#{turmaBLL}")
-    private TurmaBLL service;
+    private TurmaBLL turmaBLL;
     private DataModel turmas;
 
-    private Pessoa usuario = new Pessoa();
+    private Pessoa usuario;
     @ManagedProperty("#{pessoaBLL}")
-    private PessoaBLL userService;
+    private PessoaBLL pessoaBLL;
+
+    public TurmaBean() {
+    }
 
     public Pessoa getUsuario() {
+        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) external.getRequest();
+        String email = request.getRemoteUser();
+        usuario = pessoaBLL.findByEmail(email);
         return usuario;
     }
 
     public void setUsuario(Pessoa usuario) {
         this.usuario = usuario;
-    }
-
-    public TurmaBean() {
     }
 
     public Turma getTurma() {
@@ -47,13 +51,8 @@ public class TurmaBean {
     }
 
     public DataModel getTurmas() {
-        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) external.getRequest();
-        String emailuser = request.getRemoteUser();
-        System.out.println("" + emailuser);
-        Pessoa usuariologado = userService.findByEmail(emailuser);
-
-        turmas = new ListDataModel(service.findbyProfessor(usuariologado));
+        usuario = getUsuario();
+        turmas = new ListDataModel(turmaBLL.findbyProfessor(usuario));
         return turmas;
     }
 
@@ -62,20 +61,13 @@ public class TurmaBean {
     }
 
     public String salvar() {
+        usuario = getUsuario();
         if (!turma.getNome().equals("") && turma.getAno() > 0) {
-
-            ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
-            HttpServletRequest request = (HttpServletRequest) external.getRequest();
-            String emailuser = request.getRemoteUser();
-            System.out.println("" + emailuser);
-            Pessoa usuariologado = userService.findByEmail(emailuser);
-
+            turma.setProfessor(usuario);
             if (turma.getId() > 0) {
-                turma.setProfessor(usuariologado);
-                service.update(turma);
+                turmaBLL.update(turma);
             } else {
-                turma.setProfessor(usuariologado);
-                service.insert(turma);
+                turmaBLL.insert(turma);
             }
             return "turmalst";
         } else {
@@ -84,9 +76,9 @@ public class TurmaBean {
         }
     }
 
-    public String select() {
+    public String editar() {
         turma = (Turma) turmas.getRowData();
-        turma = service.findById(turma.getId());
+        turma = turmaBLL.findById(turma.getId());
         return "turmafrm";
     }
 
@@ -111,14 +103,14 @@ public class TurmaBean {
 //        copia.setDescricaoTelaTermoAberturaRequisitos(turma.getDescricaoTelaTermoAberturaRequisitos());
 //        copia.setDescricaoTelaTermoAberturaRestricoes(turma.getDescricaoTelaTermoAberturaRestricoes());
 //        copia.setProfessor(turma.getProfessor());
-        service.insert(copia);
+        turmaBLL.insert(copia);
         return "turmalst";
     }
 
     public String excluir() throws Exception {
         try {
             turma = (Turma) turmas.getRowData();
-            service.delete(turma.getId());
+            turmaBLL.delete(turma.getId());
             turmas = null;
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
@@ -126,25 +118,25 @@ public class TurmaBean {
         return "turmalst";
     }
 
-    public String novaTurma() {
+    public String novo() {
         turma = new Turma();
         return "turmafrm";
     }
 
-    public TurmaBLL getService() {
-        return service;
+    public TurmaBLL getTurmaBLL() {
+        return turmaBLL;
     }
 
-    public void setService(TurmaBLL service) {
-        this.service = service;
+    public void setTurmaBLL(TurmaBLL turmaBLL) {
+        this.turmaBLL = turmaBLL;
     }
 
-    public PessoaBLL getUserService() {
-        return userService;
+    public PessoaBLL getPessoaBLL() {
+        return pessoaBLL;
     }
 
-    public void setUserService(PessoaBLL userService) {
-        this.userService = userService;
+    public void setPessoaBLL(PessoaBLL pessoaBLL) {
+        this.pessoaBLL = pessoaBLL;
     }
 
 }

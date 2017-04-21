@@ -37,7 +37,7 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>/user/Index.xhtml</welcome-file>
+        <welcome-file>user/index.xhtml</welcome-file>
     </welcome-file-list>
     <error-page>
         <error-code>404</error-code>
@@ -47,6 +47,7 @@
         <error-code>403</error-code>
         <location>/errorpage_403.xhtml</location>
     </error-page>
+
     <security-constraint>
         <display-name>admin_acess</display-name>
         <web-resource-collection>
@@ -57,7 +58,7 @@
         <auth-constraint>
             <description/>
             <role-name>admin</role-name>
-             <role-name>user</role-name>
+            <role-name>user</role-name>
         </auth-constraint>
     </security-constraint>
     <security-constraint>
@@ -76,7 +77,7 @@
         <auth-method>FORM</auth-method>
         <realm-name>jdbcRealm</realm-name>
         <form-login-config>
-            <form-login-page>/Login.xhtml</form-login-page>
+            <form-login-page>/login.xhtml</form-login-page>
             <form-error-page>/errorpage_403.xhtml</form-error-page>
         </form-login-config>
     </login-config>
