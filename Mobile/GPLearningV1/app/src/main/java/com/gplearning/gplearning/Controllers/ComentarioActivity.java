@@ -105,6 +105,7 @@ public class ComentarioActivity extends AppCompatActivity {
                  //   comentarioAdapter.swap(dao.queryBuilder().orderAsc(ComentarioDao.Properties.Criacao).list());
                     lsComentario.add(COM);
                     comentarioAdapter.notifyItemInserted(lsComentario.size()-1);
+
                 }
             }
         } catch (Exception e) {
