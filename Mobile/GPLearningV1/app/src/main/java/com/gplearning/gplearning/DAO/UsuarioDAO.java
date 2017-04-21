@@ -10,6 +10,10 @@ import java.util.List;
 public class UsuarioDAO extends UrlDomain {
 
 
+
+
+
+
     public List<Usuario> Select() {
 
         List<Usuario> lsUsuario = new ArrayList<>();
