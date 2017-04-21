@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.gplearning.gplearning.Adapters.ProjetoRecyclerViewAdapter;
 import com.gplearning.gplearning.DAO.App;
+import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.Models.Projeto;
 import com.gplearning.gplearning.Models.ProjetoDao;
 import com.gplearning.gplearning.Models.UsuarioDao;
@@ -44,24 +45,8 @@ public class ProjetoFragment extends Fragment {
     private OnListFragmentInteractionListener mListener;
     private View view;
     private List<Projeto> lsProjetos = new ArrayList<>();
-   // private ProjetoDao projetoDao;
+    private ProjetoDao dao;
 
-//    /**
-//     * Mandatory empty constructor for the fragment manager to instantiate the
-//     * fragment (e.g. upon screen orientation changes).
-//     */
-//    public ProjetoFragment() {
-//    }
-//
-//    // TODO: Customize parameter initialization
-//    @SuppressWarnings("unused")
-//    public static ProjetoFragment newInstance(int columnCount) {
-//        ProjetoFragment fragment = new ProjetoFragment();
-//        Bundle args = new Bundle();
-//        args.putInt(ARG_COLUMN_COUNT, columnCount);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
     public ProjetoFragment(){}
 
@@ -70,18 +55,14 @@ public class ProjetoFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-//        if (getArguments() != null) {
-//            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-//        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_projeto_list, container, false);
-      //  projetoDao = App.getDaoSessionApp(getActivity()).getProjetoDao();
-
-
+        DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
+        dao = daoSession.getProjetoDao();
 
         mListener = new OnListFragmentInteractionListener() {
             @Override
@@ -90,10 +71,7 @@ public class ProjetoFragment extends Fragment {
                 Fragment fragment = EtapasFragment.newInstance(item.get_id());
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 manager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                transaction.replace(R.id.content_frame, fragment);
-//                transaction.addToBackStack(null);
-//                transaction.commit();
+
             }
         };
 
@@ -120,12 +98,6 @@ public class ProjetoFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnListFragmentInteractionListener) {
-//            mListener = (OnListFragmentInteractionListener) context;
-//        } else {
-//            // throw new RuntimeException(context.toString()
-//            //      + " must implement OnListFragmentInteractionListener");
-//        }
     }
 
     @Override

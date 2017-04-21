@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,21 +25,10 @@ public class ComentarioAdapter extends RecyclerView.Adapter {
     public ComentarioAdapter(List<Comentario> lsComentario, Context ctx) {
         this.lsComentario = lsComentario;
         this.context = ctx;
-        this.dateFormat = android.text.format.DateFormat.getDateFormat(context.getApplicationContext());
+        this.dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); //android.text.format.DateFormat.getDateFormat(context.getApplicationContext());
     }
 
-//    @Override
-//    public int getCount() {
-//        return lsComentario.size();
-//    }
-//
-//    @Override
-//    public Object getItem(int i) {
-//
-//        return lsComentario.get(i);
-//    }
-
-    public void swap(List<Comentario> comentarios){
+    public void swap(List<Comentario> comentarios) {
         lsComentario.clear();
         lsComentario.addAll(comentarios);
         notifyDataSetChanged();
@@ -69,30 +59,6 @@ public class ComentarioAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return lsComentario.size();
     }
-
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup viewGroup) {
-//        View view;
-//        ViewHolder holder;
-//
-//        if (convertView == null) {
-//            view = LayoutInflater.from(context).inflate(R.layout.item_listview_comentario, viewGroup, false);///.getLayoutInflater().inflate(R.layout.item_listview_comentario, viewGroup, false);
-//            holder = new ViewHolder(view);
-//            view.setTag(holder);
-//        } else {
-//            view = convertView;
-//            holder = (ViewHolder) view.getTag();
-//        }
-//        java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context.getApplicationContext());
-//
-//        Comentario comentario = (Comentario) getItem(position);
-//        if (comentario != null) {
-//            holder.texto.setText(comentario.getTexto());
-//            holder.data.setText(dateFormat.format(comentario.getCriacao()));
-//        }
-//
-//        return view;
-//    }
 
     public class ViewHolderAdapter extends RecyclerView.ViewHolder {
 

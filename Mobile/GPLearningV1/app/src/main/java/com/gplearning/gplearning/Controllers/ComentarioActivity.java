@@ -36,7 +36,6 @@ public class ComentarioActivity extends AppCompatActivity {
     private List<Comentario> lsComentario = new ArrayList<>();
     private ComentarioDao dao;
     private RecyclerView recyclerView;
-    //  private ValueDao valueDao;
     private ComentarioAdapter comentarioAdapter; //ArrayAdapter<Comentario> comentario2Adapter;
 
     @Override
@@ -47,18 +46,13 @@ public class ComentarioActivity extends AppCompatActivity {
         DaoSession daoSession = ((App) getApplication()).getDaoSession();
         //   ComentarioDao cDao
         dao = daoSession.getComentarioDao();
-        //dao = App.getDaoSessionApp(this).getComentarioDao();
-        // valueDao = daoSession.getValueDao();
-        //  ListView listView = (ListView) findViewById(R.id.comentarioListView);
         recyclerView = (RecyclerView) findViewById(R.id.comentarioListView);
 
         lsComentario = dao.queryBuilder().orderAsc(ComentarioDao.Properties.Criacao).list();
-        // new  CarregaComentarios().execute();
         comentarioAdapter = new ComentarioAdapter(lsComentario, this); // new ArrayAdapter<Comentario>(this, android.R.layout.simple_list_item_1, lsComentario);
         recyclerView.setAdapter(comentarioAdapter);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        //((LinearLayoutManager) layoutManager).setReverseLayout(true);
         ((LinearLayoutManager) layoutManager).setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -67,7 +61,6 @@ public class ComentarioActivity extends AppCompatActivity {
             public void onItemClick(View view, int position) {
                 Log.i("Event", "Clicou");
             }
-
             @Override
             public void onLongItemClick(View view, int position) {
                 Log.i("Event", "Long Click");
@@ -105,39 +98,15 @@ public class ComentarioActivity extends AppCompatActivity {
                 Log.i("Event", "id:" + COM.get_id());
                 if (id > 0) {
                     coment.setText("");
-                    //   comentarioAdapter.swap(dao.queryBuilder().orderAsc(ComentarioDao.Properties.Criacao).list());
                     lsComentario.add(COM);
                     comentarioAdapter.notifyItemInserted(lsComentario.size() - 1);
                     recyclerView.smoothScrollToPosition(lsComentario.size() - 1);
-
                 }
             }
         } catch (Exception e) {
             Log.e("ERROR", e.toString());
         }
     }
-
-
-//    public class CarregaComentarios extends AsyncTask<String, Intent, List<Comentario>> {
-//        @Override
-//        protected List<Comentario> doInBackground(String... strings) {
-//
-//            if (MetodosPublicos.IsConnected(ComentarioActivity.this)) {
-//                Log.i("Event", " Conectado na Internetes");
-//            }
-//            //.where(ComentarioDao.Properties..eq("Joe"))
-//            lsComentario = dao.queryBuilder().orderAsc(ComentarioDao.Properties.Criacao).list();
-//
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(List<Comentario> comentarios) {
-//            super.onPostExecute(comentarios);
-//            comentarioAdapter.notifyDataSetChanged();
-//        }
-//    }
-
 
     public void PopupDeletaComentario(final int position) {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -155,7 +124,6 @@ public class ComentarioActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     Log.e("ERROR", e.toString());
                 }
-                ;
             }
         });
         alert.show();
