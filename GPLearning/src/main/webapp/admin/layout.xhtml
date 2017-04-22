@@ -8,27 +8,18 @@
         <title><ui:insert name="title">GPLearning</ui:insert></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet name="./css/bootstrap.min.css"/>
-        <h:outputStylesheet name="./font-awesome-4.7.0/css/font-awesome.css"/>
+        <!--<h:outputStylesheet name="./font-awesome-4.7.0/css/font-awesome.css"/>-->
+        <h:outputStylesheet name="./css/cssDefault.css"/>
         <!--<h:outputStylesheet name="./data-tables/dataTables.min.css" />-->
         <h:outputScript name="./js/jquery-3.2.0.min.js"/>
         <h:outputScript name="./js/bootstrap.min.js"/>
+        <h:outputScript name="./js/jsLayout.js"/>
         <!--<h:outputScript name="./data-tables/dataTables.min.js"/>-->
         <link href="../resources/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
         <!--        <script src="../js/jquery-3.2.0.min.js" type="text/javascript"></script>-->
         <!--        <script src="../js/bootstrap.min.js" type="text/javascript"></script>
                 <link href="../css/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>-->
         <ui:insert name="head"></ui:insert>
-        <style>
-            .panel .panel-heading{
-                text-align: center;
-            }
-            .panel .panel-heading a.btn{
-                float: right;
-            }
-            .control_label{
-                text-align: right;
-            }
-        </style>
     </h:head>
 
     <h:body>
@@ -87,6 +78,10 @@
                     <a style="text-decoration: none;">Sociedade Educacional Três de Maio - SETREM - Bacharelado em Sistemas de Informação</a>
                 </div>
             </div>
+        </div>
+        <div id="AdmLoader">
+            <div class="AdmLoaderBg"></div>
+            <div class="AdmLoaderBx"></div>
         </div>
     </h:body>
 </html>

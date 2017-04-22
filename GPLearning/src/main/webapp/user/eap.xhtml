@@ -17,8 +17,9 @@
     </ui:define>
 
     <ui:define name="content">
-        <h:inputHidden value="#{eapBean.projeto.id}" id="pro_id"/>
-        <h:inputHidden value="#{eapBean.projeto.nome}" id="pro_nome"/>
+<!--        <h:inputHidden value="#{eapBean.projeto.id}" id="pro_id"/>-->
+        <input type="hidden" id="pro_id" value="3"/>
+        <a onclick="loadEAP();" style="float: right; cursor: pointer;"><i class="fa-refresh"></i></a>
         <div class="eap_list"></div>
 
         <div class="HtmlExample">
@@ -27,15 +28,14 @@
                     <div class="eap">
                         <div class="eap_header">
                             <a class="btn btn-xs eapIcon eap_number"></a>
-                            <a class="btn btn-xs eapIcon eapDown"><i class="fa-chevron-down"></i></a>
-                            <a class="btn btn-xs eapIcon eapUp"><i class="fa-chevron-up"></i></a>
-                            <a class="btn btn-xs eapIcon eapAdd"><i class="fa-plus"></i></a>
                             <a class="btn btn-xs eapIcon eapEdit"><i class="fa-pencil"></i></a>
+                            <a class="btn btn-xs eapIcon eapAdd"><i class="fa-plus"></i></a>
+                            <!--<a class="btn btn-xs eapIcon eapUp"><i class="fa-chevron-up"></i></a>-->                         
+                            <!--<a class="btn btn-xs eapIcon eapDown"><i class="fa-chevron-down"></i></a>-->
                         </div>
                         <div class="eap_nome">Add Nome</div>
                         <div style="display: none;">
                             <input type="hidden" name="pai.id"/>
-                            <input type="hidden" name="projeto.id"/>
                             <input type="hidden" name="id"/>
                             <input type="hidden" name="ordem"/>
                             <input type="hidden" name="nome"/>
@@ -58,7 +58,6 @@
                         <h4 class="modal-title">EAP</h4>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" name="projeto.id"/>
                         <input type="hidden" name="pai.id"/>
                         <input type="hidden" name="id"/>
                         <input type="hidden" name="ordem"/>

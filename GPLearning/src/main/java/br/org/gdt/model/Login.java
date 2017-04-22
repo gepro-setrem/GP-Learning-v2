@@ -29,7 +29,7 @@ public class Login implements Serializable {
     @JoinColumn(name = "pes_id")
     private Pessoa pessoa;
 
-    @OneToMany(mappedBy = "login", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "login", cascade = CascadeType.REMOVE)
     private List<LoginRole> loginRoles;
 
     public Login() {

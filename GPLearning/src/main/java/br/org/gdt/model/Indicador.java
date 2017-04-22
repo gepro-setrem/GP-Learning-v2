@@ -3,6 +3,7 @@ package br.org.gdt.model;
 import br.org.gdt.enumerated.Etapa;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -31,11 +32,11 @@ public class Indicador implements Serializable {
     @Column(name = "ind_ivalor")
     private int valor;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "pes_id")
     public Pessoa professor;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     private List<Atividade> atividades;
 
     public Indicador() {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -62,17 +63,20 @@ public class Projeto implements Serializable {
     @JoinColumn(name = "tur_id")
     private Turma turma;
 
-    @OneToOne(mappedBy = "projeto")
+    @OneToOne(mappedBy = "projeto", cascade = CascadeType.REMOVE)
     private TermoAbertura termoabertura;
 
-    @OneToMany(mappedBy = "projeto")
+    @OneToMany(mappedBy = "projeto", cascade = CascadeType.REMOVE)
     private List<Stakeholder> stakeholders;
 
-    @OneToMany(mappedBy = "projeto")
+    @OneToMany(mappedBy = "projeto", cascade = CascadeType.REMOVE)
     private List<Requisito> requisitos;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     private List<Pessoa> componentes;
+
+    @OneToMany(mappedBy = "projeto", cascade = CascadeType.REMOVE)
+    private List<EAP> eaps;
 
     public Projeto() {
     }
@@ -203,6 +207,14 @@ public class Projeto implements Serializable {
 
     public void setPlanoProjeto(String planoProjeto) {
         this.planoProjeto = planoProjeto;
+    }
+
+    public List<EAP> getEaps() {
+        return eaps;
+    }
+
+    public void setEaps(List<EAP> eaps) {
+        this.eaps = eaps;
     }
 
     @Override

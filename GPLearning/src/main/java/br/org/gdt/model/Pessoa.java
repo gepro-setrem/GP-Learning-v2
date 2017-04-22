@@ -58,19 +58,19 @@ public class Pessoa implements Serializable {
     @JoinColumn(name = "tur_id")
     private Turma turma;
 
-    @OneToMany(mappedBy = "professor")//, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "professor", cascade = CascadeType.REMOVE)//, fetch = FetchType.EAGER)
     private List<Turma> turmasprofessor;
 
     @OneToMany(mappedBy = "professor", cascade = CascadeType.REMOVE)//, fetch = FetchType.EAGER)
     private List<Indicador> indicadoresprofessor;
 
-    @OneToMany(mappedBy = "gerente")
+    @OneToMany(mappedBy = "gerente", cascade = CascadeType.REMOVE)
     private List<Projeto> projetosgerente;
 
-    @ManyToMany(mappedBy = "componentes")
+    @ManyToMany(mappedBy = "componentes", cascade = CascadeType.REMOVE)
     private List<Projeto> projetos;
 
-    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "pessoa")
     private Login login;
 
     public Pessoa() {

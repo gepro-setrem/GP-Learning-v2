@@ -1,0 +1,35 @@
+.panel .panel-heading{
+    text-align: center;
+}
+.panel .panel-heading a.btn{
+    float: right;
+}
+.control_label{
+    text-align: right;
+}
+#AdmLoader{
+    display: none;
+}
+#AdmLoader .AdmLoaderBg {
+    display: block;
+    z-index: 9998;
+    top: 0;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 100%;
+}
+#AdmLoader .AdmLoaderBx{
+    position: fixed;
+    z-index: 9999;
+    left: 50%;
+    top: 50%;
+    height: 70px;
+    margin-top: -35px;
+    width: 80px;
+    margin-left: -100px;
+    background: url("#{resource['img/loading.gif']}") no-repeat center center;
+    background-size: 100%;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 0 16px 0;
+}

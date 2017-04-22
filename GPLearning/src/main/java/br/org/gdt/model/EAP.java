@@ -3,8 +3,10 @@ package br.org.gdt.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,8 +54,11 @@ public class EAP implements Serializable {
     @JoinColumn(name = "eap_idpai")
     private EAP pai;
 
-    @OneToMany(mappedBy = "eap")
+    @OneToMany(mappedBy = "eap", cascade = CascadeType.REMOVE)
     private List<Tarefa> tarefas;
+
+    @OneToMany(mappedBy = "pai", cascade = CascadeType.REMOVE)
+    private List<EAP> eaps;
 
     public EAP() {
     }
@@ -144,6 +149,14 @@ public class EAP implements Serializable {
 
     public void setOrdem(int ordem) {
         this.ordem = ordem;
+    }
+
+    public List<EAP> getEaps() {
+        return eaps;
+    }
+
+    public void setEaps(List<EAP> eaps) {
+        this.eaps = eaps;
     }
 
     @Override
