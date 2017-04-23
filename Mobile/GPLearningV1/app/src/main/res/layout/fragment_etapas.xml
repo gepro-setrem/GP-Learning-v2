@@ -103,7 +103,7 @@
 
 
         <Button
-            android:id="@+id/etapaprojetoDescricaoTABtn"
+            android:id="@+id/etapaProjetoDescricaoTABtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -127,7 +127,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etapaprojetoDescricaoTABtn" />
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoDescricaoTABtn" />
 
         <Button
             android:id="@+id/etapaProjetopremissasTABtn"
@@ -172,7 +172,7 @@
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRestricoesTABtn" />
 
         <Button
-            android:id="@+id/etapaprojetoRequisitosTABtn"
+            android:id="@+id/etapaProjetoRequisitosTABtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -185,7 +185,7 @@
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoMarcosTABtn" />
 
         <Button
-            android:id="@+id/etapaprojetoStakeholdersBtn"
+            android:id="@+id/etapaProjetoStakeholdersBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -195,7 +195,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etapaprojetoRequisitosTABtn" />
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRequisitosTABtn" />
 
 
         <!--<TextView-->
@@ -218,7 +218,7 @@
             android:textSize="18sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etapaprojetoStakeholdersBtn" />
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoStakeholdersBtn" />
 
         <Button
             android:id="@+id/etapaProjetoPlanejamentoEscopoBtn"
@@ -258,6 +258,21 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRequisitosBtn" />
+
+        <RatingBar
+            android:id="@+id/etapaprojetoDescricaoRatingBar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="0dp"
+            android:numStars="5"
+            android:rating="3"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoDescricaoTABtn" />
 
         <!--<android.support.design.widget.FloatingActionButton-->
             <!--android:layout_width="80dp"-->

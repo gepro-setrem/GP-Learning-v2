@@ -33,6 +33,7 @@ public class Atividade {
     private Date conclusao;
     @Convert(converter = EtapaProjetoConverter.class, columnType = String.class)
     private EtapaProjeto etapa;
+    private int pontuacaoMedia;
 
 //    @ToMany
 //    @JoinEntity(entity = IndicadoresAtividades.class,
@@ -63,7 +64,13 @@ public class Atividade {
     @Generated(hash = 1369604525)
     private transient Long projeto__resolvedKey;
 
+    public int getPontuacaoMedia() {
+        return pontuacaoMedia;
+    }
 
+    public void setPontuacaoMedia(int pontuacaoMedia) {
+        this.pontuacaoMedia = pontuacaoMedia;
+    }
 
     public Atividade(long _id) {
         this._id = _id;
@@ -87,6 +94,20 @@ public class Atividade {
 
     @Keep
     public Atividade() {
+    }
+
+    @Generated(hash = 1684648512)
+    public Atividade(long _id, long id, String nome, Date criacao, Date termino, Date conclusao, EtapaProjeto etapa,
+            int pontuacaoMedia, long pro_id) {
+        this._id = _id;
+        this.id = id;
+        this.nome = nome;
+        this.criacao = criacao;
+        this.termino = termino;
+        this.conclusao = conclusao;
+        this.etapa = etapa;
+        this.pontuacaoMedia = pontuacaoMedia;
+        this.pro_id = pro_id;
     }
 
     public long get_id() {

@@ -2,6 +2,7 @@ package com.gplearning.gplearning.Controllers;
 
 //import android.app.Fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,10 +12,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RatingBar;
 
+import com.gplearning.gplearning.DAO.App;
+import com.gplearning.gplearning.Enums.EtapaProjeto;
+import com.gplearning.gplearning.Models.Atividade;
+import com.gplearning.gplearning.Models.AtividadeDao;
+import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.R;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 
 /**
@@ -27,25 +36,21 @@ import java.lang.reflect.Field;
  */
 public class EtapasFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "projetoId";
-  //  private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private Long mProjetoId;
-  //  private String mParam2;
-
+    private List<Atividade> lsAtividades;
+    private Long projetoId;
+    private AtividadeDao atividadeDao;
     private OnFragmentInteractionListener mListener;
 
     public EtapasFragment() {
     }
 
-//    /**
+    //    /**
 //     * Use this factory method to create a new instance of
 //     * this fragment using the provided parameters.
 //     *
 //     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
 //     * @return A new instance of fragment EtapasFragment.
 //     */
     // TODO: Rename and change types and number of parameters
@@ -53,7 +58,6 @@ public class EtapasFragment extends Fragment {
         EtapasFragment fragment = new EtapasFragment();
         Bundle args = new Bundle();
         args.putLong(ARG_PARAM1, projetoId);
-      //  args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,8 +68,7 @@ public class EtapasFragment extends Fragment {
         setHasOptionsMenu(true);
 
         if (getArguments() != null) {
-            mProjetoId = getArguments().getLong(ARG_PARAM1);
-         //   mParam2 = getArguments().getString(ARG_PARAM2);
+            projetoId = getArguments().getLong(ARG_PARAM1);
         }
     }
 
@@ -87,6 +90,10 @@ public class EtapasFragment extends Fragment {
     public void onStart() {
         super.onStart();
         getActivity().setTitle(R.string.project_detail);
+        DaoSession session = ((App) getActivity().getApplication()).getDaoSession();
+        atividadeDao = session.getAtividadeDao();
+        lsAtividades = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId)).list();
+        PassaValoresEtapas();
     }
 
     @Override
@@ -124,5 +131,20 @@ public class EtapasFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    /// Icones
+    /// http://www.flaticon.com/packs/business-and-finance-11
+    /// http://www.flaticon.com/packs/reports-and-analytics/2
+    private void PassaValoresEtapas() {
+
+        Atividade atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaDescricao)).unique();
+        if (atv != null)
+            ((RatingBar) getActivity().findViewById(R.id.etapaprojetoDescricaoRatingBar)).setRating(atv.getPontuacaoMedia());
+
+//        atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaJustificativa)).unique();
+//        if (atv != null)
+//            ((RatingBar) getActivity().findViewById(R.id.etapaprojetoJu)).setRating(atv.getPontuacaoMedia());
+
+
+    }
 
 }
