@@ -3,6 +3,7 @@ package br.org.gdt.dao;
 import br.org.gdt.enumerated.Role;
 import br.org.gdt.model.Turma;
 import br.org.gdt.model.Pessoa;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +12,15 @@ public class PessoaDAO extends DAO<Pessoa> {
 
     public PessoaDAO() {
         classe = Pessoa.class;
+    }
+
+    public List<Pessoa> findByComponentes(int pro_id) {
+        List<Pessoa> componentes = new ArrayList<>();
+        if (pro_id > 0) {
+            componentes = entityManager.createQuery("from Pessoa as p join p.projetos as pro where pro.id = :pro_id")
+                    .setParameter("pro_id", pro_id).getResultList();
+        }
+        return componentes;
     }
 
     public List<Pessoa> findByUsers(Turma turma, Role grupo) {

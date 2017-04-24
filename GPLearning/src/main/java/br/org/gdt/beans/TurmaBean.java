@@ -4,6 +4,12 @@ import br.org.gdt.model.Turma;
 import br.org.gdt.model.Pessoa;
 import br.org.gdt.bll.TurmaBLL;
 import br.org.gdt.bll.PessoaBLL;
+import br.org.gdt.bll.TurmaParametroBLL;
+import br.org.gdt.enumerated.TurmaParametroType;
+import br.org.gdt.model.TurmaParametro;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -22,10 +28,15 @@ public class TurmaBean {
     @ManagedProperty("#{turmaBLL}")
     private TurmaBLL turmaBLL;
     private DataModel turmas;
+    @ManagedProperty("#{turmaParametroBLL}")
+    private TurmaParametroBLL turmaParametroBLL;
 
     private Pessoa usuario;
     @ManagedProperty("#{pessoaBLL}")
     private PessoaBLL pessoaBLL;
+    private TurmaParametroType[] turmaParametroTypes;
+
+    private List<TurmaParametro> turmaParametros;
 
     public TurmaBean() {
     }
@@ -139,4 +150,84 @@ public class TurmaBean {
         this.pessoaBLL = pessoaBLL;
     }
 
+    public TurmaParametroBLL getTurmaParametroBLL() {
+        return turmaParametroBLL;
+    }
+
+    public void setTurmaParametroBLL(TurmaParametroBLL turmaParametroBLL) {
+        this.turmaParametroBLL = turmaParametroBLL;
+    }
+
+    public String getParameter(TurmaParametro parametro) {
+        String chave = parametro.toString();
+        Pessoa user = getUsuario();
+        TurmaParametro trp = turmaParametroBLL.getParametro(user.getTurma(), chave);
+        if (trp != null) {
+            return trp.getValor();
+        } else {
+            return "";
+        }
+    }
+
+    public TurmaParametroType[] getTurmaParametroTypes() {
+        return TurmaParametroType.values();
+    }
+
+    public void setTurmaParametroTypes(TurmaParametroType[] turmaParametroTypes) {
+        this.turmaParametroTypes = turmaParametroTypes;
+    }
+
+    public String getTurmaParametroType(String type) {
+        TurmaParametroType trType = TurmaParametroType.valueOf(type);
+        return turmaParametroBLL.getTurmaParametroType(trType);
+    }
+
+    public List<TurmaParametro> getTurmaParametros() {
+        if (turma == null) {
+            turma = new Turma();
+        }
+        turmaParametros = turma.getTurmaParametros();
+        if (turmaParametros == null) {
+            turmaParametros = new ArrayList<>();
+        }
+        for (TurmaParametroType type : getTurmaParametroTypes()) {
+            String chave = type.toString();
+            Boolean hasKey = false;
+            for (TurmaParametro trp : turmaParametros) {
+                if (trp.getChave() == chave) {
+                    hasKey = true;
+                    break;
+                }
+            }
+            if (!hasKey) {
+                TurmaParametro turmaParametro = new TurmaParametro();
+                turmaParametro.setChave(chave);
+                turmaParametros.add(turmaParametro);
+            }
+        }
+        return turmaParametros;
+
+    }
+
+    public void setTurmaParametros(List<TurmaParametro> turmaParametros) {
+        this.turmaParametros = turmaParametros;
+    }
+
+    public TurmaParametro setTurmaParametro(TurmaParametroType type) {
+        String chave = type.toString();
+        if (turma == null) {
+            turma = new Turma();
+        }
+        if (turma.getTurmaParametros() == null) {
+            turma.setTurmaParametros(new ArrayList<TurmaParametro>());
+        }
+        TurmaParametro turmaParametro = new TurmaParametro();
+        turmaParametro.setChave(chave);
+        for (TurmaParametro trp : turma.getTurmaParametros()) {
+            if (trp.getChave() == chave) {
+                turmaParametro = trp;
+            }
+        }
+        return turmaParametro;
+    }
 }

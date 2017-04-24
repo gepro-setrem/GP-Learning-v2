@@ -12,8 +12,14 @@ public class TurmaBLL extends BLL<Turma> {
 
     @Autowired
     private TurmaDAO dao;
+    @Autowired
+    private TurmaParametroBLL turmaParametroBLL;
 
     public List<Turma> findbyProfessor(Pessoa professor) {
-        return dao.findbyProfessor(professor);
+        List<Turma> turmas = dao.findbyProfessor(professor);
+        for (Turma turma : turmas) {
+
+        }
+        return turmas;
     }
 }

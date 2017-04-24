@@ -12,153 +12,58 @@
     </ui:define>
 
     <ui:define name="content">
-        <f:view>
-            <h:form>
-                <h:inputHidden value="#{turmaBean.turma.id}"/>
+        <h:form>
+            <h:inputHidden value="#{turmaBean.turma.id}"/>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4>Manutenção de Turmas</h4>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Manutenção de Turmas</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="alert-warning">
+                        <h:messages />
                     </div>
-                    <div class="panel-body">
-                        <div class="alert-warning">
-                            <h:messages />
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-8 col-xs-12">
-                                <div class="form-group row">
-                                    <label class="col-sm-3 control_label">Nome da Turma:</label>
-                                    <div class="col-sm-9">
-                                        <h:inputText class="form-control" pt:placeholder="Nome" value="#{turmaBean.turma.nome}"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 col-xs-12">
-                                <div class="form-group row" >
-                                    <label class="col-xs-3 control_label">Ano:</label>
-                                    <div class="col-sm-9" >
-                                        <h:inputText class="form-control" pt:type="number" value="#{turmaBean.turma.ano}" />
-                                    </div>
+                    <div class="row">
+                        <div class="col-sm-8 col-xs-12">
+                            <div class="form-group row">
+                                <label class="col-sm-3 control_label">Nome da Turma:</label>
+                                <div class="col-sm-9">
+                                    <h:inputText class="form-control" pt:placeholder="Nome" value="#{turmaBean.turma.nome}"/>
                                 </div>
                             </div>
                         </div>
-
-
-
-
-                        <div class="form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Descrição da Tela Inicial de Gerenciamento de Projetos"/>
-                            <div class="col-sm-10">
-                                <h:inputTextarea class="form-control" rows="4" pt:placeholder="Descrição da Tela Inicial de Gerenciamento de Projetos" value="{turmaBean.turma.descricaoTelaInicialGerenciamentoProjetos}"/>
+                        <div class="col-sm-4 col-xs-12">
+                            <div class="form-group row" >
+                                <label class="col-xs-3 control_label">Ano:</label>
+                                <div class="col-sm-9" >
+                                    <h:inputText class="form-control" pt:type="number" value="#{turmaBean.turma.ano}" />
+                                </div>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Descrição da Tela de Grupo de Processos Iniciação"/>
-                            <div class="col-sm-10">
-                                <h:inputTextarea class="form-control" rows="4" pt:placeholder="Descrição da Tela de Grupo de Processos Iniciação" value="{turmaBean.turma.descricaoTelaGrupoProcessosIniciacao}"/>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 col-xs-12">
+                            <ul class="nav nav-pills nav-stacked">
+                                <ui:repeat var="item" value="#{turmaBean.turmaParametroTypes}" varStatus="status">
+                                    <li role="presentation" class="#{status.index == 0 ? 'active' : ''}"><a href="##{item}" data-toggle="tab">#{turmaBean.getTurmaParametroType(item.toString())}</a></li>
+                                </ui:repeat>
+                            </ul>    
                         </div>
-
-                        <div class="form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Descrição da Tela de Descrição do Termo de Abertura"/>
-                            <div class="col-sm-10">
-                                <h:inputTextarea class="form-control" rows="4" pt:placeholder="Descrição da Tela de Descrição do Termo de Abertura" value="{turmaBean.turma.descricaoTelaTermoAberturaDescricao}"/>
-                            </div>
+                        <div class="tab-content col-sm-8 col-xs-12">
+                            <ui:repeat var="item" value="#{turmaBean.turmaParametros}" varStatus="status">
+                                <div class="tab-pane #{status.index == 0 ? 'active' : ''}" id="#{item.chave}">
+                                    <h:inputTextarea class="form-control" rows="5" value="#{item.valor}"/>
+                                </div>
+                            </ui:repeat>
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Descrição da Tela de Justificativa do Termo de Abertura"/>
-                            <div class="col-sm-10">
-                                <h:inputTextarea class="form-control" rows="4" pt:placeholder="Descrição da Tela de Justificativa do Termo de Abertura" value="{turmaBean.turma.descricaoTelaTermoAberturaJustificativa}"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Descrição da Tela de Premissas do Termo de Abertura"/>
-                            <div class="col-sm-10">
-                                <h:inputTextarea class="form-control" rows="4" pt:placeholder="Descrição da Tela de Premissas do Termo de Abertura" value="{turmaBean.turma.descricaoTelaTermoAberturaPremissas}"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Descrição da Tela de Restrições do Termo de Abertura"/>
-                            <div class="col-sm-10">
-                                <h:inputTextarea class="form-control" rows="4" pt:placeholder="Descrição da Tela de Restrições do Termo de Abertura" value="{turmaBean.turma.descricaoTelaTermoAberturaRestricoes}"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Descrição da Tela do Cronograma de Marcos do Termo de Abertura"/>
-                            <div class="col-sm-10">
-                                <h:inputTextarea class="form-control" rows="4" pt:placeholder="Descrição da Tela do Cronograma de Marcos do Termo de Abertura" value="{turmaBean.turma.descricaoTelaTermoAberturaCronogramaMarcos}"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Descrição da Tela dos Requisitos do Termo de Abertura"/>
-                            <div class="col-sm-10">
-                                <h:inputTextarea class="form-control" rows="4" pt:placeholder="Descrição da Tela dos Requisitos do Termo de Abertura" value="{turmaBean.turma.descricaoTelaTermoAberturaRequisitos}"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Descrição da Tela do Processo de Identificação das Partes Interessadas"/>
-                            <div class="col-sm-10">
-                                <h:inputTextarea class="form-control" rows="4" pt:placeholder="Descrição da Tela do Processo de Identificação das Partes Interessadas" value="{turmaBean.turma.descricaoTelaPartesInteressadas}"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Descrição da Tela do Grupo de Processos de Planejamento"/>
-                            <div class="col-sm-10">
-                                <h:inputTextarea class="form-control" rows="4" pt:placeholder="Descrição da Tela do Grupo de Processos de Planejamento" value="{turmaBean.turma.descricaoTelaGrupoProcessosPlanejamento}"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Descrição da Tela do Processo Criar o Plano de Gerenciamento de Projeto"/>
-                            <div class="col-sm-10">
-                                <h:inputTextarea class="form-control" rows="4" pt:placeholder="Descrição da Tela do Processo Criar o Plano de Gerenciamento de Projeto" value="{turmaBean.turma.descricaoTelaCriarPlanoGerenciamentoProjeto}"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Descrição da Tela do Processo Criar o Plano de Gerenciamento de Escopo"/>
-                            <div class="col-sm-10">
-                                <h:inputTextarea class="form-control" rows="4" pt:placeholder="Descrição da Tela do Processo Criar o Plano de Gerenciamento de Escopo" value="{turmaBean.turma.descricaoTelaCriarPlanoGerenciamentoEscopo}"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Descrição da Tela do Processo de Coletar os Requisitos"/>
-                            <div class="col-sm-10">
-                                <h:inputTextarea class="form-control" rows="4" pt:placeholder="Descrição da Tela do Processo de Coletar os Requisitos" value="{turmaBean.turma.descricaoTelaColetarRequisitos}"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Descrição da Tela do Processo de Definir o Escopo"/>
-                            <div class="col-sm-10">
-                                <h:inputTextarea class="form-control" rows="4" pt:placeholder="Descrição da Tela do Processo de Definir o Escopo" value="{turmaBean.turma.descricaoTelaDefinirEscopo}"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Descrição da Tela do Processo de Criar a EAP"/>
-                            <div class="col-sm-10">
-                                <h:inputTextarea class="form-control" rows="4" pt:placeholder="Descrição da Tela do Processo de Criar a EAP" value="{turmaBean.turma.descricaoTelaCriarEAP}"/>
-                            </div>
-                        </div>
-
-                        <div style="text-align: right;">
-                            <h:button class="btn btn-default" outcome="turmalst" value="Cancelar" style="margin-right: 5px;"/>
-                            <h:commandLink class="btn btn-success" action="#{turmaBean.salvar()}"><i class="fa-check"></i> Salvar</h:commandLink>
-                        </div>
+                    <div style="text-align: right;">
+                        <h:button class="btn btn-default" outcome="turmalst" value="Cancelar" style="margin-right: 5px;"/>
+                        <h:commandLink class="btn btn-success" action="#{turmaBean.salvar()}"><i class="fa-check"></i> Salvar</h:commandLink>
                     </div>
                 </div>
-            </h:form>
-        </f:view>
+            </div>
+        </h:form>
     </ui:define>
-
 </ui:composition>

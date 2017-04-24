@@ -54,7 +54,7 @@ public class Pessoa implements Serializable {
     @Column(name = "pes_bimagem")
     private byte[] imagem;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "tur_id")
     private Turma turma;
 

@@ -5,15 +5,12 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="head"> 
-        <h:outputScript name="./js/eap_script.js"/>
+        <h:outputScript name="./js/eap_js.js"/>
         <h:outputStylesheet name="./css/eap_css.css"/>
     </ui:define>
     <ui:define name="menuhorizontal">
         <li><h:link outcome="ProcessosIniciacao.xhtml">Iniciação</h:link></li>
         <li><h:link class="active" outcome="ProcessosPlanejamento.xhtml"><b>Planejamento</b></h:link></li>
-        <li><a>Execuçao</a></li>
-        <li><a>Monitoramento</a></li>
-        <li><a>Encerramento</a></li>
     </ui:define>
 
     <ui:define name="content">
@@ -33,7 +30,7 @@
                             <!--<a class="btn btn-xs eapIcon eapUp"><i class="fa-chevron-up"></i></a>-->                         
                             <!--<a class="btn btn-xs eapIcon eapDown"><i class="fa-chevron-down"></i></a>-->
                         </div>
-                        <div class="eap_nome">Add Nome</div>
+                        <div class="eap_nome"></div>
                         <div style="display: none;">
                             <input type="hidden" name="pai.id"/>
                             <input type="hidden" name="id"/>

@@ -1,0 +1,14 @@
+.HtmlExample{display: none;}
+.tarefas{
+    width: 100%;
+}
+.tarefas tr, .tarefas th, .tarefas td{
+    border: 1px solid #ddd;
+}
+.tarefas th, .tarefas td{
+    padding: 5px 10px;
+}
+.tarefas .marco{
+    width: 1%;
+    text-align: center;
+}

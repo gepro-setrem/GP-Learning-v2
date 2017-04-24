@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 //import javax.persistence.FetchType;
@@ -42,14 +43,14 @@ public class Turma implements Serializable {
     @OneToMany(mappedBy = "turma")
     private List<TurmaParametro> turmaParametros;
 
-    @OneToMany(mappedBy = "turma")//, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "turma", cascade = CascadeType.REMOVE)//, fetch = FetchType.EAGER)
     private List<Pessoa> academicos;
 
     @ManyToOne
     @JoinColumn(name = "pes_id")
     public Pessoa professor;
 
-    @OneToMany(mappedBy = "turma")//, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "turma", cascade = CascadeType.REMOVE)//, fetch = FetchType.EAGER)
     private List<Projeto> projetos;
 
     public Turma() {

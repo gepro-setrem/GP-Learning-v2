@@ -1,9 +1,9 @@
 package br.org.gdt.beans;
 
-import br.org.gdt.bll.EAPBLL;
 import br.org.gdt.bll.ProjetoBLL;
-import br.org.gdt.model.EAP;
+import br.org.gdt.bll.TarefaBLL;
 import br.org.gdt.model.Projeto;
+import br.org.gdt.model.Tarefa;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -11,42 +11,34 @@ import javax.faces.model.DataModel;
 
 @ManagedBean
 @RequestScoped
-public class EapBean {
+public class CronogramaBean {
 
-    private EAP eap = new EAP();
-    @ManagedProperty("#{eapBLL}")
-    private EAPBLL eapBLL;
-    private DataModel eaps;
+    private Tarefa tarefa;
+    @ManagedProperty("#{tarefaBLL}")
+    private TarefaBLL tarefaBLL;
+    private DataModel tarefas;
 
     private Projeto projeto;
     @ManagedProperty("#{projetoBLL}")
     private ProjetoBLL projetoBLL;
 
-    public EapBean() {
+    public CronogramaBean() {
     }
 
-    public EAP getEap() {
-        return eap;
+    public Tarefa getTarefa() {
+        return tarefa;
     }
 
-    public void setEap(EAP eap) {
-        this.eap = eap;
+    public void setTarefa(Tarefa tarefa) {
+        this.tarefa = tarefa;
     }
 
-    public EAPBLL getEapBLL() {
-        return eapBLL;
+    public TarefaBLL getTarefaBLL() {
+        return tarefaBLL;
     }
 
-    public void setEapBLL(EAPBLL eapBLL) {
-        this.eapBLL = eapBLL;
-    }
-
-    public DataModel getEaps() {
-        return eaps;
-    }
-
-    public void setEaps(DataModel eaps) {
-        this.eaps = eaps;
+    public void setTarefaBLL(TarefaBLL tarefaBLL) {
+        this.tarefaBLL = tarefaBLL;
     }
 
     public Projeto getProjeto() {
@@ -67,5 +59,4 @@ public class EapBean {
     public void setProjetoBLL(ProjetoBLL projetoBLL) {
         this.projetoBLL = projetoBLL;
     }
-
 }

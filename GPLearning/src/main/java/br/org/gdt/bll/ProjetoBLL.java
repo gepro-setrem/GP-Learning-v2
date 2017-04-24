@@ -18,10 +18,9 @@ public class ProjetoBLL extends BLL<Projeto> {
 
     @Autowired
     private ProjetoDAO dao;
-
     @Autowired
-    //@ManagedProperty("#{pessoaBLL}")
     private PessoaBLL pessoaBLL;
+    @Autowired
     private TurmaBLL turmaBLL;
 
     public List<Projeto> findByAluno(Pessoa pessoa) {
@@ -41,13 +40,15 @@ public class ProjetoBLL extends BLL<Projeto> {
     }
 
     public List<Projeto> findbyturmasprofessor(Pessoa pessoa) {
-        //Pessoa user = pessoaBLL.findById(pessoa.getId());
         List<Turma> lsTurmas = turmaBLL.findbyProfessor(pessoa);
         List<Projeto> projetos = new ArrayList<>();
-        //Hibernate.initialize(user.getTurmasprofessor());
         for (Turma turma : lsTurmas) {
             List<Projeto> lsProjetos = dao.findbyturma(turma);
             projetos.addAll(lsProjetos);
+        }
+        for (Projeto projeto : projetos) {
+            List<Pessoa> componentes = pessoaBLL.findByComponentes(projeto);
+            projeto.setComponentes(componentes);
         }
         return projetos;
     }

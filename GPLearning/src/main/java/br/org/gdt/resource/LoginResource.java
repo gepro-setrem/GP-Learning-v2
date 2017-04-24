@@ -19,13 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class LoginResource {
 
     @Autowired
-    private LoginBLL bll;
+    private LoginBLL loginBLL;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/login/{email}/{senha}")
     public Pessoa login(@PathParam("email") String email, @PathParam("senha") String senha) {
-        Pessoa user = bll.findLogin(email, senha);
+        Pessoa user = loginBLL.findLogin(email, senha);
         return user;
     }
 
@@ -33,7 +33,7 @@ public class LoginResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/login")
     public Pessoa getLogin(@FormParam("email") String email, @FormParam("senha") String senha) {
-        Pessoa user = bll.findLogin(email, senha);
+        Pessoa user = loginBLL.findLogin(email, senha);
         return user;
     }
 }

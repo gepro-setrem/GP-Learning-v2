@@ -12,7 +12,6 @@ public class EAPBLL extends BLL<EAP> {
 
     @Autowired
     private EAPDAO dao;
-    private ProjetoBLL projetoBLL;
 
     public EAP findbyEAP(Projeto projeto) {
         if (projeto != null) {
