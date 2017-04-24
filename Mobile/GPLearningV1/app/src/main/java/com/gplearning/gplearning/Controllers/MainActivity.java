@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        if (MetodosPublicos.ExisteSessao(this)) {
+        if (!MetodosPublicos.ExisteSessao(this)) {
             Log.i("Event", "string null, vai para login");
             Intent intentL = new Intent(this, LoginActivity.class);
             startActivity(intentL);
