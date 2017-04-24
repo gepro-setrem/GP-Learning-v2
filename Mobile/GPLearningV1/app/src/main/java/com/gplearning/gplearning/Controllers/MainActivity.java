@@ -22,6 +22,7 @@ import com.gplearning.gplearning.Enums.Fragments;
 import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.Quote;
 import com.gplearning.gplearning.R;
+import com.gplearning.gplearning.Utils.MetodosPublicos;
 
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -58,9 +59,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        SharedPreferences shared = getSharedPreferences("login", MODE_PRIVATE);
-        String string_temp = shared.getString("user", null);
-        if (string_temp == null) {
+        if (MetodosPublicos.ExisteSessao(this)) {
             Log.i("Event", "string null, vai para login");
             Intent intentL = new Intent(this, LoginActivity.class);
             startActivity(intentL);
@@ -129,20 +128,14 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
-//            SharedPreferences pref;
-//            pref = getSharedPreferences("login",MODE_PRIVATE);
-//            SharedPreferences.Editor editor = pref.edit();
-//            editor.putString("user",null);
-//            editor.commit();
+            SharedPreferences pref;
+            pref = getSharedPreferences("login", MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("user", null);
+            editor.commit();
 
             new getAssync().execute();
 
-//            Error:Execution failed for task ':app:transformResourcesWithMergeJavaResForDebug'.
-//                    > com.android.build.api.transform.TransformException: com.android.builder.packaging.DuplicateFileException: Duplicate files copied in APK META-INF/LICENSE
-//            File1: C:\Users\Mateus\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.3.2\559b70ac8a0d5cad611da4223137a920147201ba\jackson-core-2.3.2.jar
-//            File2: C:\Users\Mateus\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-databind\2.3.2\c75edc740a6d8cb1cef6fa82fa594e0bce561916\jackson-databind-2.3.2.jar
-//            File3: C:\Users\Mateus\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-annotations\2.3.0\f5e853a20b60758922453d56f9ae1e64af5cb3da\jackson-annotations-2.3.0.jar
-//
             return true;
         }
 
@@ -207,13 +200,17 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected String doInBackground(String... strings) {
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
+            try {
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
+                Log.i("WB", quote.toString());
+
+            } catch (Exception e) {
+            }
+            ;
 
 
-
-            Log.i("WB", quote.toString());
             return null;
         }
 
