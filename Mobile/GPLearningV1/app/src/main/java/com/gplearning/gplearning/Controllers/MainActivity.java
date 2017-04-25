@@ -1,7 +1,6 @@
 package com.gplearning.gplearning.Controllers;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -63,9 +62,11 @@ public class MainActivity extends AppCompatActivity
             Intent intentL = new Intent(this, LoginActivity.class);
             startActivity(intentL);
         } else {
-            SharedPreferences shModo = getSharedPreferences("modoAcesso", MODE_PRIVATE);
-            String modoAcesso = shModo.getString("modoAcesso", null);
-            if (modoAcesso == null) {
+
+            //   SharedPreferences shModo = getSharedPreferences("modoAcesso", MODE_PRIVATE);
+            //  String modoAcesso = shModo.getString("modoAcesso", null);
+
+            if (!MetodosPublicos.ExisteModoAcesso(this)) { //modoAcesso == null) {
                 changefragment(Fragments.nivelAcesso.toString());
             } else {
                 Intent intent = getIntent();

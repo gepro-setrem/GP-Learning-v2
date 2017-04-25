@@ -133,7 +133,7 @@ public class EtapasFragment extends Fragment {
 
     /// Icones
     /// http://www.flaticon.com/packs/business-and-finance-11
-    /// http://www.flaticon.com/packs/reports-and-analytics/2
+        /// http://www.flaticon.com/packs/reports-and-analytics/2
     private void PassaValoresEtapas() {
 
         Atividade atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaDescricao)).unique();

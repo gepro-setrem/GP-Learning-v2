@@ -79,6 +79,9 @@ public class ProjetoFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Log.i("Event", "Chegou na ProjetoFragment");
             RecyclerView recyclerView = (RecyclerView) view;
+
+
+            //dao.queryBuilder().where(ProjetoDao.Properties.G)
             lsProjetos = getProjetos();
             recyclerView.setAdapter(new ProjetoRecyclerViewAdapter(lsProjetos, mListener));
             if (lsProjetos.size() == 0) {

@@ -1,13 +1,13 @@
 package com.gplearning.gplearning.Controllers;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.gplearning.gplearning.Enums.Fragments;
 import com.gplearning.gplearning.R;
+import com.gplearning.gplearning.Utils.MetodosPublicos;
 
 public class NivelAcessoActivity extends AppCompatActivity {
 
@@ -17,7 +17,7 @@ public class NivelAcessoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nivel_acesso);
     }
 
-    public void AcessoAluno(View view){
+    public void AcessoAluno(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("PAGE", Fragments.projetos.toString());
         SetAcessoAluno();
@@ -27,22 +27,13 @@ public class NivelAcessoActivity extends AppCompatActivity {
     }
 
 
-       public void SetAcessoAluno(){
-        SharedPreferences pref;
-        pref = getSharedPreferences("modoAcesso",MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("modoAcesso","aluno");
-        editor.commit();
+    public void SetAcessoAluno() {
+        MetodosPublicos.SalvaModoAcessoAluno(this);
     }
 
-    public void SetAcessoProfessor(){
-        SharedPreferences pref;
-        pref = getSharedPreferences("modoAcesso",MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("modoAcesso","professor");
-        editor.commit();
+    public void SetAcessoProfessor() {
+        MetodosPublicos.SalvaModoAcessoProfessor(this);
     }
-
 
 
 }

@@ -14,25 +14,26 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MetodosPublicos {
     private static String key_email = "user_email";
-    private static String key_login= "login";
+    private static String key_login = "login";
     private static String key_id = "user_id";
-    private static String key_idExterno= "user_id_externo";
+    private static String key_idExterno = "user_id_externo";
+    private static String key_modoAcesso = "user_modo_acesso";
+    private static String key_acessoAluno = "user_acesso_aluno";
+    private static String key_acessoProfessor = "user_acesso_professor";
 
 
     /// metodos de Dados do usuário/Sessão
     public static void SalvaSessao(Context context, String email, Long idExterno) {
-        SharedPreferences pref;
-        pref = context.getSharedPreferences(key_login, MODE_PRIVATE);
+        SharedPreferences  pref = context.getSharedPreferences(key_login, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(key_email, email);
-        if (idExterno!=null && idExterno > 0)
+        if (idExterno != null && idExterno > 0)
             editor.putLong(key_idExterno, idExterno);
         editor.commit();
     }
 
     public static void SalvaSessaoId(Context context, Long id) {
-        SharedPreferences pref;
-        pref = context.getSharedPreferences(key_login, MODE_PRIVATE);
+        SharedPreferences  pref = context.getSharedPreferences(key_login, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putLong(key_id, id);
         editor.commit();
@@ -57,7 +58,34 @@ public class MetodosPublicos {
         boolean sesssao = string_temp != null;
         return sesssao;
     }
-    //
+
+    public static boolean ModoAcessoAluno(Context context) {
+        SharedPreferences shared = context.getSharedPreferences(key_modoAcesso, MODE_PRIVATE);
+        String modoAcesso = shared.getString(key_modoAcesso, null);
+        boolean acessoAluno = modoAcesso != null && modoAcesso.equals(key_acessoProfessor);
+        return acessoAluno;
+    }
+
+    public static void SalvaModoAcessoAluno(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(key_modoAcesso, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(key_modoAcesso, key_acessoAluno);
+        editor.commit();
+    }
+
+    public static  boolean ExisteModoAcesso(Context context){
+        SharedPreferences shared = context.getSharedPreferences(key_modoAcesso, MODE_PRIVATE);
+        String modoAcesso = shared.getString(key_modoAcesso, null);
+        boolean acesso = modoAcesso != null;
+        return acesso;
+    }
+
+    public static void SalvaModoAcessoProfessor(Context context) {
+        SharedPreferences  pref = context.getSharedPreferences(key_modoAcesso, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(key_modoAcesso, key_acessoProfessor);
+        editor.commit();
+    }
 
 
     public static final boolean IsConnected(Context context) {
