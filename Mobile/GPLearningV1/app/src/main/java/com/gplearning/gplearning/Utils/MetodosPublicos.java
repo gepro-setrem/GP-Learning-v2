@@ -5,58 +5,60 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-
-import com.gplearning.gplearning.DAO.App;
-import com.gplearning.gplearning.Models.DaoSession;
 
 import static android.content.Context.MODE_PRIVATE;
 
 
 public class MetodosPublicos {
+    private static String key_email = "user_email";
+    private static String key_login= "login";
+    private static String key_id = "user_id";
+    private static String key_idExterno= "user_id_externo";
 
 
     /// metodos de Dados do usuário/Sessão
     public static void SalvaSessao(Context context, String email, Long idExterno) {
         SharedPreferences pref;
-        pref = context.getSharedPreferences("login", MODE_PRIVATE);
+        pref = context.getSharedPreferences(key_login, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        editor.putString("user_email", email);
-        if (idExterno > 0)
-            editor.putLong("user_idExterno", idExterno);
+        editor.putString(key_email, email);
+        if (idExterno!=null && idExterno > 0)
+            editor.putLong(key_idExterno, idExterno);
         editor.commit();
     }
 
     public static void SalvaSessaoId(Context context, Long id) {
         SharedPreferences pref;
-        pref = context.getSharedPreferences("login", MODE_PRIVATE);
+        pref = context.getSharedPreferences(key_login, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        editor.putLong("user_id", id);
+        editor.putLong(key_id, id);
         editor.commit();
     }
 
 
     public static Long SelecionaSessaoId(Context context) {
-        SharedPreferences shared = context.getSharedPreferences("login", MODE_PRIVATE);
-        Long user_id = shared.getLong("user_id", 0);
+        SharedPreferences shared = context.getSharedPreferences(key_login, MODE_PRIVATE);
+        Long user_id = shared.getLong(key_id, 1);
         return user_id;
     }
 
     public static Long SelecionaSessaoidExterno(Context context) {
-        SharedPreferences shared = context.getSharedPreferences("login", MODE_PRIVATE);
-        Long user_idExterno = shared.getLong("user_idExterno", 0);
+        SharedPreferences shared = context.getSharedPreferences(key_login, MODE_PRIVATE);
+        Long user_idExterno = shared.getLong(key_idExterno, 0);
         return user_idExterno;
     }
 
     public static boolean ExisteSessao(Context context) {
-        SharedPreferences shared = context.getSharedPreferences("login", MODE_PRIVATE);
-        String string_temp = shared.getString("user", null);
+        SharedPreferences shared = context.getSharedPreferences(key_login, MODE_PRIVATE);
+        String string_temp = shared.getString(key_email, null);
         boolean sesssao = string_temp != null;
         return sesssao;
     }
+    //
+
 
     public static final boolean IsConnected(Context context) {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

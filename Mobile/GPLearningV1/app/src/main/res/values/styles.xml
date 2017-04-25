@@ -17,4 +17,9 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <style name="InputLogin" parent="Widget.Design.TextInputLayout">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>

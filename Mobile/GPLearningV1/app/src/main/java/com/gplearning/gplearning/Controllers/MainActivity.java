@@ -1,13 +1,12 @@
 package com.gplearning.gplearning.Controllers;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-//import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,14 +18,14 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.gplearning.gplearning.Enums.Fragments;
-import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.Quote;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 
-
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+
+//import android.support.v4.app.Fragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -128,11 +127,7 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
-            SharedPreferences pref;
-            pref = getSharedPreferences("login", MODE_PRIVATE);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString("user", null);
-            editor.commit();
+            MetodosPublicos.SalvaSessao(this, null, null);
 
             new getAssync().execute();
 

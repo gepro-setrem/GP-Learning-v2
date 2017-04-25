@@ -23,11 +23,12 @@ public class Comentario {
     private String texto;
     private Date criacao;
 
-//    private Long atv_id;
+    //    private Long atv_id;
 //    @ToOne(joinProperty = "atv_id")
 //    private Atividade atividade;
 //
-//    private Long use_id;
+
+    private Long use_id;
 //    @ToOne(joinProperty = "use_id")
 //    private Usuario usuario;
 
@@ -36,13 +37,14 @@ public class Comentario {
         this.texto = texto;
     }
 
-    @Generated(hash = 719587414)
-    public Comentario(Long _id, Long idExterno, @NotNull String texto,
-            Date criacao) {
+    @Generated(hash = 1650375064)
+    public Comentario(Long _id, Long idExterno, @NotNull String texto, Date criacao,
+            Long use_id) {
         this._id = _id;
         this.idExterno = idExterno;
         this.texto = texto;
         this.criacao = criacao;
+        this.use_id = use_id;
     }
 
     @Generated(hash = 751223151)
@@ -96,13 +98,14 @@ public class Comentario {
     public void setIdExterno(Long idExterno) {
         this.idExterno = idExterno;
     }
-//    public Long getUse_id() {
-//        return this.use_id;
-//    }
-//
-//    public void setUse_id(Long use_id) {
-//        this.use_id = use_id;
-//    }
+   
+    public Long getUse_id() {
+        return this.use_id;
+    }
+
+    public void setUse_id(Long use_id) {
+        this.use_id = use_id;
+    }
 
     @Override
     public String toString() {

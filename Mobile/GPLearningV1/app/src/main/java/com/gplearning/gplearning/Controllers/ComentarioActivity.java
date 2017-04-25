@@ -91,9 +91,8 @@ public class ComentarioActivity extends AppCompatActivity {
         EditText coment = (EditText) findViewById(R.id.comentarioNovo);
         try {
             if (!coment.getText().toString().isEmpty()) {
-                Comentario COM = new Comentario(null, null, coment.getText().toString(), new Date());
+                Comentario COM = new Comentario(null, null, coment.getText().toString(), new Date(), MetodosPublicos.SelecionaSessaoId(this));
 
-                Value val = new Value(null, coment.getText().toString());
                 long id = dao.insert(COM);
                 Log.i("Event", "id:" + COM.get_id());
                 if (id > 0) {
