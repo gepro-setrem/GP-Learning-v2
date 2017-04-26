@@ -136,6 +136,23 @@ public class EtapasFragment extends Fragment {
         /// http://www.flaticon.com/packs/reports-and-analytics/2
     private void PassaValoresEtapas() {
 
+        // descricao
+        //justificativa
+
+        // premissas
+
+        //restrições
+        //marcos
+
+        //requisitos Termo de abertura
+        //partes interessadas
+        //
+
+        //Planejamento de Escopo
+        // requisitos
+        // escopo
+
+
         Atividade atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaDescricao)).unique();
         if (atv != null)
             ((RatingBar) getActivity().findViewById(R.id.etapaprojetoDescricaoRatingBar)).setRating(atv.getPontuacaoMedia());

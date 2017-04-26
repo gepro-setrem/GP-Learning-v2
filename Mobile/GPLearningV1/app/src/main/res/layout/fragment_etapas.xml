@@ -22,8 +22,8 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:gravity="center"
             android:hint="nome"
-            android:textAlignment="center"
             android:textSize="18sp"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -48,8 +48,8 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Empresa"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -72,14 +72,14 @@
             android:id="@+id/etapaProjetoGerenteTxt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="1dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="1dp"
             android:layout_marginStart="8dp"
             android:text="nome do gerente"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView"
             app:layout_constraintLeft_toRightOf="@+id/textView"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginEnd="1dp" />
+            app:layout_constraintRight_toRightOf="parent" />
 
         <!--<TextView-->
         <!--android:id="@+id/textView3"-->
@@ -93,126 +93,127 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
             android:text="@string/inicitiation_process"
             android:textSize="18sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoGerenteTxt"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoGerenteTxt" />
 
 
-        <Button
-            android:id="@+id/etapaProjetoDescricaoTABtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="24dp"
-            android:onClick="MostraEtapa"
-            android:text="Descrição Termo de Abertura"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+        <!--<Button-->
+        <!--android:id="@+id/etapaProjetoDescricaoTAbtn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginTop="24dp"-->
+        <!--android:onClick="MostraEtapa"-->
+        <!--android:text="Descrição Termo de Abertura"-->
+        <!--android:textAppearance="@style/TextAppearance.AppCompat"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/textView5"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp" />-->
 
-        <Button
-            android:id="@+id/etapaProjetoJustificativaTABtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="233dp"
-            android:text="Justificativa Termo de Abertura"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoDescricaoTABtn"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+        <!--<Button-->
+        <!--android:id="@+id/etapaProjetoJustificativaTABtn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginTop="233dp"-->
+        <!--android:text="Justificativa Termo de Abertura"-->
+        <!--android:textAppearance="@style/TextAppearance.AppCompat"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/etapaProjetoDescricaoTABtn"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp" />-->
 
-        <Button
-            android:id="@+id/etapaProjetopremissasTABtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="32dp"
-            android:text="Premissas do Termo de Abertura"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoJustificativaTABtn"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
-
-
-        <Button
-            android:id="@+id/etapaProjetoRestricoesTABtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="32dp"
-            android:text="Restrições do Termo de Abertura"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etapaProjetopremissasTABtn"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+        <!--<Button-->
+        <!--android:id="@+id/etapaProjetopremissasTABtn_"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginTop="500dp"-->
+        <!--android:text="Premissas do Termo de Abertura"-->
+        <!--android:textAppearance="@style/TextAppearance.AppCompat"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/etapaProjetoJustificativaTABtn"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--app:layout_constraintHorizontal_bias="0.504" />-->
 
 
-        <Button
-            android:id="@+id/etapaProjetoMarcosTABtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="32dp"
-            android:text="Marcos do Termo de Abertura"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            app:layout_constraintHorizontal_bias="0.503"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRestricoesTABtn"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+        <!--<Button-->
+        <!--android:id="@+id/etapaProjetoRestricoesTABtn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginTop="32dp"-->
+        <!--android:text="Restrições do Termo de Abertura"-->
+        <!--android:textAppearance="@style/TextAppearance.AppCompat"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/etapaProjetopremissasTABtn_"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp" />-->
 
-        <Button
-            android:id="@+id/etapaProjetoRequisitosTABtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="32dp"
-            android:text="Requisitos Termo de Abertura"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoMarcosTABtn"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
 
-        <Button
-            android:id="@+id/etapaProjetoStakeholdersBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="32dp"
-            android:text="Partes interessadas"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRequisitosTABtn"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+        <!--<Button-->
+        <!--android:id="@+id/etapaProjetoMarcosTABtn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginTop="32dp"-->
+        <!--android:text="Marcos do Termo de Abertura"-->
+        <!--android:textAppearance="@style/TextAppearance.AppCompat"-->
+        <!--app:layout_constraintHorizontal_bias="0.503"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRestricoesTABtn"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp" />-->
+
+        <!--<Button-->
+        <!--android:id="@+id/etapaProjetoRequisitosTABtn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginTop="32dp"-->
+        <!--android:text="Requisitos Termo de Abertura"-->
+        <!--android:textAppearance="@style/TextAppearance.AppCompat"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/etapaProjetoMarcosTABtn"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp" />-->
+
+        <!--<Button-->
+        <!--android:id="@+id/etapaProjetoStakeholdersBtn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginTop="32dp"-->
+        <!--android:text="Partes interessadas"-->
+        <!--android:textAppearance="@style/TextAppearance.AppCompat"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRequisitosTABtn"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp" />-->
 
 
         <!--<TextView-->
@@ -224,160 +225,304 @@
         <!--android:layout_marginRight="8dp"-->
         <!--android:layout_marginTop="32dp"-->
         <!--app:layout_constraintTop_toBottomOf="@+id/button11" />-->
-        <TextView
-            android:id="@+id/EtapaProjetoPlanejamentoTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="32dp"
-            android:text="Grupo de Processos de Planejamento"
-            android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoStakeholdersBtn"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
 
-        <Button
-            android:id="@+id/etapaProjetoPlanejamentoEscopoBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="32dp"
-            android:text="Planejamento de Escopo"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/EtapaProjetoPlanejamentoTxt"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+        <!--<TextView-->
+        <!--android:id="@+id/EtapaProjetoPlanejamentoTxt"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginTop="32dp"-->
+        <!--android:text="Grupo de Processos de Planejamento"-->
+        <!--android:textSize="18sp"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/etapaProjetoStakeholdersBtn"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp" />-->
 
-        <Button
-            android:id="@+id/etapaProjetoRequisitosBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="32dp"
-            android:text="Requisitos"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoPlanejamentoEscopoBtn"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+        <!--<Button-->
+        <!--android:id="@+id/etapaProjetoPlanejamentoEscopoBtn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginTop="32dp"-->
+        <!--android:text="Planejamento de Escopo"-->
+        <!--android:textAppearance="@style/TextAppearance.AppCompat"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/EtapaProjetoPlanejamentoTxt"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp" />-->
 
-        <Button
-            android:id="@+id/etapaProjetoEscopoBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="32dp"
-            android:text="Escopo"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRequisitosBtn"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+        <!--<Button-->
+        <!--android:id="@+id/etapaProjetoRequisitosBtn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginTop="32dp"-->
+        <!--android:text="Requisitos"-->
+        <!--android:textAppearance="@style/TextAppearance.AppCompat"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/etapaProjetoPlanejamentoEscopoBtn"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp" />-->
 
-        <RatingBar
-            android:id="@+id/etapaprojetoDescricaoRatingBar"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:numStars="5"
-            android:rating="4"
-            app:layout_constraintLeft_toRightOf="@+id/ratingBar2"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        <!--<Button-->
+        <!--android:id="@+id/etapaProjetoEscopoBtn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginTop="32dp"-->
+        <!--android:text="Escopo"-->
+        <!--android:textAppearance="@style/TextAppearance.AppCompat"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRequisitosBtn"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp" />-->
 
-        <RatingBar
-            android:id="@+id/ratingBar2"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:numStars="5"
-            android:rating="3"
-            app:layout_constraintRight_toLeftOf="@+id/etapaprojetoDescricaoRatingBar"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-        <RatingBar
-            android:id="@+id/ratingBar"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:numStars="5"
-            android:rating="3"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoDescricaoTABtn"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+        <!-- Descrição Termo abertura -->
 
         <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="253dp"
-            android:adjustViewBounds="true"
+            android:id="@+id/etapaProjetoDescricaoTAbtn"
+            style="@style/imageEtapaProjeto"
+            android:layout_marginTop="173dp"
+            android:background="@drawable/ic_termo_abertura"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/etapaProjetoJustificativaTAbtn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/etapaProjetoDescricaoTAtxt"
+            style="@style/txtEtapaProjeto"
+            android:text="Descrição do termo de Abertura"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/etapaProjetoJustificativaTAtxt"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoDescricaoTAbtn" />
+
+        <RatingBar
+            android:id="@+id/etapaProjetoDescricaoTARatingBar"
+            style="@style/ratingBarEtapaProjeto"
+            android:numStars="5"
+            android:rating="3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/etapaProjetoJustificativaTARatingBar"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoDescricaoTAtxt" />
+
+        <!--Fim Descrição Termo abertura -->
+
+
+        <!--Justificativa Termo Abertura-->
+
+        <ImageButton
+            android:id="@+id/etapaProjetoJustificativaTAbtn"
+            style="@style/imageEtapaProjeto"
+            android:layout_marginTop="173dp"
             android:background="@drawable/ic_justificativa_termo_abertura"
-            android:contextClickable="false"
-            android:cropToPadding="true"
-            android:elevation="5dp"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            app:layout_constraintLeft_toRightOf="@+id/imageButton4"
+            app:layout_constraintLeft_toRightOf="@+id/etapaProjetoDescricaoTAbtn"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/etapaProjetoJustificativaTAtxt"
+            style="@style/txtEtapaProjeto"
+            android:text="Justificativa do termo de Abertura"
+            app:layout_constraintLeft_toRightOf="@+id/etapaProjetoDescricaoTAtxt"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoJustificativaTAbtn" />
+
+        <RatingBar
+            android:id="@+id/etapaProjetoJustificativaTARatingBar"
+            style="@style/ratingBarEtapaProjeto"
+            android:numStars="5"
+            android:rating="4"
+            app:layout_constraintLeft_toRightOf="@+id/etapaProjetoDescricaoTARatingBar"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoJustificativaTAtxt" />
+        <!--Fim Justificativa Termo Abertura-->
+
+
+        <!--Premissas Termo Abertura-->
         <ImageButton
-            android:id="@+id/imageButton4"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="253dp"
-            android:adjustViewBounds="true"
-            android:background="@drawable/ic_termo_abertura"
-            android:contextClickable="false"
-            android:cropToPadding="true"
-            android:elevation="5dp"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/etapaProjetoPremissasTAbtn"
+            style="@style/imageEtapaProjeto"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/ic_premissas"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/imageButton3" />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintTop_toTopOf="@+id/etapaProjetoDescricaoTAtxt"
+            android:layout_marginTop="80dp" />
+
+        <TextView
+            android:id="@+id/etapaProjetoPremissasTAtxt"
+            style="@style/txtEtapaProjeto"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:text="Premissas"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoPremissasTAbtn" />
+
+        <RatingBar
+            android:id="@+id/etapaProjetoPremissasTARatingBar"
+            style="@style/ratingBarEtapaProjeto"
+            android:numStars="5"
+            android:rating="4"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoPremissasTAtxt" />
+        <!--Fim Premissas Termo Abertura-->
+
+
+        <!--Restrições Termo Abertura-->
+        <ImageButton
+            android:id="@+id/etapaProjetoRestricoesTAbtn"
+            style="@style/imageEtapaProjeto"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/ic_restricoes"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/etapaProjetoMarcosTAbtn"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoPremissasTARatingBar" />
+
+        <TextView
+            android:id="@+id/etapaProjetoRestricoesTAtxt"
+            style="@style/txtEtapaProjeto"
+            android:text="Restrições"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/etapaProjetoMarcosTAtxt"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRestricoesTAbtn" />
+
+        <RatingBar
+            android:id="@+id/etapaProjetoRestricoesTARatingBar"
+            style="@style/ratingBarEtapaProjeto"
+            android:numStars="5"
+            android:rating="4"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/etapaProjetoMarcosTARatingBar"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRestricoesTAtxt" />
+        <!--Fim restrições Termo Abertura-->
+
+
+        <!--Marcos Termo Abertura-->
+        <ImageButton
+            android:id="@+id/etapaProjetoMarcosTAbtn"
+            style="@style/imageEtapaProjeto"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/ic_marcostermoabertura"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintLeft_toRightOf="@+id/etapaProjetoRestricoesTAbtn"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoPremissasTARatingBar" />
+
+        <TextView
+            android:id="@+id/etapaProjetoMarcosTAtxt"
+            style="@style/txtEtapaProjeto"
+            android:text="Marcos do Projeto"
+            app:layout_constraintLeft_toRightOf="@+id/etapaProjetoRestricoesTAtxt"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoMarcosTAbtn" />
+
+        <RatingBar
+            android:id="@+id/etapaProjetoMarcosTARatingBar"
+            style="@style/ratingBarEtapaProjeto"
+            android:numStars="5"
+            android:rating="4"
+            app:layout_constraintLeft_toRightOf="@+id/etapaProjetoRestricoesTARatingBar"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoMarcosTAtxt" />
+        <!--Fim Marcos Termo Abertura-->
+
+
+        <!--Requisitos Termo Abertura-->
+
+        <ImageButton
+            android:id="@+id/etapaProjetoRequisitosTAbtn"
+            style="@style/imageEtapaProjeto"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/ic_requisitostermoaberbura"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/etapaProjetoStakeholdersTAbtn"
+            app:layout_constraintTop_toTopOf="@+id/etapaProjetoRestricoesTAtxt" />
+
+        <TextView
+            android:id="@+id/etapaProjetoRequisitosTAtxt"
+            style="@style/txtEtapaProjeto"
+            android:text="Requisitos do Termo de Abertura"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/etapaProjetoStakeholdersTAtxt"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRequisitosTAbtn" />
+
+        <RatingBar
+            android:id="@+id/etapaProjetoRequisitosTARatingBar"
+            style="@style/ratingBarEtapaProjeto"
+            android:numStars="5"
+            android:rating="4"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/etapaProjetoStakeholdersTARatingBar"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRequisitosTAtxt" />
+
+
+        <!--Fim Requisitos Termo Abertura-->
+
+
+        <!--Stakeholders Termo Abertura-->
+        <ImageButton
+            android:id="@+id/etapaProjetoStakeholdersTAbtn"
+            style="@style/imageEtapaProjeto"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/ic_stakeholders"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintLeft_toRightOf="@+id/etapaProjetoRequisitosTAbtn"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/etapaProjetoMarcosTAtxt" />
+
+        <TextView
+            android:id="@+id/etapaProjetoStakeholdersTAtxt"
+            style="@style/txtEtapaProjeto"
+            android:text="Partes interessadas do Projeto"
+            app:layout_constraintLeft_toRightOf="@+id/etapaProjetoRequisitosTAtxt"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoStakeholdersTAbtn" />
+
+        <RatingBar
+            android:id="@+id/etapaProjetoStakeholdersTARatingBar"
+            style="@style/ratingBarEtapaProjeto"
+            android:numStars="5"
+            android:rating="4"
+            app:layout_constraintLeft_toRightOf="@+id/etapaProjetoRequisitosTARatingBar"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoStakeholdersTAtxt" />
+
+        <!--Fim Marcos Termo Abertura-->
+
 
         <TextView
             android:id="@+id/textView7"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Justificativa do termo de Abertura"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@+id/textView8"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton3" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Descrição do termo de Abertura"
-            android:textStyle="bold"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="995dp"
+            android:text="TextView"
+            app:layout_constraintHorizontal_bias="0.972"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/textView7"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton4" />
-
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/etapaProjetoNomeTxt" />
 
         <!--<android.support.design.widget.FloatingActionButton-->
         <!--android:layout_width="80dp"-->
