@@ -148,9 +148,9 @@ public class EtapasFragment extends Fragment {
         //partes interessadas
         //
 
-        //Planejamento de Escopo
-        // requisitos
-        // escopo
+        //Planejamento de Escopo --http://www.flaticon.com/free-icon/brainstorm_201557#term=strategy&page=1&position=2
+        // requisitos --  http://www.flaticon.com/free-icon/clipboard_235252
+        // escopo  --  http://www.flaticon.com/free-icon/notebook_330705
 
 
         Atividade atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaDescricao)).unique();

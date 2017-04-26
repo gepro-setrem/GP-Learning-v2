@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -18,6 +18,8 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
+    <!--  Estilos Personalizados   -->
+
     <style name="InputLogin" parent="Widget.Design.TextInputLayout">
         <item name="android:textColor">@color/white</item>
     </style>
@@ -25,12 +27,12 @@
     <style name="imageEtapaProjeto">
         <item name="android:layout_width">85dp</item>
         <item name="android:layout_height">85dp</item>
+        <item name="android:layout_marginTop">80dp</item>
         <!--<item name="android:elevation" tools:targetApi="lollipop">5dp</item>-->
     </style>
 
-
     <style name="txtEtapaProjeto">
-        <item name="android:layout_width">85dp</item>
+        <item name="android:layout_width">90dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
@@ -40,5 +42,19 @@
         <item name="android:layout_width">80dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
+    <style name="textviewProcessosEtapaProjeto">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">100dp</item>
+        <!--<item name="app:layout_constraintLeft_toLeftOf">parent</item>-->
+        <!--<item name="app:layout_constraintRight_toRightOf">parent</item>-->
+
+    </style>
+
 
 </resources>

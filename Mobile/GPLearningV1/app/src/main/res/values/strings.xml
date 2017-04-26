@@ -16,10 +16,25 @@
     <string name="comments">Comentários</string>
     <string name="comment_delete">Deletar comentário?</string>
 
+    <!-- Strings relacionadas a Etapas do projeto -->
+    <string name="company">Empresa</string>
+    <string name="manager">Gerente</string>
+    <string name="inicitiation_process">Processos de Iniciação</string>
+    <string name="description_opening_term">Descrição do Termo de Abertura</string>
+    <string name="justification_opening_term">Justificativa do Termo de Abertura</string>
+    <string name="premisses">Premissas</string>
+    <string name="restrictions">Restrições</string>
+    <string name="project_milestones">Marcos do Projeto</string>
+    <string name="requirements_opening_term">Requisitos do Termo de Abertura</string>
+    <string name="stakeholders">Partes Interessadas no Projeto</string>
+
+    <string name="scope_planing">Planejamento do Escopo</string>
+    <string name="requirements">Requisitos</string>
+    <string name="scope">Escopo do Projeto</string>
 
 
 
-    <!-- Strings related to login -->
+    <!-- Strings relacionadas ao login -->
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">Login</string>
 
@@ -43,7 +58,6 @@
     <string name="choose_area">Escolher área</string>
     <string name="no_comments">Nenhum comentário realizado, seja o primeiro a comentar!</string>
     <string name="project_detail">Detalhes do Projeto</string>
-    <string name="inicitiation_process">Processos de Iniciação</string>
 
 
     <string name="last_sync">Última sincronização</string>
