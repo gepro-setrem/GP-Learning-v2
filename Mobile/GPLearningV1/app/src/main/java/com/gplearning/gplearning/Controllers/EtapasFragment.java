@@ -155,7 +155,7 @@ public class EtapasFragment extends Fragment {
 
         Atividade atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaDescricao)).unique();
         if (atv != null)
-            ((RatingBar) getActivity().findViewById(R.id.etapaprojetoDescricaoRatingBar)).setRating(atv.getPontuacaoMedia());
+            ((RatingBar) getActivity().findViewById(R.id.etapaProjetoDescricaoTARatingBar)).setRating(atv.getPontuacaoMedia());
 
 //        atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaJustificativa)).unique();
 //        if (atv != null)
