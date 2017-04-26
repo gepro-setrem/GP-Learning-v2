@@ -12,6 +12,5 @@ public enum Etapa {
     Requisitos,
     Escopo,
     Eap,
-    Cronograma,
-    TermoAbertura
+    Cronograma
 }

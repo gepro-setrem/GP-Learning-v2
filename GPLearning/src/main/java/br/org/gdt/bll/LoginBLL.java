@@ -25,8 +25,9 @@ public class LoginBLL extends BLL<Login> {
                     lr.setLogin(null);
                 }
             }
+            user.getLogin().setPessoa(null);
             user.setIndicadoresprofessor(null);
-            user.setLogin(null);
+//            user.setLogin(null);
             user.setProjetos(null);
             user.setProjetosgerente(null);
             user.setTurma(null);
