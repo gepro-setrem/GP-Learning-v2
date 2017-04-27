@@ -86,7 +86,7 @@
         <TextView
             android:id="@+id/etapaProjetoProcessoIniciacaotxt"
             style="@style/textviewProcessosEtapaProjeto"
-            android:text="@string/inicitiation_process"
+            android:text="@string/inicitiation_processes"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoNomeTxt" />
@@ -96,7 +96,7 @@
             android:id="@+id/etapaProjetoDescricaoTAbtn"
             style="@style/imageEtapaProjeto"
             android:layout_marginTop="29dp"
-            android:background="@drawable/ic_writing"
+            android:background="@drawable/ic_exam"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/etapaProjetoJustificativaTAbtn"
@@ -128,7 +128,7 @@
             android:id="@+id/etapaProjetoJustificativaTAbtn"
             style="@style/imageEtapaProjeto"
             android:layout_marginTop="30dp"
-            android:background="@drawable/ic_justificativa_termo_abertura"
+            android:background="@drawable/ic_open_book"
             app:layout_constraintLeft_toRightOf="@+id/etapaProjetoDescricaoTAbtn"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoProcessoIniciacaotxt" />
@@ -161,7 +161,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="80dp"
-            android:background="@drawable/ic_premissas"
+            android:background="@drawable/ic_book"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -195,10 +195,10 @@
             android:id="@+id/etapaProjetoRestricoesTAbtn"
             style="@style/imageEtapaProjeto"
             android:layout_marginTop="50dp"
-            android:background="@drawable/ic_restricoes"
+            android:background="@drawable/ic_notepad"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/etapaProjetoMarcosTAbtn"
-            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoPremissasTARatingBar" />
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoPremissasTAbtn" />
 
         <TextView
             android:id="@+id/etapaProjetoRestricoesTAtxt"
@@ -224,11 +224,10 @@
             android:id="@+id/etapaProjetoMarcosTAbtn"
             style="@style/imageEtapaProjeto"
             android:layout_marginTop="50dp"
-            android:background="@drawable/ic_marcostermoabertura"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:background="@drawable/ic_analytics"
             app:layout_constraintLeft_toRightOf="@+id/etapaProjetoRestricoesTAbtn"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoPremissasTARatingBar" />
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoPremissasTAbtn" />
 
         <TextView
             android:id="@+id/etapaProjetoMarcosTAtxt"
@@ -248,13 +247,13 @@
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoMarcosTAtxt" />
         <!--Fim Marcos Termo Abertura-->
 
-
+        <!--#4cdbc4-->
         <!--Requisitos Termo Abertura-->
         <ImageButton
             android:id="@+id/etapaProjetoRequisitosTAbtn"
             style="@style/imageEtapaProjeto"
             android:layout_marginTop="80dp"
-            android:background="@drawable/ic_requisitostermoaberbura"
+            android:background="@drawable/ic_test"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/etapaProjetoStakeholdersTAbtn"
@@ -284,7 +283,7 @@
             android:id="@+id/etapaProjetoStakeholdersTAbtn"
             style="@style/imageEtapaProjeto"
             android:layout_marginTop="80dp"
-            android:background="@drawable/ic_stakeholders"
+            android:background="@drawable/ic_analytics_stakeholders"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             app:layout_constraintLeft_toRightOf="@+id/etapaProjetoRequisitosTAbtn"
             app:layout_constraintRight_toRightOf="parent"
@@ -313,7 +312,7 @@
             android:id="@+id/etapaProjetoProcessoAcompanhamentotxt"
             style="@style/textviewProcessosEtapaProjeto"
             android:layout_marginTop="130dp"
-            android:text="@string/inicitiation_process"
+            android:text="@string/planning_processes"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRequisitosTAbtn" />

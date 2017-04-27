@@ -19,7 +19,8 @@
     <!-- Strings relacionadas a Etapas do projeto -->
     <string name="company">Empresa</string>
     <string name="manager">Gerente</string>
-    <string name="inicitiation_process">Processos de Iniciação</string>
+    <string name="inicitiation_processes">Processos de Iniciação</string>
+    <string name="planning_processes">Processos de Planejamento</string>
     <string name="description_opening_term">Descrição do Termo de Abertura</string>
     <string name="justification_opening_term">Justificativa do Termo de Abertura</string>
     <string name="premisses">Premissas</string>
