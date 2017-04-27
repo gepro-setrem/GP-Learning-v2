@@ -13,8 +13,11 @@ public class LoginBLL extends BLL<Login> {
     @Autowired
     private LoginDAO dao;
 
-    public Login findPessoa(Pessoa usuario) {
-        return dao.findPessoa(usuario);
+    public Login findbyPessoa(Pessoa pessoa) {
+        if (pessoa != null && pessoa.getId() > 0) {
+            return dao.findbyPessoa(pessoa);
+        }
+        return null;
     }
 
     public Pessoa findLogin(String email, String senha) {
@@ -27,20 +30,12 @@ public class LoginBLL extends BLL<Login> {
             }
             user.getLogin().setPessoa(null);
             user.setIndicadoresprofessor(null);
-//            user.setLogin(null);
+            //user.setLogin(null);
             user.setProjetos(null);
             user.setProjetosgerente(null);
             user.setTurma(null);
             user.setTurmasprofessor(null);
         }
         return user;
-    }
-
-    public LoginDAO getDao() {
-        return dao;
-    }
-
-    public void setDao(LoginDAO dao) {
-        this.dao = dao;
     }
 }
