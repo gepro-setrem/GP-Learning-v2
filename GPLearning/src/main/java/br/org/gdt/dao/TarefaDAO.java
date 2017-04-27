@@ -13,25 +13,18 @@ public class TarefaDAO extends DAO<Tarefa> {
         classe = Tarefa.class;
     }
 
-    public EAP findbyEAP(Projeto projeto) {
-        EAP eap = null;
-        if (projeto != null && projeto.getId() > 0) {
-            List results = entityManager.createQuery("from EAP where projeto = :p and pai is null")
-                    .setParameter("p", projeto).getResultList();
-            if (!results.isEmpty()) {
-                eap = (EAP) results.get(0);
-            }
-        }
-        return eap;
+    public List<Tarefa> findbyTarefa(Tarefa tarefa) {
+        return entityManager.createQuery("from Tarefa where pai = :t")
+                .setParameter("t", tarefa).getResultList();
     }
 
-    public List<Tarefa> findbyChildren(int eap_id, int tar_id) {
-        List<Tarefa> lsTarefa = null;
-        if (eap_id > 0) {
-            lsTarefa = entityManager.createQuery("from Tarefa where eap.id = :eap_id").setParameter("eap_id", eap_id).getResultList();
-        } else if (tar_id > 0) {
-            lsTarefa = entityManager.createQuery("from Tarefa where pai.id = :tar_id").setParameter("tar_id", tar_id).getResultList();
-        }
-        return lsTarefa;
+    public List<Tarefa> findbyEAP(EAP eap) {
+        return entityManager.createQuery("from Tarefa where eap = :e")
+                .setParameter("e", eap).getResultList();
+    }
+
+    public List<Tarefa> findbyProjeto(Projeto projeto) {
+        return entityManager.createQuery("from Tarefa where eap.projeto = :p")
+                .setParameter("p", projeto).getResultList();
     }
 }

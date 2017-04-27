@@ -29,13 +29,13 @@ public class EAPResource {
     public EAP getAll(@PathParam("pro_id") int pro_id) {
         Projeto projeto = projetoBLL.findById(pro_id);
         if (projeto != null) {
-            EAP eap = eapBLL.findbyEAP(projeto);
+            EAP eap = eapBLL.getEAP(projeto);
             if (eap == null) {
                 EAP model = new EAP();
                 model.setProjeto(projeto);
                 model.setNome(projeto.getNome());
                 eapBLL.insert(model);
-                eap = eapBLL.findbyEAP(projeto);
+                eap = eapBLL.getEAP(projeto);
             }
             return eap;
         }

@@ -45,7 +45,7 @@ public class TurmaBean {
         ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
         HttpServletRequest request = (HttpServletRequest) external.getRequest();
         String email = request.getRemoteUser();
-        usuario = pessoaBLL.findByEmail(email);
+        usuario = pessoaBLL.findbyEmail(email);
         return usuario;
     }
 
@@ -75,6 +75,7 @@ public class TurmaBean {
         usuario = getUsuario();
         if (!turma.getNome().equals("") && turma.getAno() > 0) {
             turma.setProfessor(usuario);
+            turma.setTurmaParametros(turmaParametros);
             if (turma.getId() > 0) {
                 turmaBLL.update(turma);
             } else {
@@ -186,7 +187,7 @@ public class TurmaBean {
         if (turma == null) {
             turma = new Turma();
         }
-        turmaParametros = turma.getTurmaParametros();
+        turmaParametros = turmaParametroBLL.findbyTurma(turma);
         if (turmaParametros == null) {
             turmaParametros = new ArrayList<>();
         }
@@ -202,8 +203,10 @@ public class TurmaBean {
             if (!hasKey) {
                 TurmaParametro turmaParametro = new TurmaParametro();
                 turmaParametro.setChave(chave);
+                turmaParametro.setTurma(turma);
                 turmaParametros.add(turmaParametro);
             }
+
         }
         return turmaParametros;
 

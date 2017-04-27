@@ -3,6 +3,7 @@ package br.org.gdt.dao;
 import br.org.gdt.enumerated.Status;
 import br.org.gdt.model.Login;
 import br.org.gdt.model.Pessoa;
+import java.util.List;
 import org.springframework.stereotype.Repository;
 
 @Repository("loginDAO")
@@ -12,10 +13,14 @@ public class LoginDAO extends DAO<Login> {
         classe = Login.class;
     }
 
-    public Login findPessoa(Pessoa pessoa) {
-        return (Login) entityManager.createQuery("from Login where pessoa = :p")
-                .setParameter("p", pessoa)
-                .getSingleResult();
+    public Login findbyPessoa(Pessoa pessoa) {
+        List<Login> lsLogin = entityManager.createQuery("from Login where pessoa = :p")
+                .setParameter("p", pessoa).getResultList();
+        Login login = null;
+        if (lsLogin.size() > 0) {
+            login = lsLogin.get(0);
+        }
+        return login;
     }
 
     public Pessoa findLogin(String email, String senha) {

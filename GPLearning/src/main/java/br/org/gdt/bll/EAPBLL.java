@@ -3,6 +3,7 @@ package br.org.gdt.bll;
 import br.org.gdt.dao.EAPDAO;
 import br.org.gdt.model.EAP;
 import br.org.gdt.model.Projeto;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,25 +14,32 @@ public class EAPBLL extends BLL<EAP> {
     @Autowired
     private EAPDAO dao;
 
-    public EAP findbyEAP(Projeto projeto) {
-        if (projeto != null) {
-            EAP eap = dao.findbyEAP(projeto);
-            if (eap != null) {
-                List<EAP> eaps = findbyChildren(eap);
-                eap.setEaps(eaps);
-            }
-            clearRecursive(eap);
-            return eap;
+    public List<EAP> findbyProjeto(Projeto projeto) {
+        List<EAP> lsEAP = new ArrayList<>();
+        if (projeto != null && projeto.getId() > 0) {
+            lsEAP = dao.findbyProjeto(projeto);
         }
-        return null;
+        return lsEAP;
     }
 
-    public List<EAP> findbyChildren(EAP eap) {
-        if (eap != null) {
-            List<EAP> eaps = dao.findbyChildren(eap.getId());
+    public EAP getEAP(Projeto projeto) {
+        List<EAP> lsEAP = findbyProjeto(projeto);
+        EAP eap = null;
+        if (lsEAP.size() > 0) {
+            eap = lsEAP.get(0);
+            List<EAP> eaps = findbyEAP(eap);
+            eap.setEaps(eaps);
+        }
+        clearRecursive(eap);
+        return eap;
+    }
+
+    public List<EAP> findbyEAP(EAP eap) {
+        if (eap != null && eap.getId() > 0) {
+            List<EAP> eaps = dao.findbyEAP(eap);
             if (eaps != null) {
                 for (EAP child : eaps) {
-                    List<EAP> eaps2 = findbyChildren(child);
+                    List<EAP> eaps2 = findbyEAP(child);
                     child.setEaps(eaps2);
                 }
             }

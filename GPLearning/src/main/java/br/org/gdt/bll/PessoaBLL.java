@@ -16,11 +16,12 @@ public class PessoaBLL extends BLL<Pessoa> {
     @Autowired
     private PessoaDAO dao;
 
-    public List<Pessoa> findByComponentes(Projeto projeto) {
+    public List<Pessoa> findbyProjeto(Projeto projeto) {
+        List<Pessoa> lsPessoa = new ArrayList<>();
         if (projeto != null && projeto.getId() > 0) {
-            return dao.findByComponentes(projeto.getId());
+            lsPessoa = dao.findbyProjeto(projeto);
         }
-        return new ArrayList<>();
+        return lsPessoa;
     }
 
     public List<Pessoa> findByUsers(Turma turma, Role grupo) {
@@ -31,8 +32,11 @@ public class PessoaBLL extends BLL<Pessoa> {
         return dao.findByTurma(turmas);
     }
 
-    public Pessoa findByEmail(String email) {
-        return dao.findByEmail(email);
+    public Pessoa findbyEmail(String email) {
+        if (email != null && !email.isEmpty()) {
+            return dao.findbyEmail(email);
+        }
+        return null;
     }
 
     public List<Pessoa> findAllUsers(Pessoa pessoa) {

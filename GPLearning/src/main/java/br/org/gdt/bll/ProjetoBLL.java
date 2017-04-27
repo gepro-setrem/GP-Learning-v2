@@ -23,31 +23,42 @@ public class ProjetoBLL extends BLL<Projeto> {
     @Autowired
     private TurmaBLL turmaBLL;
 
-    public List<Projeto> findByAluno(Pessoa pessoa) {
-        return dao.findByAluno(pessoa);
-    }
-
-    public List<Projeto> findByGerente(Pessoa pessoa) {
-        return dao.findByGerente(pessoa);
-    }
-
-    public List<Projeto> findbyturma(Turma turma) {
-        return dao.findbyturma(turma);
-    }
-
-    public Projeto findByTermoAbertura(TermoAbertura termoabertura) {
-        return dao.findByTermoAbertura(termoabertura);
-    }
-
-    public List<Projeto> findbyturmasprofessor(Pessoa pessoa) {
-        List<Turma> lsTurmas = turmaBLL.findbyProfessor(pessoa);
-        List<Projeto> projetos = new ArrayList<>();
-        for (Turma turma : lsTurmas) {
-            List<Projeto> lsProjetos = dao.findbyturma(turma);
-            projetos.addAll(lsProjetos);
+    public List<Projeto> findbyAluno(Pessoa aluno) {
+        List<Projeto> lsProjeto = new ArrayList<>();
+        if (aluno != null && aluno.getId() > 0) {
+            lsProjeto = dao.findbyAluno(aluno);
         }
+        return lsProjeto;
+    }
+
+    public List<Projeto> findbyGerente(Pessoa gerente) {
+        List<Projeto> lsProjeto = new ArrayList<>();
+        if (gerente != null && gerente.getId() > 0) {
+            lsProjeto = dao.findbyGerente(gerente);
+        }
+        return lsProjeto;
+    }
+
+    public List<Projeto> findbyTurma(Turma turma) {
+        List<Projeto> lsProjeto = new ArrayList<>();
+        if (turma != null && turma.getId() > 0) {
+            lsProjeto = dao.findbyTurma(turma);
+        }
+        return lsProjeto;
+    }
+
+    public Projeto findbyTermoAbertura(TermoAbertura termoabertura) {
+        Projeto projeto = null;
+        if (termoabertura != null && termoabertura.getId() > 0) {
+            projeto = dao.findbyTermoAbertura(termoabertura);
+        }
+        return projeto;
+    }
+
+    public List<Projeto> findbyProfessor(Pessoa professor) {
+        List<Projeto> projetos = dao.findbyProfessor(professor);
         for (Projeto projeto : projetos) {
-            List<Pessoa> componentes = pessoaBLL.findByComponentes(projeto);
+            List<Pessoa> componentes = pessoaBLL.findbyProjeto(projeto);
             projeto.setComponentes(componentes);
         }
         return projetos;

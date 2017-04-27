@@ -13,8 +13,6 @@ public class TurmaDAO extends DAO<Turma> {
     }
 
     public List<Turma> findbyProfessor(Pessoa pessoa) {
-        List<Turma> lsTurma = entityManager.createQuery("from Turma as t fetch turmaParametros as tp where t.professor = :p")
-                .setParameter("p", pessoa).getResultList();
-        return lsTurma;
+        return entityManager.createQuery("from Turma where professor = :p").setParameter("p", pessoa).getResultList();
     }
 }

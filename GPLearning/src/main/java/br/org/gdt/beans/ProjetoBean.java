@@ -146,7 +146,7 @@ public class ProjetoBean {
 
     public DataModel getProjetos() {
         usuario = getUsuario();
-        projetos = new ListDataModel(projetoService.findByAluno(usuario));
+        projetos = new ListDataModel(projetoService.findbyAluno(usuario));
         return projetos;
     }
 
@@ -691,7 +691,7 @@ public class ProjetoBean {
     }
 
     public String carregarturma() {
-        projetosfiltrados = projetoService.findbyturma(turma);
+        projetosfiltrados = projetoService.findbyTurma(turma);
         return "ListagemProjetosInstrutor";
     }
 
@@ -932,7 +932,7 @@ public class ProjetoBean {
         ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
         HttpServletRequest request = (HttpServletRequest) external.getRequest();
         String email = request.getRemoteUser();
-        usuario = usuarioService.findByEmail(email);
+        usuario = usuarioService.findbyEmail(email);
         return usuario;
     }
 

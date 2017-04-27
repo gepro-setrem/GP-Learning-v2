@@ -27,7 +27,7 @@ public class HomeBean {
         ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
         HttpServletRequest request = (HttpServletRequest) external.getRequest();
         String email = request.getRemoteUser();
-        usuario = pessoaBLL.findByEmail(email);
+        usuario = pessoaBLL.findbyEmail(email);
         return usuario;
     }
 

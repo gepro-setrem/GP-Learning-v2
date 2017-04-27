@@ -5,6 +5,7 @@ import br.org.gdt.model.EAP;
 import br.org.gdt.model.Projeto;
 import br.org.gdt.model.Recurso;
 import br.org.gdt.model.Tarefa;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,24 @@ public class TarefaBLL extends BLL<Tarefa> {
     @Autowired
     private RecursoBLL recursoBLL;
 
+    public List<Tarefa> findbyTarefa(Tarefa tarefa) {
+        List<Tarefa> lsTarefa = new ArrayList<>();
+        if (tarefa != null && tarefa.getId() > 0) {
+            dao.findbyTarefa(tarefa);
+        }
+        return lsTarefa;
+    }
+
+    public List<Tarefa> findbyEAP(EAP eap) {
+        List<Tarefa> lsTarefa = new ArrayList<>();
+        if (eap != null && eap.getId() > 0) {
+            dao.findbyEAP(eap);
+        }
+        return lsTarefa;
+    }
+
     public EAP findbyEAP(Projeto projeto) {
-        EAP eap = eapBLL.findbyEAP(projeto);
+        EAP eap = eapBLL.getEAP(projeto);
         if (eap != null) {
             List<Tarefa> tarefas = findbyChildren(eap, null);
             eap.setTarefas(tarefas);
@@ -32,9 +49,9 @@ public class TarefaBLL extends BLL<Tarefa> {
     public List<Tarefa> findbyChildren(EAP eap, Tarefa tarefa) {
         List<Tarefa> tarefas = null;
         if (eap != null && eap.getId() > 0) {
-            tarefas = dao.findbyChildren(eap.getId(), 0);
+            tarefas = dao.findbyEAP(eap);
         } else if (tarefa != null && tarefa.getId() > 0) {
-            tarefas = dao.findbyChildren(0, tarefa.getId());
+            tarefas = dao.findbyTarefa(tarefa);
         }
         if (tarefas != null) {
             for (Tarefa child : tarefas) {

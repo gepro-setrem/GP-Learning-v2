@@ -17,44 +17,36 @@ public class ProjetoDAO extends DAO<Projeto> {
         classe = Projeto.class;
     }
 
-    public List<Projeto> findByAluno(Pessoa pessoa) {
-        return entityManager.createQuery("from Projeto as p left join p.componentes as c where c = :p")
-                .setParameter("p", pessoa).getResultList();
+    public List<Projeto> findbyAluno(Pessoa aluno) {
+        return entityManager.createQuery("from Projeto as p left join p.componentes as c where c = :a")
+                .setParameter("a", aluno).getResultList();
     }
 
-    public List<Projeto> findByGerente(Pessoa pessoa) {
-        return entityManager.createQuery("from Projeto as p where p.gerente = :p")
-                .setParameter("p", pessoa).getResultList();
+    public List<Projeto> findbyGerente(Pessoa gerente) {
+        return entityManager.createQuery("from Projeto where gerente = :g")
+                .setParameter("g", gerente).getResultList();
     }
 
-    public List<Projeto> findbyturma(Turma turma) {
-        return entityManager.createQuery("from Projeto where turma = :p")
-                .setParameter("p", turma).getResultList();
+    public List<Projeto> findbyTurma(Turma turma) {
+        return entityManager.createQuery("from Projeto where turma = :t")
+                .setParameter("t", turma).getResultList();
     }
-
-    public Projeto findByTermoAbertura(TermoAbertura termoabertura) {
-        List<Projeto> projetos = entityManager.createQuery("from Projeto where termoabertura = :p")
+    
+    public List<Projeto> findbyProfessor(Pessoa professor) {
+        return entityManager.createQuery("from Projeto where turma.professor = :p")
+                .setParameter("p", professor).getResultList();
+    }
+    
+    public Projeto findbyTermoAbertura(TermoAbertura termoabertura) {
+        List<Projeto> lsProjeto = entityManager.createQuery("from Projeto where termoabertura = :p")
                 .setParameter("p", termoabertura).getResultList();
-        Projeto projeto = projetos.get(0);
+        Projeto projeto = null;
+        if (lsProjeto.size() > 0) {
+            projeto = lsProjeto.get(0);
+        }
         return projeto;
     }
 
-//    public List<Projeto> findbyturmasprofessor(Pessoa pessoa) {
-//        PessoaDAO usuDAO = new PessoaDAO();
-//        Pessoa user = usuDAO.findById(pessoa.getId());
-//        //Temos a lista de turmas daquele professor, agora precisamos listas os alunos que pertencem aquelas turmas
-//        List<Projeto> projetosdaturma = new ArrayList<>();
-//        System.out.println("Turmas do Usuário" + user.getNome() + " são" + user.getTurmasprofessor());
-//
-//        for (Turma turminha : user.getTurmasprofessor()) {
-//            projetosdaturma.addAll(turminha.getProjeto());
-//        }
-//        List<Projeto> projetos = projetosdaturma;
-////        for (Projeto pr : projetos) {
-////            Hibernate.initialize(pr.getComponentes());
-////        }
-//        return projetos;
-//    }
     public Projeto findByIdRelatorio(int id) {
 
         Projeto projeto = (Projeto) entityManager.createQuery("from Projeto as p where p.idProjeto = :p")

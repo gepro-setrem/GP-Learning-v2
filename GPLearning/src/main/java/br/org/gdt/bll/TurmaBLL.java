@@ -3,6 +3,7 @@ package br.org.gdt.bll;
 import br.org.gdt.dao.TurmaDAO;
 import br.org.gdt.model.Turma;
 import br.org.gdt.model.Pessoa;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,9 @@ public class TurmaBLL extends BLL<Turma> {
     private TurmaParametroBLL turmaParametroBLL;
 
     public List<Turma> findbyProfessor(Pessoa professor) {
-        List<Turma> turmas = dao.findbyProfessor(professor);
-        for (Turma turma : turmas) {
-
+        List<Turma> turmas = new ArrayList<>();
+        if (professor != null && professor.getId() > 0) {
+            turmas = dao.findbyProfessor(professor);
         }
         return turmas;
     }

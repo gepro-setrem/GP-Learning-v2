@@ -3,6 +3,7 @@ package br.org.gdt.dao;
 import br.org.gdt.enumerated.Role;
 import br.org.gdt.model.Turma;
 import br.org.gdt.model.Pessoa;
+import br.org.gdt.model.Projeto;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
@@ -14,13 +15,9 @@ public class PessoaDAO extends DAO<Pessoa> {
         classe = Pessoa.class;
     }
 
-    public List<Pessoa> findByComponentes(int pro_id) {
-        List<Pessoa> componentes = new ArrayList<>();
-        if (pro_id > 0) {
-            componentes = entityManager.createQuery("from Pessoa as p join p.projetos as pro where pro.id = :pro_id")
-                    .setParameter("pro_id", pro_id).getResultList();
-        }
-        return componentes;
+    public List<Pessoa> findbyProjeto(Projeto projeto) {
+        return entityManager.createQuery("from Pessoa as p join p.projetos as pro where pro = :p")
+                .setParameter("p", projeto).getResultList();
     }
 
     public List<Pessoa> findByUsers(Turma turma, Role grupo) {
@@ -34,17 +31,14 @@ public class PessoaDAO extends DAO<Pessoa> {
                 .setParameter("p", turmas).getResultList();
     }
 
-    public Pessoa findByEmail(String email) {
-        Pessoa user = new Pessoa();
-        if (email != null && !email.isEmpty()) {
-            user = (Pessoa) entityManager.createQuery("from Pessoa where email=:p")
-                    .setParameter("p", email).getSingleResult();
+    public Pessoa findbyEmail(String email) {
+        List<Pessoa> lsPessoa = entityManager.createQuery("from Pessoa where email=:p")
+                .setParameter("p", email).getResultList();
+        Pessoa pessoa = null;
+        if (lsPessoa.size() > 0) {
+            pessoa = lsPessoa.get(0);
         }
-//        Pessoa user = new Pessoa();
-//        if (lsUsers.size() > 0) {
-//            user = (Pessoa) lsUsers.get(0);
-//        }
-        return user;
+        return pessoa;
     }
 
     public List<Pessoa> findAllUsers(Pessoa pessoa) {

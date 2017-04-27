@@ -56,7 +56,7 @@ public class ProjetoProfessorBean {
 
     public DataModel getProjetos() {
         usuario = getUsuario();
-        projetos = new ListDataModel(projetoBLL.findbyturmasprofessor(usuario));
+        projetos = new ListDataModel(projetoBLL.findbyProfessor(usuario));
         return projetos;
     }
 
@@ -68,7 +68,7 @@ public class ProjetoProfessorBean {
         ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
         HttpServletRequest request = (HttpServletRequest) external.getRequest();
         String email = request.getRemoteUser();
-        usuario = pessoaBLL.findByEmail(email);
+        usuario = pessoaBLL.findbyEmail(email);
         return usuario;
     }
 

@@ -6,6 +6,8 @@ import br.org.gdt.model.TurmaParametro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.org.gdt.model.Turma;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("turmaParametroBLL")
 public class TurmaParametroBLL extends BLL<TurmaParametro> {
@@ -19,6 +21,14 @@ public class TurmaParametroBLL extends BLL<TurmaParametro> {
         } else {
             return null;
         }
+    }
+
+    public List<TurmaParametro> findbyTurma(Turma turma) {
+        List<TurmaParametro> lsTurmaParametro = new ArrayList<>();
+        if (turma != null && turma.getId() > 0) {
+            lsTurmaParametro = dao.findbyTurma(turma);
+        }
+        return lsTurmaParametro;
     }
 
     public String getTurmaParametroType(TurmaParametroType type) {

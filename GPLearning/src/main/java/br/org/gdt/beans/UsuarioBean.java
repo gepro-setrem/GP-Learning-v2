@@ -55,7 +55,7 @@ public class UsuarioBean {
         ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
         HttpServletRequest request = (HttpServletRequest) external.getRequest();
         String email = request.getRemoteUser();
-        usuario = pessoaBLL.findByEmail(email);
+        usuario = pessoaBLL.findbyEmail(email);
         return usuario;
     }
     
@@ -101,7 +101,7 @@ public class UsuarioBean {
     public String salvar() {
         if (!pessoa.getNome().isEmpty() && !pessoa.getEmail().isEmpty()) {// && !pessoa.getTurma().equals("")) {
             System.out.println("Entrou no botão salvar");
-            Login perfillocal = perfilService.findPessoa(pessoa);
+            Login perfillocal = perfilService.findbyPessoa(pessoa);
             LoginRole loginRole = new LoginRole();
             loginRole.setLogin(perfil);
             loginRole.setRole(Role.user);
