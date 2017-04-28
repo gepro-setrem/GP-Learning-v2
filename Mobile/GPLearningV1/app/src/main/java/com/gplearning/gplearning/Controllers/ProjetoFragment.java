@@ -23,7 +23,7 @@ import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.Models.Projeto;
 import com.gplearning.gplearning.Models.ProjetoDao;
-import com.gplearning.gplearning.Models.UsuarioDao;
+import com.gplearning.gplearning.Models.PessoaDao;
 import com.gplearning.gplearning.R;
 
 import java.lang.reflect.Field;

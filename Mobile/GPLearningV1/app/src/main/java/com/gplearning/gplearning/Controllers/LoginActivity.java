@@ -3,38 +3,25 @@ package com.gplearning.gplearning.Controllers;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.LoaderManager.LoaderCallbacks;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.gplearning.gplearning.DAO.UsuarioDAO;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
@@ -51,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
+
+    private UsuarioDAO userDAO;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -75,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-      //  populateAutoComplete();
+        //  populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -214,7 +203,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 2;
     }
 
     /**
@@ -259,12 +248,13 @@ public class LoginActivity extends AppCompatActivity {
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
-        private final String mPassword;
+        private final String email;
+        private final String password;
+        private long idExterno = 0;
 
         UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
+            this.email = email;
+            this.password = password;
         }
 
         @Override
@@ -273,14 +263,20 @@ public class LoginActivity extends AppCompatActivity {
 
             try {
                 // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+                // Thread.sleep(2000);
+                userDAO = new UsuarioDAO();
+                idExterno = userDAO.Login(email, password);
+
+                Log.i("AGL LG", "ID:" + idExterno);
+
+                return idExterno > 0;
+            } catch (Exception e) {
+                Log.i("AGL ERROR BG", e.toString());
                 return false;
             }
 
 
             // TODO: register the new account here.
-            return true;
         }
 
         @Override
@@ -291,8 +287,8 @@ public class LoginActivity extends AppCompatActivity {
             if (success) {
 
                 //chama webService e loga o usuário
-
-                MetodosPublicos.SalvaSessao(LoginActivity.this, mEmail, Long.valueOf(1));
+                //  if (idExterno > 0) {
+                MetodosPublicos.SalvaSessao(LoginActivity.this, email, idExterno);
                 //salva as preferencias
 //                SharedPreferences pref;
 //                pref = getSharedPreferences("login", MODE_PRIVATE);

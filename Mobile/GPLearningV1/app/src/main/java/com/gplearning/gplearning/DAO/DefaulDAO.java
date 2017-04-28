@@ -1,7 +1,7 @@
 package com.gplearning.gplearning.DAO;
 
 
-import com.gplearning.gplearning.Models.Usuario;
+import com.gplearning.gplearning.Models.Pessoa;
 import com.gplearning.gplearning.Utils.UrlDomain;
 
 import java.util.ArrayList;
@@ -12,8 +12,8 @@ class DefaulDAO extends UrlDomain {
     String valor = UrlDefault;
 
 
-    public List<Usuario> SelectAll() {
-        List<Usuario> lsUsuario = new ArrayList<>();
+    public List<Pessoa> SelectAll() {
+        List<Pessoa> lsUsuario = new ArrayList<>();
         return lsUsuario;
     }
 

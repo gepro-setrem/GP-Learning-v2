@@ -21,13 +21,13 @@
     <string name="manager">Gerente</string>
     <string name="inicitiation_processes">Processos de Iniciação</string>
     <string name="planning_processes">Processos de Planejamento</string>
-    <string name="description_opening_term">Descrição do Termo de Abertura</string>
+    <string name="description_opening_term">Desc. do Termo de Abertura</string>
     <string name="justification_opening_term">Justificativa do Termo de Abertura</string>
     <string name="premisses">Premissas</string>
     <string name="restrictions">Restrições</string>
     <string name="project_milestones">Marcos do Projeto</string>
     <string name="requirements_opening_term">Requisitos do Termo de Abertura</string>
-    <string name="stakeholders">Partes Interessadas no Projeto</string>
+    <string name="stakeholders">Stakeholders</string>
 
     <string name="scope_planing">Planejamento do Escopo</string>
     <string name="requirements">Requisitos</string>

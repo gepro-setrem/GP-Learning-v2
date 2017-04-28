@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity
 
             MetodosPublicos.SalvaSessao(this, null, null);
 
-            new getAssync().execute();
+            // new getAssync().execute();
 
             return true;
         }
@@ -203,9 +203,8 @@ public class MainActivity extends AppCompatActivity
                 Log.i("WB", quote.toString());
 
             } catch (Exception e) {
+                Log.i("ERROR", e.toString());
             }
-            ;
-
 
             return null;
         }
