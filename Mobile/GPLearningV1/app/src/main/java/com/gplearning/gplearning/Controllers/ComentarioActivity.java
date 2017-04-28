@@ -1,29 +1,21 @@
 package com.gplearning.gplearning.Controllers;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
-import com.gplearning.gplearning.Adapters.Comentario2Adapter;
 import com.gplearning.gplearning.Adapters.ComentarioAdapter;
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.DaoSession;
-import com.gplearning.gplearning.Models.Value;
-import com.gplearning.gplearning.Models.ValueDao;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 
@@ -61,6 +53,7 @@ public class ComentarioActivity extends AppCompatActivity {
             public void onItemClick(View view, int position) {
                 Log.i("Event", "Clicou");
             }
+
             @Override
             public void onLongItemClick(View view, int position) {
                 Log.i("Event", "Long Click");
@@ -91,10 +84,11 @@ public class ComentarioActivity extends AppCompatActivity {
         EditText coment = (EditText) findViewById(R.id.comentarioNovo);
         try {
             if (!coment.getText().toString().isEmpty()) {
-                Comentario COM = new Comentario(null, null, coment.getText().toString(), new Date(), MetodosPublicos.SelecionaSessaoId(this));
+                Comentario COM = new Comentario(null, 0, coment.getText().toString(), new Date(), MetodosPublicos.SelecionaSessaoId(this));
 
                 long id = dao.insert(COM);
-                Log.i("Event", "id:" + COM.get_id());
+                MetodosPublicos.Log("Event", "id:" + COM.get_id());
+
                 if (id > 0) {
                     coment.setText("");
                     lsComentario.add(COM);
@@ -103,7 +97,7 @@ public class ComentarioActivity extends AppCompatActivity {
                 }
             }
         } catch (Exception e) {
-            Log.e("ERROR", e.toString());
+          MetodosPublicos.Log("ERROR", e.toString());
         }
     }
 

@@ -16,10 +16,8 @@ public class Pessoa {
     @Id(autoincrement = true)
     private Long _id;
 
-    @Transient
     private int id; ///só para API
 
-    private Long idExterno;
     private String nome;
     private String email;
     private String telefone;
@@ -40,9 +38,9 @@ public class Pessoa {
     }
 
 
-    public Pessoa(Long _id, Long idExterno, String nome, String email, String telefone, int karma, Date criacao) {
+    public Pessoa(Long _id, int id, String nome, String email, String telefone, int karma, Date criacao) {
         this._id = _id;
-        this.idExterno = idExterno;
+        this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
@@ -58,15 +56,13 @@ public class Pessoa {
         this._id = _id;
     }
 
-    public Long getIdExterno() {
-        if (this.id > 0 && idExterno == null)
-            return Long.valueOf(id);
-        else
-            return idExterno;
+
+    public int getId() {
+        return id;
     }
 
-    public void setIdExterno(Long idExterno) {
-        this.idExterno = idExterno;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -109,11 +105,5 @@ public class Pessoa {
         this.criacao = criacao;
     }
 
-//    public int getId() {
-//        return id;
-//    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 }

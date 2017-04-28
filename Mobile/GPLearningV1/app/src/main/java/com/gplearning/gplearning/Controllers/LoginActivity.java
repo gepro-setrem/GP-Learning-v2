@@ -19,7 +19,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.DAO.UsuarioDAO;
+import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.Pessoa;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 
@@ -90,7 +93,13 @@ public class LoginActivity extends AppCompatActivity {
         mProgressView = findViewById(R.id.login_progress);
     }
 
-//    private void populateAutoComplete() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    //    private void populateAutoComplete() {
 //        if (!mayRequestContacts()) {
 //            return;
 //        }
@@ -246,7 +255,7 @@ public class LoginActivity extends AppCompatActivity {
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginTask extends AsyncTask<Void, Void, Pessoa> {
 
         private final String email;
         private final String password;
@@ -258,21 +267,23 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected Pessoa doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
             try {
                 // Simulate network access.
                 // Thread.sleep(2000);
+                DaoSession session = ((App) LoginActivity.this.getApplication()).getDaoSession();
+
                 userDAO = new UsuarioDAO();
-                idExterno = userDAO.Login(email, password);
 
-                Log.i("AGL LG", "ID:" + idExterno);
+             return userDAO.Login(session, email, password);
 
-                return idExterno > 0;
+               // Log.i("gpl LG", "ID:" + idExterno);
+
             } catch (Exception e) {
-                Log.i("AGL ERROR BG", e.toString());
-                return false;
+                MetodosPublicos.Log("",e.toString());
+                return null;
             }
 
 
@@ -280,23 +291,12 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(final Pessoa user) {
             mAuthTask = null;
             showProgress(false);
 
-            if (success) {
-
-                //chama webService e loga o usuário
-                //  if (idExterno > 0) {
-                MetodosPublicos.SalvaSessao(LoginActivity.this, email, idExterno);
-                //salva as preferencias
-//                SharedPreferences pref;
-//                pref = getSharedPreferences("login", MODE_PRIVATE);
-//                SharedPreferences.Editor editor = pref.edit();
-//                editor.putString("user", mEmail);
-//                editor.commit();
-
-                //  finish();
+            if (user!=null) {
+                MetodosPublicos.SalvaSessao(LoginActivity.this, user.get_id(), user.getNome(), email, user.getId());
                 Intent secondActivity = new Intent(LoginActivity.this, NivelAcessoActivity.class);
                 startActivityForResult(secondActivity, RESULT_OK);
                 finish();

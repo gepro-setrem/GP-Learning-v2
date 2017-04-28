@@ -17,7 +17,8 @@ public class Comentario {
     @Id
     private Long _id;
 
-    private Long idExterno;
+    private int id;
+  //  private Long idExterno;
 
     @NotNull
     private String texto;
@@ -37,11 +38,11 @@ public class Comentario {
         this.texto = texto;
     }
 
-    @Generated(hash = 1650375064)
-    public Comentario(Long _id, Long idExterno, @NotNull String texto, Date criacao,
+    @Generated(hash = 1947443568)
+    public Comentario(Long _id, int id, @NotNull String texto, Date criacao,
             Long use_id) {
         this._id = _id;
-        this.idExterno = idExterno;
+        this.id = id;
         this.texto = texto;
         this.criacao = criacao;
         this.use_id = use_id;
@@ -91,14 +92,8 @@ public class Comentario {
         this._id = _id;
     }
 
-    public Long getIdExterno() {
-        return idExterno;
-    }
+ 
 
-    public void setIdExterno(Long idExterno) {
-        this.idExterno = idExterno;
-    }
-   
     public Long getUse_id() {
         return this.use_id;
     }
@@ -111,6 +106,18 @@ public class Comentario {
     public String toString() {
         return texto;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+//    public int getId() {
+//        return this.id;
+//    }
 
 
 }
