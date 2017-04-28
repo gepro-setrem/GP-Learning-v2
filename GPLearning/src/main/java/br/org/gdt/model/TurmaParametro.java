@@ -19,16 +19,16 @@ public class TurmaParametro implements Serializable {
     @Column(name = "trp_id")
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "tur_id")
-    private Turma turma;
-
     @Column(name = "trp_vchave", length = 200)
     private String chave;
 
     @Column(name = "trp_tvalor", length = 2500)
     private String valor;
-
+    
+    @ManyToOne
+    @JoinColumn(name = "tur_id")
+    private Turma turma;
+    
     public TurmaParametro() {
     }
 

@@ -19,8 +19,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="form-group" style="padding: 1%">
-                        <p:dataTable var="item" value="#{projetoProfessorBean.projetos}" widgetVar="projsTable"
-                                     emptyMessage="Não há projetos criados por alunos desta turma" filteredValue="#{projetoProfessorBean.projetosfiltrados}">
+                        <p:dataTable var="item" value="#{projetoProfessorBean.projetos}" widgetVar="projsTable" emptyMessage="Não há projetos criados por alunos desta turma">
                             <p:column filterMatchMode="contains">
                                 <f:facet name="header" >Projeto</f:facet>
                                 <h:outputText value="#{item.nome}"/>
@@ -48,9 +47,9 @@
                                 </h:outputText>
                             </p:column>
 
-                            <p:column headerText="Opções" style="width: 155px">
+                            <p:column headerText="Opções" style="width: 150px; text-align: center;">
                                 <f:facet name="header">Opções</f:facet>
-                                <h:commandLink action="{projetoProfessorBean.acessarComentarios()}" class="navbar-link" value="Comentar Projeto"/>
+                                <h:commandLink action="{projetoProfessorBean.acessarComentarios()}" class="btn btn-primary btn-xs" style="color: #fff;"><i class="fa-comments-o"></i> Comentar</h:commandLink>
                             </p:column>
                         </p:dataTable>
                     </div>

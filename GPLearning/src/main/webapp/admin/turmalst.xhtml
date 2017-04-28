@@ -15,7 +15,7 @@
         <h:form>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h:commandLink action="#{turmaBean.novo()}" class="btn btn-primary"><i class="fa-plus"></i> Nova Turma</h:commandLink>
+                    <h:commandLink action="#{turmaBean.novo()}" class="btn btn-success"><i class="fa-plus"></i> Nova Turma</h:commandLink>
                     <h4>Listagem de Turmas</h4>
                 </div>
                 <div class="panel-body">
@@ -34,11 +34,11 @@
                             <h:outputText value="#{turma.ano}"/>
                         </p:column>
 
-                        <p:column headerText="Opções" style="width: 300px">
+                        <p:column headerText="Opções" style="width: 300px; text-align: center;">
                             <f:facet name="header">Opções</f:facet>
-                            <h:commandLink action="#{turmaBean.editar()}" value="Editar "/>
-                            <h:commandLink action="#{turmaBean.excluir()}" value="/Excluir " onclick="return confirm('Tem certeza que deseja excluir?')"/>
-                            <h:commandLink action="#{turmaBean.duplicar()}" value="/ Duplicar" onclick="return confirm('Tem certeza que deseja duplicar esta turma?')"/>
+                            <h:commandLink action="#{turmaBean.editar()}" class="btn btn-success btn-xs" style="color: #fff; margin-right: 5px;"><i class="fa-pencil"></i> Editar</h:commandLink>
+                            <h:commandLink action="#{turmaBean.excluir()}" class="btn btn-danger btn-xs" style="color: #fff; margin-right: 5px;" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fa-trash"></i> Excluir</h:commandLink>
+                            <h:commandLink action="#{turmaBean.duplicar()}" class="btn btn-primary btn-xs" style="color: #fff" onclick="return confirm('Tem certeza que deseja duplicar esta turma?')"><i class="fa-clone"></i> Duplicar</h:commandLink>
                         </p:column>
 
                     </p:dataTable>

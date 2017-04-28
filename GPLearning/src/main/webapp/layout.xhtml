@@ -8,15 +8,15 @@
     <h:head>
         <title><ui:insert name="title">GPLearning</ui:insert></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <h:outputStylesheet name="./css/bootstrap.css"/>
-        <!--<h:outputStylesheet name="./font-awesome-4.7.0/css/font-awesome.css"/>-->
+        <h:outputStylesheet name="./css/bootstrap.min.css"/>
         <h:outputStylesheet name="./css/cssDefault.css"/>
+        <h:outputStylesheet name="./font-awesome-4.7.0/css/font-awesome.css"/>
         <!--<h:outputStylesheet name="./data-tables/dataTables.min.css" />-->
-        <!--        <h:outputScript name="./js/jquery-3.2.0.min.js"/>-->
-        <!--        <h:outputScript name="./js/bootstrap.min.js"/>-->
+        <h:outputScript name="./js/jquery-3.2.0.min.js"/>
+        <h:outputScript name="./js/bootstrap.min.js"/>
         <h:outputScript name="./js/jsLayout.js"/>
         <!--<h:outputScript name="./data-tables/dataTables.min.js"/>-->
-        <link href="../resources/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+        <!--<link href="../resources/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>-->
         <!--        <script src="../js/jquery-3.2.0.min.js" type="text/javascript"></script>-->
         <!--        <script src="../js/bootstrap.min.js" type="text/javascript"></script>
                 <link href="../css/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>-->
@@ -46,18 +46,11 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="#{view.viewId == '/admin/projetolst.xhtml' ? 'active' : ''}">
-                            <h:link outcome="/admin/projetolst">Projetos</h:link>
-                        </li>
-                        <li class="#{view.viewId == '/admin/usuariolst.xhtml' ? 'active' : ''}">
-                            <h:link outcome="/admin/usuariolst">Usuários</h:link>
-                        </li>
-                        <li class="#{view.viewId == '/admin/turmalst.xhtml' ? 'active' : ''}">
-                            <h:link outcome="/admin/turmalst">Turmas</h:link>
-                        </li>
-                        <li class="#{view.viewId == '/admin/indicadorlst.xhtml' ? 'active' : ''}">
-                            <h:link outcome="/admin/indicadorlst">Indicadores</h:link>
-                        </li>
+                        <li><a>Iniciação</a></li>
+                        <li><a>Planejamento</a></li>
+                        <li><a>Execuçao</a></li>
+                        <li><a>Monitoramento</a></li>
+                        <li><a>Encerramento</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right" style="display: #{homeBean.hasSession ? 'block' : 'none'}">
                         <li><h:link outcome="/user/projetolst.xhtml">Meus Projetos</h:link></li>
@@ -66,19 +59,15 @@
                 </div>
             </div>
         </nav>
-        <div class="row">
-            <div class="col-xs-12" style="margin-bottom: 20px;">
-                <div style="padding: 0 15px;">
-                    <ui:insert name="content"></ui:insert>
-                </div>
+        <div style="margin-bottom: 20px;">
+            <div style="padding: 0 15px;">
+                <ui:insert name="content"></ui:insert>
             </div>
+        </div>
 
-            <div class="col-xs-12">
-                <div style="padding: 10px 30px 30px; background-color: #f5f5f5; border: 1px solid #e7e7e7;">
-                    <h:link class="btn btn-link" outcome="/about.xhtml" value="About" style="float: right;"/>
-                    <a style="text-decoration: none;">Sociedade Educacional Três de Maio - SETREM - Bacharelado em Sistemas de Informação</a>
-                </div>
-            </div>
+        <div style="padding: 10px 30px 30px; background-color: #f5f5f5; border: 1px solid #e7e7e7;">
+            <h:link class="btn btn-link" outcome="/about.xhtml" value="About" style="float: right;"/>
+            <a style="text-decoration: none;">Sociedade Educacional Três de Maio - SETREM - Bacharelado em Sistemas de Informação</a>
         </div>
         <div id="AdmLoader">
             <div class="AdmLoaderBg"></div>

@@ -24,12 +24,20 @@ public class PessoaBLL extends BLL<Pessoa> {
         return lsPessoa;
     }
 
-    public List<Pessoa> findByUsers(Turma turma, Role grupo) {
-        return dao.findByUsers(turma, grupo);
+    public List<Pessoa> findByUsers(Turma turma, Role role) {
+        List<Pessoa> lsPessoa = new ArrayList<>();
+        if (turma != null && turma.getId() > 0 && role != null) {
+            lsPessoa = dao.findbyTurmaUsers(turma, role);
+        }
+        return lsPessoa;
     }
 
-    public List<Pessoa> findByTurma(List<Turma> turmas) {
-        return dao.findByTurma(turmas);
+    public List<Pessoa> findbyTurma(Turma turma) {
+        List<Pessoa> lsPessoa = new ArrayList<>();
+        if (turma != null && turma.getId() > 0) {
+            lsPessoa = dao.findbyTurma(turma);
+        }
+        return lsPessoa;
     }
 
     public Pessoa findbyEmail(String email) {
@@ -39,7 +47,11 @@ public class PessoaBLL extends BLL<Pessoa> {
         return null;
     }
 
-    public List<Pessoa> findAllUsers(Pessoa pessoa) {
-        return dao.findAllUsers(pessoa);
+    public List<Pessoa> findbyProfessor(Pessoa professor) {
+        List<Pessoa> lsPessoa = new ArrayList<>();
+        if (professor != null && professor.getId() > 0) {
+            lsPessoa = dao.findbyProfessor(professor);
+        }
+        return lsPessoa;
     }
 }

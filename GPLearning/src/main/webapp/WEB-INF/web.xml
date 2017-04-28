@@ -39,6 +39,10 @@
     <welcome-file-list>
         <welcome-file>user/index.xhtml</welcome-file>
     </welcome-file-list>
+    <mime-mapping>
+        <extension>woff</extension>
+        <mime-type>application/font-woff</mime-type>
+    </mime-mapping>
     <error-page>
         <error-code>404</error-code>
         <location>/errorpage_404.xhtml</location>
@@ -70,7 +74,7 @@
         </web-resource-collection>
         <auth-constraint>
             <description/>
-            <role-name>admin</role-name>
+            <role-name>user</role-name>
         </auth-constraint>
     </security-constraint>
     <login-config>

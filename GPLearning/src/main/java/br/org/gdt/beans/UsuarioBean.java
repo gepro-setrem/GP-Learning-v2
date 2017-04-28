@@ -34,7 +34,6 @@ public class UsuarioBean {
     @ManagedProperty("#{pessoaBLL}")
     private PessoaBLL pessoaBLL;
     private DataModel usuarios;
-    private List<Pessoa> usuariosfiltrados;
     
     @ManagedProperty("#{turmaBLL}")
     private TurmaBLL turmaService;
@@ -72,8 +71,7 @@ public class UsuarioBean {
 //        for (Turma turmafor : turmas) {
 //            usuariosdaturma.addAll(turmafor.getAcademicos());
 //        }
-
-        usuarios = new ListDataModel(pessoaBLL.findAllUsers(usuario));
+        usuarios = new ListDataModel(pessoaBLL.findbyProfessor(usuario));
         // usuarios = new ListDataModel(dao.findByTurma(turmas));
         return usuarios;
     }
@@ -155,14 +153,6 @@ public class UsuarioBean {
     public String novo() {
         pessoa = new Pessoa();
         return "usuariofrm";
-    }
-    
-    public List<Pessoa> getUsuariosfiltrados() {
-        return usuariosfiltrados;
-    }
-    
-    public void setUsuariosfiltrados(List<Pessoa> usuariosfiltrados) {
-        this.usuariosfiltrados = usuariosfiltrados;
     }
     
     public PessoaBLL getPessoaBLL() {

@@ -22,6 +22,7 @@ import org.primefaces.model.UploadedFile;
 public class PerfilBean {
 
     private Pessoa usuario;
+    private Pessoa user;
     @ManagedProperty("#{pessoaBLL}")
     private PessoaBLL pessoaBLL;
     private UploadedFile userImage;
@@ -35,6 +36,7 @@ public class PerfilBean {
 
     public String editar() {
         //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para salvar, é necessário preencher todos os campos!"));
+        usuario = getUser();
         return "perfilfrm";
     }
 
@@ -59,10 +61,6 @@ public class PerfilBean {
     }
 
     public Pessoa getUsuario() {
-        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) external.getRequest();
-        String email = request.getRemoteUser();
-        usuario = pessoaBLL.findbyEmail(email);
         return usuario;
     }
 
@@ -85,4 +83,17 @@ public class PerfilBean {
     public void setUserImage(UploadedFile userImage) {
         this.userImage = userImage;
     }
+
+    public Pessoa getUser() {
+        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) external.getRequest();
+        String email = request.getRemoteUser();
+        user = pessoaBLL.findbyEmail(email);
+        return user;
+    }
+
+    public void setUser(Pessoa user) {
+        this.user = user;
+    }
+
 }

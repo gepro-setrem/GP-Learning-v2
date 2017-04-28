@@ -58,7 +58,7 @@ public class IndicadorBean {
         try {
             indicador = (Indicador) indicadores.getRowData();
             indicadorBLL.delete(indicador.getId());
-            indicadores = null;
+            indicador = null;
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
         }

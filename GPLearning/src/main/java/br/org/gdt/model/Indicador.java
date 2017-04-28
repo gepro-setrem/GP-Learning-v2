@@ -32,7 +32,7 @@ public class Indicador implements Serializable {
     @Column(name = "ind_ivalor")
     private int valor;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "pes_id")
     public Pessoa professor;
 

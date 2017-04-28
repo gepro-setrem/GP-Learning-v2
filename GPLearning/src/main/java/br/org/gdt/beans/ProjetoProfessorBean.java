@@ -33,8 +33,6 @@ public class ProjetoProfessorBean {
     private TurmaBLL turmaBLL;
     private List<Turma> turmas;
 
-    private List<Projeto> projetosfiltrados;
-
     public ProjetoProfessorBean() {
     }
 
@@ -57,6 +55,7 @@ public class ProjetoProfessorBean {
     public DataModel getProjetos() {
         usuario = getUsuario();
         projetos = new ListDataModel(projetoBLL.findbyProfessor(usuario));
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
         return projetos;
     }
 
@@ -100,14 +99,6 @@ public class ProjetoProfessorBean {
 
     public void setTurmas(List<Turma> turmas) {
         this.turmas = turmas;
-    }
-
-    public List<Projeto> getProjetosfiltrados() {
-        return projetosfiltrados;
-    }
-
-    public void setProjetosfiltrados(List<Projeto> projetosfiltrados) {
-        this.projetosfiltrados = projetosfiltrados;
     }
 
 }

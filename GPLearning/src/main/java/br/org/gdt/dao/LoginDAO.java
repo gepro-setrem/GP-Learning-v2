@@ -24,13 +24,14 @@ public class LoginDAO extends DAO<Login> {
     }
 
     public Pessoa findLogin(String email, String senha) {
+        List<Pessoa> lsPessoa = entityManager.createQuery("from Pessoa p join fetch p.login.loginRoles lr where p.login.email = :email and p.login.senha = :senha and p.status = :status")
+                .setParameter("email", email)
+                .setParameter("senha", senha)
+                .setParameter("status", Status.Ativo)
+                .getResultList();
         Pessoa user = null;
-        if (email != null && !email.isEmpty() && senha != null && !senha.isEmpty()) {
-            user = (Pessoa) entityManager.createQuery("from Pessoa p join fetch p.login.loginRoles lr where p.login.email = :email and p.login.senha = :senha and p.status = :status")
-                    .setParameter("email", email)
-                    .setParameter("senha", senha)
-                    .setParameter("status", Status.Ativo)
-                    .getSingleResult();
+        if (lsPessoa != null && lsPessoa.size() > 0) {
+            user = lsPessoa.get(0);
         }
         return user;
     }

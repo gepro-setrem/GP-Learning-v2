@@ -21,20 +21,23 @@ public class LoginBLL extends BLL<Login> {
     }
 
     public Pessoa findLogin(String email, String senha) {
-        Pessoa user = dao.findLogin(email, senha);
-        if (user != null) {
-            if (user.getLogin().getLoginRoles() != null) {
-                for (LoginRole lr : user.getLogin().getLoginRoles()) {
-                    lr.setLogin(null);
+        Pessoa user = null;
+        if (email != null && !email.isEmpty() && senha != null && !senha.isEmpty()) {
+            user = dao.findLogin(email, senha);
+            if (user != null) {
+                if (user.getLogin().getLoginRoles() != null) {
+                    for (LoginRole lr : user.getLogin().getLoginRoles()) {
+                        lr.setLogin(null);
+                    }
                 }
+                user.getLogin().setPessoa(null);
+                user.setIndicadoresprofessor(null);
+                //user.setLogin(null);
+                user.setProjetos(null);
+                user.setProjetosgerente(null);
+                user.setTurma(null);
+                user.setTurmasprofessor(null);
             }
-            user.getLogin().setPessoa(null);
-            user.setIndicadoresprofessor(null);
-            //user.setLogin(null);
-            user.setProjetos(null);
-            user.setProjetosgerente(null);
-            user.setTurma(null);
-            user.setTurmasprofessor(null);
         }
         return user;
     }

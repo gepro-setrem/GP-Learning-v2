@@ -8,12 +8,6 @@
         <h:outputScript name="./js/jquery-3.2.0.min.js"/>
         <h:outputScript name="./js/bootstrap.min.js"/>
     </ui:define>
-    <ui:define name="menuhorizontal">
-        <li><a href="projetolst.xhtml">Projetos</a></li>
-        <li><a href="usuariolst.xhtml">Usuários</a></li>
-        <li class="active"><a href="turmalst.xhtml">Turmas</a></li>
-    </ui:define>
-
     <ui:define name="content">
         <h:form>
             <h:inputHidden value="#{turmaBean.turma.id}"/>
@@ -43,6 +37,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-xs-12">
+                            <div class="form-group row" >
+                                <label class="col-xs-2 control_label">Descrição:</label>
+                                <div class="col-sm-10" >
+                                    <h:inputTextarea class="form-control" value="#{turmaBean.turma.descricao}" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4 col-xs-12">
@@ -53,9 +55,11 @@
                             </ul>    
                         </div>
                         <div class="tab-content col-sm-8 col-xs-12">
-                            <ui:repeat var="item" value="#{turmaBean.turmaParametros}" varStatus="status">
+                            <ui:repeat var="item" value="#{turmaBean.turma.turmaParametros}" varStatus="status">
                                 <div class="tab-pane #{status.index == 0 ? 'active' : ''}" id="#{item.chave}">
-                                    <h:inputTextarea class="form-control" rows="5" value="#{item.valor}"/>
+                                    <h:inputHidden value="#{turmaBean.turma.turmaParametros[status.index].chave}"/>
+                                    <h:inputHidden value="#{turmaBean.turma.turmaParametros[status.index].id}"/>
+                                    <h:inputTextarea class="form-control" rows="5" value="#{turmaBean.turma.turmaParametros[status.index].valor}"/>
                                 </div>
                             </ui:repeat>
                         </div>

@@ -9,7 +9,6 @@ import br.org.gdt.enumerated.TurmaParametroType;
 import br.org.gdt.model.TurmaParametro;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -20,7 +19,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.servlet.http.HttpServletRequest;
 
-@ManagedBean
+@ManagedBean(name = "turmaBean")
 @RequestScoped
 public class TurmaBean {
 
@@ -35,8 +34,6 @@ public class TurmaBean {
     @ManagedProperty("#{pessoaBLL}")
     private PessoaBLL pessoaBLL;
     private TurmaParametroType[] turmaParametroTypes;
-
-    private List<TurmaParametro> turmaParametros;
 
     public TurmaBean() {
     }
@@ -75,7 +72,6 @@ public class TurmaBean {
         usuario = getUsuario();
         if (!turma.getNome().equals("") && turma.getAno() > 0) {
             turma.setProfessor(usuario);
-            turma.setTurmaParametros(turmaParametros);
             if (turma.getId() > 0) {
                 turmaBLL.update(turma);
             } else {
@@ -91,6 +87,7 @@ public class TurmaBean {
     public String editar() {
         turma = (Turma) turmas.getRowData();
         turma = turmaBLL.findById(turma.getId());
+        initParameters();
         return "turmafrm";
     }
 
@@ -132,6 +129,7 @@ public class TurmaBean {
 
     public String novo() {
         turma = new Turma();
+        initParameters();
         return "turmafrm";
     }
 
@@ -183,39 +181,6 @@ public class TurmaBean {
         return turmaParametroBLL.getTurmaParametroType(trType);
     }
 
-    public List<TurmaParametro> getTurmaParametros() {
-        if (turma == null) {
-            turma = new Turma();
-        }
-        turmaParametros = turmaParametroBLL.findbyTurma(turma);
-        if (turmaParametros == null) {
-            turmaParametros = new ArrayList<>();
-        }
-        for (TurmaParametroType type : getTurmaParametroTypes()) {
-            String chave = type.toString();
-            Boolean hasKey = false;
-            for (TurmaParametro trp : turmaParametros) {
-                if (trp.getChave() == chave) {
-                    hasKey = true;
-                    break;
-                }
-            }
-            if (!hasKey) {
-                TurmaParametro turmaParametro = new TurmaParametro();
-                turmaParametro.setChave(chave);
-                turmaParametro.setTurma(turma);
-                turmaParametros.add(turmaParametro);
-            }
-
-        }
-        return turmaParametros;
-
-    }
-
-    public void setTurmaParametros(List<TurmaParametro> turmaParametros) {
-        this.turmaParametros = turmaParametros;
-    }
-
     public TurmaParametro setTurmaParametro(TurmaParametroType type) {
         String chave = type.toString();
         if (turma == null) {
@@ -232,5 +197,32 @@ public class TurmaBean {
             }
         }
         return turmaParametro;
+    }
+
+    private void initParameters() {
+        if (turma == null) {
+            turma = new Turma();
+        }
+        List<TurmaParametro> lsTurmaParametro = turmaParametroBLL.findbyTurma(turma);
+        if (lsTurmaParametro == null) {
+            lsTurmaParametro = new ArrayList<>();
+        }
+        for (TurmaParametroType type : getTurmaParametroTypes()) {
+            String chave = type.toString();
+            Boolean hasKey = false;
+            for (TurmaParametro trp : lsTurmaParametro) {
+                if (trp.getChave() == chave) {
+                    hasKey = true;
+                    break;
+                }
+            }
+            if (!hasKey) {
+                TurmaParametro turmaParametro = new TurmaParametro();
+                turmaParametro.setChave(chave);
+                turmaParametro.setTurma(turma);
+                lsTurmaParametro.add(turmaParametro);
+            }
+            turma.setTurmaParametros(lsTurmaParametro);
+        }
     }
 }

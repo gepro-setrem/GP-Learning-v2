@@ -16,7 +16,7 @@
         <h:form>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h:commandLink action="#{indicadorBean.novo()}" class="btn btn-primary"><i class="fa-plus"></i> Novo Indicador</h:commandLink>
+                    <h:commandLink action="#{indicadorBean.novo()}" class="btn btn-success"><i class="fa-plus"></i> Novo Indicador</h:commandLink>
                     <h4>Listagem de Indicadores</h4>
                 </div>
                 <div class="panel-body">
@@ -35,10 +35,10 @@
                             <h:outputText value="#{item.valor}"/>
                         </p:column>
 
-                        <p:column headerText="Opções" style="width: 300px">
+                        <p:column headerText="Opções" style="width: 300px; text-align: center;">
                             <f:facet name="header">Opções</f:facet>
-                            <h:commandLink action="#{indicadorBean.editar()}" value="Editar "/>
-                            <h:commandLink action="#{indicadorBean.excluir()}" value="/Excluir " onclick="return confirm('Tem certeza que deseja excluir?')"/>
+                            <h:commandLink action="#{indicadorBean.editar()}" class="btn btn-success btn-xs" style="color: #fff; margin-right: 5px;"><i class="fa-pencil"></i> Editar</h:commandLink>
+                            <h:commandLink action="#{indicadorBean.excluir()}" class="btn btn-danger btn-xs" style="color: #fff" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fa-trash"></i> Excluir</h:commandLink>
                         </p:column>
 
                     </p:dataTable>

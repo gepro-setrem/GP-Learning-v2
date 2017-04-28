@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 //import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -54,7 +55,7 @@ public class Pessoa implements Serializable {
     @Column(name = "pes_bimagem")
     private byte[] imagem;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tur_id")
     private Turma turma;
 
