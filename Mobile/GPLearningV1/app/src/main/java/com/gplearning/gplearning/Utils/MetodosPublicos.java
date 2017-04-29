@@ -28,7 +28,12 @@ public class MetodosPublicos {
     public static void SalvaSessao(Context context, Long id, String nome, String email, int idExterno) {
         SharedPreferences pref = context.getSharedPreferences(key_login, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        editor.putLong(key_id, id);
+        Log("sessao", " nome:" + nome + " email:" + email);
+        if (id != null)
+            editor.putLong(key_id, id);
+        else
+            editor.putLong(key_id, 0);
+
         editor.putString(key_nome, nome);
         editor.putString(key_email, email);
         if (idExterno > 0)
@@ -44,9 +49,14 @@ public class MetodosPublicos {
     }
 
 
-    public static String SelecionaSessaoNome(Context context){
-        SharedPreferences shared = context.getSharedPreferences(key_login,MODE_PRIVATE);
-        return shared.getString(key_nome,"--");
+    public static String SelecionaSessaoNome(Context context) {
+        SharedPreferences shared = context.getSharedPreferences(key_login, MODE_PRIVATE);
+        return shared.getString(key_nome, "--");
+    }
+
+    public static String SelecionaSessaoEmail(Context context) {
+        SharedPreferences shared = context.getSharedPreferences(key_login, MODE_PRIVATE);
+        return shared.getString(key_email, "--");
     }
 
     public static Long SelecionaSessaoId(Context context) {

@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.gplearning.gplearning.Enums.Fragments;
 import com.gplearning.gplearning.Models.Quote;
@@ -88,6 +89,15 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView =  navigationView.getHeaderView(0);
+        ((TextView)hView.findViewById(R.id.headerName)).setText(MetodosPublicos.SelecionaSessaoNome(this));
+        ((TextView)hView.findViewById(R.id.headerEmail)).setText(MetodosPublicos.SelecionaSessaoEmail(this));
     }
 
     @Override
