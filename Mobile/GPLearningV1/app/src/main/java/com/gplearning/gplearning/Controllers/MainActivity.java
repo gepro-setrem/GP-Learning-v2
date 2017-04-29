@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
-            MetodosPublicos.SalvaSessao(this, null, null);
+            MetodosPublicos.SalvaSessao(this, null, null, null, 0);
 
             // new getAssync().execute();
 

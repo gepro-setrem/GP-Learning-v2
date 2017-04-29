@@ -21,13 +21,18 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp">
 
+        <ProgressBar
+            android:id="@+id/projetoProgressbar"
+            style="@style/progressBar"
+            android:layout_gravity="center"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
             android:id="@+id/TxtNenhumRegistro"
             android:gravity="center"
-            android:text="Você ainda não tem nennhum projeto criado. Não perca tempo acesse a ferramenta GP Learning 2.0 e crie os seus projetos!"
+            android:text="@string/no_project"
             android:textSize="18sp"
             android:visibility="gone"/>
 

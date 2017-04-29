@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.gplearning.gplearning.Models.Projeto;
 import com.gplearning.gplearning.Controllers.ProjetoFragment.OnListFragmentInteractionListener;
+import com.gplearning.gplearning.Models.Projeto;
 import com.gplearning.gplearning.R;
 
 import java.util.ArrayList;
@@ -21,11 +21,13 @@ import java.util.List;
 public class ProjetoRecyclerViewAdapter extends RecyclerView.Adapter<ProjetoRecyclerViewAdapter.ViewHolder> {
 
     private List<Projeto> mValues = new ArrayList<>();
-    private OnListFragmentInteractionListener mListener;
+    private OnListFragmentInteractionListener listenerClick;
+    private OnListFragmentInteractionListener listenerLongClick;
 
-    public ProjetoRecyclerViewAdapter(List<Projeto> items, OnListFragmentInteractionListener listener) {
+    public ProjetoRecyclerViewAdapter(List<Projeto> items, OnListFragmentInteractionListener listenerClick, OnListFragmentInteractionListener listenerLongClick) {
         mValues = items;
-        mListener = listener;
+        this.listenerClick = listenerClick;
+        this.listenerLongClick = listenerLongClick;
     }
 
     @Override
@@ -41,13 +43,24 @@ public class ProjetoRecyclerViewAdapter extends RecyclerView.Adapter<ProjetoRecy
         holder.mIdView.setText(mValues.get(position).getNome());
         holder.mContentView.setText(mValues.get(position).getGerente());
 
+        holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if (listenerLongClick != null) {
+                    listenerLongClick.onListFragmentInteraction(holder.mItem);
+                    return true;
+                }
+                return false;
+            }
+        });
+
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != mListener) {
+                if (null != listenerClick) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    listenerClick.onListFragmentInteraction(holder.mItem);
                 }
             }
         });

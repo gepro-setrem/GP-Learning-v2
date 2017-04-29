@@ -4,18 +4,16 @@ package com.gplearning.gplearning.Controllers;
 //import android.app.FragmentTransaction;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
-
-import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gplearning.gplearning.Adapters.ProjetoRecyclerViewAdapter;
@@ -23,8 +21,8 @@ import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.Models.Projeto;
 import com.gplearning.gplearning.Models.ProjetoDao;
-import com.gplearning.gplearning.Models.PessoaDao;
 import com.gplearning.gplearning.R;
+import com.gplearning.gplearning.Utils.MetodosPublicos;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -42,13 +40,16 @@ public class ProjetoFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+    private OnListFragmentInteractionListener listenerClick;
+    private OnListFragmentInteractionListener listenerLongClick;
     private View view;
+    private RecyclerView recyclerView;
     private List<Projeto> lsProjetos = new ArrayList<>();
     private ProjetoDao dao;
 
 
-    public ProjetoFragment(){}
+    public ProjetoFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,10 +62,9 @@ public class ProjetoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_projeto_list, container, false);
-        DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
-        dao = daoSession.getProjetoDao();
 
-        mListener = new OnListFragmentInteractionListener() {
+
+        listenerClick = new OnListFragmentInteractionListener() {
             @Override
             public void onListFragmentInteraction(Projeto item) {
                 Log.i("event", "clicou no projeto:" + item.getNome());
@@ -78,16 +78,11 @@ public class ProjetoFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Log.i("Event", "Chegou na ProjetoFragment");
-            RecyclerView recyclerView = (RecyclerView) view;
-
+            recyclerView = (RecyclerView) view;
 
             //dao.queryBuilder().where(ProjetoDao.Properties.G)
-            lsProjetos = getProjetos();
-            recyclerView.setAdapter(new ProjetoRecyclerViewAdapter(lsProjetos, mListener));
-            if (lsProjetos.size() == 0) {
-                ((RecyclerView) view.findViewById(R.id.projetoListview)).setVisibility(View.GONE);
-                ((TextView) getActivity().findViewById(R.id.TxtNenhumRegistro)).setVisibility(View.VISIBLE);
-            }
+            // lsProjetos = getProjetos();
+            recyclerView.setAdapter(new ProjetoRecyclerViewAdapter(lsProjetos, listenerClick, listenerLongClick));
         }
 
         return view;
@@ -96,6 +91,9 @@ public class ProjetoFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
+        dao = daoSession.getProjetoDao();
+        new CarregaProjetos().execute();
     }
 
     @Override
@@ -183,4 +181,28 @@ public class ProjetoFragment extends Fragment {
         // TODO: Update argument type and name
         void onListFragmentInteraction(Projeto item);
     }
+
+    private class CarregaProjetos extends AsyncTask<String, String, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            lsProjetos = dao.loadAll();
+            MetodosPublicos.Log("projetos", " retorno com:" + lsProjetos.size());
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            ((ProgressBar) getActivity().findViewById(R.id.projetoProgressbar)).setVisibility(View.GONE);
+            if (lsProjetos.size() == 0)
+                ((TextView) getActivity().findViewById(R.id.TxtNenhumRegistro)).setVisibility(View.VISIBLE);
+            else {
+                ((RecyclerView) view.findViewById(R.id.projetoListview)).setVisibility(View.VISIBLE);
+                recyclerView.getAdapter().notifyDataSetChanged();
+            }
+        }
+    }
+
+
 }

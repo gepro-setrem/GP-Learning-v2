@@ -34,6 +34,7 @@
     <string name="scope">Escopo do Projeto</string>
 
 
+    <string name="no_project">Você ainda não tem nenhum projeto criado. Não perca tempo, acesse a ferramenta GP Learning 2.0 e crie os seus projetos!</string>
 
     <!-- Strings relacionadas ao login -->
     <string name="action_settings">Settings</string>

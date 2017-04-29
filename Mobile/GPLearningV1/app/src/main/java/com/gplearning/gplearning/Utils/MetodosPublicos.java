@@ -49,14 +49,14 @@ public class MetodosPublicos {
         return shared.getString(key_nome,"--");
     }
 
-    public static int SelecionaSessaoId(Context context) {
+    public static Long SelecionaSessaoId(Context context) {
         SharedPreferences shared = context.getSharedPreferences(key_login, MODE_PRIVATE);
-        return shared.getInt(key_id, 1);
+        return shared.getLong(key_id, 0);
     }
 
-    public static Long SelecionaSessaoidExterno(Context context) {
+    public static int SelecionaSessaoidExterno(Context context) {
         SharedPreferences shared = context.getSharedPreferences(key_login, MODE_PRIVATE);
-        Long user_idExterno = shared.getLong(key_idExterno, 0);
+        int user_idExterno = shared.getInt(key_idExterno, 0);
         return user_idExterno;
     }
 

@@ -53,8 +53,15 @@
         <item name="android:layout_marginTop">100dp</item>
         <!--<item name="app:layout_constraintLeft_toLeftOf">parent</item>-->
         <!--<item name="app:layout_constraintRight_toRightOf">parent</item>-->
-
     </style>
 
+    <style name="progressBar">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
 
 </resources>
