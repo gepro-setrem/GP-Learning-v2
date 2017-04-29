@@ -24,6 +24,6 @@ public class LogoutServlet extends HttpServlet {
         // authentication form will be shown
 //    response.sendRedirect(request.getContextPath() 
 //      + "/faces/user/index.xhtml");
-        response.sendRedirect(request.getContextPath() + "/login.xhtml");
+        response.sendRedirect(request.getContextPath() + "/user/index.xhtml");
     }
 }

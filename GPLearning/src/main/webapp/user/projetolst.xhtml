@@ -16,7 +16,7 @@
                     <div class="alert-warning">
                         <h:messages />
                     </div>
-                    <p:dataTable class="table table-hover" var="proj" value="#{projetoBean.projetos}">
+                    <p:dataTable class="table table-hover" var="proj" value="#{projetoBean.projetos}" emptyMessage="Nenhum registro encontrado.">
                         <p:column>
                             <f:facet name="header">Nome do Projeto</f:facet>
                             <h:outputText value="#{proj.nome}"/>
@@ -36,10 +36,9 @@
 
                         <p:column headerText="Opções" style="width: 220px; text-align: center">
                             <f:facet name="header">Opções</f:facet>
-                            <h:commandLink action="#{projetoBean.editar()}" value="Editar "/>
-                            <h:commandLink action="#{projetoBean.acessar()}" value="/Gerenciar"/>
+                            <h:commandLink action="#{projetoBean.editar()}" class="btn btn-success btn-xs" style="color: #fff; margin-right: 5px;"><i class="fa-pencil"></i> Editar</h:commandLink>
+                            <h:commandLink action="#{projetoBean.acessar()}" class="btn btn-primary btn-xs" style="color: #fff;"><i class="fa-list-ul"></i> Gerenciar</h:commandLink>
                         </p:column>
-
                     </p:dataTable>
                 </div>
             </div>

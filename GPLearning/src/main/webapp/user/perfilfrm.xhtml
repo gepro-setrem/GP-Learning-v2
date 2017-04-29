@@ -8,7 +8,7 @@
     <ui:define name="content">
         <f:view>
             <h:form enctype="multipart/form-data">
-                <h:inputHidden value="#{usuarioBean.usuario.id}"/>
+                <h:inputHidden value="#{perfilBean.usuario.id}"/>
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -34,13 +34,13 @@
                             <div class="col-lg-4 col-sm-6 col-xs-12">
                                 <div class="form-group">
                                     <label>Senha:</label>
-                                    <p:password class="form-control" value="#{perfilBean.usuario.login.senha}" />
+                                    <p:password class="form-control" value="#{perfilBean.login.senha}" />
                                 </div>
                             </div>
                             <div class="col-lg-4 col-sm-6 col-xs-12">
                                 <div class="form-group">
                                     <label>Telefone:</label>
-                                    <p:inputMask class="form-control" value="#{perfilBean.usuario.telefone}" mask="(999) 99999-9999"/>
+                                    <p:inputMask class="form-control" value="#{perfilBean.usuario.telefone}" mask="(99) 99999-9999"/>
                                 </div>
                             </div>
 

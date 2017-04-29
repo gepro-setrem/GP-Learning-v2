@@ -7,69 +7,63 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="menuhorizontal">
-        <li><a class="active">Iniciação</a></li>
+        <li class="active"><a>Iniciação</a></li>
         <li><a>Planejamento</a></li>
     </ui:define>
     <ui:define name="content">
         <h:form>
-            <h:inputHidden value="#{projetoBean.projeto.id}"/><br></br>
+            <h:inputHidden value="#{projetoBean.projeto.id}"/>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4>Cadastro de Projetos</h4>
                 </div>
                 <div class="panel-body">
-                    <div class="row form-group">
-                        <div class="alert-warning">
-                            <h:messages />
-                        </div>
-                        <div class="row form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Nome do Projeto"/>
-                            <div class="col-sm-10">
+                    <div class="alert-warning"><h:messages /></div>
+                    <div class="row">
+                        <div class="col-md-7 col-xs-12">
+                            <div class="form-group">
+                                <label>Nome:</label>
                                 <h:inputText class="form-control" pt:placeholder="Nome" value="#{projetoBean.projeto.nome}" />
                             </div>
                         </div>
-
-                        <div class="row form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Descrição Geral"/>
-                            <div class="col-sm-10">
-                                <h:inputTextarea class="form-control" pt:placeholder="Descrição do Projeto" rows="3" value="#{projetoBean.projeto.descricao}"/>
-                            </div>
-                        </div>
-
-                        <div class="row form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Empresa"/>
-                            <div class="col-sm-10">
-                                <h:inputText class="form-control" pt:placeholder="Empresa" value="#{projetoBean.projeto.empresa}"/>
-                            </div>
-                        </div>
-
-                        <div class="row form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Gerente de Projeto"/>
-                            <div class="col-sm-10">
+                        <div class="col-md-5 col-xs-12">
+                            <div class="form-group">
+                                <label>Gerente:</label>
                                 <h:selectOneMenu class="form-control" converter="pessoaConverter" value="#{projetoBean.projeto.gerente}">
-                                    <f:selectItems value="#{projetoBean.usuarios}" var="user"  itemLabel="#{user.toString()}"/>
+                                    <f:selectItems value="#{projetoBean.usuarios}" var="user"  itemLabel="#{user}"/>
                                 </h:selectOneMenu>
                             </div>
                         </div>
-
-
-                        <div class="form-group">
-                            <h:outputLabel class="col-sm-2 control-label" value="Componentes do Projeto"/>
-                            <div class="col-sm-10">
-                                <p:selectCheckboxMenu class="form-control" label="usuarios" converter="pessoaConverter" value="#{projetoBean.projeto.componentes}" style="width: 100%">
-                                    <f:selectItems value="#{projetoBean.usuarios}" var="user"  itemLabel="#{user.toString()}"/>
+                        <div class="col-md-7 col-xs-12">
+                            <div class="form-group">
+                                <label>Empresa:</label>
+                                <h:inputText class="form-control" pt:placeholder="Empresa" value="#{projetoBean.projeto.empresa}" />
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-xs-12">
+                            <div class="form-group">
+                                <label>Componentes:</label>
+                                <p:selectCheckboxMenu class="form-control" label="Componentes" converter="pessoaConverter" value="#{projetoBean.projeto.componentes}" style="width: 100%">
+                                    <f:selectItems value="#{projetoBean.usuarios}" var="user"  itemLabel="#{user}"/>
                                 </p:selectCheckboxMenu>
                             </div>
                         </div>
-
-                        <!--                        <p:commandButton value="Comentário" type="button" onclick="PF('dlg1').show();" />
-                                                <p:dialog header="Comentários Gerais sobre o projeto" widgetVar="dlg1" minHeight="40">
-                                                    <h:outputText value="{projetoBean.projeto.comentarioGeralInstrutor}" />
-                                                </p:dialog>-->
-                        <div id="botoes" style="text-align: right">
-                            <h:commandButton class="btn btn-primary" action="#{projetoBean.salvar()}" value="Salvar"/>
-                            <h:button class="btn btn-default" outcome="ListagemProjetos" value="Cancelar"/>
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label>Descrição Geral:</label>
+                                <h:inputTextarea class="form-control" pt:placeholder="Descrição Geral" rows="3" value="#{projetoBean.projeto.descricao}"/>
+                            </div>
                         </div>
+                    </div>
+
+
+                    <!--                        <p:commandButton value="Comentário" type="button" onclick="PF('dlg1').show();" />
+                                            <p:dialog header="Comentários Gerais sobre o projeto" widgetVar="dlg1" minHeight="40">
+                                                <h:outputText value="{projetoBean.projeto.comentarioGeralInstrutor}" />
+                                            </p:dialog>-->
+                    <div class="text-right">
+                        <h:button class="btn btn-default" outcome="projetolst" value="Cancelar" style="margin-right: 5px;"/>
+                        <h:commandLink class="btn btn-success" action="#{projetoBean.salvar()}"><i class="fa-check"></i> Salvar</h:commandLink>
                     </div>
                 </div>
             </div>

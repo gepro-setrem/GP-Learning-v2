@@ -2,6 +2,7 @@ package br.org.gdt.converter;
 
 import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.model.Pessoa;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -9,6 +10,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 @FacesConverter("pessoaConverter")
+@ManagedBean
 public class PessoaConverter implements Converter {
 
     @ManagedProperty("#{pessoaBLL}")
@@ -25,4 +27,13 @@ public class PessoaConverter implements Converter {
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         return "" + ((Pessoa) value).getId();
     }
+
+    public PessoaBLL getPessoaBLL() {
+        return pessoaBLL;
+    }
+
+    public void setPessoaBLL(PessoaBLL pessoaBLL) {
+        this.pessoaBLL = pessoaBLL;
+    }
+
 }

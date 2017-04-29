@@ -2,12 +2,17 @@ package br.org.gdt.beans;
 
 import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.model.Pessoa;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 @ManagedBean
 @SessionScoped
@@ -63,6 +68,17 @@ public class HomeBean {
 
     public void setHasSession(boolean hasSession) {
         this.hasSession = hasSession;
+    }
+
+    private StreamedContent imagem;
+
+    public StreamedContent getImagem() throws IOException {
+        getUsuario();
+        InputStream is = null;
+        if (usuario.getImagem() != null) {
+            is = new ByteArrayInputStream(usuario.getImagem());
+        }
+        return new DefaultStreamedContent(is, "", "" + usuario.getId());
     }
 
 }

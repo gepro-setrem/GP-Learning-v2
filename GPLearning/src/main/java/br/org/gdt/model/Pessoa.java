@@ -71,7 +71,7 @@ public class Pessoa implements Serializable {
     @ManyToMany(mappedBy = "componentes", cascade = CascadeType.REMOVE)
     private List<Projeto> projetos;
 
-    @OneToOne(mappedBy = "pessoa")
+    @OneToOne(mappedBy = "pessoa", fetch = FetchType.EAGER)
     private Login login;
 
     public Pessoa() {
@@ -142,7 +142,11 @@ public class Pessoa implements Serializable {
     }
 
     public byte[] getImagem() {
-        return imagem;
+        if (imagem != null && imagem.length > 0) {
+            return imagem;
+        } else {
+            return null;
+        }
     }
 
     public void setImagem(byte[] imagem) {

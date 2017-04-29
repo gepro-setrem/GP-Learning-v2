@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <title><ui:insert name="title">GPLearning</ui:insert></title>
@@ -12,7 +13,7 @@
         <h:outputStylesheet name="./css/cssDefault.css"/>
         <!--<h:outputStylesheet name="./font-awesome-4.7.0/css/font-awesome.css"/>-->
         <!--<h:outputStylesheet name="./data-tables/dataTables.min.css" />-->
-        <h:outputScript name="./js/jquery-3.2.0.min.js"/>
+        <!--<h:outputScript name="./js/jquery-3.2.0.min.js"/>-->
         <h:outputScript name="./js/bootstrap.min.js"/>
         <h:outputScript name="./js/jsLayout.js"/>
         <!--<h:outputScript name="./data-tables/dataTables.min.js"/>-->
@@ -35,7 +36,8 @@
             </div>
             <div class="col-md-2 col-xs-5">
                 <h:link outcome="/user/perfil.xhtml">
-                    <h:graphicImage library="img/" name="usuario.png" style="max-height: 60px;"/>
+                    <h:graphicImage rendered="#{homeBean.usuario.imagem == null}" library="img/" name="usuario.png" style="max-height: 60px;"/>
+                    <p:graphicImage rendered="#{homeBean.usuario.imagem != null}" value="#{homeBean.imagem}" style="max-height: 60px" cache="false"/>
                 </h:link>
             </div>
         </div>
@@ -60,7 +62,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right" style="display: #{homeBean.hasSession ? 'block' : 'none'}">
                         <li><h:link outcome="/user/projetolst.xhtml">Meus Projetos</h:link></li>
-                        <li><p class="navbar-text navbar-right" style="">Olá, <h:outputText class="navbar-link" value="#{homeBean.usuario.nome}"/>. <h:outputLink value="logout">Sair</h:outputLink></p></li>
+                        <li><p class="navbar-text navbar-right" style="">Olá, <h:outputText class="navbar-link" value="#{homeBean.usuario.nome}"/>. <h:outputLink value="../logout">Sair</h:outputLink></p></li>
                     </ul>
                 </div>
             </div>

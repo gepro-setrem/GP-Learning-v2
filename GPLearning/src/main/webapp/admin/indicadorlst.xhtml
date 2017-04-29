@@ -25,7 +25,7 @@
                         <h:messages />
                     </div>
 
-                    <p:dataTable class="table table-hover" var="item" value="#{indicadorBean.indicadores}">
+                    <p:dataTable class="table table-hover" var="item" value="#{indicadorBean.indicadores}" emptyMessage="Nenhum registro encontrado.">
                         <p:column>
                             <f:facet name="header">Nome do Indicador</f:facet>
                             <h:outputText value="#{item.nome}"/>

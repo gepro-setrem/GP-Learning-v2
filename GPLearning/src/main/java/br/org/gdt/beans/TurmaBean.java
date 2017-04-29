@@ -23,14 +23,14 @@ import javax.servlet.http.HttpServletRequest;
 @RequestScoped
 public class TurmaBean {
 
-    private Turma turma;
+    private Turma turma = new Turma();
     @ManagedProperty("#{turmaBLL}")
     private TurmaBLL turmaBLL;
     private DataModel turmas;
     @ManagedProperty("#{turmaParametroBLL}")
     private TurmaParametroBLL turmaParametroBLL;
 
-    private Pessoa usuario;
+    private Pessoa usuario = new Pessoa();
     @ManagedProperty("#{pessoaBLL}")
     private PessoaBLL pessoaBLL;
     private TurmaParametroType[] turmaParametroTypes;
