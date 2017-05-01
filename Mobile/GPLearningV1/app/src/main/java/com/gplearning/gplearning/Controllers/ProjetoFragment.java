@@ -68,18 +68,18 @@ public class ProjetoFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_projeto_list, container, false);
 
 
-//        listenerClick = new OnListFragmentInteractionListener() {
-//            @Override
-//            public void onListFragmentInteraction(Projeto item) {
-//                Log.i("event", "clicou no projeto:" + item.getNome());
-//                Fragment fragment = EtapasFragment.newInstance(item.get_id());
-//                FragmentManager manager = getActivity().getSupportFragmentManager();
-//                manager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+//        listenerclick = new onlistfragmentinteractionlistener() {
+//            @override
+//            public void onlistfragmentinteraction(projeto item) {
+//                log.i("event", "clicou no projeto:" + item.getnome());
+//                fragment fragment = etapasfragment.newinstance(item.get_id());
+//                fragmentmanager manager = getactivity().getsupportfragmentmanager();
+//                manager.begintransaction().replace(r.id.content_frame, fragment).commit();
 //
 //            }
 //        };
 
-        // Set the adapter
+        // set the adapter
         if (view instanceof RecyclerView) {
             Log.i("Event", "Chegou na ProjetoFragment");
             recyclerView = (RecyclerView) view.findViewById(R.id.projetoListview);

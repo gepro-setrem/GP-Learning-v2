@@ -1,14 +1,16 @@
 package com.gplearning.gplearning.Models;
 
 
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
+import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
+import java.util.List;
 
 @Entity(nameInDb = "termoAbertura")
 public class TermoAbertura {
@@ -25,11 +27,29 @@ public class TermoAbertura {
     @ToOne(joinProperty = "pro_id")
     private Projeto projeto;
 
-    /** Used to resolve relations */
+
+    @ToMany(referencedJoinProperty = "IdTermoAbertura")
+    private List<Restricoes> lsRestricoes;
+
+    @ToMany(referencedJoinProperty = "IdTermoAbertura")
+    private List<Premissas> lsPremissas;
+
+    @ToMany(referencedJoinProperty = "IdTermoAbertura")
+    private List<Marco> lsMarco;
+
+    @ToMany(referencedJoinProperty = "IdTermoAbertura")
+    private List<RequisitoTermoAbertura> lsRequisitoTermoAbertura;
+
+
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 1647359195)
     private transient TermoAberturaDao myDao;
 
@@ -141,6 +161,121 @@ public class TermoAbertura {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 1321194083)
+    public List<Restricoes> getLsRestricoes() {
+        if (lsRestricoes == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            RestricoesDao targetDao = daoSession.getRestricoesDao();
+            List<Restricoes> lsRestricoesNew = targetDao._queryTermoAbertura_LsRestricoes(id);
+            synchronized (this) {
+                if (lsRestricoes == null) {
+                    lsRestricoes = lsRestricoesNew;
+                }
+            }
+        }
+        return lsRestricoes;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 831465351)
+    public synchronized void resetLsRestricoes() {
+        lsRestricoes = null;
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 1747667354)
+    public List<Premissas> getLsPremissas() {
+        if (lsPremissas == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            PremissasDao targetDao = daoSession.getPremissasDao();
+            List<Premissas> lsPremissasNew = targetDao._queryTermoAbertura_LsPremissas(id);
+            synchronized (this) {
+                if (lsPremissas == null) {
+                    lsPremissas = lsPremissasNew;
+                }
+            }
+        }
+        return lsPremissas;
+    }
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 718023656)
+    public synchronized void resetLsPremissas() {
+        lsPremissas = null;
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 111619938)
+    public List<Marco> getLsMarco() {
+        if (lsMarco == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            MarcoDao targetDao = daoSession.getMarcoDao();
+            List<Marco> lsMarcoNew = targetDao._queryTermoAbertura_LsMarco(id);
+            synchronized (this) {
+                if (lsMarco == null) {
+                    lsMarco = lsMarcoNew;
+                }
+            }
+        }
+        return lsMarco;
+    }
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 479589052)
+    public synchronized void resetLsMarco() {
+        lsMarco = null;
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 1302167210)
+    public List<RequisitoTermoAbertura> getLsRequisitoTermoAbertura() {
+        if (lsRequisitoTermoAbertura == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            RequisitoTermoAberturaDao targetDao = daoSession.getRequisitoTermoAberturaDao();
+            List<RequisitoTermoAbertura> lsRequisitoTermoAberturaNew = targetDao
+                    ._queryTermoAbertura_LsRequisitoTermoAbertura(id);
+            synchronized (this) {
+                if (lsRequisitoTermoAbertura == null) {
+                    lsRequisitoTermoAbertura = lsRequisitoTermoAberturaNew;
+                }
+            }
+        }
+        return lsRequisitoTermoAbertura;
+    }
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 1369674208)
+    public synchronized void resetLsRequisitoTermoAbertura() {
+        lsRequisitoTermoAbertura = null;
     }
 
     /** called by internal mechanisms, do not call yourself. */
