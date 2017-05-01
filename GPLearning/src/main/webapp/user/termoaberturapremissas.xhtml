@@ -1,0 +1,75 @@
+<ui:composition template="/user/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="menuhorizontal">
+        <li class="active"><h:link outcome="iniciacao">Iniciação</h:link></li>
+        <li><h:link outcome="planejamento">Planejamento</h:link></li>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            #{premissaBean.setProjeto(projetoBean.projeto)}
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>Listagem de Premissas</h4></div>
+                <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12"><div class="alert-warning"><h:messages /></div></div>
+                        <div class="col-xs-12">#{projetoBean.getDescricao('descricaoTelaTermoAberturaPremissas')}</div>
+                        <div class="col-xs-12">
+                            <h:inputHidden value="#{premissaBean.premissa.id}"/>
+                            <div class="row form-group">
+                                <label class="col-lg-2 col-sm-3 col-xs-12">Descrição da Premissa*:</label>
+                                <div class="col-lg-9 col-sm-7 col-xs-8">
+                                    <h:inputText class="form-control" value="#{premissaBean.premissa.descricao}" pt:placeholder="Descrição da Premissa"/>
+                                </div>
+                                <div class="col-lg-1 col-sm-2 col-xs-3">
+                                    <h:commandLink action="#{premissaBean.salvar()}" class="btn btn-success"><i class="fa-check"></i> Salvar</h:commandLink>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <p:dataTable class="table table-hover" var="item" value="#{premissaBean.premissas}" emptyMessage="Nenhum registro encontrado.">
+                                <p:column headerText="Descrição da Premissa">
+                                    <h:outputText value="#{item.descricao}"/>
+                                </p:column>
+
+                                <p:column headerText="Opções" style="width: 150px">
+                                    <h:commandLink action="#{premissaBean.editar()}" class="btn btn-success btn-xs" style="color: #fff; margin-right: 5px;"><i class="fa-pencil"></i> Editar</h:commandLink>
+                                    <h:commandLink action="#{premissaBean.excluir()}" class="btn btn-danger btn-xs" style="color: #fff; margin-right: 5px;" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fa-trash"></i> Excluir</h:commandLink>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                        <div class="col-xs-12">
+                            <p:commandButton value="Comentário" class="btn btn-primary"  type="button" onclick="PF('dlg1').show();" />
+                            <p:dialog header="Comentários sobre as Restrições" widgetVar="dlg1" minHeight="40">
+                                <h:outputText value="{projetoBean.projeto.comentarioRestricoes}" />
+                            </p:dialog>
+                        </div>
+                        <div class="col-md-9 col-xs-7">
+                            <ul class="pagination">
+                                <li><h:link outcome="termoaberturadescricao">Descrição</h:link></li>
+                                <li><h:link outcome="termoaberturajustificativa">Justificativa</h:link></li>
+                                <li class="active"><h:link outcome="termoaberturapremissas">Premissas</h:link></li>
+                                <li><h:link outcome="termoaberturarestricoes">Restrições</h:link></li>
+                                <li><h:link outcome="termoaberturamarcos">Marcos</h:link></li>
+                                <li><h:link outcome="termoaberturarequisitos">Requisitos</h:link></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3 col-xs-5" style="text-align: right;">
+                            <div class="pagination">
+                                <h:link class="btn btn-default" outcome="termoaberturajustificativa" style="margin-right: 5px;">Voltar</h:link>
+                                <h:link class="btn btn-primary" outcome="termoaberturarestricoes">Próximo <i class="fa-chevron-right"></i></h:link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

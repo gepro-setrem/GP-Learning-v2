@@ -33,6 +33,11 @@ public abstract class BLL<T> {
         dao.delete(id);
     }
 
+    @Transactional
+    public void delete(T item) {
+        dao.delete(item);
+    }
+
     public T findById(int id) {
         return (T) dao.findById(id);
     }

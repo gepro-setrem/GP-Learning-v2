@@ -1,0 +1,47 @@
+<ui:composition template="/user/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="menuhorizontal">
+        <li class="active"><h:link outcome="iniciacao">Iniciação</h:link></li>
+        <li><h:link outcome="planejamento">Planejamento</h:link></li>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            #{termoAberturaBean.setProjeto(projetoBean.projeto)}
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>Justificativa do Projeto</h4></div>
+                <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12"><div class="alert-warning"><h:messages /></div></div>
+                        <div class="col-xs-12">#{projetoBean.getDescricao('descricaoTelaTermoAberturaJustificativa')}</div>
+                        <div class="col-xs-12">
+                            <h:inputTextarea class="form-control" rows="3" value="#{termoAberturaBean.termoabertura.justificativa}"/>
+                        </div>
+                        <div class="col-md-9 col-xs-7">
+                            <ul class="pagination">
+                                <li><h:link outcome="termoaberturadescricao">Descrição</h:link></li>
+                                <li class="active"><h:link outcome="termoaberturajustificativa">Justificativa</h:link></li>
+                                <li><h:link outcome="termoaberturapremissas">Premissas</h:link></li>
+                                <li><h:link outcome="termoaberturarestricoes">Restrições</h:link></li>
+                                <li><h:link outcome="termoaberturamarcos">Marcos</h:link></li>
+                                <li><h:link outcome="termoaberturarequisitos">Requisitos</h:link></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3 col-xs-5" style="text-align: right;">
+                            <div class="pagination">
+                                <h:link class="btn btn-default" outcome="termoaberturadescricao" style="margin-right: 5px;">Voltar</h:link>
+                                <h:commandLink class="btn btn-success" action="#{termoAberturaBean.salvarJustificativa()}">Salvar e Próximo <i class="fa-chevron-right"></i></h:commandLink>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

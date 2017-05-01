@@ -1,0 +1,47 @@
+<ui:composition template="/user/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="menuhorizontal">
+        <li class="active"><a href="iniciacao.xhtml">Iniciação</a></li>
+        <li><a href="planejamento.xhtml">Planejamento</a></li>
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-md-1 col-sm-2 col-xs-3" style="padding: 0;">
+                <p:graphicImage library="img/" name="legendas.png" style="width: 100%; margin-top: 60px;"/>
+            </div>
+            <div class="col-md-11 col-sm-10 col-xs-9">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Grupo de Processos: Iniciação</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                #{projetoBean.getDescricao('descricaoTelaGrupoProcessosIniciacao')}
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-4">
+                                <h:link outcome="termoaberturadescricao">
+                                    <h:graphicImage library="img/" name="Desenv TA.png" style="width: 100%;"/>
+                                </h:link>
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-4">
+                                <h:graphicImage library="img/" name="flecha.jpg" style="width: 100%; padding: 35%;"/>
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-4">
+                                <h:link outcome="stakeholders">
+                                    <h:graphicImage library="img/" name="Identificar PI.png" style="width: 100%;"/>
+                                </h:link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
+

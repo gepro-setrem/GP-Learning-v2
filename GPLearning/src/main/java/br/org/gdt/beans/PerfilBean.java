@@ -35,11 +35,14 @@ import java.nio.file.Path;
 public class PerfilBean implements Serializable {
 
     private Pessoa usuario = new Pessoa();
-    private Login login = new Login();
+
     private Pessoa user = new Pessoa();
     @ManagedProperty("#{pessoaBLL}")
     private PessoaBLL pessoaBLL;
     private UploadedFile userImage;
+    @ManagedProperty("#{loginBLL}")
+    private LoginBLL loginBLL;
+    private Login login = new Login();
 
     public PerfilBean() {
     }
@@ -56,8 +59,9 @@ public class PerfilBean implements Serializable {
     }
 
     public String salvar() {
-        int user_id = usuario.getId();
-        if (!usuario.getNome().isEmpty() && !usuario.getEmail().isEmpty() && usuario.getId() > 0) {// && !usuario.getTurma().equals("")) {
+        getUser();
+        int user_id = user.getId();
+        if (!usuario.getNome().isEmpty() && !usuario.getEmail().isEmpty()) {
             byte[] imgDataBa = new byte[(int) userImage.getSize()];
             DataInputStream dataIs;
             try {
@@ -66,10 +70,10 @@ public class PerfilBean implements Serializable {
             } catch (IOException ex) {
                 Logger.getLogger(Projeto2Bean.class.getName()).log(Level.SEVERE, null, ex);
             }
+            login.setEmail(usuario.getEmail());
             Pessoa oldUser = pessoaBLL.findById(user_id);
-            Login oldLogin = oldUser.getLogin();
-            oldLogin.setEmail(usuario.getEmail());
-            oldLogin.setSenha(login.getSenha());
+            boolean changeEmail = !usuario.getEmail().equals(oldUser.getEmail());
+            usuario.setId(oldUser.getId());
             usuario.setTurma(oldUser.getTurma());
             usuario.setStatus(oldUser.getStatus());
             usuario.setCriacao(oldUser.getCriacao());
@@ -79,9 +83,27 @@ public class PerfilBean implements Serializable {
                 usuario.setImagem(oldUser.getImagem());
             }
             usuario.setAlteracao(new Date());
-
-            usuario.setLogin(oldLogin);
+//            usuario.setLogin(null);
             pessoaBLL.update(usuario);
+            if (!login.getSenha().isEmpty() || changeEmail) {
+                Login oldLogin = loginBLL.findbyPessoa(oldUser);
+                if (changeEmail) {
+                    loginBLL.delete(oldLogin);
+                    oldLogin.setEmail(login.getEmail());
+                }
+                if (!login.getSenha().isEmpty()) {
+                    oldLogin.setSenha(login.getSenha());
+                }
+                for (LoginRole lr : oldLogin.getLoginRoles()) {
+                    lr.setLogin(oldLogin);
+                }
+                loginBLL.update(oldLogin);
+            }
+            if (changeEmail) {
+                ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
+                HttpServletRequest request = (HttpServletRequest) external.getRequest();
+                request.getSession().invalidate();
+            }
             return "perfil";
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para salvar, é necessário preencher todos os campos!"));
@@ -132,4 +154,13 @@ public class PerfilBean implements Serializable {
     public void setLogin(Login login) {
         this.login = login;
     }
+
+    public LoginBLL getLoginBLL() {
+        return loginBLL;
+    }
+
+    public void setLoginBLL(LoginBLL loginBLL) {
+        this.loginBLL = loginBLL;
+    }
+
 }

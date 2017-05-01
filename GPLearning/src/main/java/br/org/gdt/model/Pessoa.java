@@ -71,6 +71,7 @@ public class Pessoa implements Serializable {
     @ManyToMany(mappedBy = "componentes", cascade = CascadeType.REMOVE)
     private List<Projeto> projetos;
 
+    //@OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
     @OneToOne(mappedBy = "pessoa", fetch = FetchType.EAGER)
     private Login login;
 
@@ -199,6 +200,31 @@ public class Pessoa implements Serializable {
 
     public void setLogin(Login login) {
         this.login = login;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 61 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Pessoa other = (Pessoa) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
     }
 
     @Override

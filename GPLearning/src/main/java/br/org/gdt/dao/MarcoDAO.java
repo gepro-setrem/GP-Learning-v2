@@ -12,9 +12,8 @@ public class MarcoDAO extends DAO<Marco> {
         classe = Marco.class;
     }
 
-    public List<Marco> findbytermoabertura(TermoAbertura termoabertura) {
+    public List<Marco> findbyTermoAbertura(TermoAbertura termoabertura) {
         return entityManager.createQuery("from Marco where termoabertura = :p")
-                .setParameter("p", termoabertura)
-                .getResultList();
+                .setParameter("p", termoabertura).getResultList();
     }
 }

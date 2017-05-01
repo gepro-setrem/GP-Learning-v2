@@ -13,7 +13,7 @@ public class RequisitoTermoAberturaBLL extends BLL<RequisitoTermoAbertura> {
     @Autowired
     private RequisitoTermoAberturaDAO dao;
 
-    public List<RequisitoTermoAbertura> findbytermoabertura(TermoAbertura termoabertura) {
-        return dao.findbytermoabertura(termoabertura);
+    public List<RequisitoTermoAbertura> findbyTermoAbertura(TermoAbertura termoabertura) {
+        return dao.TermoAbertura(termoabertura);
     }
 }

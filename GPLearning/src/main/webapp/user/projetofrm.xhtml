@@ -11,6 +11,15 @@
         <li><a>Planejamento</a></li>
     </ui:define>
     <ui:define name="content">
+        <style>
+            .autocomplete ul, .autocomplete span input {
+                width: 100%;
+                border: 1px solid #CCC;
+                box-shadow: 0 0;
+                -webkit-box-shadow: 0 0;
+                min-height: 34px;
+            }
+        </style>
         <h:form>
             <h:inputHidden value="#{projetoBean.projeto.id}"/>
             <div class="panel panel-default">
@@ -22,36 +31,42 @@
                     <div class="row">
                         <div class="col-md-7 col-xs-12">
                             <div class="form-group">
-                                <label>Nome:</label>
-                                <h:inputText class="form-control" pt:placeholder="Nome" value="#{projetoBean.projeto.nome}" />
+                                <label>Nome*:</label>
+                                <h:inputText class="form-control" pt:placeholder="Nome" value="#{projetoBean.projeto.nome}" required="true" requiredMessage="O 'Nome' é obrigatório!"/>
                             </div>
                         </div>
                         <div class="col-md-5 col-xs-12">
-                            <div class="form-group">
-                                <label>Gerente:</label>
-                                <h:selectOneMenu class="form-control" converter="pessoaConverter" value="#{projetoBean.projeto.gerente}">
-                                    <f:selectItems value="#{projetoBean.usuarios}" var="user"  itemLabel="#{user}"/>
-                                </h:selectOneMenu>
+                            <div class="form-group autocomplete">
+                                <label>Gerente*:</label>
+                                <p:autoComplete multiple="false" completeMethod="#{projetoBean.completePessoa}" value="#{projetoBean.projeto.gerente}"
+                                                var="pessoa" itemLabel="#{pessoa.nome}" itemValue="#{pessoa}" converter="#{pessoaConverter}" forceSelection="true" style="width: 100%;" placeholder="Pesquisar" required="true" requiredMessage="O 'Gerente' é obrigatório!">
+                                    <p:column>
+                                        <h:outputText value="#{pessoa.nome}"/>
+                                    </p:column>
+                                </p:autoComplete>
                             </div>
                         </div>
                         <div class="col-md-7 col-xs-12">
                             <div class="form-group">
-                                <label>Empresa:</label>
-                                <h:inputText class="form-control" pt:placeholder="Empresa" value="#{projetoBean.projeto.empresa}" />
+                                <label>Empresa*:</label>
+                                <h:inputText class="form-control" pt:placeholder="Empresa" value="#{projetoBean.projeto.empresa}" required="true" requiredMessage="A 'Empresa' é obrigatória!"/>
                             </div>
                         </div>
                         <div class="col-md-5 col-xs-12">
-                            <div class="form-group">
-                                <label>Componentes:</label>
-                                <p:selectCheckboxMenu class="form-control" label="Componentes" converter="pessoaConverter" value="#{projetoBean.projeto.componentes}" style="width: 100%">
-                                    <f:selectItems value="#{projetoBean.usuarios}" var="user"  itemLabel="#{user}"/>
-                                </p:selectCheckboxMenu>
+                            <div class="form-group autocomplete">
+                                <label>Componentes*:</label>
+                                <p:autoComplete multiple="true" completeMethod="#{projetoBean.completePessoa}" value="#{projetoBean.projeto.componentes}"
+                                                var="pessoa" itemLabel="#{pessoa.nome}" itemValue="#{pessoa}" converter="#{pessoaConverter}" forceSelection="true" style="width: 100%;" placeholder="Pesquisar" required="true" requiredMessage="Os 'Componentes' são obrigatórios!">
+                                    <p:column>
+                                        <h:outputText value="#{pessoa.nome}" />
+                                    </p:column>
+                                </p:autoComplete>
                             </div>
                         </div>
                         <div class="col-xs-12">
                             <div class="form-group">
-                                <label>Descrição Geral:</label>
-                                <h:inputTextarea class="form-control" pt:placeholder="Descrição Geral" rows="3" value="#{projetoBean.projeto.descricao}"/>
+                                <label>Descrição Geral*:</label>
+                                <h:inputTextarea class="form-control" pt:placeholder="Descrição Geral" required="true" rows="3" value="#{projetoBean.projeto.descricao}" requiredMessage="A 'Descrição' é obrigatória!"/>
                             </div>
                         </div>
                     </div>

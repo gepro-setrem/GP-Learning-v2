@@ -13,7 +13,7 @@ public class RestricaoBLL extends BLL<Restricao> {
     @Autowired
     private RestricaoDAO dao;
 
-    public List<Restricao> findbytermoabertura(TermoAbertura termoabertura) {
-        return dao.findbytermoabertura(termoabertura);
+    public List<Restricao> findbyTermoAbertura(TermoAbertura termoabertura) {
+        return dao.findbyTermoAbertura(termoabertura);
     }
 }

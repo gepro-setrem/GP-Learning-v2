@@ -7,14 +7,6 @@
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
         <h:form>
-            <style>
-                .control_label{
-                    text-align: right;
-                }
-                .control_form{
-
-                }
-            </style>
             <div class="panel panel-default">
                 <div class="panel-heading" style="text-align: center;">
                     <h:commandLink action="#{perfilBean.editar()}" class="btn btn-primary"><i class="fa-pencil"></i> Editar</h:commandLink>
@@ -28,24 +20,24 @@
                         </div>
                         <div class="col-lg-10 col-md-9 col-sm-8 col-xs-7">
                             <div class="row">
-                                <label class="col-sm-6 col-xs-4 control_label">Nome:</label>
-                                <div class="col-sm-6 col-xs-8 control_form">#{perfilBean.user.nome}</div>
+                                <label class="col-sm-6 col-xs-4 text-right">Nome:</label>
+                                <div class="col-sm-6 col-xs-8">#{perfilBean.user.nome}</div>
                             </div>
                             <div class="row">
-                                <label class="col-sm-6 col-xs-4 control_label">Email:</label>
-                                <div class="col-sm-6 col-xs-8 control_form">#{perfilBean.user.email}</div>
+                                <label class="col-sm-6 col-xs-4 text-right">Email:</label>
+                                <div class="col-sm-6 col-xs-8">#{perfilBean.user.email}</div>
                             </div>
                             <div class="row">
-                                <label class="col-sm-6 col-xs-4 control_label">Telefone:</label>
-                                <div class="col-sm-6 col-xs-8 control_form">#{perfilBean.user.telefone}</div>
+                                <label class="col-sm-6 col-xs-4 text-right">Telefone:</label>
+                                <div class="col-sm-6 col-xs-8">#{perfilBean.user.telefone}</div>
                             </div>
                             <div class="row">
-                                <label class="col-sm-6 col-xs-4 control_label">Turma:</label>
-                                <div class="col-sm-6 col-xs-8 control_form">#{perfilBean.user.turma}</div>
+                                <label class="col-sm-6 col-xs-4 text-right">Turma:</label>
+                                <div class="col-sm-6 col-xs-8">#{perfilBean.user.turma}</div>
                             </div>
                             <div class="row">
-                                <label class="col-sm-6 col-xs-4 control_label">Status:</label>
-                                <div class="col-sm-6 col-xs-8 control_form">#{perfilBean.user.status}</div>
+                                <label class="col-sm-6 col-xs-4 text-right">Status:</label>
+                                <div class="col-sm-6 col-xs-8">#{perfilBean.user.status}</div>
                             </div>
                         </div>
                     </div>

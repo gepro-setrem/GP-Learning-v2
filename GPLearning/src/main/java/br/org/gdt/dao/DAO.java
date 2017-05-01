@@ -24,6 +24,11 @@ public abstract class DAO<T> {
         entityManager.remove(item);
     }
 
+    public void delete(T item) {
+        item = entityManager.merge(item);
+        entityManager.remove(item);
+    }
+
     public T findById(int id) {
         return entityManager.find(classe, id);
     }

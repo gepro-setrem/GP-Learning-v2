@@ -2,7 +2,6 @@ package br.org.gdt.resource;
 
 import br.org.gdt.bll.LoginBLL;
 import br.org.gdt.model.Login;
-import br.org.gdt.model.LoginRole;
 import br.org.gdt.model.Pessoa;
 import java.util.List;
 import javax.ws.rs.Consumes;

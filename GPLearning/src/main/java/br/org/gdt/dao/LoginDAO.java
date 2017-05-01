@@ -14,7 +14,7 @@ public class LoginDAO extends DAO<Login> {
     }
 
     public Login findbyPessoa(Pessoa pessoa) {
-        List<Login> lsLogin = entityManager.createQuery("from Login where pessoa = :p")
+        List<Login> lsLogin = entityManager.createQuery("from Login l join fetch l.loginRoles lr where l.pessoa = :p")
                 .setParameter("p", pessoa).getResultList();
         Login login = null;
         if (lsLogin.size() > 0) {

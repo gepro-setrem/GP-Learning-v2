@@ -20,8 +20,7 @@
                 <div class="panel-body">
                     <div class="form-group" style="padding: 1%">
                         <p:dataTable var="item" value="#{projetoProfessorBean.projetos}" widgetVar="projsTable" emptyMessage="Não há projetos criados por alunos desta turma">
-                            <p:column filterMatchMode="contains">
-                                <f:facet name="header" >Projeto</f:facet>
+                            <p:column headerText="Projeto" filterMatchMode="contains">
                                 <h:outputText value="#{item.nome}"/>
                             </p:column>
 
@@ -39,11 +38,14 @@
                                 </f:facet>
                                 <h:outputText value="#{item.turma}" />
                             </p:column>
-
-                            <p:column headerText="Data de Criação" style="width: 200px">
-                                <f:facet name="header">Data de Modificação</f:facet>
-                                <h:outputText value="#{proj.alteracao}">
-
+                            <p:column headerText="Data de Criação">
+                                <h:outputText value="${item.criacao}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy hh:mm"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Data de Modificação">
+                                <h:outputText value="${item.alteracao}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy hh:mm"/>
                                 </h:outputText>
                             </p:column>
 

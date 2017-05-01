@@ -11,7 +11,6 @@
     <ui:define name="content">
         <h:form>
             <h:inputHidden value="#{turmaBean.turma.id}"/>
-
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4>Manutenção de Turmas</h4>
@@ -23,9 +22,9 @@
                     <div class="row">
                         <div class="col-sm-8 col-xs-12">
                             <div class="form-group row">
-                                <label class="col-sm-3 control_label">Nome da Turma:</label>
+                                <label class="col-sm-3 control_label">Nome da Turma*:</label>
                                 <div class="col-sm-9">
-                                    <h:inputText class="form-control" pt:placeholder="Nome" value="#{turmaBean.turma.nome}"/>
+                                    <h:inputText class="form-control" pt:placeholder="Nome" value="#{turmaBean.turma.nome}" required="true" requiredMessage="O 'Nome' é obrigatório!"/>
                                 </div>
                             </div>
                         </div>
@@ -57,9 +56,9 @@
                         <div class="tab-content col-sm-8 col-xs-12">
                             <ui:repeat var="item" value="#{turmaBean.turma.turmaParametros}" varStatus="status">
                                 <div class="tab-pane #{status.index == 0 ? 'active' : ''}" id="#{item.chave}">
-                                    <h:inputHidden value="#{turmaBean.turma.turmaParametros[status.index].chave}"/>
-                                    <h:inputHidden value="#{turmaBean.turma.turmaParametros[status.index].id}"/>
-                                    <h:inputTextarea class="form-control" rows="5" value="#{turmaBean.turma.turmaParametros[status.index].valor}"/>
+                                    <h:inputHidden value="#{item.chave}"/>
+                                    <h:inputHidden value="#{item.id}"/>
+                                    <h:inputTextarea class="form-control" rows="5" value="#{item.valor}"/>
                                 </div>
                             </ui:repeat>
                         </div>

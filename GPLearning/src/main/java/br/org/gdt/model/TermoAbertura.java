@@ -3,6 +3,7 @@ package br.org.gdt.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,16 +40,16 @@ public class TermoAbertura implements Serializable {
     @JoinColumn(name = "pro_id")
     private Projeto projeto;
 
-    @OneToMany(mappedBy = "termoabertura")
+    @OneToMany(mappedBy = "termoabertura", cascade = CascadeType.REMOVE)
     private List<Premissa> premissas;
 
-    @OneToMany(mappedBy = "termoabertura")
+    @OneToMany(mappedBy = "termoabertura", cascade = CascadeType.REMOVE)
     private List<Restricao> restricoes;
 
-    @OneToMany(mappedBy = "termoabertura")
+    @OneToMany(mappedBy = "termoabertura", cascade = CascadeType.REMOVE)
     private List<Marco> marcos;
 
-    @OneToMany(mappedBy = "termoabertura")
+    @OneToMany(mappedBy = "termoabertura", cascade = CascadeType.REMOVE)
     private List<RequisitoTermoAbertura> requisitosTermoAberturas;
 
     public TermoAbertura() {

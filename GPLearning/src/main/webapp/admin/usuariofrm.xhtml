@@ -8,9 +8,8 @@
 
     <ui:define name="content">
         <f:view>
-            <h:form>
+            <h:form enctype="multipart/form-data">
                 <h:inputHidden value="#{usuarioBean.pessoa.id}"/>
-                <h:inputHidden value="#{usuarioBean.pessoa.status}"/>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4>Manutenção de Usuários</h4>
@@ -20,49 +19,49 @@
                         <div class="row">
                             <div class="col-lg-4 col-md-6 col-sx-12">
                                 <div class="form-group">
-                                    <label>Nome:</label>
-                                    <h:inputText class="form-control" pt:placeholder="Nome" value="#{usuarioBean.pessoa.nome}" />
+                                    <label>Nome*:</label>
+                                    <h:inputText class="form-control" pt:placeholder="Nome" value="#{usuarioBean.pessoa.nome}" required="true" requiredMessage="O 'Nome' é obrigatório!"/>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 col-sx-12">
                                 <div class="form-group">
-                                    <label>Email:</label>
-                                    <h:inputText class="form-control" pt:placeholder="Email" value="#{usuarioBean.pessoa.email}" />
+                                    <label>E-mail*:</label>
+                                    <h:inputText class="form-control" pt:placeholder="E-mail" value="#{usuarioBean.pessoa.email}" required="true" requiredMessage="O 'E-mail' é obrigatório!"/>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 col-sx-12">
                                 <div class="form-group">
                                     <label>Senha:</label>
-                                    <p:password class="form-control" value="#{usuarioBean.pessoa.login.senha}" />
+                                    <p:password class="form-control" value="#{usuarioBean.login.senha}" />
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-6 col-sx-12">
                                 <div class="form-group">
                                     <label>Telefone:</label>
-                                    <p:inputMask class="form-control" pt:placeholder="Telefone" value="#{usuarioBean.pessoa.telefone}" mask="(999) 99999-9999"/>
+                                    <p:inputMask class="form-control" pt:placeholder="Telefone" value="#{usuarioBean.pessoa.telefone}" mask="(99) 99999-9999"/>
                                 </div>
                             </div>
 
                             <div class="col-lg-2 col-md-6 col-sx-12">
                                 <div class="form-group">
-                                    <label>Turma:</label>
-                                    <h:selectOneMenu class="form-control" converter="turmaConverter" value="#{usuarioBean.pessoa.turma}">
+                                    <label>Turma*:</label>
+                                    <h:selectOneMenu class="form-control" converter="#{turmaConverter}" value="#{usuarioBean.pessoa.turma}" required="true" requiredMessage="A 'Turma' é obrigatória!">
                                         <f:selectItems  value="#{usuarioBean.turmas}" var="turma" itemLabel="#{turma.nome}"/>
                                     </h:selectOneMenu>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-6 col-sx-12">
                                 <div class="form-group">
-                                    <label>Status:</label>
-                                    <h:selectOneMenu class="form-control" converter="statusConverter" value="#{usuarioBean.pessoa.status}">
+                                    <label>Status*:</label>
+                                    <h:selectOneMenu class="form-control" converter="#{statusConverter}" value="#{usuarioBean.pessoa.status}" required="true" requiredMessage="O 'Status' é obrigatório!">
                                         <f:selectItems  value="#{usuarioBean.status}" var="status" itemLabel="#{status}"/>
                                     </h:selectOneMenu>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-6 col-sx-12">
                                 <div class="form-group">
-                                    <label>Papel:</label>
-                                    <h:selectOneMenu class="form-control" converter="roleConverter" value="#{usuarioBean.role}">
+                                    <label>Papel*:</label>
+                                    <h:selectOneMenu class="form-control" converter="#{roleConverter}" value="#{usuarioBean.role}" required="true" requiredMessage="O 'Papel' é obrigatório!"> 
                                         <f:selectItems  value="#{usuarioBean.roles}" var="role" itemLabel="#{role == 'admin' ? 'Professor' : 'Aluno'}"/>
                                     </h:selectOneMenu>
                                 </div>
@@ -70,7 +69,7 @@
                             <div class="col-lg-2 col-md-6 col-sx-12">
                                 <div class="form-group">
                                     <label>Imagem:</label>
-                                    <p:fileUpload  mode="simple"  auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" value="#{usuarioBean.pessoa.imagem}"/>
+                                    <p:fileUpload  mode="simple"  auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" value="#{usuarioBean.userImage}"/>
                                 </div>
                             </div>
                         </div>

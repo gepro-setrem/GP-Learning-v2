@@ -16,26 +16,27 @@
                     <div class="alert-warning">
                         <h:messages />
                     </div>
-                    <p:dataTable class="table table-hover" var="proj" value="#{projetoBean.projetos}" emptyMessage="Nenhum registro encontrado.">
-                        <p:column>
-                            <f:facet name="header">Nome do Projeto</f:facet>
-                            <h:outputText value="#{proj.nome}"/>
+                    <p:dataTable class="table table-hover" var="item" value="#{projetoBean.projetos}" emptyMessage="Nenhum registro encontrado.">
+                        <p:column headerText="Projeto">
+                            <h:outputText value="#{item.nome}"/>
                         </p:column>
 
                         <p:column headerText="Data de Criação">
-                            <f:facet name="header">Data de Criação</f:facet>
-                            <h:outputText value="#{proj.criacao}">
+                            <h:outputText value="${item.criacao}">
+                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Data de Modificação">
+                            <h:outputText value="${item.alteracao}">
+                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm"/>
                             </h:outputText>
                         </p:column>
 
                         <p:column headerText="Estado" style="width: 200px; text-align: center">
-                            <f:facet name="header">Estado</f:facet>
-                            <h:outputText value="#{proj.estado}"/>
+                            <h:outputText value="#{item.estado}"/>
                         </p:column>
 
-
                         <p:column headerText="Opções" style="width: 220px; text-align: center">
-                            <f:facet name="header">Opções</f:facet>
                             <h:commandLink action="#{projetoBean.editar()}" class="btn btn-success btn-xs" style="color: #fff; margin-right: 5px;"><i class="fa-pencil"></i> Editar</h:commandLink>
                             <h:commandLink action="#{projetoBean.acessar()}" class="btn btn-primary btn-xs" style="color: #fff;"><i class="fa-list-ul"></i> Gerenciar</h:commandLink>
                         </p:column>

@@ -13,7 +13,7 @@ public class StakeholderBLL extends BLL<Stakeholder> {
     @Autowired
     private StakeholderDAO dao;
 
-    public List<Stakeholder> findByProjeto(Projeto projeto) {
-        return dao.findByProjeto(projeto);
+    public List<Stakeholder> findbyProjeto(Projeto projeto) {
+        return dao.findbyProjeto(projeto);
     }
 }

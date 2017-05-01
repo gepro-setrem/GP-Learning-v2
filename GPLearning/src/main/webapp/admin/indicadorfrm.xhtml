@@ -26,9 +26,9 @@
                     <div class="row">
                         <div class="col-sm-8 col-xs-12">
                             <div class="form-group row">
-                                <label class="col-sm-3 control_label">Nome do Indicador:</label>
+                                <label class="col-sm-3 control_label">Nome do Indicador*:</label>
                                 <div class="col-sm-9">
-                                    <h:inputText class="form-control" pt:placeholder="Nome" value="#{indicadorBean.indicador.nome}" pt:required="required"/>
+                                    <h:inputText class="form-control" pt:placeholder="Nome" value="#{indicadorBean.indicador.nome}" required="true" requiredMessage="O 'Nome' é obrigatório!"/>
                                 </div>
                             </div>
                         </div>

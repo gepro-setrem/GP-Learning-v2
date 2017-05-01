@@ -128,7 +128,7 @@ public class Projeto2Bean {
 
     public List<Pessoa> getUsuarios() {
         turma = usuario.getTurma();
-        usuarios = usuarioService.findbyTurmaUsers(turma, Role.user);
+        usuarios = usuarioService.findbyTurmaUsers(turma, Role.user, "");
         return usuarios;
     }
 
@@ -172,7 +172,7 @@ public class Projeto2Bean {
     }
 
     public DataModel getPremissas() {
-        premissas = new ListDataModel(premissaService.findbytermoabertura(projeto.getTermoabertura()));
+        premissas = new ListDataModel(premissaService.findbyTermoAbertura(projeto.getTermoabertura()));
         return premissas;
     }
 
@@ -189,7 +189,7 @@ public class Projeto2Bean {
     }
 
     public DataModel getRestricoes() {
-        restricoes = new ListDataModel(restricaoService.findbytermoabertura(projeto.getTermoabertura()));
+        restricoes = new ListDataModel(restricaoService.findbyTermoAbertura(projeto.getTermoabertura()));
         return restricoes;
     }
 
@@ -206,7 +206,7 @@ public class Projeto2Bean {
     }
 
     public DataModel getMarcos() {
-        marcos = new ListDataModel(marcoService.findbytermoabertura(projeto.getTermoabertura()));
+        marcos = new ListDataModel(marcoService.findbyTermoAbertura(projeto.getTermoabertura()));
         return marcos;
     }
 
@@ -223,7 +223,7 @@ public class Projeto2Bean {
     }
 
     public DataModel getReqtosta() {
-        reqtosta = new ListDataModel(requisitoTermoAberturaService.findbytermoabertura(projeto.getTermoabertura()));
+        reqtosta = new ListDataModel(requisitoTermoAberturaService.findbyTermoAbertura(projeto.getTermoabertura()));
         return reqtosta;
     }
 
@@ -240,7 +240,7 @@ public class Projeto2Bean {
     }
 
     public DataModel getPartesinteressadas() {
-        partesinteressadas = new ListDataModel(parteInteressadaService.findByProjeto(projeto));
+        partesinteressadas = new ListDataModel(parteInteressadaService.findbyProjeto(projeto));
         return partesinteressadas;
     }
 

@@ -11,19 +11,8 @@ public class LogoutServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    protected void doGet(HttpServletRequest request,
-            HttpServletResponse response)
-            throws ServletException, IOException {
-
-        // Invalidate current HTTP session.
-        // Will call JAAS LoginModule logout() method
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getSession().invalidate();
-
-        // Redirect the user to the secure web page.
-        // Since the user is now logged out the
-        // authentication form will be shown
-//    response.sendRedirect(request.getContextPath() 
-//      + "/faces/user/index.xhtml");
         response.sendRedirect(request.getContextPath() + "/user/index.xhtml");
     }
 }

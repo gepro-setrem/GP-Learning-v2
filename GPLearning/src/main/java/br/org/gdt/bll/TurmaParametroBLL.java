@@ -49,7 +49,7 @@ public class TurmaParametroBLL extends BLL<TurmaParametro> {
                 return "Descrição da Tela do Cronograma de Marcos do Termo de Abertura";
             case descricaoTelaTermoAberturaRequisitos:
                 return "Descrição da Tela dos Requisitos do Termo de Abertura";
-            case descricaoTelaPartesInteressadas:
+            case descricaoTelaStakeholders:
                 return "Descrição da Tela do Processo de Identificação das Partes Interessadas";
             case descricaoTelaGrupoProcessosPlanejamento:
                 return "Descrição da Tela do Grupo de Processos de Planejamento";

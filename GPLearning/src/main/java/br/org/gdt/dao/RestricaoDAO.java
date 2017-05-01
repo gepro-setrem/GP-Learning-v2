@@ -12,7 +12,7 @@ public class RestricaoDAO extends DAO<Restricao> {
         classe = Restricao.class;
     }
 
-    public List<Restricao> findbytermoabertura(TermoAbertura termoabertura) {
+    public List<Restricao> findbyTermoAbertura(TermoAbertura termoabertura) {
         return entityManager.createQuery("from Restricao where termoabertura = :p")
                 .setParameter("p", termoabertura).getResultList();
     }

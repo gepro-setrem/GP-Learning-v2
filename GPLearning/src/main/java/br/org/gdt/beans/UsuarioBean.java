@@ -9,11 +9,15 @@ import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.enumerated.Role;
 import br.org.gdt.enumerated.Status;
 import br.org.gdt.model.LoginRole;
+import java.io.DataInputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -24,32 +28,34 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.servlet.http.HttpServletRequest;
+import org.primefaces.model.UploadedFile;
 
 @ManagedBean
 @RequestScoped
 public class UsuarioBean {
-    
-    private Pessoa usuario;
-    private Pessoa pessoa;
+
+    private Pessoa usuario = new Pessoa();
+    private Pessoa pessoa = new Pessoa();
     @ManagedProperty("#{pessoaBLL}")
     private PessoaBLL pessoaBLL;
     private DataModel usuarios;
-    
+
     @ManagedProperty("#{turmaBLL}")
-    private TurmaBLL turmaService;
+    private TurmaBLL turmaBLL;
     private List<Turma> turmas;
-    
-    private Login perfil;
-    @ManagedProperty("#{perfilBLL}")
-    private LoginBLL perfilService;
-    
+
+    private Login login = new Login();
+    @ManagedProperty("#{loginBLL}")
+    private LoginBLL loginBLL;
+
     private Status[] status;
     private Role[] roles;
     private Role role;
-    
+    private UploadedFile userImage;
+
     public UsuarioBean() {
     }
-    
+
     public Pessoa getUsuario() {
         ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
         HttpServletRequest request = (HttpServletRequest) external.getRequest();
@@ -57,11 +63,11 @@ public class UsuarioBean {
         usuario = pessoaBLL.findbyEmail(email);
         return usuario;
     }
-    
+
     public void setUsuario(Pessoa usuario) {
         this.usuario = usuario;
     }
-    
+
     public DataModel getUsuarios() {
         usuario = getUsuario();
 //        turmas = turmaService.findbyProfessor(usuario);
@@ -75,56 +81,54 @@ public class UsuarioBean {
         // usuarios = new ListDataModel(dao.findByTurma(turmas));
         return usuarios;
     }
-    
+
     public void setUsuarios(DataModel usuarios) {
         this.usuarios = usuarios;
     }
-    
-    private String getDateTime() {
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date date = new Date();
-        return dateFormat.format(date);
-    }
-    
+
     public List<Turma> getTurmas() {
         usuario = getUsuario();
-        turmas = turmaService.findbyProfessor(usuario);
+        turmas = turmaBLL.findbyProfessor(usuario);
         return turmas;
     }
-    
+
     public void setTurmas(List<Turma> turmas) {
         this.turmas = turmas;
     }
-    
+
     public String salvar() {
-        if (!pessoa.getNome().isEmpty() && !pessoa.getEmail().isEmpty()) {// && !pessoa.getTurma().equals("")) {
-            System.out.println("Entrou no botão salvar");
-            Login perfillocal = perfilService.findbyPessoa(pessoa);
+        if (!pessoa.getNome().isEmpty() && !pessoa.getEmail().isEmpty() && pessoa.getTurma() != null && pessoa.getTurma().getId() > 0) {
+            byte[] imgDataBa = new byte[(int) userImage.getSize()];
+            DataInputStream dataIs;
+            try {
+                dataIs = new DataInputStream(userImage.getInputstream());
+                dataIs.readFully(imgDataBa);
+            } catch (IOException ex) {
+                Logger.getLogger(Projeto2Bean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            login.setEmail(pessoa.getEmail());
             LoginRole loginRole = new LoginRole();
-            loginRole.setLogin(perfil);
-            loginRole.setRole(Role.user);
+            loginRole.setLogin(login);
+            loginRole.setRole(role);
             List<LoginRole> lsLoginRole = new ArrayList<>();
             lsLoginRole.add(loginRole);
-            
-            if (pessoa.getId() > 0) {
-                System.out.println("Entrou para alterar");
-                pessoa.setAlteracao(new Date());
+            login.setLoginRoles(lsLoginRole);
+            pessoa.setAlteracao(new Date());
+            pessoa.setImagem(imgDataBa);
+
+            int user_id = pessoa.getId();
+            if (user_id > 0) {
+                Pessoa oldUser = pessoaBLL.findById(user_id);
+                if (!(imgDataBa != null && imgDataBa.length > 0)) {
+                    pessoa.setImagem(oldUser.getImagem());
+                }
+                pessoa.setCriacao(oldUser.getCriacao());
                 pessoaBLL.update(pessoa);
-                perfillocal.setEmail(pessoa.getEmail());
-                perfillocal.setLoginRoles(lsLoginRole);
-                perfilService.update(perfillocal);
             } else {
-                pessoa.setAlteracao(new Date());
                 pessoa.setCriacao(new Date());
-                pessoa.setStatus(Status.Ativo);
                 pessoaBLL.insert(pessoa);
-                
-                System.out.println("É um usuário novo");
-                perfil = new Login();
-                perfil.setEmail(pessoa.getEmail());
-                perfil.setLoginRoles(lsLoginRole);
-                perfil.setPessoa(pessoa);
-                perfilService.insert(perfil);
+                login.setPessoa(pessoa);
+                loginBLL.insert(login);
             }
             return "usuariolst";
         } else {
@@ -132,13 +136,22 @@ public class UsuarioBean {
             return "usuariofrm";
         }
     }
-    
+
     public String editar() {
         pessoa = (Pessoa) usuarios.getRowData();
         pessoa = pessoaBLL.findById(pessoa.getId());
+        login = loginBLL.findbyPessoa(pessoa);
+        if (login == null) {
+            login = new Login();
+        }
+        if (login.getLoginRoles() != null && login.getLoginRoles().size() > 0) {
+            role = login.getLoginRoles().get(0).getRole();
+        } else {
+            role = getRoles()[0];
+        }
         return "usuariofrm";
     }
-    
+
     public String inativar() {
         FacesContext context = FacesContext.getCurrentInstance();
         pessoa = (Pessoa) usuarios.getRowData();
@@ -149,78 +162,82 @@ public class UsuarioBean {
         usuarios = null;
         return "usuariolst";
     }
-    
+
     public String novo() {
         pessoa = new Pessoa();
+        login = new Login();
         return "usuariofrm";
     }
-    
+
     public PessoaBLL getPessoaBLL() {
         return pessoaBLL;
     }
-    
+
     public void setPessoaBLL(PessoaBLL pessoaBLL) {
         this.pessoaBLL = pessoaBLL;
     }
-    
-    public TurmaBLL getTurmaService() {
-        return turmaService;
+
+    public TurmaBLL getTurmaBLL() {
+        return turmaBLL;
     }
-    
-    public void setTurmaService(TurmaBLL turmaService) {
-        this.turmaService = turmaService;
+
+    public void setTurmaBLL(TurmaBLL turmaBLL) {
+        this.turmaBLL = turmaBLL;
     }
-    
-    public Login getPerfil() {
-        return perfil;
+
+    public Login getLogin() {
+        return login;
     }
-    
-    public void setPerfil(Login perfil) {
-        this.perfil = perfil;
+
+    public void setLogin(Login login) {
+        this.login = login;
     }
-    
-    public LoginBLL getPerfilService() {
-        return perfilService;
+
+    public LoginBLL getLoginBLL() {
+        return loginBLL;
     }
-    
-    public void setPerfilService(LoginBLL perfilService) {
-        this.perfilService = perfilService;
+
+    public void setLoginBLL(LoginBLL loginBLL) {
+        this.loginBLL = loginBLL;
     }
-    
+
     public Status[] getStatus() {
         return Status.values();
     }
-    
+
     public void setStatus(Status[] status) {
         this.status = status;
     }
-    
+
     public Role[] getRoles() {
         return Role.values();
     }
-    
+
     public void setRoles(Role[] roles) {
         this.roles = roles;
     }
-    
+
     public Role getRole() {
-        if (pessoa != null && pessoa.getLogin() != null && pessoa.getLogin().getLoginRoles() != null && pessoa.getLogin().getLoginRoles().size() > 0) {
-            return pessoa.getLogin().getLoginRoles().get(0).getRole();
-        } else {
-            return getRoles()[0];
-        }
+        return role;
     }
-    
+
     public void setRole(Role role) {
         this.role = role;
     }
-    
+
     public Pessoa getPessoa() {
         return pessoa;
     }
-    
+
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
     }
-    
+
+    public UploadedFile getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(UploadedFile userImage) {
+        this.userImage = userImage;
+    }
 }

@@ -24,10 +24,10 @@ public class PessoaBLL extends BLL<Pessoa> {
         return lsPessoa;
     }
 
-    public List<Pessoa> findbyTurmaUsers(Turma turma, Role role) {
+    public List<Pessoa> findbyTurmaUsers(Turma turma, Role role, String search) {
         List<Pessoa> lsPessoa = new ArrayList<>();
         if (turma != null && turma.getId() > 0 && role != null) {
-            lsPessoa = dao.findbyTurmaUsers(turma, role);
+            lsPessoa = dao.findbyTurmaUsers(turma, role, search);
         }
         return lsPessoa;
     }

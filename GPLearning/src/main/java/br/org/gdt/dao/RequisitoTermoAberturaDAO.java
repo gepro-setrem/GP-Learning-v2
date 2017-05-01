@@ -12,8 +12,8 @@ public class RequisitoTermoAberturaDAO extends DAO<RequisitoTermoAbertura> {
         classe = RequisitoTermoAbertura.class;
     }
 
-    public List<RequisitoTermoAbertura> findbytermoabertura(TermoAbertura termoabertura) {
-        return entityManager.createQuery("from RequisitoTermoAbertura where termoabertura =:p")
+    public List<RequisitoTermoAbertura> TermoAbertura(TermoAbertura termoabertura) {
+        return entityManager.createQuery("from RequisitoTermoAbertura where termoabertura = :p")
                 .setParameter("p", termoabertura).getResultList();
     }
 }

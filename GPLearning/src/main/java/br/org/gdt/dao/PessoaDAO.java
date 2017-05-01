@@ -15,12 +15,17 @@ public class PessoaDAO extends DAO<Pessoa> {
     }
 
     public List<Pessoa> findbyProjeto(Projeto projeto) {
-        return entityManager.createQuery("from Pessoa as p join p.projetos as pro where pro = :p")
+        return entityManager.createQuery("select p from Pessoa as p join p.projetos as pro where pro = :p")
                 .setParameter("p", projeto).getResultList();
     }
 
-    public List<Pessoa> findbyTurmaUsers(Turma turma, Role role) {
-        return entityManager.createQuery("select p from Pessoa as p left join p.login.loginRoles as r where p.turma = :t and r.role = :r")
+    public List<Pessoa> findbyTurmaUsers(Turma turma, Role role, String search) {
+        String sqlPessoa = "";
+        if (search != null && !search.isEmpty()) {
+            sqlPessoa = " and upper (translate(p.nome, 'ÁÇÉÍÓÚÀÈÌÒÙÂÊÎÔÛÃÕËÜáçéíóúàèìòùâêîôûãõëü', 'ACEIOUAEIOUAEIOUAOEUaceiouaeiouaeiouaoeu'))"
+                    + " LIKE upper(translate('%" + search + "%', 'ÁÇÉÍÓÚÀÈÌÒÙÂÊÎÔÛÃÕËÜáçéíóúàèìòùâêîôûãõëü', 'ACEIOUAEIOUAEIOUAOEUaceiouaeiouaeiouaoeu'))";
+        }
+        return entityManager.createQuery("select p from Pessoa as p left join p.login.loginRoles as r where p.turma = :t and r.role = :r" + sqlPessoa)
                 .setParameter("t", turma)
                 .setParameter("r", role).getResultList();
     }

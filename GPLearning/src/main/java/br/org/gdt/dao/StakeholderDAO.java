@@ -12,9 +12,8 @@ public class StakeholderDAO extends DAO<Stakeholder> {
         classe = Stakeholder.class;
     }
 
-    public List<Stakeholder> findByProjeto(Projeto projeto) {
+    public List<Stakeholder> findbyProjeto(Projeto projeto) {
         return entityManager.createQuery("from Stakeholder where projeto = :p")
-                .setParameter("p", projeto)
-                .getResultList();
+                .setParameter("p", projeto).getResultList();
     }
 }

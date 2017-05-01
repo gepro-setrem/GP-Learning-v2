@@ -13,7 +13,7 @@ public class MarcoBLL extends BLL<Marco> {
     @Autowired
     private MarcoDAO dao;
 
-    public List<Marco> findbytermoabertura(TermoAbertura termoabertura) {
-        return dao.findbytermoabertura(termoabertura);
+    public List<Marco> findbyTermoAbertura(TermoAbertura termoabertura) {
+        return dao.findbyTermoAbertura(termoabertura);
     }
 }

@@ -6,7 +6,6 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -29,7 +28,7 @@ public class Login implements Serializable {
     @JoinColumn(name = "pes_id")
     private Pessoa pessoa;
 
-    @OneToMany(mappedBy = "login", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "login", cascade = CascadeType.ALL)
     private List<LoginRole> loginRoles;
 
     public Login() {

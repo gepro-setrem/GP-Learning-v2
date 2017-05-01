@@ -18,7 +18,7 @@ public class ProjetoDAO extends DAO<Projeto> {
     }
 
     public List<Projeto> findbyAluno(Pessoa aluno) {
-        return entityManager.createQuery("from Projeto as p left join p.componentes as c where c = :a")
+        return entityManager.createQuery("select p from Projeto as p left join p.componentes as c where c = :a")
                 .setParameter("a", aluno).getResultList();
     }
 

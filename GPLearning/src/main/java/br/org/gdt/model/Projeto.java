@@ -1,6 +1,7 @@
 package br.org.gdt.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -72,7 +73,7 @@ public class Projeto implements Serializable {
     @OneToMany(mappedBy = "projeto", cascade = CascadeType.REMOVE)
     private List<Requisito> requisitos;
 
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany
     private List<Pessoa> componentes;
 
     @OneToMany(mappedBy = "projeto", cascade = CascadeType.REMOVE)

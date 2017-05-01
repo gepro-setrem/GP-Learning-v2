@@ -19,7 +19,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.servlet.http.HttpServletRequest;
 
-@ManagedBean(name = "turmaBean")
+@ManagedBean
 @RequestScoped
 public class TurmaBean {
 
@@ -70,7 +70,7 @@ public class TurmaBean {
 
     public String salvar() {
         usuario = getUsuario();
-        if (!turma.getNome().equals("") && turma.getAno() > 0) {
+        if (!turma.getNome().isEmpty() && turma.getAno() > 0) {
             turma.setProfessor(usuario);
             if (turma.getId() > 0) {
                 turmaBLL.update(turma);

@@ -40,7 +40,7 @@ public class Turma implements Serializable {
     @Column(name = "tur_dalteracao")
     private Date alteracao;
 
-    @OneToMany(mappedBy = "turma")
+    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL)
     private List<TurmaParametro> turmaParametros;
 
     @OneToMany(mappedBy = "turma", cascade = CascadeType.REMOVE)//, fetch = FetchType.EAGER)

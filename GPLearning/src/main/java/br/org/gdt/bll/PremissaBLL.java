@@ -13,7 +13,7 @@ public class PremissaBLL extends BLL<Premissa> {
     @Autowired
     private PremissaDAO dao;
 
-    public List<Premissa> findbytermoabertura(TermoAbertura termoabertura) {
-        return dao.findbytermoabertura(termoabertura);
+    public List<Premissa> findbyTermoAbertura(TermoAbertura termoabertura) {
+        return dao.findbyTermoAbertura(termoabertura);
     }
 }
