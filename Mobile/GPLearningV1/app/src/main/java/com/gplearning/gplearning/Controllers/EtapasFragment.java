@@ -2,26 +2,26 @@ package com.gplearning.gplearning.Controllers;
 
 //import android.app.Fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.Enums.EtapaProjeto;
 import com.gplearning.gplearning.Models.Atividade;
 import com.gplearning.gplearning.Models.AtividadeDao;
 import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.Pessoa;
+import com.gplearning.gplearning.Models.PessoaDao;
 import com.gplearning.gplearning.R;
 
 import java.lang.reflect.Field;
@@ -40,7 +40,7 @@ public class EtapasFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "projetoId";
 
-    private List<Atividade> lsAtividades;
+    //  private List<Atividade> lsAtividades;
     private Long projetoId;
     private AtividadeDao atividadeDao;
     private OnFragmentInteractionListener mListener;
@@ -93,14 +93,22 @@ public class EtapasFragment extends Fragment {
         super.onStart();
         getActivity().setTitle(R.string.project_detail);
         DaoSession session = ((App) getActivity().getApplication()).getDaoSession();
+        PessoaDao pessoaDao = session.getPessoaDao();
+        List<Pessoa> lsPessoas = pessoaDao.loadAll();
+
+        ((TextView) getActivity().findViewById(R.id.etapaProjetoNomeTxt)).setText("Nome do projeto");
+        ((TextView) getActivity().findViewById(R.id.etapaProjetoEmpresaTxt)).setText("Nome da Empresa");
+        ((TextView) getActivity().findViewById(R.id.etapaProjetoGerenteTxt)).setText("Nome do Gerente");
+
+
         atividadeDao = session.getAtividadeDao();
-        lsAtividades = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId)).list();
-        PassaValoresEtapas();
+        List<Atividade> lsAtividades = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId)).list();
+        PassaValoresEtapas(lsAtividades);
 
         ((ImageButton) getActivity().findViewById(R.id.etapaProjetoDescricaoTAbtn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent  = new Intent(getActivity(), EtapaActivity.class);
+                Intent intent = new Intent(getActivity(), EtapaActivity.class);
                 startActivity(intent);
             }
         });
@@ -145,8 +153,9 @@ public class EtapasFragment extends Fragment {
 
     /// Icones
     /// http://www.flaticon.com/packs/business-and-finance-11
-        /// http://www.flaticon.com/packs/reports-and-analytics/2
-    private void PassaValoresEtapas() {
+    /// http://www.flaticon.com/packs/reports-and-analytics/2
+    private void PassaValoresEtapas(List<Atividade> lsAtividades) {
+
 
         // descricao
         //justificativa
@@ -165,15 +174,37 @@ public class EtapasFragment extends Fragment {
         // escopo  --  http://www.flaticon.com/free-icon/notebook_330705
 
 
-        Atividade atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaDescricao)).unique();
-        if (atv != null)
-            ((RatingBar) getActivity().findViewById(R.id.etapaProjetoDescricaoTARatingBar)).setRating(atv.getPontuacaoMedia());
+        // Atividade atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaDescricao)).unique();
+        if (lsAtividades != null && lsAtividades.size() > 0) {
 
-//        atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaJustificativa)).unique();
-//        if (atv != null)
-//            ((RatingBar) getActivity().findViewById(R.id.etapaprojetoJu)).setRating(atv.getPontuacaoMedia());
-
-
+            for (Atividade atv : lsAtividades) {
+                if (atv.getEtapa() == EtapaProjeto.TermoAberturaDescricao)
+                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoDescricaoTARatingBar)).setRating(atv.getPontuacaoMedia());
+                else if (atv.getEtapa() == EtapaProjeto.TermoAberturaJustificativa)
+                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoJustificativaTARatingBar)).setRating(atv.getPontuacaoMedia());
+                else if (atv.getEtapa() == EtapaProjeto.TermoAberturaPremissas)
+                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoPremissasTARatingBar)).setRating(atv.getPontuacaoMedia());
+                else if (atv.getEtapa() == EtapaProjeto.TermoAberturaRestricoes)
+                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRestricoesTARatingBar)).setRating(atv.getPontuacaoMedia());
+                else if (atv.getEtapa() == EtapaProjeto.TermoAberturaMarcos)
+                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoMarcosTARatingBar)).setRating(atv.getPontuacaoMedia());
+                else if (atv.getEtapa() == EtapaProjeto.TermoAberturaRequisitos)
+                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosTARatingBar)).setRating(atv.getPontuacaoMedia());
+                else if (atv.getEtapa() == EtapaProjeto.Stakeholders)
+                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoStakeholdersTARatingBar)).setRating(atv.getPontuacaoMedia());
+                else if (atv.getEtapa() == EtapaProjeto.PlanejamentoEscopo)
+                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)).setRating(atv.getPontuacaoMedia());
+                else if (atv.getEtapa() == EtapaProjeto.Requisitos)
+                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosRatingBar)).setRating(atv.getPontuacaoMedia());
+                else if (atv.getEtapa() == EtapaProjeto.Escopo)
+                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)).setRating(atv.getPontuacaoMedia());
+            }
+            //        atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaJustificativa)).unique();
+            //        if (atv != null)
+            //            ((RatingBar) getActivity().findViewById(R.id.etapaprojetoJu)).setRating(atv.getPontuacaoMedia());
+        }
     }
 
 }
+
+

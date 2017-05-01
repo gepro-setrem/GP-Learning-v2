@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,9 +17,11 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.gplearning.gplearning.Adapters.ProjetoRecyclerViewAdapter;
+import com.gplearning.gplearning.Adapters.ProjetoAdapter;
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.Pessoa;
+import com.gplearning.gplearning.Models.PessoaDao;
 import com.gplearning.gplearning.Models.Projeto;
 import com.gplearning.gplearning.Models.ProjetoDao;
 import com.gplearning.gplearning.R;
@@ -40,11 +43,12 @@ public class ProjetoFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener listenerClick;
-    private OnListFragmentInteractionListener listenerLongClick;
+    private ProjetoAdapter projetoAdapter;
+    // private OnListFragmentInteractionListener listenerClick;
+    //  private OnListFragmentInteractionListener listenerLongClick;
     private View view;
     private RecyclerView recyclerView;
-    private List<Projeto> lsProjetos = new ArrayList<>();
+    public List<Projeto> lsProjetos = new ArrayList<>();
     private ProjetoDao dao;
 
 
@@ -64,25 +68,45 @@ public class ProjetoFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_projeto_list, container, false);
 
 
-        listenerClick = new OnListFragmentInteractionListener() {
-            @Override
-            public void onListFragmentInteraction(Projeto item) {
-                Log.i("event", "clicou no projeto:" + item.getNome());
-                Fragment fragment = EtapasFragment.newInstance(item.get_id());
-                FragmentManager manager = getActivity().getSupportFragmentManager();
-                manager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-
-            }
-        };
+//        listenerClick = new OnListFragmentInteractionListener() {
+//            @Override
+//            public void onListFragmentInteraction(Projeto item) {
+//                Log.i("event", "clicou no projeto:" + item.getNome());
+//                Fragment fragment = EtapasFragment.newInstance(item.get_id());
+//                FragmentManager manager = getActivity().getSupportFragmentManager();
+//                manager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+//
+//            }
+//        };
 
         // Set the adapter
         if (view instanceof RecyclerView) {
             Log.i("Event", "Chegou na ProjetoFragment");
-            recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view.findViewById(R.id.projetoListview);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+            //((LinearLayoutManager) layoutManager).setStackFromEnd(true);
+            recyclerView.setLayoutManager(layoutManager);
 
-            //dao.queryBuilder().where(ProjetoDao.Properties.G)
-            // lsProjetos = getProjetos();
-            recyclerView.setAdapter(new ProjetoRecyclerViewAdapter(lsProjetos, listenerClick, listenerLongClick));
+
+            projetoAdapter = new ProjetoAdapter(lsProjetos, getActivity()); //new ProjetoRecyclerViewAdapter(lsProjetos, listenerClick, listenerLongClick);
+            recyclerView.setAdapter(projetoAdapter);
+
+            recyclerView.addOnItemTouchListener(new MetodosPublicos.RecyclerItemClickListener(getActivity(), recyclerView, new MetodosPublicos.RecyclerItemClickListener.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    Fragment fragment = EtapasFragment.newInstance(lsProjetos.get(position).getId());
+                    FragmentManager manager = getActivity().getSupportFragmentManager();
+                    manager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                    Log.i("Event", "Clicou");
+                }
+
+                @Override
+                public void onLongItemClick(View view, int position) {
+                    Log.i("Event", "Long Click");
+                }
+            }));
+
+
         }
 
         return view;
@@ -123,46 +147,47 @@ public class ProjetoFragment extends Fragment {
 //            pj.setEmpresa("Empresa Oficial "+i);
 //            lsProjetos.add(pj);
 //        }
-
+     //   PessoaDao
 
         Projeto pj = new Projeto();
-        pj.set_id(Long.valueOf(1));
+        pj.setId(Long.valueOf(1));
         pj.setNome("Projeto de melhoria de rede de computadores de uma fábrica de móveis");
-        pj.setGerente("Tiago Luis cesa Seibel");
+        Pessoa pessoa = new Pessoa();
+        pessoa.setNome("Tiago Luis cesa Seibel");
+        pj.setGerente(pessoa);
         pj.setEmpresa("Jaeli Móveis");
         lsProjetos.add(pj);
 
         pj = new Projeto();
-        pj.set_id(Long.valueOf(2));
+        pj.setId(Long.valueOf(2));
         pj.setNome("Instalação e Configuração da Rede de computadores");
-        pj.setGerente("Tiago Luis cesa Seibel");
+        pj.setGerente(pessoa);
         pj.setEmpresa("Empresa CTT");
         lsProjetos.add(pj);
 
 
         pj = new Projeto();
-        pj.set_id(Long.valueOf(3));
+        pj.setId(Long.valueOf(3));
         pj.setNome("Projeto CTT Logística");
-        pj.setGerente("Tiago Luis cesa Seibel");
+        pj.setGerente(pessoa);
         pj.setEmpresa("CTT Logística");
         lsProjetos.add(pj);
 
 
         pj = new Projeto();
-        pj.set_id(Long.valueOf(4));
+        pj.setId(Long.valueOf(4));
         pj.setNome("Projeto de software para empresa ABC");
-        pj.setGerente("Tiago Luis cesa Seibel");
+        pj.setGerente(pessoa);
         pj.setEmpresa("Empresa ABC");
         lsProjetos.add(pj);
 
 
         pj = new Projeto();
-        pj.set_id(Long.valueOf(1));
+        pj.setId(Long.valueOf(1));
         pj.setNome("VesteFin");
-        pj.setGerente("Tiago Luis cesa Seibel");
+        pj.setGerente(pessoa);
         pj.setEmpresa("VesteBem");
         lsProjetos.add(pj);
-
 
         return lsProjetos;
     }
@@ -186,7 +211,12 @@ public class ProjetoFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            lsProjetos = dao.loadAll();
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+            lsProjetos.addAll(getProjetos()); //dao.loadAll();
             MetodosPublicos.Log("projetos", " retorno com:" + lsProjetos.size());
             return true;
         }
@@ -195,11 +225,14 @@ public class ProjetoFragment extends Fragment {
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             ((ProgressBar) getActivity().findViewById(R.id.projetoProgressbar)).setVisibility(View.GONE);
+            MetodosPublicos.Log("projetos", " PostExecuted");
+
             if (lsProjetos.size() == 0)
                 ((TextView) getActivity().findViewById(R.id.TxtNenhumRegistro)).setVisibility(View.VISIBLE);
             else {
                 ((RecyclerView) view.findViewById(R.id.projetoListview)).setVisibility(View.VISIBLE);
-                recyclerView.getAdapter().notifyDataSetChanged();
+                projetoAdapter.notifyDataSetChanged();
+                projetoAdapter.notifyItemInserted(1);
             }
         }
     }

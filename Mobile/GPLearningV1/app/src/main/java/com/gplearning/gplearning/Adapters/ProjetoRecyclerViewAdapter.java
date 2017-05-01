@@ -41,7 +41,7 @@ public class ProjetoRecyclerViewAdapter extends RecyclerView.Adapter<ProjetoRecy
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).getNome());
-        holder.mContentView.setText(mValues.get(position).getGerente());
+        holder.mContentView.setText(mValues.get(position).getGerente().getNome());
 
         holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

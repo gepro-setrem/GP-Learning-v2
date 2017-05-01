@@ -2,77 +2,89 @@ package com.gplearning.gplearning.Models;
 
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
+import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.DaoException;
+import org.greenrobot.greendao.annotation.NotNull;
 
 @Entity(nameInDb = "projeto")
 public class Projeto {
 
-    @Id(autoincrement = true)
-    private Long _id;
+//    @Id(autoincrement = true)
+//    private Long _id;
 
-    private Long idExterno;
+    @Id
+    private Long id;
     private String nome;
     private String descricao;
-    private String gerente;
     private String empresa;
+    private String estado;
+    private String escopo;
+
+    //  private Pessoa gerente;
     private Date criacao;
     private Date alteracao;
     private String comentarioInstrutor;
 
-    public Projeto() {}
+    private long ger_id;
+    @ToOne(joinProperty = "ger_id")
+    private Pessoa gerente;
+
+    private long tur_id;
+    @ToOne(joinProperty = "tur_id")
+    private Turma turma;
+
+    /** Used to resolve relations */
+    @Generated(hash = 2040040024)
+    private transient DaoSession daoSession;
+
+    /** Used for active entity operations. */
+    @Generated(hash = 235931277)
+    private transient ProjetoDao myDao;
+
+    @Generated(hash = 68582640)
+    private transient Long gerente__resolvedKey;
+
+    @Generated(hash = 1191549063)
+    private transient Long turma__resolvedKey;
+
+    public Projeto() {
+    }
 
     public Projeto(String nome) {
         this.nome = nome;
     }
 
+
     @Keep
-    public Projeto(long _id, long idExterno, String nome, String descricao,
-                   String gerente, String empresa, Date criacao, Date alteracao,
-                   String comentarioInstrutor) {
-        this._id = _id;
-        this.idExterno = idExterno;
+    public Projeto( Long id, String nome, String descricao, String empresa,
+            String estado, String escopo, Date criacao, Date alteracao,
+            String comentarioInstrutor, long ger_id, long tur_id) {
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
-        this.gerente = gerente;
         this.empresa = empresa;
+        this.estado = estado;
+        this.escopo = escopo;
         this.criacao = criacao;
         this.alteracao = alteracao;
         this.comentarioInstrutor = comentarioInstrutor;
+        this.ger_id = ger_id;
+        this.tur_id = tur_id;
     }
 
-    @Generated(hash = 174373330)
-    public Projeto(Long _id, Long idExterno, String nome, String descricao, String gerente,
-            String empresa, Date criacao, Date alteracao, String comentarioInstrutor) {
-        this._id = _id;
-        this.idExterno = idExterno;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.gerente = gerente;
-        this.empresa = empresa;
-        this.criacao = criacao;
-        this.alteracao = alteracao;
-        this.comentarioInstrutor = comentarioInstrutor;
+    public Long getIdExterno() {
+        return this.id;
     }
 
-    public Long get_id() {
-        return _id;
+    public void setIdExterno(Long idExterno) {
+        this.id = idExterno;
     }
 
-    public void set_id(Long _id) {
-        this._id = _id;
-    }
-
-    public Long getId() {
-        return idExterno;
-    }
-
-    public void setId(Long idExterno) {
-        this.idExterno = idExterno;
-    }
 
     public String getNome() {
         return nome;
@@ -90,20 +102,28 @@ public class Projeto {
         this.descricao = descricao;
     }
 
-    public String getGerente() {
-        return gerente;
-    }
-
-    public void setGerente(String gerente) {
-        this.gerente = gerente;
-    }
-
     public String getEmpresa() {
         return empresa;
     }
 
     public void setEmpresa(String empresa) {
         this.empresa = empresa;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getEscopo() {
+        return escopo;
+    }
+
+    public void setEscopo(String escopo) {
+        this.escopo = escopo;
     }
 
     public Date getCriacao() {
@@ -130,14 +150,87 @@ public class Projeto {
         this.comentarioInstrutor = comentarioInstrutor;
     }
 
-    public Long getIdExterno() {
-        return this.idExterno;
+    public long getGer_id() {
+        return ger_id;
     }
 
-    public void setIdExterno(Long idExterno) {
-        this.idExterno = idExterno;
+    public void setGer_id(long ger_id) {
+        this.ger_id = ger_id;
     }
 
+    public long getTur_id() {
+        return tur_id;
+    }
 
+    public void setTur_id(long tur_id) {
+        this.tur_id = tur_id;
+    }
 
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    @Keep
+    public Pessoa getGerente() {
+        return gerente;
+    }
+    @Keep
+    public void setGerente(Pessoa gerente) {
+        this.gerente = gerente;
+    }
+    @Keep
+    public Turma getTurma() {
+        return turma;
+    }
+
+    @Keep
+    public void setTurma(Turma turma) {
+        this.turma = turma;
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 128553479)
+    public void delete() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.delete(this);
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 1942392019)
+    public void refresh() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.refresh(this);
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 713229351)
+    public void update() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.update(this);
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 770581243)
+    public void __setDaoSession(DaoSession daoSession) {
+        this.daoSession = daoSession;
+        myDao = daoSession != null ? daoSession.getProjetoDao() : null;
+    }
 }

@@ -10,57 +10,43 @@ import java.util.Date;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
 
-@Entity(nameInDb = "turma")
-public class Turma {
+@Entity(nameInDb = "termoAbertura")
+public class TermoAbertura {
 
     @Id
-    private Long _id;
-
     private int id;
 
-    private String nome;
-    private int ano;
-
+    private String descricao;
+    private String justificativa;
     private Date criacao;
     private Date alteracao;
 
-    private long pro_id;
+    private int pro_id;
     @ToOne(joinProperty = "pro_id")
-    private Pessoa professor;
+    private Projeto projeto;
 
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
     /** Used for active entity operations. */
-    @Generated(hash = 1752625201)
-    private transient TurmaDao myDao;
+    @Generated(hash = 1647359195)
+    private transient TermoAberturaDao myDao;
 
-    @Generated(hash = 502892095)
-    private transient Long professor__resolvedKey;
+    @Generated(hash = 415564391)
+    private transient Integer projeto__resolvedKey;
 
-    public Turma() {
+    public TermoAbertura() {
     }
 
     @Keep
-    public Turma(Long _id, int id, String nome, int ano, Date criacao, Date alteracao, long pro_id) {
-        this._id = _id;
+    public TermoAbertura(int id, String descricao, String justificativa, Date criacao, Date alteracao, int pro_id) {
         this.id = id;
-        this.nome = nome;
-        this.ano = ano;
+        this.descricao = descricao;
+        this.justificativa = justificativa;
         this.criacao = criacao;
         this.alteracao = alteracao;
         this.pro_id = pro_id;
-    }
-
-
-
-    public Long get_id() {
-        return _id;
-    }
-
-    public void set_id(Long _id) {
-        this._id = _id;
     }
 
     public int getId() {
@@ -71,20 +57,20 @@ public class Turma {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
-    public int getAno() {
-        return ano;
+    public String getJustificativa() {
+        return justificativa;
     }
 
-    public void setAno(int ano) {
-        this.ano = ano;
+    public void setJustificativa(String justificativa) {
+        this.justificativa = justificativa;
     }
 
     public Date getCriacao() {
@@ -103,22 +89,22 @@ public class Turma {
         this.alteracao = alteracao;
     }
 
-    public long getPro_id() {
+    public int getPro_id() {
         return pro_id;
     }
 
-    public void setPro_id(long pro_id) {
+    public void setPro_id(int pro_id) {
         this.pro_id = pro_id;
     }
 
     @Keep
-    public Pessoa getProfessor() {
-        return professor;
+    public Projeto getProjeto() {
+        return projeto;
     }
 
     @Keep
-    public void setProfessor(Pessoa professor) {
-        this.professor = professor;
+    public void setProjeto(Projeto projeto) {
+        this.projeto = projeto;
     }
 
     /**
@@ -158,9 +144,9 @@ public class Turma {
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 844828238)
+    @Generated(hash = 467792871)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getTurmaDao() : null;
+        myDao = daoSession != null ? daoSession.getTermoAberturaDao() : null;
     }
 }

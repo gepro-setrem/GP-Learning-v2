@@ -161,14 +161,14 @@ public class Eap {
         return projeto;
     }
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 1979152853)
+    @Generated(hash = 1275955963)
     public void setProjeto(@NotNull Projeto projeto) {
         if (projeto == null) {
             throw new DaoException("To-one property 'pro_id' has not-null constraint; cannot set to-one to null");
         }
         synchronized (this) {
             this.projeto = projeto;
-            pro_id = projeto.get_id();
+            pro_id = projeto.getId();
             projeto__resolvedKey = pro_id;
         }
     }

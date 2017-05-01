@@ -17,8 +17,7 @@ public class Comentario {
     @Id
     private Long _id;
 
-    private int id;
-  //  private Long idExterno;
+    private int id;//id da API
 
     @NotNull
     private String texto;

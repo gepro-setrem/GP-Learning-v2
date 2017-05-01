@@ -28,7 +28,7 @@ public class MetodosPublicos {
     public static void SalvaSessao(Context context, Long id, String nome, String email, int idExterno) {
         SharedPreferences pref = context.getSharedPreferences(key_login, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        Log("sessao", " nome:" + nome + " email:" + email);
+        Log("sessao", "idI:" + id + " idEx:" + idExterno + " nome:" + nome + " email:" + email);
         if (id != null)
             editor.putLong(key_id, id);
         else
@@ -174,7 +174,7 @@ public class MetodosPublicos {
 //    }
 
     public static void Log(String lg, String valor) {
-        Log.i(lg + " gpl ", valor);
+        Log.i(lg + " gpla ", valor);
     }
 }
 
