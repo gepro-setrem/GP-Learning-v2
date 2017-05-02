@@ -10,6 +10,10 @@ $(function () {
         $('#tarefaModal [name=nome]').focus();
     });
 });
+$(document).on('click', '.marco [type=checkbox]', function () {
+    var isCheck = $(this).prop('checked');
+    $(this).parents('.tarefa:eq(0)').find('[name=marco]').val(isCheck);
+});
 
 $(document).on('click', '.eapEdit', function () {
     var eap = $(this).parents('.eap:eq(0)');

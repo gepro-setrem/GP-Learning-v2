@@ -9,6 +9,7 @@
         <h:outputScript name="./js/jquery-3.2.0.min.js"/>
         <h:outputScript name="./js/bootstrap.min.js"/>
         <h:outputScript name="./js/cronograma_js.js"/>
+        <h:outputStylesheet name="./css/check_css.css"/>
     </ui:define>
     <ui:define name="menuhorizontal">
         <li><h:link outcome="iniciacao">Iniciação</h:link></li>
@@ -18,7 +19,7 @@
     <ui:define name="content">
         <form>
             <div class="panel panel-default">
-                <div class="panel-heading"><h4>Criar a Cronograma</h4></div>
+                <div class="panel-heading"><h4>Criar o Cronograma</h4></div>
                 <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
                 <div class="panel-body">
                     <div class="row">
@@ -58,7 +59,12 @@
                         <input type="hidden" name="marco"/>
                         <input type="hidden" name="eap.id"/>
                     </td>
-                    <td class="marco"><i></i></td>
+                    <td class="marco">   
+                        <div class="checkbox-custom">
+                            <input type="checkbox"/>
+                                <label></label>
+                        </div>
+                    </td>
                     <td><span class="indice"></span><span class="nome"></span></td>
                     <td class="data"></td>
                     <td class="recursos"></td>

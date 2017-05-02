@@ -170,6 +170,9 @@ public class ProjetoBean {
     }
 
     public Projeto getProjeto() {
+        if (projeto != null && projeto.getId() > 0) {
+            projeto = projetoBLL.findById(projeto.getId());
+        }
         return projeto;
     }
 
