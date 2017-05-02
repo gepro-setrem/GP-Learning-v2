@@ -1,12 +1,12 @@
 package com.gplearning.gplearning.Models;
 
 
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.ToOne;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
 
 @Entity(nameInDb = "premissas")
 public class Premissas {
@@ -20,11 +20,15 @@ public class Premissas {
     @ToOne(joinProperty = "IdTermoAbertura")
     private TermoAbertura termoAbertura;
 
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 81685024)
     private transient PremissasDao myDao;
 
@@ -110,6 +114,11 @@ public class Premissas {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
+    }
+
+    @Override
+    public String toString() {
+        return descricao;
     }
 
     /** called by internal mechanisms, do not call yourself. */

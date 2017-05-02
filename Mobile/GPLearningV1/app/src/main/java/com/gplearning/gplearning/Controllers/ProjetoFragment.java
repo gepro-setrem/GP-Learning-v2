@@ -21,7 +21,6 @@ import com.gplearning.gplearning.Adapters.ProjetoAdapter;
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.Models.Pessoa;
-import com.gplearning.gplearning.Models.PessoaDao;
 import com.gplearning.gplearning.Models.Projeto;
 import com.gplearning.gplearning.Models.ProjetoDao;
 import com.gplearning.gplearning.R;
@@ -66,8 +65,6 @@ public class ProjetoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_projeto_list, container, false);
-
-
 //        listenerclick = new onlistfragmentinteractionlistener() {
 //            @override
 //            public void onlistfragmentinteraction(projeto item) {
@@ -86,11 +83,8 @@ public class ProjetoFragment extends Fragment {
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
             //((LinearLayoutManager) layoutManager).setStackFromEnd(true);
             recyclerView.setLayoutManager(layoutManager);
-
-
             projetoAdapter = new ProjetoAdapter(lsProjetos, getActivity()); //new ProjetoRecyclerViewAdapter(lsProjetos, listenerClick, listenerLongClick);
             recyclerView.setAdapter(projetoAdapter);
-
             recyclerView.addOnItemTouchListener(new MetodosPublicos.RecyclerItemClickListener(getActivity(), recyclerView, new MetodosPublicos.RecyclerItemClickListener.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
@@ -105,19 +99,17 @@ public class ProjetoFragment extends Fragment {
                     Log.i("Event", "Long Click");
                 }
             }));
-
-
+            DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
+            dao = daoSession.getProjetoDao();
+            new CarregaProjetos().execute();
         }
-
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
-        dao = daoSession.getProjetoDao();
-        new CarregaProjetos().execute();
+
     }
 
     @Override
@@ -147,7 +139,7 @@ public class ProjetoFragment extends Fragment {
 //            pj.setEmpresa("Empresa Oficial "+i);
 //            lsProjetos.add(pj);
 //        }
-     //   PessoaDao
+        //   PessoaDao
 
         Projeto pj = new Projeto();
         pj.setId(Long.valueOf(1));
@@ -224,7 +216,9 @@ public class ProjetoFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
-            ((ProgressBar) getActivity().findViewById(R.id.projetoProgressbar)).setVisibility(View.GONE);
+            ProgressBar pg = ((ProgressBar) getActivity().findViewById(R.id.projetoProgressbar));
+            if (pg != null)
+                pg.setVisibility(View.GONE);
             MetodosPublicos.Log("projetos", " PostExecuted");
 
             if (lsProjetos.size() == 0)

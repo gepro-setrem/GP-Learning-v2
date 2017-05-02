@@ -105,14 +105,6 @@ public class EtapasFragment extends Fragment {
         List<Atividade> lsAtividades = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId)).list();
         PassaValoresEtapas(lsAtividades);
 
-        ((ImageButton) getActivity().findViewById(R.id.etapaProjetoDescricaoTAbtn)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), EtapaActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
     }
 
@@ -177,10 +169,18 @@ public class EtapasFragment extends Fragment {
         // Atividade atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaDescricao)).unique();
         if (lsAtividades != null && lsAtividades.size() > 0) {
 
-            for (Atividade atv : lsAtividades) {
-                if (atv.getEtapa() == EtapaProjeto.TermoAberturaDescricao)
+            for (final Atividade atv : lsAtividades) {
+                if (atv.getEtapa() == EtapaProjeto.TermoAberturaDescricao) {
                     ((RatingBar) getActivity().findViewById(R.id.etapaProjetoDescricaoTARatingBar)).setRating(atv.getPontuacaoMedia());
-                else if (atv.getEtapa() == EtapaProjeto.TermoAberturaJustificativa)
+                    ((ImageButton) getActivity().findViewById(R.id.etapaProjetoDescricaoTAbtn)).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getActivity(), EtapaActivity.class);
+                            intent.putExtra("ID",atv.get_id() );
+                            startActivity(intent);
+                        }
+                    });
+                } else if (atv.getEtapa() == EtapaProjeto.TermoAberturaJustificativa)
                     ((RatingBar) getActivity().findViewById(R.id.etapaProjetoJustificativaTARatingBar)).setRating(atv.getPontuacaoMedia());
                 else if (atv.getEtapa() == EtapaProjeto.TermoAberturaPremissas)
                     ((RatingBar) getActivity().findViewById(R.id.etapaProjetoPremissasTARatingBar)).setRating(atv.getPontuacaoMedia());

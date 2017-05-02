@@ -1,7 +1,6 @@
 package com.gplearning.gplearning.Models;
 
 
-
 import com.gplearning.gplearning.Converters.EtapaProjetoConverter;
 import com.gplearning.gplearning.Enums.EtapaProjeto;
 
@@ -22,10 +21,10 @@ import java.util.List;
 
 @Entity(nameInDb = "atividade")
 public class Atividade {
-    @Id(autoincrement = true)
-    private long _id;
+    @Id
+    private Long _id;
 
-    private long id;
+    private int id;
 
     private String nome;
     private Date criacao;
@@ -53,11 +52,15 @@ public class Atividade {
     @OrderBy("_id ASC")
     private List<ParametrosAtividade> lsParametros;
 
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 1139238037)
     private transient AtividadeDao myDao;
 
@@ -80,8 +83,9 @@ public class Atividade {
         this.nome = nome;
         this.etapa = etapa;
     }
+
     @Keep
-    public Atividade(long _id, long id, String nome, Date criacao, Date termino, Date conclusao, EtapaProjeto etapa, long pro_id) {
+    public Atividade(long _id, int id, String nome, Date criacao, Date termino, Date conclusao, EtapaProjeto etapa, long pro_id) {
         this._id = _id;
         this.id = id;
         this.nome = nome;
@@ -96,8 +100,9 @@ public class Atividade {
     public Atividade() {
     }
 
-    @Generated(hash = 1684648512)
-    public Atividade(long _id, long id, String nome, Date criacao, Date termino, Date conclusao, EtapaProjeto etapa,
+
+    @Generated(hash = 558728208)
+    public Atividade(Long _id, int id, String nome, Date criacao, Date termino, Date conclusao, EtapaProjeto etapa,
             int pontuacaoMedia, long pro_id) {
         this._id = _id;
         this.id = id;
@@ -110,19 +115,19 @@ public class Atividade {
         this.pro_id = pro_id;
     }
 
-    public long get_id() {
+    public Long get_id() {
         return _id;
     }
 
-    public void set_id(long _id) {
+    public void set_id(Long _id) {
         this._id = _id;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -174,7 +179,9 @@ public class Atividade {
         this.pro_id = pro_id;
     }
 
-    /** To-one relationship, resolved on first access. */
+    /**
+     * To-one relationship, resolved on first access.
+     */
     @Generated(hash = 1517119008)
     public Projeto getProjeto() {
         long __key = this.pro_id;
@@ -193,7 +200,9 @@ public class Atividade {
         return projeto;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     @Generated(hash = 1275955963)
     public void setProjeto(@NotNull Projeto projeto) {
         if (projeto == null) {
@@ -258,13 +267,17 @@ public class Atividade {
         this.lsParametros = lsParametros;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 129847840)
     public synchronized void resetLsIndicadoresAtividades() {
         lsIndicadoresAtividades = null;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 1599991901)
     public synchronized void resetLsParametros() {
         lsParametros = null;
@@ -305,6 +318,7 @@ public class Atividade {
         }
         myDao.update(this);
     }
+
 
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 715426895)
