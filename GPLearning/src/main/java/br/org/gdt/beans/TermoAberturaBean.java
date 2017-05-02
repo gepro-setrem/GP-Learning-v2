@@ -43,8 +43,6 @@ public class TermoAberturaBean {
             termoabertura.setAlteracao(new Date());
             termoabertura.setProjeto(projeto);
             if (termoabertura.getId() > 0) {
-                TermoAbertura taOld = termoAberturaBLL.findById(termoabertura.getId());
-                termoabertura.setJustificativa(taOld.getJustificativa());
                 termoAberturaBLL.update(termoabertura);
             } else {
                 termoabertura.setCriacao(new Date());
@@ -62,8 +60,6 @@ public class TermoAberturaBean {
             termoabertura.setAlteracao(new Date());
             termoabertura.setProjeto(projeto);
             if (termoabertura.getId() > 0) {
-                TermoAbertura taOld = termoAberturaBLL.findById(termoabertura.getId());
-                termoabertura.setDescricao(taOld.getDescricao());
                 termoAberturaBLL.update(termoabertura);
             } else {
                 termoabertura.setCriacao(new Date());

@@ -11,10 +11,10 @@ public enum TurmaParametroType {
     descricaoTelaTermoAberturaRequisitos,
     descricaoTelaStakeholders,
     descricaoTelaGrupoProcessosPlanejamento,
-    descricaoTelaCriarPlanoGerenciamentoProjeto,
     descricaoTelaCriarPlanoGerenciamentoEscopo,
     descricaoTelaColetarRequisitos,
     descricaoTelaDefinirEscopo,
     descricaoTelaCriarEAP,
-    descricaoTelaCriarCronograma
+    descricaoTelaCriarCronograma,
+    descricaoTelaCriarPlanoGerenciamentoProjeto,
 }

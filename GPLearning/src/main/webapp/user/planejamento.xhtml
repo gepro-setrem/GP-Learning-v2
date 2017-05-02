@@ -6,57 +6,88 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="menuhorizontal">
-        <li><a href="iniciacao.xhtml">Iniciação</a></li>
-        <li class="active"><a href="planejamento.xhtml">Planejamento</a></li>
+        <li><h:link outcome="iniciacao">Iniciação</h:link></li>
+        <li class="active"><h:link outcome="planejamento">Planejamento</h:link></li>
     </ui:define>
 
     <ui:define name="content">
-        <p:graphicImage library="img/" name="legendas.png" class="img-rounded" height="8%" width="9%" style="float: left; padding-top: 8%; margin: auto" />
-        <f:view>
-            <h:form class="form-horizontal" style="padding-left: 10%; padding-right: 10%">
+        <style>
+            .arrow{
+                width: 100%; 
+                padding: 35%; 
+            }
+            @media screen and (max-width: 768px){
+                .arrow{
+                    width: 30px;
+                    margin-left: -10px;
+                    margin-top: 20px;
+                    padding: 0;
+                }
+            }
+        </style>
+        <div class="row">
+            <div class="col-md-1 col-sm-2 col-xs-3" style="padding: 0;">
+                <p:graphicImage library="img/" name="legendas.png" style="width: 100%; margin-top: 60px;"/>
+            </div>
+            <div class="col-md-11 col-sm-10 col-xs-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading" style="text-align: center">
-                        <h4>Grupo de Processos: Planejamento</h4>
-                    </div>
-                    <div class="panel-info">
-                        <div class="form-group" style="padding-top: 4%; padding-right: 5%; padding-left: 5%">
-                            <h:outputLabel value="#{projetoBean.getDescricao("descricaoTelaGrupoProcessosPlanejamento")}" style="white-space: pre-wrap"/>
-                            <br />
-                            <h:link outcome="CriarPlanoGerenciamentoEscopo" style="padding: 2%">
-                                <h:graphicImage library="img/" name="Plan Gere Escopo.png" height="12%" width="18%"/>
-                            </h:link>
-
-                            <h:graphicImage library="img/" name="flecha.jpg" height="6%" width="9%"/>
-
-                            <h:link outcome="ColetarRequisitos" style="padding: 2%">
-                                <h:graphicImage library="img/" name="Coletar os Requisitos.png" height="12%" width="18%"/>
-                            </h:link>
-
-                            <h:graphicImage library="img/" name="flecha.jpg" height="6%" width="9%"/>
-
-                            <h:link outcome="DefinirEscopo" style="padding: 2%">
-                                <h:graphicImage library="img/" name="Definir o Escopo.png" height="12%" width="18%"/>
-                            </h:link>
-
-                            <h:graphicImage library="img/" name="flecha.jpg" height="6%" width="9%"/>
-
-                            <h:link outcome="CriarEAP" style="padding: 2%">
-                                <h:graphicImage library="img/" name="Criar EAP.png" height="12%" width="18%"/>
-                            </h:link>
-
-                            <h:graphicImage library="img/" name="flecha.jpg" height="6%" width="9%"/>
-
-                            <h:link outcome="PlanoGerenciamentoProjeto" style="padding: 2%">
-                                <h:graphicImage library="img/" name="Plan Gere Projeto.png" height="12%" width="18%"/>
-                            </h:link>
+                    <div class="panel-heading"><h4>Grupo de Processos: Planejamento</h4></div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-12"><label style="white-space: pre-wrap;">#{projetoBean.getDescricao('descricaoTelaGrupoProcessosPlanejamento')}</label></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 col-xs-3">
+                                <h:link outcome="planoescopo">
+                                    <h:graphicImage library="img/" name="Plan Gere Escopo.png" style="width: 100%;"/>
+                                </h:link>
+                            </div>
+                            <div class="col-sm-2 col-xs-1">
+                                <h:graphicImage library="img/" name="flecha.jpg" class="arrow"/>
+                            </div>
+                            <div class="col-sm-2 col-xs-3">
+                                <h:link outcome="requisitos">
+                                    <h:graphicImage library="img/" name="Coletar os Requisitos.png" style="width: 100%;"/>
+                                </h:link>
+                            </div>
+                            <div class="col-sm-2 col-xs-1">
+                                <h:graphicImage library="img/" name="flecha.jpg" class="arrow"/>
+                            </div>
+                            <div class="col-sm-2 col-xs-3">
+                                <h:link outcome="escopo">
+                                    <h:graphicImage library="img/" name="Definir o Escopo.png" style="width: 100%;"/>
+                                </h:link>
+                            </div>
+                            <div class="col-sm-2 col-xs-1">
+                                <h:graphicImage library="img/" name="flecha.jpg" class="arrow"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 col-xs-3">
+                                <h:link outcome="eap">
+                                    <h:graphicImage library="img/" name="Criar EAP.png" style="width: 100%;"/>
+                                </h:link>
+                            </div>
+                            <div class="col-sm-2 col-xs-1">
+                                <h:graphicImage library="img/" name="flecha.jpg" class="arrow"/>
+                            </div>
+                            <div class="col-sm-2 col-xs-3">
+                                <h:link outcome="cronograma">
+                                    <h:graphicImage library="img/" name="Criar Cronograma.png" style="width: 100%;"/>
+                                </h:link>
+                            </div>
+                            <div class="col-sm-2 col-xs-1">
+                                <h:graphicImage library="img/" name="flecha.jpg" class="arrow"/>
+                            </div>
+                            <div class="col-sm-2 col-xs-3">
+                                <h:link outcome="planogerenciamentoprojeto">
+                                    <h:graphicImage library="img/" name="Plan Gere Projeto.png" style="width: 100%;"/>
+                                </h:link>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </h:form>
-        </f:view>
+            </div>
+        </div>
     </ui:define>
-
 </ui:composition>
-
-</body>
-</html>

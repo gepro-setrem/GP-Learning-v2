@@ -33,7 +33,7 @@ public class RequisitoTermoAberturaBean {
 
     public String salvar() {
         if (projeto != null && projeto.getTermoabertura() != null) {
-            if (!requisito.getDescricao().isEmpty()) {
+            if (!requisito.getDescricao().isEmpty() && !requisito.getNome().isEmpty()) {
                 requisito.setTermoabertura(projeto.getTermoabertura());
                 if (requisito.getId() > 0) {
                     requisitoBLL.update(requisito);
@@ -43,7 +43,7 @@ public class RequisitoTermoAberturaBean {
                 requisito = new RequisitoTermoAbertura();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Requisito salvo com sucesso!"));
             } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para salvar, você deve preencher a descrição do Requisito!"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para salvar, você deve preencher todos os campos!"));
             }
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Não existe nenhum Projeto selecionado ou Termo de Abertura criado!"));

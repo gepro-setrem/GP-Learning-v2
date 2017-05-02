@@ -29,7 +29,7 @@ public abstract class DAO<T> {
         entityManager.remove(item);
     }
 
-    public T findById(int id) {
+    public T findbyId(int id) {
         return entityManager.find(classe, id);
     }
 

@@ -12,9 +12,8 @@ public class RequisitoDAO extends DAO<Requisito> {
         classe = Requisito.class;
     }
 
-    public List<Requisito> findByProjeto(Projeto projeto) {
+    public List<Requisito> findbyProjeto(Projeto projeto) {
         return entityManager.createQuery("from Requisito where projeto = :p")
-                .setParameter("p", projeto)
-                .getResultList();
+                .setParameter("p", projeto).getResultList();
     }
 }

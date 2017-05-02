@@ -13,7 +13,7 @@ public class RequisitoBLL extends BLL<Requisito> {
     @Autowired
     private RequisitoDAO dao;
 
-    public List<Requisito> findByProjeto(Projeto projeto) {
-        return dao.findByProjeto(projeto);
+    public List<Requisito> findbyProjeto(Projeto projeto) {
+        return dao.findbyProjeto(projeto);
     }
 }

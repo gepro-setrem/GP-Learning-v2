@@ -14,7 +14,7 @@
         <h:outputStylesheet name="./font-awesome-4.7.0/css/font-awesome.css"/>
         <!--<h:outputStylesheet name="./data-tables/dataTables.min.css" />-->
         <!--<h:outputScript name="./js/jquery-3.2.0.min.js"/>-->
-        <h:outputScript name="./js/bootstrap.min.js"/>
+        <!--<h:outputScript name="./js/bootstrap.min.js"/>-->
         <h:outputScript name="./js/jsLayout.js"/>
         <!--<h:outputScript name="./data-tables/dataTables.min.js"/>-->
         <link href="../resources/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
@@ -49,12 +49,8 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <ui:insert name="menuhorizontal">
-                            <li class="#{view.viewId == '/user/projetolst.xhtml' ? 'active' : ''}">
-                                <a>Iniciação</a>
-                            </li>
-                            <li class="#{view.viewId == '/user/usuariolst.xhtml' ? 'active' : ''}">
-                                <a>Planejamento</a>
-                            </li>
+                            <li><a>Iniciação</a></li>
+                            <li><a>Planejamento</a></li>
                         </ui:insert>
                         <li><a>Execução</a></li>
                         <li><a>Monitoramento</a></li>

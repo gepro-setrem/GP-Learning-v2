@@ -47,34 +47,34 @@ public class ProjetoDAO extends DAO<Projeto> {
         return projeto;
     }
 
-    public Projeto findByIdRelatorio(int id) {
-
-        Projeto projeto = (Projeto) entityManager.createQuery("from Projeto as p where p.idProjeto = :p")
-                .setParameter("p", id)
-                .getSingleResult();
-
-        System.out.println("Buscando por relatórios, entrando em requisitos" + projeto.getRequisitos());
-        List<Requisito> reqtos = new ArrayList<Requisito>();
-        for (Requisito r : projeto.getRequisitos()) {
-            reqtos.add(r);
-        }
-        projeto.setRequisitos(reqtos);
-
-        System.out.println("Projeto: " + projeto.getNome());
-        System.out.println("Partes do Projeto" + projeto.getStakeholders().size());
-
-        System.out.println("Buscando por relatórios, entrando em partes interessadas" + projeto.getStakeholders());
-        List<Stakeholder> partesinteressadas = new ArrayList<Stakeholder>();
-
-        //partesinteressadas = 
-        for (Stakeholder p : projeto.getStakeholders()) {
-            partesinteressadas.add(p);
-            System.out.println("item" + p);
-        }
-        projeto.setStakeholders(partesinteressadas);
-        System.out.println("Partes " + projeto.getStakeholders());
-
-        System.out.println("Buscando por relatórios, concluído");
-        return projeto;
-    }
+//    public Projeto findByIdRelatorio(int id) {
+//
+//        Projeto projeto = (Projeto) entityManager.createQuery("from Projeto as p where p.idProjeto = :p")
+//                .setParameter("p", id)
+//                .getSingleResult();
+//
+//        System.out.println("Buscando por relatórios, entrando em requisitos" + projeto.getRequisitos());
+//        List<Requisito> reqtos = new ArrayList<Requisito>();
+//        for (Requisito r : projeto.getRequisitos()) {
+//            reqtos.add(r);
+//        }
+//        projeto.setRequisitos(reqtos);
+//
+//        System.out.println("Projeto: " + projeto.getNome());
+//        System.out.println("Partes do Projeto" + projeto.getStakeholders().size());
+//
+//        System.out.println("Buscando por relatórios, entrando em partes interessadas" + projeto.getStakeholders());
+//        List<Stakeholder> partesinteressadas = new ArrayList<Stakeholder>();
+//
+//        //partesinteressadas = 
+//        for (Stakeholder p : projeto.getStakeholders()) {
+//            partesinteressadas.add(p);
+//            System.out.println("item" + p);
+//        }
+//        projeto.setStakeholders(partesinteressadas);
+//        System.out.println("Partes " + projeto.getStakeholders());
+//
+//        System.out.println("Buscando por relatórios, concluído");
+//        return projeto;
+//    }
 }

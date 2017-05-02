@@ -5,47 +5,65 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="head"> 
-        <h:outputScript name="./js/cronograma_js.js"/>
         <h:outputStylesheet name="./css/cronograma_css.css"/>
+        <h:outputScript name="./js/jquery-3.2.0.min.js"/>
+        <h:outputScript name="./js/bootstrap.min.js"/>
+        <h:outputScript name="./js/cronograma_js.js"/>
     </ui:define>
     <ui:define name="menuhorizontal">
-        <li><h:link outcome="ProcessosIniciacao.xhtml">Iniciação</h:link></li>
-        <li><h:link class="active" outcome="ProcessosPlanejamento.xhtml"><b>Planejamento</b></h:link></li>
+        <li><h:link outcome="iniciacao">Iniciação</h:link></li>
+        <li class="active"><h:link outcome="planejamento">Planejamento</h:link></li>
     </ui:define>
 
     <ui:define name="content">
-<!--        <h:inputHidden value="#{cronogramaBean.projeto.id}" id="pro_id"/>-->
-        <input type="hidden" id="pro_id" value="1"/>
-        <table class="tarefas">
-            <thead>
-                <tr>
-                    <th>Marco</th>
-                    <th>Tarefa</th>
-                    <th>Data</th>
-                    <th>Recursos</th>
-                </tr>
-            </thead>
-            <tbody>
+        <form>
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>Criar a Cronograma</h4></div>
+                <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12"><label style="white-space: pre-wrap;">#{projetoBean.getDescricao('descricaoTelaCriarCronograma')}</label></div>
+                        <div class="col-xs-12 form-group">
+                            <h:inputHidden value="#{projetoBean.projeto.id}" id="pro_id"/>
+                            <table class="tarefas">
+                                <thead>
+                                    <tr>
+                                        <th>Marco</th>
+                                        <th>Tarefa</th>
+                                        <th>Data</th>
+                                        <th>Recursos</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-            </tbody>
-        </table>
-        <table class="HtmlExample">
-            <tr class="tarefa">
-                <td style="display: none;">
-                    <input type="hidden" name="pai.id"/>
-                    <input type="hidden" name="id"/>
-                    <input type="hidden" name="nome"/>
-                    <input type="hidden" name="inicio"/>
-                    <input type="hidden" name="termino"/>
-                    <input type="hidden" name="conclusao"/>         
-                    <input type="hidden" name="marco"/>
-                    <input type="hidden" name="eap.id"/>
-                </td>
-                <td class="marco"><i></i></td>
-                <td><span class="indice"></span><span class="nome"></span></td>
-                <td class="data"></td>
-                <td class="recursos"></td>
-            </tr>
-        </table>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-xs-12 text-center">
+                            <h:link class="btn btn-success" outcome="planejamento"><i class="fa-check"></i> Concluir a criação do Cronograma</h:link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <table class="HtmlExample">
+                <tr class="tarefa">
+                    <td style="display: none;">
+                        <input type="hidden" name="pai.id"/>
+                        <input type="hidden" name="id"/>
+                        <input type="hidden" name="nome"/>
+                        <input type="hidden" name="inicio"/>
+                        <input type="hidden" name="termino"/>
+                        <input type="hidden" name="conclusao"/>         
+                        <input type="hidden" name="marco"/>
+                        <input type="hidden" name="eap.id"/>
+                    </td>
+                    <td class="marco"><i></i></td>
+                    <td><span class="indice"></span><span class="nome"></span></td>
+                    <td class="data"></td>
+                    <td class="recursos"></td>
+                </tr>
+            </table>
+        </form>
     </ui:define>
 </ui:composition>

@@ -20,7 +20,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12"><div class="alert-warning"><h:messages /></div></div>
-                        <div class="col-xs-12">#{projetoBean.getDescricao('descricaoTelaTermoAberturaPremissas')}</div>
+                        <div class="col-xs-12"><label style="white-space: pre-wrap;">#{projetoBean.getDescricao('descricaoTelaTermoAberturaPremissas')}</label></div>
                         <div class="col-xs-12">
                             <h:inputHidden value="#{premissaBean.premissa.id}"/>
                             <div class="row form-group">
@@ -63,7 +63,7 @@
                         </div>
                         <div class="col-md-3 col-xs-5" style="text-align: right;">
                             <div class="pagination">
-                                <h:link class="btn btn-default" outcome="termoaberturajustificativa" style="margin-right: 5px;">Voltar</h:link>
+                                <h:link class="btn btn-default" outcome="termoaberturajustificativa" style="margin-right: 5px;"><i class="fa-chevron-left"></i> Anterior</h:link>
                                 <h:link class="btn btn-primary" outcome="termoaberturarestricoes">Próximo <i class="fa-chevron-right"></i></h:link>
                             </div>
                         </div>

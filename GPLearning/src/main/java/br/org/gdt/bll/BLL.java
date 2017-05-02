@@ -39,7 +39,7 @@ public abstract class BLL<T> {
     }
 
     public T findById(int id) {
-        return (T) dao.findById(id);
+        return (T) dao.findbyId(id);
     }
 
     public List<T> findAll() {

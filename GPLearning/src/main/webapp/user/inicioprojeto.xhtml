@@ -9,7 +9,9 @@
                 <h:link outcome="iniciacao" class="btn btn-success"><i class="fa-arrow-right"></i> Iniciar Projeto</h:link>
                 <h4>Projetos</h4></div>
             <div class="panel-body">
-                #{projetoBean.getDescricao('descricaoTelaInicialGerenciamentoProjetos')}
+                <label style="white-space: pre-wrap;">
+                    #{projetoBean.getDescricao('descricaoTelaInicialGerenciamentoProjetos')}
+                </label>
             </div>
         </div>
     </ui:define>

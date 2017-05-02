@@ -20,8 +20,9 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12"><div class="alert-warning"><h:messages /></div></div>
-                        <div class="col-xs-12">#{projetoBean.getDescricao('descricaoTelaStakeholders')}</div>
+                        <div class="col-xs-12"><label style="white-space: pre-wrap;">#{projetoBean.getDescricao('descricaoTelaStakeholders')}</label></div>
                         <div class="col-xs-12">
+                            <h:inputHidden value="#{stakeholderBean.stakeholder.id}"/>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-xs-3 text-right">Nome*:</label>
                                 <div class="col-sm-10 col-xs-9">
@@ -64,14 +65,14 @@
                                 </p:column>
                             </p:dataTable>
                         </div>
-                        <div class="coll-xs-12">
+                        <div class="col-xs-12">
                             <p:commandButton value="Comentário" class="btn btn-primary" type="button" onclick="PF('dlg1').show();" />
                             <p:dialog header="Comentários sobre as Partes Interessadas" widgetVar="dlg1" minHeight="40">
                                 <h:outputText value="{projetoBean.projeto.comentarioPartesInteressadas}" />
                             </p:dialog>
                         </div>
-                        <div class="col-xs-12" style="text-align: center;">
-                            <h:link class="btn btn-primary" outcome="iniciacao"><i class="fa-check"></i> Concluir Identificação das Partes Interessada</h:link>
+                        <div class="col-xs-12 text-center">
+                            <h:link class="btn btn-success" outcome="planejamento"><i class="fa-check"></i> Concluir Identificação das Partes Interessada</h:link>
                         </div>
                     </div>
                 </div>

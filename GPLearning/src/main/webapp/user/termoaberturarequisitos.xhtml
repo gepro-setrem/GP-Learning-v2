@@ -20,22 +20,31 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12"><div class="alert-warning"><h:messages /></div></div>
-                        <div class="col-xs-12">#{projetoBean.getDescricao('descricaoTelaTermoAberturaRequisitos')}</div>
+                        <div class="col-xs-12"><label style="white-space: pre-wrap;">#{projetoBean.getDescricao('descricaoTelaTermoAberturaRequisitos')}</label></div>
                         <div class="col-xs-12">
                             <h:inputHidden value="#{requisitoTermoAberturaBean.requisito.id}"/>
-                            <div class="row form-group">
-                                <label class="col-lg-2 col-sm-3 col-xs-12">Descrição do Requisito*:</label>
-                                <div class="col-lg-9 col-sm-7 col-xs-8">
-                                    <h:inputText class="form-control" value="#{requisitoTermoAberturaBean.requisito.descricao}" pt:placeholder="Descrição do Requisito"/>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-xs-3 text-right">Requisito*:</label>
+                                <div class="col-sm-10 col-xs-9">
+                                    <h:inputText class="form-control" pt:placeholder="Nome do Requisito" value="#{requisitoTermoAberturaBean.requisito.nome}"/>
                                 </div>
-                                <div class="col-lg-1 col-sm-2 col-xs-3">
-                                    <h:commandLink action="#{requisitoTermoAberturaBean.salvar()}" class="btn btn-success"><i class="fa-check"></i> Salvar</h:commandLink>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-xs-3 text-right">Descrição*:</label>
+                                <div class="col-sm-10 col-xs-9">
+                                    <p:inputTextarea rows="3"  class="form-control" pt:placeholder="Descrição do Requisito" value="#{requisitoTermoAberturaBean.requisito.descricao}"/>
                                 </div>
+                            </div>
+                            <div class="form-group text-right">
+                                <h:commandLink action="#{requisitoTermoAberturaBean.salvar()}" class="btn btn-success"><i class="fa-check"></i> Salvar</h:commandLink>
                             </div>
                         </div>
                         <div class="col-xs-12">
                             <p:dataTable class="table table-hover" var="item" value="#{requisitoTermoAberturaBean.requisitos}" emptyMessage="Nenhum registro encontrado.">
-                                <p:column headerText="Descrição do Requisito">
+                                <p:column headerText="Requisito">
+                                    <h:outputText value="#{item.nome}"/>
+                                </p:column>
+                                <p:column headerText="Descrição">
                                     <h:outputText value="#{item.descricao}"/>
                                 </p:column>
 
@@ -63,7 +72,7 @@
                         </div>
                         <div class="col-md-3 col-xs-5" style="text-align: right;">
                             <div class="pagination">
-                                <h:link class="btn btn-default" outcome="termoaberturamarcos" style="margin-right: 5px;">Voltar</h:link>
+                                <h:link class="btn btn-default" outcome="termoaberturamarcos" style="margin-right: 5px;"><i class="fa-chevron-left"></i> Anterior</h:link>
                                 <h:link class="btn btn-primary" outcome="iniciacao">Próximo <i class="fa-chevron-right"></i></h:link>
                             </div>
                         </div>

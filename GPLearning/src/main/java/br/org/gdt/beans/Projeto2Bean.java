@@ -257,7 +257,7 @@ public class Projeto2Bean {
     }
 
     public DataModel getRequisitos() {
-        requisitos = new ListDataModel(requisitoService.findByProjeto(projeto));
+        requisitos = new ListDataModel(requisitoService.findbyProjeto(projeto));
         return requisitos;
     }
 
@@ -776,7 +776,7 @@ public class Projeto2Bean {
 
         List<Projeto> projetoslist = new ArrayList<>();
 
-        projeto = projetoService.findByIdRelatorio(projeto.getId());
+//        projeto = projetoService.findByIdRelatorio(projeto.getId());
         projetoslist.add(projeto);
 
         JRBeanCollectionDataSource jrs = new JRBeanCollectionDataSource(projetoslist, false);

@@ -19,8 +19,8 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12"><div class="alert-warning"><h:messages /></div></div>
-                        <div class="col-xs-12">#{projetoBean.getDescricao('descricaoTelaTermoAberturaDescricao')}</div>
-                        <div class="col-xs-12">
+                        <div class="col-xs-12"><label style="white-space: pre-wrap;">#{projetoBean.getDescricao('descricaoTelaTermoAberturaDescricao')}</label></div>
+                        <div class="col-xs-12 form-group">
                             <h:inputTextarea class="form-control" rows="3" value="#{termoAberturaBean.termoabertura.descricao}"/>
                         </div>
                         <div class="col-xs-12">
@@ -41,8 +41,8 @@
                         </div>
                         <div class="col-md-3 col-xs-5" style="text-align: right;">
                             <div class="pagination">
-                                <h:link class="btn btn-default" outcome="iniciacao" style="margin-right: 5px;">Voltar</h:link>
-                                <h:commandLink class="btn btn-success" action="#{termoAberturaBean.salvarDescricao()}">Salvar e Próximo <i class="fa-chevron-right"></i></h:commandLink>
+                                <h:link class="btn btn-default" outcome="iniciacao" style="margin-right: 5px;"><i class="fa-chevron-left"></i> Anterior</h:link>
+                                <h:commandLink class="btn btn-primary" action="#{termoAberturaBean.salvarDescricao()}">Próximo <i class="fa-chevron-right"></i></h:commandLink>
                             </div>
                         </div>
                     </div>

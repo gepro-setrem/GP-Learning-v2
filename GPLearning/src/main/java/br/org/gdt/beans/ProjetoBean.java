@@ -116,6 +116,30 @@ public class ProjetoBean {
         }
     }
 
+    public String salvarPlanoEscopo() {
+        if (!projeto.getPlanoEscopo().isEmpty()) {
+            projeto.setAlteracao(new Date());
+            projeto.setEstado("Planejamento");
+            projetoBLL.update(projeto);
+            return "planejamento";
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para seguir, é necessário descrever o plano de gerenciamento de escopo"));
+            return "planoescopo";
+        }
+    }
+
+    public String salvarEscopo() {
+        if (!projeto.getEscopo().isEmpty()) {
+            projeto.setAlteracao(new Date());
+            projeto.setEstado("Planejamento");
+            projetoBLL.update(projeto);
+            return "planejamento";
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para seguir, é necessário descrever o escopo do projeto"));
+            return "escopo";
+        }
+    }
+
     public Pessoa getUsuario() {
         ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
         HttpServletRequest request = (HttpServletRequest) external.getRequest();

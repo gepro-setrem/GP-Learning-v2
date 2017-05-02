@@ -6,6 +6,8 @@ import br.org.gdt.model.Projeto;
 import br.org.gdt.model.TermoAbertura;
 import br.org.gdt.model.Turma;
 import br.org.gdt.model.Pessoa;
+import br.org.gdt.model.Requisito;
+import br.org.gdt.model.Stakeholder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedProperty;
@@ -22,6 +24,10 @@ public class ProjetoBLL extends BLL<Projeto> {
     private PessoaBLL pessoaBLL;
     @Autowired
     private TurmaBLL turmaBLL;
+    @Autowired
+    private RequisitoBLL requisitoBLL;
+    @Autowired
+    private StakeholderBLL stakeholderBLL;
 
     public List<Projeto> findbyAluno(Pessoa aluno) {
         List<Projeto> lsProjeto = new ArrayList<>();
@@ -64,7 +70,17 @@ public class ProjetoBLL extends BLL<Projeto> {
         return projetos;
     }
 
-    public Projeto findByIdRelatorio(int id) {
-        return dao.findByIdRelatorio(id);
+    public Projeto findbyRelatorio(Projeto item) {
+        Projeto projeto = new Projeto();
+        if (item != null && item.getId() > 0) {
+            projeto = dao.findbyId(item.getId());
+            if (projeto != null) {
+                List<Requisito> requisitos = requisitoBLL.findbyProjeto(projeto);
+                projeto.setRequisitos(requisitos);
+                List<Stakeholder> stakeholders = stakeholderBLL.findbyProjeto(projeto);
+                projeto.setStakeholders(stakeholders);
+            }
+        }
+        return projeto;
     }
 }

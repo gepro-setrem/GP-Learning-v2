@@ -6,11 +6,11 @@ import br.org.gdt.model.Projeto;
 import br.org.gdt.model.Tarefa;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class CronogramaBean {
 
     private Tarefa tarefa;

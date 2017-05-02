@@ -5,87 +5,105 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="head"> 
-        <h:outputScript name="./js/eap_js.js"/>
         <h:outputStylesheet name="./css/eap_css.css"/>
+        <h:outputScript name="./js/jquery-3.2.0.min.js"/>
+        <h:outputScript name="./js/bootstrap.min.js"/>
+        <h:outputScript name="./js/eap_js.js"/>
     </ui:define>
+
     <ui:define name="menuhorizontal">
-        <li><h:link outcome="ProcessosIniciacao.xhtml">Iniciação</h:link></li>
-        <li><h:link class="active" outcome="ProcessosPlanejamento.xhtml"><b>Planejamento</b></h:link></li>
+        <li><h:link outcome="iniciacao">Iniciação</h:link></li>
+        <li class="active"><h:link outcome="planejamento">Planejamento</h:link></li>
     </ui:define>
 
     <ui:define name="content">
-<!--        <h:inputHidden value="#{eapBean.projeto.id}" id="pro_id"/>-->
-        <input type="hidden" id="pro_id" value="3"/>
-        <a onclick="loadEAP();" style="float: right; cursor: pointer;"><i class="fa-refresh"></i></a>
-        <div class="eap_list"></div>
-
-        <div class="HtmlExample">
-            <ul class="eap_pai">
-                <li class="eap_item">
-                    <div class="eap">
-                        <div class="eap_header">
-                            <a class="btn btn-xs eapIcon eap_number"></a>
-                            <a class="btn btn-xs eapIcon eapEdit"><i class="fa-pencil"></i></a>
-                            <a class="btn btn-xs eapIcon eapAdd"><i class="fa-plus"></i></a>
-                            <!--<a class="btn btn-xs eapIcon eapUp"><i class="fa-chevron-up"></i></a>-->                         
-                            <!--<a class="btn btn-xs eapIcon eapDown"><i class="fa-chevron-down"></i></a>-->
+        <form>
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>Criar a EAP</h4></div>
+                <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12"><label style="white-space: pre-wrap;">#{projetoBean.getDescricao('descricaoTelaCriarEAP')}</label></div>
+                        <div class="col-xs-12 form-group">
+                            <h:inputHidden value="#{projetoBean.projeto.id}" id="pro_id"/>
+                            <a onclick="loadEAP();" style="float: right; cursor: pointer;"><i class="fa-refresh"></i></a>
+                            <div class="eap_list"></div>
                         </div>
-                        <div class="eap_nome"></div>
-                        <div style="display: none;">
-                            <input type="hidden" name="pai.id"/>
-                            <input type="hidden" name="id"/>
-                            <input type="hidden" name="ordem"/>
-                            <input type="hidden" name="nome"/>
-                            <input type="hidden" name="descricao"/>
-                            <input type="hidden" name="inicio"/>         
-                            <input type="hidden" name="termino"/>
-                            <input type="hidden" name="valor"/>
+                        <div class="col-xs-12 text-center">
+                            <h:link class="btn btn-success" outcome="planejamento"><i class="fa-check"></i> Concluir a criação da EAP</h:link>
                         </div>
-                    </div>
-                    <ul class="eap_pai"></ul>
-                </li>
-            </ul>
-        </div>
-
-        <div class="modal fade" id="eapModal" role="dialog" aria-labelledby="eapModal" aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                        <h4 class="modal-title">EAP</h4>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" name="pai.id"/>
-                        <input type="hidden" name="id"/>
-                        <input type="hidden" name="ordem"/>
-                        <div class="form-group">
-                            <label>Nome:</label>
-                            <input class="form-control" type="text" placeholder="Nome" name="nome"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Descrição:</label>
-                            <textarea class="form-control" placeholder="Descrição" name="descricao"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Início:</label>
-                            <input class="form-control" type="date" placeholder="Início" name="inicio"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Fim:</label>
-                            <input class="form-control" type="date" placeholder="Término" name="termino"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Custo:</label>
-                            <input class="form-control" type="number" placeholder="Custo" name="valor"/>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a class="btn btn-danger deletaEAP"><i class="fa-trash"></i> Excluir</a>
-                        <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
-                        <a class="btn btn-success salvaEAP"><i class="fa-check"></i> Salvar</a>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <div class="HtmlExample">
+                <ul class="eap_pai">
+                    <li class="eap_item">
+                        <div class="eap">
+                            <div class="eap_header">
+                                <a class="btn btn-xs eapIcon eap_number"></a>
+                                <a class="btn btn-xs eapIcon eapEdit"><i class="fa-pencil"></i></a>
+                                <a class="btn btn-xs eapIcon eapAdd"><i class="fa-plus"></i></a>
+                                <!--<a class="btn btn-xs eapIcon eapUp"><i class="fa-chevron-up"></i></a>-->                         
+                                <!--<a class="btn btn-xs eapIcon eapDown"><i class="fa-chevron-down"></i></a>-->
+                            </div>
+                            <div class="eap_nome"></div>
+                            <div style="display: none;">
+                                <input type="hidden" name="pai.id"/>
+                                <input type="hidden" name="id"/>
+                                <input type="hidden" name="ordem"/>
+                                <input type="hidden" name="nome"/>
+                                <input type="hidden" name="descricao"/>
+                                <input type="hidden" name="inicio"/>         
+                                <input type="hidden" name="termino"/>
+                                <input type="hidden" name="valor"/>
+                            </div>
+                        </div>
+                        <ul class="eap_pai"></ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="modal fade" id="eapModal" role="dialog" aria-labelledby="eapModal" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">EAP</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="pai.id"/>
+                            <input type="hidden" name="id"/>
+                            <input type="hidden" name="ordem"/>
+                            <div class="form-group">
+                                <label>Nome:</label>
+                                <input class="form-control" type="text" placeholder="Nome" name="nome"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Descrição:</label>
+                                <textarea class="form-control" placeholder="Descrição" name="descricao"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Início:</label>
+                                <input class="form-control" type="date" placeholder="Início" name="inicio"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Fim:</label>
+                                <input class="form-control" type="date" placeholder="Término" name="termino"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Custo:</label>
+                                <input class="form-control" type="number" placeholder="Custo" name="valor"/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-danger deletaEAP"><i class="fa-trash"></i> Excluir</a>
+                            <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
+                            <a class="btn btn-success salvaEAP"><i class="fa-check"></i> Salvar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </ui:define>
 </ui:composition>

@@ -1,8 +1,10 @@
 <ui:composition template="/user/layout.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:h="http://xmlns.jcp.org/jsf/html">
+                xmlns:p="http://primefaces.org/ui">
+
 
     <ui:define name="menuhorizontal">
         <li class="active"><h:link outcome="iniciacao">Iniciação</h:link></li>
@@ -18,9 +20,15 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12"><div class="alert-warning"><h:messages /></div></div>
-                        <div class="col-xs-12">#{projetoBean.getDescricao('descricaoTelaTermoAberturaJustificativa')}</div>
-                        <div class="col-xs-12">
+                        <div class="col-xs-12"><label style="white-space: pre-wrap;">#{projetoBean.getDescricao('descricaoTelaTermoAberturaJustificativa')}</label></div>
+                        <div class="col-xs-12 form-group">
                             <h:inputTextarea class="form-control" rows="3" value="#{termoAberturaBean.termoabertura.justificativa}"/>
+                        </div>
+                        <div class="col-xs-12">
+                            <p:commandButton value="Comentário" class="btn btn-primary" type="button" onclick="PF('dlg1').show();" />
+                            <p:dialog header="Comentário sobre o Termo de Abertura Geral" widgetVar="dlg1" minHeight="40">
+                                <h:outputText value="{projetoBean.projeto.comentarioInfoBasicasTA}" />
+                            </p:dialog>
                         </div>
                         <div class="col-md-9 col-xs-7">
                             <ul class="pagination">
@@ -34,8 +42,8 @@
                         </div>
                         <div class="col-md-3 col-xs-5" style="text-align: right;">
                             <div class="pagination">
-                                <h:link class="btn btn-default" outcome="termoaberturadescricao" style="margin-right: 5px;">Voltar</h:link>
-                                <h:commandLink class="btn btn-success" action="#{termoAberturaBean.salvarJustificativa()}">Salvar e Próximo <i class="fa-chevron-right"></i></h:commandLink>
+                                <h:link class="btn btn-default" outcome="termoaberturadescricao" style="margin-right: 5px;"><i class="fa-chevron-left"></i> Anterior</h:link>
+                                <h:commandLink class="btn btn-primary" action="#{termoAberturaBean.salvarJustificativa()}">Próximo <i class="fa-chevron-right"></i></h:commandLink>
                             </div>
                         </div>
                     </div>
