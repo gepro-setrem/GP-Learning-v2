@@ -101,6 +101,7 @@ public class EtapasFragment extends Fragment {
         ((TextView) getActivity().findViewById(R.id.etapaProjetoGerenteTxt)).setText("Nome do Gerente");
 
 
+        
         atividadeDao = session.getAtividadeDao();
         List<Atividade> lsAtividades = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId)).list();
         PassaValoresEtapas(lsAtividades);
