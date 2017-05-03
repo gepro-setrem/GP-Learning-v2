@@ -200,7 +200,7 @@ function printRecursiveEAP(eap) {
     if (eap) {
         var html = $('.HtmlExample .tarefa').clone();
         $('.tarefas tbody').append(html);
-
+        html.find('.marco').html('');
         html.find('[name="eap.id"]').val(eap.id);
 
         html.find('.nome').html(eap.id + ' - ' + eap.nome);

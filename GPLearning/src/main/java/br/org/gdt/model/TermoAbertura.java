@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
 
 @Entity
 public class TermoAbertura implements Serializable {
@@ -31,9 +32,11 @@ public class TermoAbertura implements Serializable {
     private String justificativa;
 
     @Column(name = "trb_dcriacao")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date criacao;
 
     @Column(name = "trb_dalteracao")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date alteracao;
 
     @OneToOne

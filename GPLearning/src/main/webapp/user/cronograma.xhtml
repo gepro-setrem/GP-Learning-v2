@@ -25,7 +25,9 @@
                     <div class="row">
                         <div class="col-xs-12"><label style="white-space: pre-wrap;">#{projetoBean.getDescricao('descricaoTelaCriarCronograma')}</label></div>
                         <div class="col-xs-12 form-group">
-                            <h:inputHidden value="#{projetoBean.projeto.id}" id="pro_id"/>
+<!--                            <h:inputHidden value="#{projetoBean.projeto.id}" id="pro_id"/>-->
+                            <h:inputHidden value="5" id="pro_id"/>
+                            <a onclick="loadTarefa();" style="float: right; cursor: pointer;"><i class="fa-refresh"></i></a>
                             <table class="tarefas">
                                 <thead>
                                     <tr>
@@ -62,7 +64,7 @@
                     <td class="marco">   
                         <div class="checkbox-custom">
                             <input type="checkbox"/>
-                                <label></label>
+                            <label></label>
                         </div>
                     </td>
                     <td><span class="indice"></span><span class="nome"></span></td>

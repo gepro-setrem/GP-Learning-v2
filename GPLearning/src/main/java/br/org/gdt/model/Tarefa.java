@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
 
 @Entity
 public class Tarefa implements Serializable {
@@ -28,12 +29,15 @@ public class Tarefa implements Serializable {
     private String nome;
 
     @Column(name = "tar_dinicio")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date inicio;
 
     @Column(name = "tar_dtermino")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date termino;
 
     @Column(name = "tar_dconclusao")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date conclusao;
 
     @Column(name = "tar_bmarco")

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
 
 @Entity
 public class Marco implements Serializable {
@@ -25,6 +26,7 @@ public class Marco implements Serializable {
     private String objetivo;
 
     @Column(name = "mar_dprevisao")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date previsao;
 
     @ManyToOne

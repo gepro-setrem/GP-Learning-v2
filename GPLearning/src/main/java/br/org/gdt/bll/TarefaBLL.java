@@ -50,16 +50,23 @@ public class TarefaBLL extends BLL<Tarefa> {
         List<Tarefa> tarefas = null;
         if (eap != null && eap.getId() > 0) {
             tarefas = dao.findbyEAP(eap);
+            eap.setTarefas(tarefas);
+
+            if (eap.getEaps() != null) {
+                for (EAP child : eap.getEaps()) {
+                    findbyChildren(child, null);
+                }
+            }
         } else if (tarefa != null && tarefa.getId() > 0) {
             tarefas = dao.findbyTarefa(tarefa);
         }
         if (tarefas != null) {
             for (Tarefa child : tarefas) {
-                List<Tarefa> tarefas2 = findbyChildren(child.getEap(), child);
+                List<Tarefa> tarefas2 = findbyChildren(null, child);
                 List<Recurso> recursos = recursoBLL.findbyRecursos(child);
                 child.setRecursos(recursos);
-                clearRecursive(child);
                 child.setTarefas(tarefas2);
+                clearRecursive(child);
             }
         }
         return tarefas;
@@ -70,6 +77,8 @@ public class TarefaBLL extends BLL<Tarefa> {
             tarefa.setEap(null);
             if (tarefa.getPai() != null) {
                 tarefa.getPai().setEap(null);
+                tarefa.getPai().setTarefas(null);
+                tarefa.getPai().setRecursos(null);
             }
             if (tarefa.getTarefas() != null) {
                 for (Tarefa tarefa_son : tarefa.getTarefas()) {

@@ -7,7 +7,6 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-//import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
 
 @Entity
 public class Turma implements Serializable {
@@ -35,9 +35,11 @@ public class Turma implements Serializable {
     private int ano;
 
     @Column(name = "tur_dcriacao")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date criacao;
 
     @Column(name = "tur_dalteracao")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date alteracao;
 
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL)

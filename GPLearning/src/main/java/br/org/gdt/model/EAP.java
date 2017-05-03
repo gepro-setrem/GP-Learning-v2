@@ -13,8 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
 
 @Entity
 public class EAP implements Serializable {
@@ -33,12 +33,15 @@ public class EAP implements Serializable {
     private String descricao;
 
     @Column(name = "eap_dinicio")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date inicio;
 
     @Column(name = "eap_dtermino")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date termino;
 
     @Column(name = "eap_dconclusao")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date conclusao;
 
     @Column(name = "eap_nvalor")

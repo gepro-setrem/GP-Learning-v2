@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-//import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
 
 @Entity
 public class Pessoa implements Serializable {
@@ -44,9 +44,11 @@ public class Pessoa implements Serializable {
     private Status status;
 
     @Column(name = "pes_dcriacao")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date criacao;
 
     @Column(name = "pes_dalteracao")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date alteracao;
 
     @Column(name = "pes_ikarma")

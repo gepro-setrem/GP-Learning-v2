@@ -1,6 +1,7 @@
 package br.org.gdt.model;
 
 import br.org.gdt.enumerated.Etapa;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -15,9 +16,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
 
 @Entity
-public class Atividade {
+public class Atividade implements Serializable {
 
     @SequenceGenerator(name = "genatividade", sequenceName = "seqatividade", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genatividade")
@@ -30,12 +32,15 @@ public class Atividade {
     private String nome;
 
     @Column(name = "atv_dcriacao")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date criacao;
 
     @Column(name = "atv_dtermino")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date termino;
 
     @Column(name = "atv_dconclusao")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date conclusao;
 
     @Column(name = "atv_vetapa")
