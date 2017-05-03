@@ -13,7 +13,9 @@ public class ComentarioDAO extends DAO<Comentario> {
     }
     
     public List<Comentario> findbyAtividade(Atividade atividade){
-        return entityManager.createQuery("select c from Comentario as c left join c.act_id as atv where atv = :a")
+        return entityManager.createQuery("from Comentario where atividade = :a")
                 .setParameter("a", atividade).getResultList();
+//          return entityManager.createQuery("select c from Comentario as c left join c.atividade as atv where atv = :a")
+//                .setParameter("a", atividade).getResultList();
     }
 }
