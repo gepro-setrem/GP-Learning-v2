@@ -25,6 +25,9 @@ public class Projeto {
     private String estado;
     private String escopo;
 
+    private String planoEscopo;
+    private String planoProjeto;
+
     //  private Pessoa gerente;
     private Date criacao;
     private Date alteracao;
@@ -70,6 +73,25 @@ public class Projeto {
         this.empresa = empresa;
         this.estado = estado;
         this.escopo = escopo;
+        this.criacao = criacao;
+        this.alteracao = alteracao;
+        this.comentarioInstrutor = comentarioInstrutor;
+        this.ger_id = ger_id;
+        this.tur_id = tur_id;
+    }
+
+    @Generated(hash = 731642018)
+    public Projeto(Long id, String nome, String descricao, String empresa, String estado,
+            String escopo, String planoEscopo, String planoProjeto, Date criacao,
+            Date alteracao, String comentarioInstrutor, long ger_id, long tur_id) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.empresa = empresa;
+        this.estado = estado;
+        this.escopo = escopo;
+        this.planoEscopo = planoEscopo;
+        this.planoProjeto = planoProjeto;
         this.criacao = criacao;
         this.alteracao = alteracao;
         this.comentarioInstrutor = comentarioInstrutor;
@@ -225,6 +247,22 @@ public class Projeto {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
+    }
+
+    public String getPlanoEscopo() {
+        return this.planoEscopo;
+    }
+
+    public void setPlanoEscopo(String planoEscopo) {
+        this.planoEscopo = planoEscopo;
+    }
+
+    public String getPlanoProjeto() {
+        return this.planoProjeto;
+    }
+
+    public void setPlanoProjeto(String planoProjeto) {
+        this.planoProjeto = planoProjeto;
     }
 
     /** called by internal mechanisms, do not call yourself. */

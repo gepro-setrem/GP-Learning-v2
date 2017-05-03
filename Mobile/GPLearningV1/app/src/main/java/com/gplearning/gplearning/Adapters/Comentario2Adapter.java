@@ -61,7 +61,7 @@ public class Comentario2Adapter extends BaseAdapter {
 
         Comentario comentario = (Comentario) getItem(position);
         if (comentario != null) {
-            holder.texto.setText(comentario.getTexto());
+            holder.texto.setText(comentario.getDescricao());
             holder.data.setText(dateFormat.format(comentario.getCriacao()));
         }
 

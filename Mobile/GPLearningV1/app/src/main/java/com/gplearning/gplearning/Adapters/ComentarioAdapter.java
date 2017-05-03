@@ -46,7 +46,7 @@ public class ComentarioAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         ViewHolderAdapter holder = (ViewHolderAdapter) viewHolder;
         Comentario comentario = lsComentario.get(position);
-        holder.texto.setText(comentario.getTexto());
+        holder.texto.setText(comentario.getDescricao());
         holder.data.setText(dateFormat.format(comentario.getCriacao()));
     }
 

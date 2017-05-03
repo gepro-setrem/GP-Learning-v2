@@ -101,7 +101,7 @@ public class EtapasFragment extends Fragment {
         ((TextView) getActivity().findViewById(R.id.etapaProjetoGerenteTxt)).setText("Nome do Gerente");
 
 
-        
+
         atividadeDao = session.getAtividadeDao();
         List<Atividade> lsAtividades = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId)).list();
         PassaValoresEtapas(lsAtividades);
@@ -165,6 +165,16 @@ public class EtapasFragment extends Fragment {
         //Planejamento de Escopo --http://www.flaticon.com/free-icon/brainstorm_201557#term=strategy&page=1&position=2
         // requisitos --  http://www.flaticon.com/free-icon/clipboard_235252
         // escopo  --  http://www.flaticon.com/free-icon/notebook_330705
+
+
+        ((ImageButton) getActivity().findViewById(R.id.etapaProjetoDescricaoTAbtn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), EtapaActivity.class);
+                intent.putExtra("ID",0 );
+                startActivity(intent);
+            }
+        });
 
 
         // Atividade atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaDescricao)).unique();
