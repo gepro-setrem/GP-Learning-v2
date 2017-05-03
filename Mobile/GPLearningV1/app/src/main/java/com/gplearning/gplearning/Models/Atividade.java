@@ -1,6 +1,7 @@
 package com.gplearning.gplearning.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gplearning.gplearning.Converters.EtapaProjetoConverter;
 import com.gplearning.gplearning.Enums.EtapaProjeto;
 
@@ -10,7 +11,6 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
-import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.OrderBy;
 import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.ToOne;
@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(nameInDb = "atividade")
 public class Atividade {
     @Id
@@ -103,7 +104,7 @@ public class Atividade {
 
     @Generated(hash = 558728208)
     public Atividade(Long _id, int id, String nome, Date criacao, Date termino, Date conclusao, EtapaProjeto etapa,
-            int pontuacaoMedia, long pro_id) {
+                     int pontuacaoMedia, long pro_id) {
         this._id = _id;
         this.id = id;
         this.nome = nome;
@@ -179,40 +180,14 @@ public class Atividade {
         this.pro_id = pro_id;
     }
 
-    /**
-     * To-one relationship, resolved on first access.
-     */
-    @Generated(hash = 1517119008)
+    @Keep
     public Projeto getProjeto() {
-        long __key = this.pro_id;
-        if (projeto__resolvedKey == null || !projeto__resolvedKey.equals(__key)) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            ProjetoDao targetDao = daoSession.getProjetoDao();
-            Projeto projetoNew = targetDao.load(__key);
-            synchronized (this) {
-                projeto = projetoNew;
-                projeto__resolvedKey = __key;
-            }
-        }
         return projeto;
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
-    @Generated(hash = 1275955963)
-    public void setProjeto(@NotNull Projeto projeto) {
-        if (projeto == null) {
-            throw new DaoException("To-one property 'pro_id' has not-null constraint; cannot set to-one to null");
-        }
-        synchronized (this) {
-            this.projeto = projeto;
-            pro_id = projeto.getId();
-            projeto__resolvedKey = pro_id;
-        }
+    @Keep
+    public void setProjeto(Projeto projeto) {
+        this.projeto = projeto;
     }
 
     /**

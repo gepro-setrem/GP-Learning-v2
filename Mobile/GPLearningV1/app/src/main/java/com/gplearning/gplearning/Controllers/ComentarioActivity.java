@@ -2,6 +2,7 @@ package com.gplearning.gplearning.Controllers;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 
 import com.gplearning.gplearning.Adapters.ComentarioAdapter;
 import com.gplearning.gplearning.DAO.App;
+import com.gplearning.gplearning.DAO.ComentarioDAO;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.DaoSession;
@@ -90,6 +92,7 @@ public class ComentarioActivity extends AppCompatActivity {
                 MetodosPublicos.Log("Event", "id:" + COM.get_id());
 
                 if (id > 0) {
+                    new SalvaComentario().execute(COM);
                     coment.setText("");
                     lsComentario.add(COM);
                     comentarioAdapter.notifyItemInserted(lsComentario.size() - 1);
@@ -97,7 +100,7 @@ public class ComentarioActivity extends AppCompatActivity {
                 }
             }
         } catch (Exception e) {
-          MetodosPublicos.Log("ERROR", e.toString());
+            MetodosPublicos.Log("ERROR", e.toString());
         }
     }
 
@@ -110,8 +113,11 @@ public class ComentarioActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 try {
-                    Log.i("Event", "Vai deletar o comet id:" + comentarioAdapter.getItemId(position));
-                    dao.deleteByKey(comentarioAdapter.getItemId(position));
+                    Comentario comentario = dao.load(comentarioAdapter.getItemId(position));
+                    Log.i("Event", "Vai deletar o comet id:" + comentario.get_id());
+                    if (comentario != null && comentario.getId() > 0)
+                        new DeletaComentario().execute(comentario);
+                    dao.deleteByKey(comentario.get_id());
                     lsComentario.remove(position);
                     comentarioAdapter.notifyItemRemoved(position);
                 } catch (Exception e) {
@@ -120,6 +126,54 @@ public class ComentarioActivity extends AppCompatActivity {
             }
         });
         alert.show();
+
+    }
+
+
+    private class SalvaComentario extends AsyncTask<Comentario, String, Comentario> {
+
+        @Override
+        protected Comentario doInBackground(Comentario... comentarios) {
+            ComentarioDAO comentarioDAO = new ComentarioDAO();
+            try {
+                if (MetodosPublicos.IsConnected(ComentarioActivity.this)) { //se estiver conectado na internet envia
+                    int id = comentarioDAO.SalvarComentario(comentarios[0]);
+                    if (id > 0) {
+                        comentarios[0].setId(id);
+                        return comentarios[0];
+                    }
+                }
+            } catch (Exception e) {
+                MetodosPublicos.Log("Error", " error :" + e.toString());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Comentario comentario) {
+            super.onPostExecute(comentario);
+            if (comentario != null) {
+                dao.update(comentario);
+            }
+        }
+    }
+
+    private class DeletaComentario extends AsyncTask<Comentario, String, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Comentario... comentarios) {
+            if (MetodosPublicos.IsConnected(ComentarioActivity.this)) {
+                ComentarioDAO comentarioDAO = new ComentarioDAO();
+                return comentarioDAO.DeletaComentario(comentarios[0]);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            MetodosPublicos.Log("error", "Deletou:" + aBoolean);
+        }
 
     }
 

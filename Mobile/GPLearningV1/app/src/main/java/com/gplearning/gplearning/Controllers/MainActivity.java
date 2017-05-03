@@ -17,13 +17,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.gplearning.gplearning.DAO.App;
+import com.gplearning.gplearning.DAO.ComentarioDAO;
 import com.gplearning.gplearning.Enums.Fragments;
-import com.gplearning.gplearning.Models.Quote;
+import com.gplearning.gplearning.Models.Atividade;
+import com.gplearning.gplearning.Models.Comentario;
+import com.gplearning.gplearning.Models.ComentarioDao;
+import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
+import java.util.Date;
 
 //import android.support.v4.app.Fragment;
 
@@ -95,9 +99,9 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View hView =  navigationView.getHeaderView(0);
-        ((TextView)hView.findViewById(R.id.headerName)).setText(MetodosPublicos.SelecionaSessaoNome(this));
-        ((TextView)hView.findViewById(R.id.headerEmail)).setText(MetodosPublicos.SelecionaSessaoEmail(this));
+        View hView = navigationView.getHeaderView(0);
+        ((TextView) hView.findViewById(R.id.headerName)).setText(MetodosPublicos.SelecionaSessaoNome(this));
+        ((TextView) hView.findViewById(R.id.headerEmail)).setText(MetodosPublicos.SelecionaSessaoEmail(this));
     }
 
     @Override
@@ -138,9 +142,9 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
-            MetodosPublicos.SalvaSessao(this, null, null, null, 0);
+            // MetodosPublicos.SalvaSessao(this, null, null, null, 0);
 
-            // new getAssync().execute();
+            new getAssync().execute();
 
             return true;
         }
@@ -207,13 +211,40 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected String doInBackground(String... strings) {
             try {
-                RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
-                Log.i("WB", quote.toString());
+                //  RestTemplate restTemplate = new RestTemplate();
+                //  restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                //  Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
+                //   Log.i("WB", quote.toString());
+                ComentarioDAO ComentarioDAO = new ComentarioDAO();
+                Atividade atv = new Atividade();
+                atv.setId(1);
+                DaoSession daoSession = ((App) getApplication()).getDaoSession();
+                ComentarioDao daoCom = daoSession.getComentarioDao();
+                //   ComentarioDao cDao
+                daoCom = daoSession.getComentarioDao();
+                //  List<Comentario> lsComentario = ComentarioDAO.SelecionaComentarioPorAtividade(atv);
+                Comentario COM = new Comentario(null, 0, "comentario de teste da Apllicação".toString(), new Date(), MetodosPublicos.SelecionaSessaoId(MainActivity.this));
+                daoCom.save(COM);
+                MetodosPublicos.Log("Salve", " salvou com id:" + COM.get_id());
+
+                int id = 0;
+                try {
+                    if (COM.get_id() > 0) {
+                        id = ComentarioDAO.SalvarComentario(COM);
+                    }
+                } catch (Exception e) {
+                    MetodosPublicos.Log("ERROR", e.toString());
+                }
+
+                if (COM.get_id() == 0 || id == 0) {
+                    daoCom.deleteByKey(COM.get_id());
+                    MetodosPublicos.Log("Salve", " vai deletar  id:" + COM.get_id());
+                }
+                //   SalvarComentario
+                //  MetodosPublicos.Log("com", "total: " + lsComentario.size());
 
             } catch (Exception e) {
-                Log.i("ERROR", e.toString());
+                MetodosPublicos.Log("ERROR", e.toString());
             }
 
             return null;

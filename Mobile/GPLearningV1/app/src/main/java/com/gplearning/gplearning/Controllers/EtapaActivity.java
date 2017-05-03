@@ -83,21 +83,21 @@ public class EtapaActivity extends AppCompatActivity {
     private void AtualizaValores(Atividade atv) {
         DaoSession daoSession = ((App) getApplication()).getDaoSession();
 
-        if (atv.getEtapa() == EtapaProjeto.TermoAberturaDescricao ||
-                atv.getEtapa() == EtapaProjeto.TermoAberturaJustificativa ||
-                atv.getEtapa() == EtapaProjeto.PlanejamentoEscopo ||
+        if (atv.getEtapa() == EtapaProjeto.DescricaoProjeto ||
+                atv.getEtapa() == EtapaProjeto.JustificativaProjeto ||
+                atv.getEtapa() == EtapaProjeto.PlanoGerenciamentoEscopo ||
                 atv.getEtapa() == EtapaProjeto.Escopo) {
             //texto corrido
             ((ListView) findViewById(R.id.EtapaListview)).setVisibility(View.GONE);
             TextView etapaTextView = ((TextView) findViewById(R.id.EtapaTxtTexto));
             etapaTextView.setVisibility(View.VISIBLE);
 
-            if (atv.getEtapa() == EtapaProjeto.TermoAberturaDescricao ||
-                    atv.getEtapa() == EtapaProjeto.TermoAberturaJustificativa) {
+            if (atv.getEtapa() == EtapaProjeto.DescricaoProjeto ||
+                    atv.getEtapa() == EtapaProjeto.JustificativaProjeto) {
                 TermoAberturaDao termoAberturaDao = daoSession.getTermoAberturaDao();
                 TermoAbertura termoAbertura = termoAberturaDao.queryBuilder().where(TermoAberturaDao.Properties.Pro_id.eq(atv.getPro_id())).unique();
                 if (termoAbertura != null) {
-                    if (atv.getEtapa() == EtapaProjeto.TermoAberturaDescricao)
+                    if (atv.getEtapa() == EtapaProjeto.DescricaoProjeto)
                         etapaTextView.setText(termoAbertura.getDescricao());
                     else
                         etapaTextView.setText(termoAbertura.getJustificativa());
@@ -106,7 +106,7 @@ public class EtapaActivity extends AppCompatActivity {
                 ProjetoDao projetoDao = daoSession.getProjetoDao();
                 Projeto projeto = projetoDao.queryBuilder().where(ProjetoDao.Properties.Id.eq(atv.getPro_id())).unique();
 
-                if (atv.getEtapa() == EtapaProjeto.PlanejamentoEscopo) {
+                if (atv.getEtapa() == EtapaProjeto.PlanoGerenciamentoEscopo) {
                     etapaTextView.setText(projeto.getPlanoEscopo());
                 } //IMPLEMENTAR ESTES METODOS AINDA!!!
                 else if (atv.getEtapa() == EtapaProjeto.Escopo) {
@@ -135,16 +135,16 @@ public class EtapaActivity extends AppCompatActivity {
                 TermoAberturaDao termoAberturaDao = daoSession.getTermoAberturaDao();
                 TermoAbertura termoAbertura = termoAberturaDao.queryBuilder().where(TermoAberturaDao.Properties.Pro_id.eq(atv.getPro_id())).unique();
 
-                if (atv.getEtapa() == EtapaProjeto.TermoAberturaPremissas) {
+                if (atv.getEtapa() == EtapaProjeto.Premissas) {
                     ArrayAdapter<Premissas> adapter = new ArrayAdapter<Premissas>(this, android.R.layout.simple_list_item_1, termoAbertura.getLsPremissas());
                     listview.setAdapter(adapter);
-                } else if (atv.getEtapa() == EtapaProjeto.TermoAberturaRequisitos) {
+                } else if (atv.getEtapa() == EtapaProjeto.RequisitosTermoAbertura) {
                     ArrayAdapter<RequisitoTermoAbertura> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, termoAbertura.getLsRequisitoTermoAbertura());
                     listview.setAdapter(adapter);
-                } else if (atv.getEtapa() == EtapaProjeto.TermoAberturaMarcos) {
+                } else if (atv.getEtapa() == EtapaProjeto.Marcos) {
                     ArrayAdapter<Marco> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, termoAbertura.getLsMarco());
                     listview.setAdapter(adapter);
-                } else if (atv.getEtapa() == EtapaProjeto.TermoAberturaRestricoes) {
+                } else if (atv.getEtapa() == EtapaProjeto.Restricoes) {
                     ArrayAdapter<Restricoes> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, termoAbertura.getLsRestricoes());
                     listview.setAdapter(adapter);
                 }

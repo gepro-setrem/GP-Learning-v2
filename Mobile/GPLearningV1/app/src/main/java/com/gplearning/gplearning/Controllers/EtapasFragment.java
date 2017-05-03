@@ -181,7 +181,7 @@ public class EtapasFragment extends Fragment {
         if (lsAtividades != null && lsAtividades.size() > 0) {
 
             for (final Atividade atv : lsAtividades) {
-                if (atv.getEtapa() == EtapaProjeto.TermoAberturaDescricao) {
+                if (atv.getEtapa() == EtapaProjeto.DescricaoProjeto) {
                     ((RatingBar) getActivity().findViewById(R.id.etapaProjetoDescricaoTARatingBar)).setRating(atv.getPontuacaoMedia());
                     ((ImageButton) getActivity().findViewById(R.id.etapaProjetoDescricaoTAbtn)).setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -191,24 +191,25 @@ public class EtapasFragment extends Fragment {
                             startActivity(intent);
                         }
                     });
-                } else if (atv.getEtapa() == EtapaProjeto.TermoAberturaJustificativa)
+                } else if (atv.getEtapa() == EtapaProjeto.JustificativaProjeto)
                     ((RatingBar) getActivity().findViewById(R.id.etapaProjetoJustificativaTARatingBar)).setRating(atv.getPontuacaoMedia());
-                else if (atv.getEtapa() == EtapaProjeto.TermoAberturaPremissas)
+                else if (atv.getEtapa() == EtapaProjeto.Premissas)
                     ((RatingBar) getActivity().findViewById(R.id.etapaProjetoPremissasTARatingBar)).setRating(atv.getPontuacaoMedia());
-                else if (atv.getEtapa() == EtapaProjeto.TermoAberturaRestricoes)
+                else if (atv.getEtapa() == EtapaProjeto.Restricoes)
                     ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRestricoesTARatingBar)).setRating(atv.getPontuacaoMedia());
-                else if (atv.getEtapa() == EtapaProjeto.TermoAberturaMarcos)
+                else if (atv.getEtapa() == EtapaProjeto.Marcos)
                     ((RatingBar) getActivity().findViewById(R.id.etapaProjetoMarcosTARatingBar)).setRating(atv.getPontuacaoMedia());
-                else if (atv.getEtapa() == EtapaProjeto.TermoAberturaRequisitos)
+                else if (atv.getEtapa() == EtapaProjeto.RequisitosTermoAbertura)
                     ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosTARatingBar)).setRating(atv.getPontuacaoMedia());
                 else if (atv.getEtapa() == EtapaProjeto.Stakeholders)
                     ((RatingBar) getActivity().findViewById(R.id.etapaProjetoStakeholdersTARatingBar)).setRating(atv.getPontuacaoMedia());
-                else if (atv.getEtapa() == EtapaProjeto.PlanejamentoEscopo)
+                else if (atv.getEtapa() == EtapaProjeto.PlanoGerenciamentoEscopo)
                     ((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)).setRating(atv.getPontuacaoMedia());
                 else if (atv.getEtapa() == EtapaProjeto.Requisitos)
                     ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosRatingBar)).setRating(atv.getPontuacaoMedia());
                 else if (atv.getEtapa() == EtapaProjeto.Escopo)
                     ((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)).setRating(atv.getPontuacaoMedia());
+
             }
             //        atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaJustificativa)).unique();
             //        if (atv != null)

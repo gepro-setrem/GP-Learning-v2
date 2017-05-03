@@ -1,16 +1,18 @@
 package com.gplearning.gplearning.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
-import org.greenrobot.greendao.annotation.NotNull;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(nameInDb = "projeto")
 public class Projeto {
 
@@ -41,11 +43,15 @@ public class Projeto {
     @ToOne(joinProperty = "tur_id")
     private Turma turma;
 
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 235931277)
     private transient ProjetoDao myDao;
 
@@ -64,9 +70,9 @@ public class Projeto {
 
 
     @Keep
-    public Projeto( Long id, String nome, String descricao, String empresa,
-            String estado, String escopo, Date criacao, Date alteracao,
-            String comentarioInstrutor, long ger_id, long tur_id) {
+    public Projeto(Long id, String nome, String descricao, String empresa,
+                   String estado, String escopo, Date criacao, Date alteracao,
+                   String comentarioInstrutor, long ger_id, long tur_id) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -82,8 +88,8 @@ public class Projeto {
 
     @Generated(hash = 731642018)
     public Projeto(Long id, String nome, String descricao, String empresa, String estado,
-            String escopo, String planoEscopo, String planoProjeto, Date criacao,
-            Date alteracao, String comentarioInstrutor, long ger_id, long tur_id) {
+                   String escopo, String planoEscopo, String planoProjeto, Date criacao,
+                   Date alteracao, String comentarioInstrutor, long ger_id, long tur_id) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -195,14 +201,17 @@ public class Projeto {
     public void setId(Long id) {
         this.id = id;
     }
+
     @Keep
     public Pessoa getGerente() {
         return gerente;
     }
+
     @Keep
     public void setGerente(Pessoa gerente) {
         this.gerente = gerente;
     }
+
     @Keep
     public Turma getTurma() {
         return turma;

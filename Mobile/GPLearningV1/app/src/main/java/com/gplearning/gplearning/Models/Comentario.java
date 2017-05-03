@@ -1,7 +1,11 @@
 package com.gplearning.gplearning.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Keep;
@@ -9,10 +13,9 @@ import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
 
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(nameInDb = "comentario", indexes = {
         @Index(value = "descricao, criacao DESC")})
 public class Comentario {
@@ -35,11 +38,15 @@ public class Comentario {
     @ToOne(joinProperty = "IdRemetente")
     private Pessoa remetente;
 
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 978109081)
     private transient ComentarioDao myDao;
 
@@ -69,7 +76,7 @@ public class Comentario {
 
     @Generated(hash = 809527407)
     public Comentario(Long _id, int id, @NotNull String descricao, Date criacao,
-            Long IdAtividade, Long IdRemetente) {
+                      Long IdAtividade, Long IdRemetente) {
         this._id = _id;
         this.id = id;
         this.descricao = descricao;
