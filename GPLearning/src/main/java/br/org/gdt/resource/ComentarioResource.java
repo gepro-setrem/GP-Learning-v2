@@ -11,6 +11,8 @@ import br.org.gdt.bll.ComentarioBLL;
 import br.org.gdt.model.Atividade;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -19,6 +21,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Path("/comentario")
 public class ComentarioResource {
@@ -69,10 +72,18 @@ public class ComentarioResource {
         return 0;
     }
 
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/excluir")
-    public Boolean Excluir(@FormParam("com_id") int com_id) {
+    
+//    @POST
+//    @Path("/excluir/{com_id}")
+//    //  @Produces(MediaType.APPLICATION_XML)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/excluir/{com_id}")
+    public Boolean Excluir(@PathParam("com_id") int com_id) {
+        
+        System.out.println("Vai deletar o Comentario!");
         if (com_id > 0) {
             Comentario comentario = comentarioBLL.findById(com_id);
             comentarioBLL.delete(comentario);
