@@ -8,7 +8,7 @@ package br.org.gdt.resource;
 import br.org.gdt.bll.AtividadeBLL;
 import br.org.gdt.model.Comentario;
 import br.org.gdt.bll.ComentarioBLL;
-import br.org.gdt.model.Atividade;
+import br.org.gdt.model.Etapa;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -39,7 +39,7 @@ public class ComentarioResource {
         System.out.println("chegou no metodo id:" + atv_id);
         List<Comentario> lsComentario = new ArrayList<Comentario>();
         if (atv_id > 0) {
-            Atividade atv = atividadeBLL.findById(atv_id);
+            Etapa atv = atividadeBLL.findById(atv_id);
             if (atv != null && atv.getId() > 0) {
                 lsComentario = comentarioBLL.findbyAtividade(atv);
             }

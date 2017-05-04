@@ -1,6 +1,6 @@
 package br.org.gdt.model;
 
-import br.org.gdt.enumerated.Etapa;
+import br.org.gdt.enumerated.EtapaProjeto;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -19,10 +19,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 
 @Entity
-public class Atividade implements Serializable {
+public class Etapa implements Serializable {
 
-    @SequenceGenerator(name = "genatividade", sequenceName = "seqatividade", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genatividade")
+    @SequenceGenerator(name = "genetapa", sequenceName = "seqetapa", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genetapa")
 
     @Id
     @Column(name = "atv_id")
@@ -45,16 +45,16 @@ public class Atividade implements Serializable {
 
     @Column(name = "atv_vetapa")
     @Enumerated(EnumType.STRING)
-    private Etapa etapa;
+    private EtapaProjeto etapa;
 
     @ManyToOne
     @JoinColumn(name = "pro_id")
     private Projeto projeto;
 
-    @OneToMany(mappedBy = "atividade")
-    private List<AtividadeParametro> atividadeParametros;
+    @OneToMany(mappedBy = "etapa")
+    private List<EtapaParametro> etapaParametros;
 
-    @OneToMany(mappedBy = "atividade")
+    @OneToMany(mappedBy = "etapa")
     private List<Comentario> comentarios;
 
     public String getNome() {
@@ -81,11 +81,11 @@ public class Atividade implements Serializable {
         this.criacao = criacao;
     }
 
-    public Etapa getEtapa() {
+    public EtapaProjeto getEtapa() {
         return etapa;
     }
 
-    public void setEtapa(Etapa etapa) {
+    public void setEtapa(EtapaProjeto etapa) {
         this.etapa = etapa;
     }
 
@@ -113,12 +113,12 @@ public class Atividade implements Serializable {
         this.conclusao = conclusao;
     }
 
-    public List<AtividadeParametro> getAtividadeParametros() {
-        return atividadeParametros;
+    public List<EtapaParametro> getAtividadeParametros() {
+        return etapaParametros;
     }
 
-    public void setAtividadeParametros(List<AtividadeParametro> atividadeParametros) {
-        this.atividadeParametros = atividadeParametros;
+    public void setAtividadeParametros(List<EtapaParametro> etapaParametros) {
+        this.etapaParametros = etapaParametros;
     }
 
     public List<Comentario> getComentarios() {
@@ -152,7 +152,7 @@ public class Atividade implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Atividade other = (Atividade) obj;
+        final Etapa other = (Etapa) obj;
         if (this.id != other.id) {
             return false;
         }

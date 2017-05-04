@@ -11,26 +11,26 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-public class AtividadeParametro implements Serializable {
+public class EtapaParametro implements Serializable {
 
-    @SequenceGenerator(name = "genatividadeparametro", sequenceName = "seqatividadeparametro", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genatividadeparametro")
+    @SequenceGenerator(name = "genetapaparametro", sequenceName = "seqetapaparametro", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genetapaparametro")
 
     @Id
-    @Column(name = "tvp_id")
+    @Column(name = "tpp_id")
     private int id;
 
-    @Column(name = "tvp_vchave", length = 200)
+    @Column(name = "tpp_vchave", length = 200)
     private String chave;
 
-    @Column(name = "tvp_vvalor", length = 200)
+    @Column(name = "tpp_vvalor", length = 200)
     private String valor;
 
     @ManyToOne
     @JoinColumn(name = "act_id")
-    private Atividade atividade;
+    private Etapa etapa;
 
-    public AtividadeParametro() {
+    public EtapaParametro() {
     }
 
     public int getId() {
@@ -57,12 +57,14 @@ public class AtividadeParametro implements Serializable {
         this.valor = valor;
     }
 
-    public Atividade getAtividade() {
-        return atividade;
+    public Etapa getEtapa() {
+        return etapa;
     }
 
-    public void setAtividade(Atividade atividade) {
-        this.atividade = atividade;
+    public void setEtapa(Etapa etapa) {
+        this.etapa = etapa;
     }
+
+   
 
 }

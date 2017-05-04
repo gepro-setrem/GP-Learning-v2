@@ -1,6 +1,6 @@
 package br.org.gdt.enumerated;
 
-public enum Etapa {
+public enum EtapaProjeto {
     DescricaoProjeto,
     JustificativaProjeto,
     Premissas,

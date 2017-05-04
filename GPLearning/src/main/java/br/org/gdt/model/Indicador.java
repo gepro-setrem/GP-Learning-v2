@@ -1,6 +1,6 @@
 package br.org.gdt.model;
 
-import br.org.gdt.enumerated.Etapa;
+import br.org.gdt.enumerated.EtapaProjeto;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -37,7 +37,7 @@ public class Indicador implements Serializable {
     public Pessoa professor;
 
     @ManyToMany(cascade = CascadeType.REMOVE)
-    private List<Atividade> atividades;
+    private List<EtapaProjeto> atividades;
 
     public Indicador() {
     }
@@ -74,11 +74,11 @@ public class Indicador implements Serializable {
         this.professor = professor;
     }
 
-    public List<Atividade> getAtividades() {
+    public List<EtapaProjeto> getAtividades() {
         return atividades;
     }
 
-    public void setAtividades(List<Atividade> atividades) {
+    public void setAtividades(List<EtapaProjeto> atividades) {
         this.atividades = atividades;
     }
 

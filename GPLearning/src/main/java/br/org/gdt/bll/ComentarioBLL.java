@@ -1,7 +1,7 @@
 package br.org.gdt.bll;
 
 import br.org.gdt.dao.ComentarioDAO;
-import br.org.gdt.model.Atividade;
+import br.org.gdt.model.Etapa;
 import br.org.gdt.model.Comentario;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class ComentarioBLL extends BLL<Comentario> {
     @Autowired
     private ComentarioDAO dao;
 
-    public List<Comentario> findbyAtividade(Atividade atividade) {
+    public List<Comentario> findbyAtividade(Etapa atividade) {
         List<Comentario> lsComentario = new ArrayList<>();
         if (atividade != null && atividade.getId() > 0) {
             lsComentario = dao.findbyAtividade(atividade);
