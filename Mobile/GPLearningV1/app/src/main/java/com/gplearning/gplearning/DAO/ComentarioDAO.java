@@ -12,23 +12,19 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ComentarioDAO extends UrlDomain {
 
 
     public List<Comentario> SelecionaComentarioPorAtividade(Atividade atividade) {
-        UrlDefault += "/comentario/index/" + atividade.getId();
+        String url = UrlDefault += "/comentario/index/" + atividade.getId();
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-        MetodosPublicos.Log("DAO", " vai seleecioanr url:" + UrlDefault);
-        ResponseEntity<Comentario[]> responseEntity = restTemplate.getForEntity(UrlDefault, Comentario[].class);
+        MetodosPublicos.Log("DAO", " vai seleecioanr url:" + url);
+        ResponseEntity<Comentario[]> responseEntity = restTemplate.getForEntity(url, Comentario[].class);
         Comentario[] comentarioArray = responseEntity.getBody();
-        //   MediaType contentType = responseEntity.getHeaders().getContentType();
-        //   HttpStatus statusCode = responseEntity.getStatusCode();
         if (comentarioArray != null && comentarioArray.length > 0)
             return Arrays.asList(comentarioArray);
         return null;
@@ -52,14 +48,12 @@ public class ComentarioDAO extends UrlDomain {
 
     public boolean DeletaComentario(Comentario comentario) {
         if (comentario != null && comentario.getId() > 0) {
-            String url = UrlDefault + "/comentario/excluir/";
+            String url = UrlDefault + "/comentario/excluir/" + comentario.getId();
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             MetodosPublicos.Log("DAO", " vai deletar url:" + url);
-            Map<String, Integer> vars = new HashMap<String, Integer>();
-            vars.put("com_id", comentario.getId());
-            ResponseEntity<Boolean> responseEntity = restTemplate.postForEntity(url, comentario, Boolean.class);
+            ResponseEntity<Boolean> responseEntity = restTemplate.getForEntity(url, Boolean.class);
             return responseEntity.getBody();
         }
         return false;

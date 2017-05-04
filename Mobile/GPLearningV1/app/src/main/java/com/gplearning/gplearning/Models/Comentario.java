@@ -29,10 +29,11 @@ public class Comentario {
     private String descricao;
     private Date criacao;
 
+    private boolean deletado;//define que este comentário esta deletado
+
     private Long IdAtividade;
     @ToOne(joinProperty = "IdAtividade")
     private Atividade atividade;
-//
 
     private Long IdRemetente;
     @ToOne(joinProperty = "IdRemetente")
@@ -74,13 +75,14 @@ public class Comentario {
         this.IdRemetente = IdRemetente;
     }
 
-    @Generated(hash = 809527407)
+    @Generated(hash = 1065863250)
     public Comentario(Long _id, int id, @NotNull String descricao, Date criacao,
-                      Long IdAtividade, Long IdRemetente) {
+            boolean deletado, Long IdAtividade, Long IdRemetente) {
         this._id = _id;
         this.id = id;
         this.descricao = descricao;
         this.criacao = criacao;
+        this.deletado = deletado;
         this.IdAtividade = IdAtividade;
         this.IdRemetente = IdRemetente;
     }
@@ -153,6 +155,14 @@ public class Comentario {
         this.remetente = remetente;
     }
 
+    public boolean isDeletado() {
+        return deletado;
+    }
+
+    public void setDeletado(boolean deletado) {
+        this.deletado = deletado;
+    }
+
     @Override
     public String toString() {
         return descricao;
@@ -192,6 +202,10 @@ public class Comentario {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
+    }
+
+    public boolean getDeletado() {
+        return this.deletado;
     }
 
     /** called by internal mechanisms, do not call yourself. */
