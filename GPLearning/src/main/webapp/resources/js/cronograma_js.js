@@ -116,6 +116,7 @@ $(document).on('click', '#tarefaModal .salvaTarefa', function () {
                     });
                     tarefa.find('.recursos').html(recursos.slice(0, -2));
                     tarefa.find('.nome').html(responser + '- ' + $('#tarefaModal [name=nome]').val());
+                    ReloadNumbers();
                     $('#tarefaModal').modal('hide');
                 }
             }, error: function (error) {
@@ -186,19 +187,47 @@ function CalculaLargura() {
 }
 
 function ReloadNumbers() {
-    LoadIndex($('.tarefa_pai:eq(0)'), '');
+    $('.tarefas .tarefa [name=id]:not([value])~[name="eap.pai.id"]:not([value])').parents('.tarefa').each(function (index, item) {
+        var idPai = parseInt($(item).find('[name="id"]').val()) || 0;
+        var idEap = parseInt($(item).find('[name="eap.id"]').val()) || 0;
+        var index_label = index + 1;
+        $('.tarefas .tarefa [name=id]:not([value])~[name="eap.id"][value="' + idEap + '"]').parents('.tarefa').find('.indice').html(index_label);
+        LoadIndex(idPai, idEap, index_label + '.');
+    });
+    //LoadIndex($('.tarefa_pai:eq(0)'), '');
 //    $('.eap_item.eap_column').removeClass('eap_column');
 //    $('.eap_list .eap_pai:eq(1) > .eap_item').addClass('eap_column');
 //    CalculaLargura();
 }
 
-function LoadIndex(pai, v_i) {
-    $(pai).children('.tarefa_item').each(function (index, item) {
-        var index_label = v_i + (index + 1);
-        $(item).children('.tarefa').find('.indice').html(index_label);
-//        $(item).children('.tarefa').find('[name=ordem]').val(index_label);
-        LoadIndex($(item).children('.tarefa_pai'), index_label + '.');
-    });
+function LoadIndex(idPai, idEap, v_i) {
+    if (idPai > 0) {
+        $('.tarefas .tarefa [name="pai.id"][value="' + idPai + '"]').each(function (index, item) {
+            var tarefa = $(item).parents('.tarefa:eq(0)');
+            var idPai = parseInt($(tarefa).find('[name="id"]').val()) || 0;
+            var idEap = parseInt($(tarefa).find('[name="eap.id"]').val()) || 0;
+            var index_label = v_i + (index + 1);
+            $('.tarefas .tarefa [name="id"][value="' + idPai + '"]').parents('.tarefa').find('.indice').html(index_label);
+            LoadIndex(idPai, idEap, index_label + '.');
+        });
+    } else if (idEap > 0) {
+        $('.tarefas .tarefa [name=id]:not([value])~[name="eap.pai.id"][value="' + idEap + '"]').each(function (index, item) {
+            var tarefa = $(item).parents('.tarefa:eq(0)');
+            var idPai = parseInt($(tarefa).find('[name="id"]').val()) || 0;
+            var idEap = parseInt($(tarefa).find('[name="eap.id"]').val()) || 0;
+            var index_label = v_i + (index + 1);
+            $('.tarefas .tarefa [name=id]:not([value])~[name="eap.id"][value="' + idEap + '"]').parents('.tarefa').find('.indice').html(index_label);
+            LoadIndex(idPai, idEap, index_label + '.');
+        });
+        $('.tarefas .tarefa [name=id][value]~[name="eap.id"][value="' + idEap + '"]').each(function (index, item) {
+            var tarefa = $(item).parents('.tarefa:eq(0)');
+            var idPai = parseInt($(tarefa).find('[name="id"]').val()) || 0;
+            var idEap = parseInt($(tarefa).find('[name="eap.id"]').val()) || 0;
+            var index_label = v_i + (index + 1);
+            $('.tarefas .tarefa [name="id"][value="' + idPai + '"]').parents('.tarefa').find('.indice').html(index_label);
+            LoadIndex(idPai, idEap, index_label + '.');
+        });
+    }
 }
 
 function loadTarefa() {
@@ -213,7 +242,7 @@ function loadTarefa() {
                 $('.tarefas tbody').html('');
                 if (responser) {
                     printRecursiveEAP(responser);
-//                    ReloadNumbers();
+                    ReloadNumbers();
                 }
             },
             error: function (error) {
@@ -227,17 +256,6 @@ function printRecursiveTarefa(tarefa) {
     if (tarefa) {
         var html = $('.HtmlExample .tarefa').clone();
         $('.tarefas tbody').append(html);
-
-//        if (tarefa.pai) {
-//            $('[name="id"][value="' + tarefa.pai.id + '"]').parents('.tarefa_item:eq(0)').find('.tarefa_pai:eq(0)').append(html);
-//            html.find('[name="pai.id"]').val(tarefa.pai.id);
-//        } else if (tarefa.eap) {
-//            $('[name="eap.id"][value="' + tarefa.eap.id + '"]').parents('.tarefa_item:eq(0)').find('.tarefa_pai:eq(0)').append(html);
-//            html.find('[name="eap.id"]').val(tarefa.eap.id);
-//        } else {
-//            html = $('.HtmlExample .tarefa_pai:eq(0)').clone();
-//            $('.tarefa_list').append(html);
-//        }
         if (tarefa.pai)
             html.find('[name="pai.id"]').val(tarefa.pai.id);
         if (tarefa.eap)
@@ -274,6 +292,8 @@ function printRecursiveEAP(eap) {
         html.find('.marco').html('');
         html.find('.tarefaEdit').remove();
         html.find('[name="eap.id"]').val(eap.id);
+        if (eap.pai)
+            html.find('[name="eap.pai.id"]').val(eap.pai.id);
 
         html.find('.nome').html(eap.id + ' - ' + eap.nome);
         if (eap.tarefas) {

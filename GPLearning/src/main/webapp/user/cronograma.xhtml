@@ -25,8 +25,8 @@
                     <div class="row">
                         <div class="col-xs-12"><label style="white-space: pre-wrap;">#{projetoBean.getDescricao('descricaoTelaCriarCronograma')}</label></div>
                         <div class="col-xs-12 form-group">
-<!--                            <h:inputHidden value="#{projetoBean.projeto.id}" id="pro_id"/>-->
-                            <h:inputHidden value="5" id="pro_id"/>
+                            <h:inputHidden value="#{projetoBean.projeto.id}" id="pro_id"/>
+                            <!--<h:inputHidden value="5" id="pro_id"/>-->
                             <a onclick="loadTarefa();" style="float: right; cursor: pointer;"><i class="fa-refresh"></i></a>
                             <table class="tarefas">
                                 <thead>
@@ -61,6 +61,7 @@
                         <input type="hidden" name="conclusao"/>         
                         <input type="hidden" name="marco"/>
                         <input type="hidden" name="eap.id"/>
+                        <input type="hidden" name="eap.pai.id"/>
                         <div class="lsRecursos"></div>
                     </td>
                     <td class="marco">   

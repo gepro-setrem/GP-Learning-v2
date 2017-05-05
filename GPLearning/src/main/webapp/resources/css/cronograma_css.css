@@ -44,3 +44,11 @@
 .deletaRecurso{
     margin: 0 -5px 0 5px;
 }
+.tarefa .indice{
+    /*    border-radius: 50%;
+        padding: 0px 4px;
+        background: #ddd;*/
+    margin-right: 20px;
+    width: 50px;
+    display: inline-block;
+}
