@@ -10,6 +10,11 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.gplearning.gplearning.Enums.RecursosEnum;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -22,6 +27,10 @@ public class MetodosPublicos {
     private static String key_modoAcesso = "user_modo_acesso";
     private static String key_acessoAluno = "user_acesso_aluno";
     private static String key_acessoProfessor = "user_acesso_professor";
+
+    private static String key_sync = "sync";
+    private static String key_sync_comentario = "last_sync_comentario";
+    private static String key_sync_atividade = "last_sync_atividade";
 
 
     /// metodos de Dados do usuário/Sessão
@@ -102,6 +111,21 @@ public class MetodosPublicos {
         SharedPreferences pref = context.getSharedPreferences(key_modoAcesso, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(key_modoAcesso, key_acessoProfessor);
+        editor.commit();
+    }
+
+
+    public static void SalvaUltimaSincronizacao(Context context, RecursosEnum recurso, Date date) {
+        java.text.DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SharedPreferences pref = context.getSharedPreferences(key_sync, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        if (recurso == RecursosEnum.Comentario) {
+            editor.putString(key_sync_comentario, dateFormat.format(date));
+        } else if (recurso == RecursosEnum.atividades) {
+            editor.putString(key_sync_atividade, dateFormat.format(date));
+        }
+        MetodosPublicos.Log("Data", " new Date:" + dateFormat.format(date));
+
         editor.commit();
     }
 

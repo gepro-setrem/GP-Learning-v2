@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.DAO.ComentarioDAO;
 import com.gplearning.gplearning.Enums.Fragments;
+import com.gplearning.gplearning.Enums.RecursosEnum;
 import com.gplearning.gplearning.Models.Atividade;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Models.ComentarioDao;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+      //  MetodosPublicos.SalvaUltimaSincronizacao(this, RecursosEnum.Comentario, new Date());
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {

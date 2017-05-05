@@ -15,6 +15,7 @@ import android.widget.EditText;
 import com.gplearning.gplearning.Adapters.ComentarioAdapter;
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.DAO.ComentarioDAO;
+import com.gplearning.gplearning.Enums.RecursosEnum;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.DaoSession;
@@ -67,6 +68,7 @@ public class ComentarioActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+      //  new SincronizaComentarios().execute();
     }
 
     @Override
@@ -189,6 +191,19 @@ public class ComentarioActivity extends AppCompatActivity {
             }
 
         }
+
+    }
+
+    private class SincronizaComentarios extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            //  List<Comentario> lsComentariosDeletados= dao.
+
+            MetodosPublicos.SalvaUltimaSincronizacao(ComentarioActivity.this, RecursosEnum.Comentario, new Date());
+            return null;
+        }
+
 
     }
 

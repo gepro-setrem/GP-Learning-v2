@@ -27,6 +27,7 @@ public class Comentario {
 
     @NotNull
     private String descricao;
+
     private Date criacao;
 
     private boolean deletado;//define que este comentário esta deletado
