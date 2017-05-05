@@ -42,7 +42,7 @@ public class Turma implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date alteracao;
 
-    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "turma")
     private List<TurmaParametro> turmaParametros;
 
     @OneToMany(mappedBy = "turma", cascade = CascadeType.REMOVE)//, fetch = FetchType.EAGER)

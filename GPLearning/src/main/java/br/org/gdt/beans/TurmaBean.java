@@ -222,7 +222,7 @@ public class TurmaBean {
                 turmaParametro.setTurma(turma);
                 lsTurmaParametro.add(turmaParametro);
             }
-            turma.setTurmaParametros(lsTurmaParametro);
         }
+        turma.setTurmaParametros(lsTurmaParametro);
     }
 }

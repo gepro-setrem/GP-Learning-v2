@@ -14,11 +14,8 @@ public class RecursoDAO extends DAO<Recurso> {
         classe = Recurso.class;
     }
 
-    public List<Recurso> findbyRecursos(int tar_id) {
-        List<Recurso> recursos = null;
-        if (tar_id > 0) {
-            recursos = entityManager.createQuery("from Recurso where tarefa.id = :tar_id").setParameter("tar_id", tar_id).getResultList();
-        }
-        return recursos;
+    public List<Recurso> findbyTarefa(Tarefa tarefa) {
+        return entityManager.createQuery("from Recurso where tarefa = :t")
+                .setParameter("t", tarefa).getResultList();
     }
 }

@@ -11,65 +11,112 @@ $(function () {
     });
 });
 $(document).on('click', '.marco [type=checkbox]', function () {
+    var tarefa = $(this).parents('.tarefa:eq(0)');
+    var id = parseInt(tarefa.find('[name=id]').val()) || 0;
     var isCheck = $(this).prop('checked');
-    $(this).parents('.tarefa:eq(0)').find('[name=marco]').val(isCheck);
+    tarefa.find('[name=marco]').val(isCheck);
+    if (id > 0) {
+        $.ajax({
+            type: 'POST',
+            url: '/GPLearning/api/tarefa/marcar',
+            data: {id: id, marco: isCheck},
+            success: function (responser) {
+                HideLoader();
+                if (responser) {
+                }
+            }, error: function (error) {
+                HideLoader();
+            }
+        });
+    }
 });
 
-$(document).on('click', '.eapEdit', function () {
-    var eap = $(this).parents('.eap:eq(0)');
-    var ordem = eap.find('[name=ordem]').val();
-    eap.find('[name]').each(function (index, item) {
+$(document).on('click', '.tarefaEdit', function () {
+    var tarefa = $(this).parents('.tarefa:eq(0)');
+    //var ordem = eap.find('[name=ordem]').val();
+    tarefa.find('[name]').each(function (index, item) {
         var name = $(item).attr('name');
         var value = $(item).val();
-        $('#eapModal [name="' + name + '"]').val(value);
+        $('#tarefaModal [name="' + name + '"]').val(value);
     });
-    $('#eapModal .modal-title').html('EAP - ' + ordem);
-    if (ordem == '1')
-        $('#eapModal .deletaEAP').hide();
-    else
-        $('#eapModal .deletaEAP').show();
-    $('#eapModal').modal('show');
+    //$('#tarefaModal .modal-title').html('EAP - ' + ordem);
+    $('#tarefaModal .deletaEAP').show();
+    $('#tarefaModal .recursos > tbody').html('');
+    tarefa.find('.lsRecursos [name=recurso]').each(function (index, item) {
+        var html = $('.HtmlExample .recurso').clone();
+        html.find('[name=recurso]').val($(item).val());
+        $('#tarefaModal .recursos > tbody').append(html);
+    });
+    $('#tarefaModal').modal('show');
 });
 
-$(document).on('click', '#eapModal .salvaEAP', function () {
+$(document).on('click', '#tarefaModal .addRecurso', function () {
+    var html = $('.HtmlExample .recurso').clone();
+    $('#tarefaModal .recursos > tbody').append(html);
+});
+
+$(document).on('click', '#tarefaModal .deletaRecurso', function () {
+    $(this).parents('.recurso:eq(0)').remove();
+});
+
+$(document).on('click', '#tarefaModal .salvaTarefa', function () {
     //var form = $('#eapModal [name]');
     var obj = Object();
-    obj.projeto = {id: (parseInt($('#pro_id').val()) || 0)};
-    var pai_id = parseInt($('#eapModal [name="pai.id"]').val()) || 0;
+    //obj.projeto = {id: (parseInt($('#pro_id').val()) || 0)};
+    var pai_id = parseInt($('#tarefaModal [name="pai.id"]').val()) || 0;
     if (pai_id > 0)
         obj.pai = {id: pai_id};
-    obj.id = parseInt($('#eapModal [name="id"]').val()) || 0;
-    obj.ordem = parseInt($('#eapModal [name="ordem"]').val().split('.').slice(-1)[0]) || 0;
-    obj.nome = $('#eapModal [name="nome"]').val();
-    obj.descricao = $('#eapModal [name="descricao"]').val();
-    obj.inicio = $('#eapModal [name="inicio"]').val();
-    obj.termino = $('#eapModal [name="termino"]').val();
-    obj.valor = parseFloat($('#eapModal [name="valor"]').val()) || 0;
+    var eap_id = parseInt($('#tarefaModal [name="eap.id"]').val()) || 0;
+    if (eap_id > 0)
+        obj.eap = {id: eap_id};
+    obj.id = parseInt($('#tarefaModal [name="id"]').val()) || 0;
+    obj.nome = $('#tarefaModal [name="nome"]').val();
+    obj.conclusao = $('#tarefaModal [name="conclusao"]').val();
+    obj.inicio = $('#tarefaModal [name="inicio"]').val();
+    obj.termino = $('#tarefaModal [name="termino"]').val();
+    obj.recursos = [];
+    $('#tarefaModal [name="recurso"]').each(function (index, item) {
+        var recurso = $.trim($(item).val());
+        if (recurso != '') {
+            obj.recursos.push({nome: recurso});
+        }
+    });
     if ($.trim(obj.nome) != '') {
         ShowLoader();
         $.ajax({
             type: 'POST',
-            url: '/GPLearning/api/eap/salvar',
+            url: '/GPLearning/api/tarefa/salvar',
             data: JSON.stringify(obj),
             dataType: 'json',
             contentType: "application/json",
             success: function (responser) {
                 HideLoader();
                 if (responser && responser > 0) {
-                    var eap = $('.eap [name=id][value="' + obj.id + '"]').parents('.eap:eq()');
+                    var tarefa = $('.tarefa [name=id][value="' + obj.id + '"]').parents('.tarefa:eq(0)');
                     if (obj.id === 0)
                     {
-                        eap = $('.HtmlExample .eap_item').clone();
-                        $('#eapModal [name=id]').val(responser);
-                        $('[name="id"][value="' + pai_id + '"]').parents('.eap_item:eq(0)').find('.eap_pai:eq(0)').append(eap);
+                        tarefa = $('.HtmlExample .tarefa').clone();
+                        $('#tarefaModal [name=id]').val(responser);
+                        if (pai_id > 0) {
+                            tarefa.insertAfter($('[name="id"][value="' + pai_id + '"]').parents('.tarefa:eq(0)'));
+                        } else if (eap_id) {
+                            tarefa.insertAfter($('[name="eap.id"][value="' + eap_id + '"]').parents('.tarefa:eq(0)'));
+                        }
                     }
-                    $('#eapModal [name]').each(function (index, item) {
+                    $('#tarefaModal [name]').each(function (index, item) {
                         var name = $(item).attr('name');
                         var value = $(item).val();
-                        eap.find('[name="' + name + '"]').val(value);
+                        tarefa.find('[name="' + name + '"]').val(value);
                     });
-                    eap.find('.eap_nome').html(responser + '- ' + $('#eapModal [name=nome]').val());
-                    $('#eapModal').modal('hide');
+                    tarefa.find('.lsRecursos').html('');
+                    var recursos = '';
+                    $(obj.recursos).each(function (index, item) {
+                        recursos += item.nome + ', ';
+                        tarefa.find('.lsRecursos').append('<input type="hidden" name="recurso" value="' + item.nome + '"/>');
+                    });
+                    tarefa.find('.recursos').html(recursos.slice(0, -2));
+                    tarefa.find('.nome').html(responser + '- ' + $('#tarefaModal [name=nome]').val());
+                    $('#tarefaModal').modal('hide');
                 }
             }, error: function (error) {
                 HideLoader();
@@ -78,25 +125,24 @@ $(document).on('click', '#eapModal .salvaEAP', function () {
     }
 });
 
-$(document).on('click', '#eapModal .deletaEAP', function () {
-    var id = parseInt($('#eapModal').find('[name=id]').val()) || 0;
+$(document).on('click', '#tarefaModal .deletaTarefa', function () {
+    var id = parseInt($('#tarefaModal').find('[name=id]').val()) || 0;
     var confirm = false;
     if (id > 0) {
-        confirm = window.confirm("Tem certeza que deseja excluir?\n Todas os subpacotes serão excluídos também!");
+        confirm = window.confirm("Tem certeza que deseja excluir?\n Todas as subtarefas serão excluídos também!");
     }
     if (confirm) {
         ShowLoader();
         $.ajax({
             type: 'POST',
-            url: '/GPLearning/api/eap/excluir',
-            data: {eap_id: id},
+            url: '/GPLearning/api/tarefa/excluir',
+            data: {id: id},
             success: function (responser) {
                 HideLoader();
                 if (responser) {
-                    var item = $('.eap [name=id][value="' + id + '"]').parents('.eap_item:eq(0)');
-                    item.remove();
+                    DeleteRecursive(id);
                     ReloadNumbers();
-                    $('#eapModal').modal('hide');
+                    $('#tarefaModal').modal('hide');
                 }
             }, error: function (error) {
                 HideLoader();
@@ -104,18 +150,31 @@ $(document).on('click', '#eapModal .deletaEAP', function () {
         });
     }
 });
+function DeleteRecursive(id) {
+    if (id > 0) {
+        $('.tarefa [name="pai.id"][value="' + id + '"]').parents('.tarefa').each(function (index, item) {
+            var id2 = parseInt($(item).find('[name=id]').val()) || 0;
+            DeleteRecursive(id2);
+        });
+        $('.tarefa [name=id][value="' + id + '"]').parents('.tarefa:eq(0)').remove();
+    }
+}
 
-$(document).on('click', '.eapAdd', function () {
-    var eap = $(this).parents('.eap:eq(0)');
-    var ordem = $(eap).find('[name=ordem]').val();
-    var childrens = $(eap).next('.eap_pai').children('.eap_item').length;
-    ordem = ordem + '.' + (childrens + 1);
-    $('#eapModal [name]').val('');
-    $('#eapModal [name="pai.id"]').val($(eap).find('[name=id]').val());
-    $('#eapModal [name=ordem]').val(ordem);
-    $('#eapModal .modal-title').html('EAP - ' + ordem);
-    $('#eapModal .deletaEAP').hide();
-    $('#eapModal').modal('show');
+$(document).on('click', '.tarefaAdd', function () {
+    var tarefa = $(this).parents('.tarefa:eq(0)');
+    $('#tarefaModal [name]').val('');
+    var id = parseInt($(tarefa).find('[name="id"]').val()) || 0;
+    //var idPai = parseInt($(tarefa).find('[name="pai.id]"').val()) || 0;
+    var idEap = parseInt($(tarefa).find('[name="eap.id"]').val()) || 0;
+    if (id > 0)
+        $('#tarefaModal [name="pai.id"]').val(id);
+    else if (idEap > 0)
+        $('#tarefaModal [name="eap.id"]').val(idEap);
+    //$('#tarefaModal [name=ordem]').val(ordem);
+    //$('#eapModal .modal-title').html('EAP - ' + ordem);
+    $('#tarefaModal .deletaTarefa').hide();
+    if (id > 0 || idEap > 0)
+        $('#tarefaModal').modal('show');
 });
 
 function CalculaLargura() {
@@ -179,13 +238,25 @@ function printRecursiveTarefa(tarefa) {
 //            html = $('.HtmlExample .tarefa_pai:eq(0)').clone();
 //            $('.tarefa_list').append(html);
 //        }
+        if (tarefa.pai)
+            html.find('[name="pai.id"]').val(tarefa.pai.id);
+        if (tarefa.eap)
+            html.find('[name="eap.id"]').val(tarefa.eap.id);
         html.find('[name="id"]').val(tarefa.id);
         html.find('[name="nome"]').val(tarefa.nome);
         html.find('[name="inicio"]').val(tarefa.inicio);
         html.find('[name="termino"]').val(tarefa.termino);
         html.find('[name="conclusao"]').val(tarefa.conclusao);
         html.find('[name="marco"]').val(tarefa.marco);
-
+        html.find('.marco [type=checkbox]').prop('checked', tarefa.marco);
+        var recursos = '';
+        if (tarefa.recursos) {
+            $(tarefa.recursos).each(function (index, item) {
+                recursos += item.nome + ', ';
+                html.find('.lsRecursos').append('<input type="hidden" name="recurso" value="' + item.nome + '"/>');
+            });
+        }
+        html.find('.recursos').html(recursos.slice(0, -2));
         html.find('.nome').html(tarefa.id + ' - ' + tarefa.nome);
 
         if (tarefa.tarefas) {
@@ -201,6 +272,7 @@ function printRecursiveEAP(eap) {
         var html = $('.HtmlExample .tarefa').clone();
         $('.tarefas tbody').append(html);
         html.find('.marco').html('');
+        html.find('.tarefaEdit').remove();
         html.find('[name="eap.id"]').val(eap.id);
 
         html.find('.nome').html(eap.id + ' - ' + eap.nome);

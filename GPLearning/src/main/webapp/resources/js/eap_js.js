@@ -52,7 +52,7 @@ $(document).on('click', '#eapModal .salvaEAP', function () {
             success: function (responser) {
                 HideLoader();
                 if (responser && responser > 0) {
-                    var eap = $('.eap [name=id][value="' + obj.id + '"]').parents('.eap:eq()');
+                    var eap = $('.eap [name=id][value="' + obj.id + '"]').parents('.eap:eq(0)');
                     if (obj.id === 0)
                     {
                         eap = $('.HtmlExample .eap_item').clone();
@@ -186,20 +186,6 @@ function printRecursiveEAP(eap) {
         }
     }
 }
-function toDate(num) {
-    var d = new Date(parseInt(num));
-    if (d != 'Invalid Date') {
-        var dia = d.getDate();
-        if (dia < 10)
-            dia = '0' + dia;
-        var mes = d.getMonth() + 1;
-        if (mes < 10)
-            mes = '0' + mes;
-        var ano = d.getFullYear();
-        return ano + '-' + mes + '-' + dia;
-    }
-    return null;
-}//"yyyy-MM-dd"
 //function number() {
 //    return Math.floor((1 + Math.random()) * 0x10000);
 //}

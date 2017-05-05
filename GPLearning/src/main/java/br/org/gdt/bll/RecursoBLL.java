@@ -14,10 +14,10 @@ public class RecursoBLL extends BLL<Recurso> {
     @Autowired
     private RecursoDAO dao;
 
-    public List<Recurso> findbyRecursos(Tarefa tarefa) {
+    public List<Recurso> findbyTarefa(Tarefa tarefa) {
         List<Recurso> recursos = new ArrayList<>();
         if (tarefa != null && tarefa.getId() > 0) {
-            recursos = dao.findbyRecursos(tarefa.getId());
+            recursos = dao.findbyTarefa(tarefa);
         }
         return recursos;
     }

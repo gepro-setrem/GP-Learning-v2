@@ -63,7 +63,7 @@ public class TarefaBLL extends BLL<Tarefa> {
         if (tarefas != null) {
             for (Tarefa child : tarefas) {
                 List<Tarefa> tarefas2 = findbyChildren(null, child);
-                List<Recurso> recursos = recursoBLL.findbyRecursos(child);
+                List<Recurso> recursos = recursoBLL.findbyTarefa(child);
                 child.setRecursos(recursos);
                 child.setTarefas(tarefas2);
                 clearRecursive(child);
@@ -74,7 +74,13 @@ public class TarefaBLL extends BLL<Tarefa> {
 
     private void clearRecursive(Tarefa tarefa) {
         if (tarefa != null) {
-            tarefa.setEap(null);
+            if (tarefa.getEap() != null) {
+                tarefa.getEap().setPai(null);
+                tarefa.getEap().setEaps(null);
+                tarefa.getEap().setProjeto(null);
+                tarefa.getEap().setTarefas(null);
+            }
+
             if (tarefa.getPai() != null) {
                 tarefa.getPai().setEap(null);
                 tarefa.getPai().setTarefas(null);

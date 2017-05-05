@@ -74,7 +74,7 @@ public class Pessoa implements Serializable {
     private List<Projeto> projetos;
 
     //@OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
-    @OneToOne(mappedBy = "pessoa", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "pessoa")
     private Login login;
 
     public Pessoa() {

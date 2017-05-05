@@ -41,7 +41,7 @@ public class Comentario implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "act_id")
-    private Etapa atividade;
+    private Etapa etapa;
 
     public Comentario() {
     }
@@ -86,12 +86,12 @@ public class Comentario implements Serializable {
         this.destinatario = destinatario;
     }
 
-    public Etapa getAtividade() {
-        return atividade;
+    public Etapa getEtapa() {
+        return etapa;
     }
 
-    public void setAtividade(Etapa atividade) {
-        this.atividade = atividade;
+    public void setEtapa(Etapa etapa) {
+        this.etapa = etapa;
     }
 
 }

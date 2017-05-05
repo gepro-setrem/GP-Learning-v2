@@ -1,6 +1,7 @@
 .HtmlExample{display: none;}
 .tarefas{
     width: 100%;
+    cursor: pointer;
 }
 .tarefas tr, .tarefas th, .tarefas td{
     border: 1px solid #ddd;
@@ -18,4 +19,28 @@
 }
 .marco_icon:hover{
     color: #ccc;
+}
+.tarefaAdd, .tarefaEdit{
+    opacity: 0;
+    float: right;
+    margin: 0 1px;
+}
+.tarefa:hover{
+    background: #eee;
+}
+.tarefa:hover .tarefaAdd, .tarefa:hover .tarefaEdit{
+    opacity: 1;
+}
+
+#tarefaModal .recursos{
+    width: 100%;
+}
+#tarefaModal .recursos .recurso{
+    border: 1px solid transparent;
+}
+.addRecurso{
+    margin-top: 10px;
+}
+.deletaRecurso{
+    margin: 0 -5px 0 5px;
 }

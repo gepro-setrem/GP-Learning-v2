@@ -36,8 +36,8 @@ public class Indicador implements Serializable {
     @JoinColumn(name = "pes_id")
     public Pessoa professor;
 
-    @ManyToMany(cascade = CascadeType.REMOVE)
-    private List<EtapaProjeto> atividades;
+    @ManyToMany(mappedBy = "indicador", cascade = CascadeType.REMOVE)
+    private List<IndicadorEtapa> indicadoretapas;
 
     public Indicador() {
     }
@@ -74,12 +74,12 @@ public class Indicador implements Serializable {
         this.professor = professor;
     }
 
-    public List<EtapaProjeto> getAtividades() {
-        return atividades;
+    public List<IndicadorEtapa> getIndicadoretapas() {
+        return indicadoretapas;
     }
 
-    public void setAtividades(List<EtapaProjeto> atividades) {
-        this.atividades = atividades;
+    public void setIndicadoretapas(List<IndicadorEtapa> indicadoretapas) {
+        this.indicadoretapas = indicadoretapas;
     }
 
 }

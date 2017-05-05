@@ -56,9 +56,9 @@
                         <div class="tab-content col-sm-8 col-xs-12">
                             <ui:repeat var="item" value="#{turmaBean.turma.turmaParametros}" varStatus="status">
                                 <div class="tab-pane #{status.index == 0 ? 'active' : ''}" id="#{item.chave}">
-                                    <h:inputHidden value="#{item.chave}"/>
-                                    <h:inputHidden value="#{item.id}"/>
-                                    <h:inputTextarea class="form-control" rows="5" value="#{item.valor}"/>
+                                    <h:inputHidden value="#{turmaBean.turma.turmaParametros[status.index].chave}"/>
+                                    <h:inputHidden value="#{turmaBean.turma.turmaParametros[status.index].id}"/>
+                                    <h:inputTextarea class="form-control" rows="5" value="#{turmaBean.turma.turmaParametros[status.index].valor}"/>
                                 </div>
                             </ui:repeat>
                         </div>

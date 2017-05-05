@@ -1,6 +1,7 @@
 package br.org.gdt.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,11 +25,11 @@ public class TurmaParametro implements Serializable {
 
     @Column(name = "trp_tvalor", length = 2500)
     private String valor;
-    
+
     @ManyToOne
     @JoinColumn(name = "tur_id")
     private Turma turma;
-    
+
     public TurmaParametro() {
     }
 
@@ -62,6 +63,35 @@ public class TurmaParametro implements Serializable {
 
     public void setTurma(Turma turma) {
         this.turma = turma;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + this.id;
+        hash = 89 * hash + Objects.hashCode(this.chave);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TurmaParametro other = (TurmaParametro) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.chave, other.chave)) {
+            return false;
+        }
+        return true;
     }
 
 }
