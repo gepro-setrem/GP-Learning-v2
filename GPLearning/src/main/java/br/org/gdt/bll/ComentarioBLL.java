@@ -4,6 +4,7 @@ import br.org.gdt.dao.ComentarioDAO;
 import br.org.gdt.model.Etapa;
 import br.org.gdt.model.Comentario;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,4 +45,14 @@ public class ComentarioBLL extends BLL<Comentario> {
         }
         return lsComentario;
     }
+    
+    public List<Comentario> findbyDate(Date date){
+        List<Comentario> lsComentarios = new ArrayList<>();
+        if(date!=null){
+            dao.
+        }
+        return lsComentarios;
+    }
+            
+    
 }

@@ -10,6 +10,7 @@ import br.org.gdt.model.Comentario;
 import br.org.gdt.bll.ComentarioBLL;
 import br.org.gdt.model.Etapa;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -22,6 +23,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Path("/comentario")
 public class ComentarioResource {
@@ -43,6 +45,18 @@ public class ComentarioResource {
             if (atv != null && atv.getId() > 0) {
                 lsComentario = comentarioBLL.findbyAtividade(atv);
             }
+        }
+        return lsComentario;
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/date/{date}")
+    public List<Comentario> getAllFromDate(@PathParam("date") Date date) {
+        System.out.println("chegou no metodo date:" + date.toString());
+        List<Comentario> lsComentario = new ArrayList<Comentario>();
+        if (null != date) {
+            lsComentario = comentarioBLL.findbyDate(date);
         }
         return lsComentario;
     }
@@ -72,17 +86,18 @@ public class ComentarioResource {
         return 0;
     }
 
-    
 //    @POST
 //    @Path("/excluir/{com_id}")
 //    //  @Produces(MediaType.APPLICATION_XML)
 //    @Produces(MediaType.APPLICATION_JSON)
 //    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @GET
+    // @GET
+    //   @Path("/excluir/{com_id}")
+    //  public Boolean Excluir(@PathParam("com_id") int com_id) {
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/excluir/{com_id}")
-    public Boolean Excluir(@PathParam("com_id") int com_id) {
-        
+    @ResponseBody
+    public Boolean Excluir(@FormParam("com_id") int com_id) {
         System.out.println("Vai deletar o Comentario!");
         if (com_id > 0) {
             Comentario comentario = comentarioBLL.findById(com_id);
