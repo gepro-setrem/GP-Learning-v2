@@ -23,11 +23,14 @@ public class EtapaParametro implements Serializable {
     @Column(name = "tpp_vchave", length = 200)
     private String chave;
 
-    @Column(name = "tpp_vvalor", length = 200)
+    @Column(name = "tpp_vvalor", length = 2500)
     private String valor;
 
+    @Column(name = "tpp_iminimo")
+    private int minimo;
+
     @ManyToOne
-    @JoinColumn(name = "act_id")
+    @JoinColumn(name = "eta_id")
     private Etapa etapa;
 
     public EtapaParametro() {
@@ -64,7 +67,5 @@ public class EtapaParametro implements Serializable {
     public void setEtapa(Etapa etapa) {
         this.etapa = etapa;
     }
-
-   
 
 }

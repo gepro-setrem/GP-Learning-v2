@@ -24,8 +24,12 @@ public class Avaliacao implements Serializable {
     @Column(name = "ava_id")
     private int id;
 
-    @Column(name = "ava_ivalor", length = 2500)
+    @Column(name = "ava_ivalor", length = 5)
     private int valor;
+
+    @Column(name = "ava_dcriacao")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date criacao;
 
     @ManyToOne
     @JoinColumn(name = "tpp_id")
@@ -56,6 +60,14 @@ public class Avaliacao implements Serializable {
 
     public void setValor(int valor) {
         this.valor = valor;
+    }
+
+    public Date getCriacao() {
+        return criacao;
+    }
+
+    public void setCriacao(Date criacao) {
+        this.criacao = criacao;
     }
 
     public EtapaParametro getEtapaParametro() {

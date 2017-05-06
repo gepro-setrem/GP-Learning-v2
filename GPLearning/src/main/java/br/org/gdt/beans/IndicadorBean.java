@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestScoped
 public class IndicadorBean {
 
+    private static final String viewList = "indicador";
     private Indicador indicador = new Indicador();
     @ManagedProperty("#{indicadorBLL}")
     private IndicadorBLL indicadorBLL;
@@ -41,33 +42,35 @@ public class IndicadorBean {
             } else {
                 indicadorBLL.insert(indicador);
             }
-            return "indicadorlst";
+            indicador = new Indicador();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Indicador salvo com sucesso!"));
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para salvar, é necessário preencher o nome do Indicador!"));
-            return "indicadorfrm";
         }
+        return viewList;
     }
 
     public String editar() {
         indicador = (Indicador) indicadores.getRowData();
         indicador = indicadorBLL.findById(indicador.getId());
-        return "indicadorfrm";
+        return viewList;
     }
 
     public String excluir() throws Exception {
         try {
             indicador = (Indicador) indicadores.getRowData();
             indicadorBLL.delete(indicador.getId());
-            indicador = null;
+            indicador = new Indicador();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Indicador excluído com sucesso!"));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
         }
-        return "indicadorlst";
+        return viewList;
     }
 
     public String novo() {
         indicador = new Indicador();
-        return "indicadorfrm";
+        return viewList;
     }
 
     public Indicador getIndicador() {

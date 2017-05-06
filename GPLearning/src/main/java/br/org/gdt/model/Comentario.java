@@ -40,7 +40,7 @@ public class Comentario implements Serializable {
     private Pessoa destinatario;
 
     @ManyToOne
-    @JoinColumn(name = "act_id")
+    @JoinColumn(name = "eta_id")
     private Etapa etapa;
 
     public Comentario() {

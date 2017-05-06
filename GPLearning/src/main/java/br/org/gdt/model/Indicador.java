@@ -29,15 +29,12 @@ public class Indicador implements Serializable {
     @Column(name = "ind_vnome", length = 200)
     private String nome;
 
-    @Column(name = "ind_ivalor")
-    private int valor;
-
     @ManyToOne
     @JoinColumn(name = "pes_id")
     public Pessoa professor;
 
     @ManyToMany(mappedBy = "indicador", cascade = CascadeType.REMOVE)
-    private List<IndicadorEtapa> indicadoretapas;
+    private List<IndicadorEtapa> indicadorEtapas;
 
     public Indicador() {
     }
@@ -58,14 +55,6 @@ public class Indicador implements Serializable {
         this.nome = nome;
     }
 
-    public int getValor() {
-        return valor;
-    }
-
-    public void setValor(int valor) {
-        this.valor = valor;
-    }
-
     public Pessoa getProfessor() {
         return professor;
     }
@@ -74,12 +63,12 @@ public class Indicador implements Serializable {
         this.professor = professor;
     }
 
-    public List<IndicadorEtapa> getIndicadoretapas() {
-        return indicadoretapas;
+    public List<IndicadorEtapa> getIndicadorEtapas() {
+        return indicadorEtapas;
     }
 
-    public void setIndicadoretapas(List<IndicadorEtapa> indicadoretapas) {
-        this.indicadoretapas = indicadoretapas;
+    public void setIndicadorEtapas(List<IndicadorEtapa> indicadorEtapas) {
+        this.indicadorEtapas = indicadorEtapas;
     }
 
 }
