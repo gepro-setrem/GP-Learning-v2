@@ -49,7 +49,7 @@ public class ComentarioBLL extends BLL<Comentario> {
     public List<Comentario> findbyDate(Date date){
         List<Comentario> lsComentarios = new ArrayList<>();
         if(date!=null){
-            //dao.
+          return dao.findbyDate(date);
         }
         return lsComentarios;
     }

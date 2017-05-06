@@ -48,19 +48,7 @@ public class ComentarioResource {
         }
         return lsComentario;
     }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/date/{date}")
-    public List<Comentario> getAllFromDate(@PathParam("date") Date date) {
-        System.out.println("chegou no metodo date:" + date.toString());
-        List<Comentario> lsComentario = new ArrayList<Comentario>();
-        if (null != date) {
-            lsComentario = comentarioBLL.findbyDate(date);
-        }
-        return lsComentario;
-    }
-
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/comentario/{com_id}")
@@ -69,7 +57,18 @@ public class ComentarioResource {
         //  List<Comentario> lsComentario = new ArrayList<Comentario>();
         return comentarioBLL.findById(com_id);
     }
-    //  return lsComentario;
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/date")
+    public List<Comentario> getAllFromDate(Comentario comentario) {
+      //  System.out.println("chegou no metodo date:" + date.toString());
+        List<Comentario> lsComentario = new ArrayList<>();
+        if (null != comentario && comentario.getCriacao() != null) {
+            lsComentario = comentarioBLL.findbyDate(comentario.getCriacao());
+        }
+        return lsComentario;
+    }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -94,13 +93,16 @@ public class ComentarioResource {
     // @GET
     //   @Path("/excluir/{com_id}")
     //  public Boolean Excluir(@PathParam("com_id") int com_id) {
+//    @POST
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Path("/excluir")
+//    public Boolean Excluir(@FormParam("com_id") int com_id) {
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @ResponseBody
-    public Boolean Excluir(@FormParam("com_id") int com_id) {
+    @Path("/excluir")
+    public Boolean Excluir(Comentario com) {
         System.out.println("Vai deletar o Comentario!");
-        if (com_id > 0) {
-            Comentario comentario = comentarioBLL.findById(com_id);
+        if (com != null && com.getId() > 0) {
+            Comentario comentario = comentarioBLL.findById(com.getId());
             comentarioBLL.delete(comentario);
             return true;
         }

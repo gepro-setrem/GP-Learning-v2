@@ -1,6 +1,8 @@
 package br.org.gdt.resource;
 
+import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.bll.ProjetoBLL;
+import br.org.gdt.model.Pessoa;
 import br.org.gdt.model.Projeto;
 import java.util.List;
 import javax.ws.rs.GET;
@@ -16,11 +18,33 @@ public class ProjetoResource {
     @Autowired
     private ProjetoBLL projetoBLL;
 
+    @Autowired
+    private PessoaBLL pessoaBLL;
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/index/{pes_id}")
-    public List<Projeto> getAll(@PathParam("pes_id") int pes_id) {
-        Projeto projeto = projetoBLL.findById(pes_id);
+    @Path("/index/aluno/{pes_id}")
+    public List<Projeto> getAllbyAluno(@PathParam("pes_id") int pes_id) {
+        if (pes_id > 0) {
+            Pessoa aluno = pessoaBLL.findById(pes_id);
+            if (aluno != null) {
+                return projetoBLL.findbyAluno(aluno);
+            }
+        }
         return null;
     }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/index/professor/{pes_id}")
+    public List<Projeto> getAllbyProfessor(@PathParam("pes_id") int pes_id) {
+        if (pes_id > 0) {
+            Pessoa professor = pessoaBLL.findById(pes_id);
+            if (professor != null) {
+                return projetoBLL.findbyProfessor(professor);
+            }
+        }
+        return null;
+    }
+
 }
