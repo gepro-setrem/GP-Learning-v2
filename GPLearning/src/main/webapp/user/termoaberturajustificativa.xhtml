@@ -16,7 +16,7 @@
         <h:form>
             #{termoAberturaBean.setProjeto(projetoBean.projeto)}
             <div class="panel panel-default">
-                <div class="panel-heading"><h4>Justificativa do Projeto</h4></div>
+                <div class="panel-heading"><h4>#{turmaBean.getEtapaProjeto('JustificativaProjeto')}</h4></div>
                 <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
                 <div class="panel-body">
                     <div class="row">

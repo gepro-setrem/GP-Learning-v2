@@ -164,6 +164,11 @@ public class TurmaBean {
         return turmaParametroBLL.getTurmaParametroType(trType);
     }
 
+    public String getEtapaProjeto(String type) {
+        EtapaProjeto etType = EtapaProjeto.valueOf(type);
+        return etapaBLL.getEtapaProjeto(etType);
+    }
+
     private void initParametros() {
         List<TurmaParametro> lsTurmaParametro = turmaParametroBLL.findbyTurma(turma);
         TurmaParametroType[] lsTurmaParametroType = TurmaParametroType.values();

@@ -25,25 +25,25 @@ public class Etapa implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genetapa")
 
     @Id
-    @Column(name = "atv_id")
+    @Column(name = "eta_id")
     private int id;
 
-    @Column(name = "atv_vnome", length = 200)
+    @Column(name = "eta_vnome", length = 200)
     private String nome;
 
-    @Column(name = "atv_dcriacao")
+    @Column(name = "eta_dcriacao")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date criacao;
 
-    @Column(name = "atv_dtermino")
+    @Column(name = "eta_dtermino")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date termino;
 
-    @Column(name = "atv_dconclusao")
+    @Column(name = "eta_dconclusao")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date conclusao;
 
-    @Column(name = "atv_vetapa")
+    @Column(name = "eta_vetapa")
     @Enumerated(EnumType.STRING)
     private EtapaProjeto etapa;
 

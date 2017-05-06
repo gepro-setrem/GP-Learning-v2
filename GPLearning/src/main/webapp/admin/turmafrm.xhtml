@@ -20,64 +20,65 @@
                     <div class="alert-warning">
                         <h:messages />
                     </div>
-                    <div class="row">
-                        <div class="col-sm-8 col-xs-12">
-                            <div class="form-group row">
-                                <label class="col-sm-3 control_label">Nome da Turma*:</label>
-                                <div class="col-sm-9">
-                                    <h:inputText class="form-control" pt:placeholder="Nome" value="#{turmaBean.turma.nome}" required="true" requiredMessage="O 'Nome' é obrigatório!"/>
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#turma">Turma</a></li>
+                        <li><a data-toggle="tab" href="#descricoes">Descrições</a></li>
+                        <li><a data-toggle="tab" href="#gamificacao">Gamificação</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane row active" id="turma" style="padding-top: 15px;">
+                            <div class="col-sm-8 col-xs-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 control_label">Nome da Turma*:</label>
+                                    <div class="col-sm-9">
+                                        <h:inputText class="form-control" pt:placeholder="Nome" value="#{turmaBean.turma.nome}" required="true" requiredMessage="O 'Nome' é obrigatório!"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-12">
+                                <div class="form-group row" >
+                                    <label class="col-xs-3 control_label">Ano:</label>
+                                    <div class="col-sm-9" >
+                                        <h:inputText class="form-control" pt:type="number" value="#{turmaBean.turma.ano}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group row" >
+                                    <label class="col-xs-2 control_label">Descrição:</label>
+                                    <div class="col-sm-10" >
+                                        <h:inputTextarea class="form-control" value="#{turmaBean.turma.descricao}" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 col-xs-12">
-                            <div class="form-group row" >
-                                <label class="col-xs-3 control_label">Ano:</label>
-                                <div class="col-sm-9" >
-                                    <h:inputText class="form-control" pt:type="number" value="#{turmaBean.turma.ano}" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12">
-                            <div class="form-group row" >
-                                <label class="col-xs-2 control_label">Descrição:</label>
-                                <div class="col-sm-10" >
-                                    <h:inputTextarea class="form-control" value="#{turmaBean.turma.descricao}" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <ui:repeat var="item" value="#{turmaBean.turma.turmaParametros}" varStatus="status">
-                            <div class="col-xs-12 text-left form-group">
-                                <c:set var="label" value="#{turmaBean.getTurmaParametroType(item.chave)}"/>
-                                <a class="btn btn-link">#{label}</a>
-                                <div id="#{item.chave}" class="collapse in">
-                                    <h:inputHidden value="#{turmaBean.turma.turmaParametros[status.index].chave}"/>
-                                    <h:inputHidden value="#{turmaBean.turma.turmaParametros[status.index].id}"/>
-                                    <h:inputTextarea class="form-control" rows="5" value="#{turmaBean.turma.turmaParametros[status.index].valor}" pt:placeholder="#{label}"/>
-                                </div>
-                            </div>
-                        </ui:repeat>
-                    </div>
-<!--                    <div class="row">
-                        <div class="col-sm-4 col-xs-12">
-                            <ul class="nav nav-pills nav-stacked">
-                                <ui:repeat var="item" value="{turmaBean.turmaParametroTypes}" varStatus="status">
-                                    <li role="presentation" class="{status.index == 0 ? 'active' : ''}"><a href="{item}" data-toggle="tab">{turmaBean.getTurmaParametroType(item.toString())}</a></li>
-                                </ui:repeat>
-                            </ul>    
-                        </div>
-                        <div class="tab-content col-sm-8 col-xs-12">
-                            <ui:repeat var="item" value="{turmaBean.turma.turmaParametros}" varStatus="status">
-                                <div class="tab-pane {status.index == 0 ? 'active' : ''}" id="{item.chave}">
-                                    <h:inputHidden value="{turmaBean.turma.turmaParametros[status.index].chave}"/>
-                                    <h:inputHidden value="{turmaBean.turma.turmaParametros[status.index].id}"/>
-                                    <h:inputTextarea class="form-control" rows="5" value="{turmaBean.turma.turmaParametros[status.index].valor}"/>
+                        <div class="tab-pane row" id="descricoes" style="padding-top: 15px;">
+                            <ui:repeat var="item" value="#{turmaBean.turma.turmaParametros}" varStatus="status">
+                                <div class="col-xs-12 text-left form-group">
+                                    <c:set var="label" value="#{turmaBean.getTurmaParametroType(item.chave)}"/>
+                                    <a class="btn btn-link">#{label}</a>
+                                    <div id="#{item.chave}" class="collapse in">
+                                        <h:inputHidden value="#{turmaBean.turma.turmaParametros[status.index].chave}"/>
+                                        <h:inputHidden value="#{turmaBean.turma.turmaParametros[status.index].id}"/>
+                                        <h:inputTextarea class="form-control" rows="5" value="#{turmaBean.turma.turmaParametros[status.index].valor}" pt:placeholder="#{label}"/>
+                                    </div>
                                 </div>
                             </ui:repeat>
                         </div>
-                    </div>-->
-
+                        <div class="tab-pane row" id="gamificacao" style="padding-top: 15px;">
+                            <ui:repeat var="item" value="#{turmaBean.turma.etapas}" varStatus="status">
+                                <div class="col-xs-12 text-left form-group">
+                                    <c:set var="label" value="#{turmaBean.getEtapaProjeto(item.etapa)}"/>
+                                    <a class="btn btn-link">#{label}</a>
+                                    <div id="#{item.etapa}" class="collapse in">
+                                        <h:inputHidden value="#{turmaBean.turma.etapas[status.index].etapa}"/>
+                                        <h:inputHidden value="#{turmaBean.turma.etapas[status.index].id}"/>
+                                        <h:inputText class="form-control" value="#{turmaBean.turma.etapas[status.index].nome}" pt:placeholder="#{label}"/>
+                                    </div>
+                                </div>
+                            </ui:repeat>
+                        </div>
+                    </div>
                     <div style="text-align: right;">
                         <h:button class="btn btn-default" outcome="turmalst" value="Cancelar" style="margin-right: 5px;"/>
                         <h:commandLink class="btn btn-success" action="#{turmaBean.salvar()}"><i class="fa-check"></i> Salvar</h:commandLink>

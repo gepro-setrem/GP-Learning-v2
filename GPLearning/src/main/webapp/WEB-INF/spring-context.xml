@@ -54,7 +54,6 @@
             <bean class="br.org.gdt.resource.ComentarioResource" />
             <bean class="br.org.gdt.resource.ProjetoResource" />
             <bean class="br.org.gdt.resource.EAPResource" />
-            <bean class="br.org.gdt.resource.RecursoResource" />
             <bean class="br.org.gdt.resource.TarefaResource" />
         </jaxrs:serviceBeans>
         <jaxrs:providers>

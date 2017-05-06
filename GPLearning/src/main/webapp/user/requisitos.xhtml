@@ -15,7 +15,7 @@
         <h:form>
             #{requisitoBean.setProjeto(projetoBean.projeto)}
             <div class="panel panel-default">
-                <div class="panel-heading"><h4>Coleta de Requisitos</h4></div>
+                <div class="panel-heading"><h4>#{turmaBean.getEtapaProjeto('Requisitos')}</h4></div>
                 <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
                 <div class="panel-body">
                     <div class="row">
