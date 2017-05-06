@@ -5,7 +5,7 @@
  */
 package br.org.gdt.resource;
 
-import br.org.gdt.bll.AtividadeBLL;
+import br.org.gdt.bll.EtapaBLL;
 import br.org.gdt.model.Comentario;
 import br.org.gdt.bll.ComentarioBLL;
 import br.org.gdt.model.Etapa;
@@ -32,7 +32,7 @@ public class ComentarioResource {
     private ComentarioBLL comentarioBLL;
 
     @Autowired
-    private AtividadeBLL atividadeBLL;
+    private EtapaBLL etapaBLL;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -41,7 +41,7 @@ public class ComentarioResource {
         System.out.println("chegou no metodo id:" + atv_id);
         List<Comentario> lsComentario = new ArrayList<Comentario>();
         if (atv_id > 0) {
-            Etapa atv = atividadeBLL.findById(atv_id);
+            Etapa atv = etapaBLL.findById(atv_id);
             if (atv != null && atv.getId() > 0) {
                 lsComentario = comentarioBLL.findbyAtividade(atv);
             }

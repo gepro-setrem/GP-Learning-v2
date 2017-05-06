@@ -1,11 +1,13 @@
 package br.org.gdt.beans;
 
+import br.org.gdt.bll.EtapaBLL;
 import br.org.gdt.model.Turma;
 import br.org.gdt.model.Pessoa;
 import br.org.gdt.bll.TurmaBLL;
 import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.bll.TurmaParametroBLL;
 import br.org.gdt.enumerated.TurmaParametroType;
+import br.org.gdt.model.Etapa;
 import br.org.gdt.model.TurmaParametro;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,9 @@ public class TurmaBean {
     @ManagedProperty("#{pessoaBLL}")
     private PessoaBLL pessoaBLL;
     private TurmaParametroType[] turmaParametroTypes;
+
+    @ManagedProperty("#{etapaBLL}")
+    private EtapaBLL etapaBLL;
 
     public TurmaBean() {
     }
@@ -87,7 +92,7 @@ public class TurmaBean {
     public String editar() {
         turma = (Turma) turmas.getRowData();
         turma = turmaBLL.findById(turma.getId());
-        initParameters();
+        initParametros();
         return "turmafrm";
     }
 
@@ -96,22 +101,6 @@ public class TurmaBean {
         turma = (Turma) turmas.getRowData();
         copia.setNome(turma.getNome() + " CÓPIA");
         copia.setAno(turma.getAno());
-//        copia.setDescricaoTelaColetarRequisitos(turma.getDescricaoTelaColetarRequisitos());
-//        copia.setDescricaoTelaCriarEAP(turma.getDescricaoTelaCriarEAP());
-//        copia.setDescricaoTelaCriarPlanoGerenciamentoEscopo(turma.getDescricaoTelaCriarPlanoGerenciamentoEscopo());
-//        copia.setDescricaoTelaCriarPlanoGerenciamentoProjeto(turma.getDescricaoTelaCriarPlanoGerenciamentoProjeto());
-//        copia.setDescricaoTelaDefinirEscopo(turma.getDescricaoTelaDefinirEscopo());
-//        copia.setDescricaoTelaGrupoProcessosIniciacao(turma.getDescricaoTelaGrupoProcessosIniciacao());
-//        copia.setDescricaoTelaGrupoProcessosPlanejamento(turma.getDescricaoTelaGrupoProcessosPlanejamento());
-//        copia.setDescricaoTelaInicialGerenciamentoProjetos(turma.getDescricaoTelaInicialGerenciamentoProjetos());
-//        copia.setDescricaoTelaPartesInteressadas(turma.getDescricaoTelaPartesInteressadas());
-//        copia.setDescricaoTelaTermoAberturaCronogramaMarcos(turma.getDescricaoTelaTermoAberturaCronogramaMarcos());
-//        copia.setDescricaoTelaTermoAberturaDescricao(turma.getDescricaoTelaTermoAberturaDescricao());
-//        copia.setDescricaoTelaTermoAberturaJustificativa(turma.getDescricaoTelaTermoAberturaJustificativa());
-//        copia.setDescricaoTelaTermoAberturaPremissas(turma.getDescricaoTelaTermoAberturaPremissas());
-//        copia.setDescricaoTelaTermoAberturaRequisitos(turma.getDescricaoTelaTermoAberturaRequisitos());
-//        copia.setDescricaoTelaTermoAberturaRestricoes(turma.getDescricaoTelaTermoAberturaRestricoes());
-//        copia.setProfessor(turma.getProfessor());
         turmaBLL.insert(copia);
         return "turmalst";
     }
@@ -129,7 +118,7 @@ public class TurmaBean {
 
     public String novo() {
         turma = new Turma();
-        initParameters();
+        initParametros();
         return "turmafrm";
     }
 
@@ -181,32 +170,8 @@ public class TurmaBean {
         return turmaParametroBLL.getTurmaParametroType(trType);
     }
 
-    public TurmaParametro setTurmaParametro(TurmaParametroType type) {
-        String chave = type.toString();
-        if (turma == null) {
-            turma = new Turma();
-        }
-        if (turma.getTurmaParametros() == null) {
-            turma.setTurmaParametros(new ArrayList<TurmaParametro>());
-        }
-        TurmaParametro turmaParametro = new TurmaParametro();
-        turmaParametro.setChave(chave);
-        for (TurmaParametro trp : turma.getTurmaParametros()) {
-            if (trp.getChave() == chave) {
-                turmaParametro = trp;
-            }
-        }
-        return turmaParametro;
-    }
-
-    private void initParameters() {
-        if (turma == null) {
-            turma = new Turma();
-        }
+    private void initParametros() {
         List<TurmaParametro> lsTurmaParametro = turmaParametroBLL.findbyTurma(turma);
-        if (lsTurmaParametro == null) {
-            lsTurmaParametro = new ArrayList<>();
-        }
         TurmaParametroType[] lsTurmaParametroType = getTurmaParametroTypes();
         for (TurmaParametroType type : lsTurmaParametroType) {
             String chave = type.toString();
@@ -226,4 +191,18 @@ public class TurmaBean {
         }
         turma.setTurmaParametros(lsTurmaParametro);
     }
+
+    private void inirEtapas() {
+        List<Etapa> lsEtapa = etapaBLL.findbyTurma(turma);
+    }
+
+    public EtapaBLL getEtapaBLL() {
+        return etapaBLL;
+    }
+
+    public void setEtapaBLL(EtapaBLL etapaBLL) {
+        this.etapaBLL = etapaBLL;
+    }
+    
+    
 }

@@ -45,6 +45,9 @@ public class Turma implements Serializable {
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL)
     private List<TurmaParametro> turmaParametros;
 
+    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL)
+    private List<Etapa> etapas;
+
     @OneToMany(mappedBy = "turma", cascade = CascadeType.REMOVE)//, fetch = FetchType.EAGER)
     private List<Pessoa> academicos;
 
@@ -112,6 +115,14 @@ public class Turma implements Serializable {
 
     public void setTurmaParametros(List<TurmaParametro> turmaParametros) {
         this.turmaParametros = turmaParametros;
+    }
+
+    public List<Etapa> getEtapas() {
+        return etapas;
+    }
+
+    public void setEtapas(List<Etapa> etapas) {
+        this.etapas = etapas;
     }
 
     public List<Pessoa> getAcademicos() {

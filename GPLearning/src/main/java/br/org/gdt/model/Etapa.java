@@ -48,8 +48,8 @@ public class Etapa implements Serializable {
     private EtapaProjeto etapa;
 
     @ManyToOne
-    @JoinColumn(name = "pro_id")
-    private Projeto projeto;
+    @JoinColumn(name = "tur_id")
+    private Turma turma;
 
     @OneToMany(mappedBy = "etapa")
     private List<EtapaParametro> etapaParametros;
@@ -89,12 +89,20 @@ public class Etapa implements Serializable {
         this.etapa = etapa;
     }
 
-    public Projeto getProjeto() {
-        return projeto;
+    public Turma getTurma() {
+        return turma;
     }
 
-    public void setProjeto(Projeto projeto) {
-        this.projeto = projeto;
+    public void setTurma(Turma turma) {
+        this.turma = turma;
+    }
+
+    public List<EtapaParametro> getEtapaParametros() {
+        return etapaParametros;
+    }
+
+    public void setEtapaParametros(List<EtapaParametro> etapaParametros) {
+        this.etapaParametros = etapaParametros;
     }
 
     public Date getTermino() {

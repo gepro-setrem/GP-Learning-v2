@@ -36,7 +36,7 @@ public class ComentarioBLL extends BLL<Comentario> {
                         com.getRemetente().setIndicadoresprofessor(null);
                     }
                     if(com.getEtapa()!=null){
-                        com.getEtapa().setProjeto(null);
+                        com.getEtapa().setTurma(null);
                         com.getEtapa().setComentarios(null);   
                         com.getEtapa().setAtividadeParametros(null);
                     }
