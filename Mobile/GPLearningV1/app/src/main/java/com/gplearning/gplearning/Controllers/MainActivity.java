@@ -20,15 +20,14 @@ import android.widget.TextView;
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.DAO.ComentarioDAO;
 import com.gplearning.gplearning.Enums.Fragments;
-import com.gplearning.gplearning.Enums.RecursosEnum;
-import com.gplearning.gplearning.Models.Atividade;
 import com.gplearning.gplearning.Models.Comentario;
-import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
+import com.gplearning.gplearning.Utils.Sincronizacao;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.List;
 
 //import android.support.v4.app.Fragment;
 
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-      //  MetodosPublicos.SalvaUltimaSincronizacao(this, RecursosEnum.Comentario, new Date());
+        //  MetodosPublicos.SalvaUltimaSincronizacao(this, RecursosEnum.Comentario, new Date());
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -217,31 +216,40 @@ public class MainActivity extends AppCompatActivity
                 //  restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 //  Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
                 //   Log.i("WB", quote.toString());
-                ComentarioDAO ComentarioDAO = new ComentarioDAO();
-                Atividade atv = new Atividade();
-                atv.setId(1);
-                DaoSession daoSession = ((App) getApplication()).getDaoSession();
-                ComentarioDao daoCom = daoSession.getComentarioDao();
-                //   ComentarioDao cDao
-                daoCom = daoSession.getComentarioDao();
-                //  List<Comentario> lsComentario = ComentarioDAO.SelecionaComentarioPorAtividade(atv);
-                Comentario COM = new Comentario(null, 0, "comentario de teste da Apllicação".toString(), new Date(), MetodosPublicos.SelecionaSessaoId(MainActivity.this));
-                daoCom.save(COM);
-                MetodosPublicos.Log("Salve", " salvou com id:" + COM.get_id());
 
-                int id = 0;
-                try {
-                    if (COM.get_id() > 0) {
-                        id = ComentarioDAO.SalvarComentario(COM);
-                    }
-                } catch (Exception e) {
-                    MetodosPublicos.Log("ERROR", e.toString());
-                }
 
-                if (COM.get_id() == 0 || id == 0) {
-                    daoCom.deleteByKey(COM.get_id());
-                    MetodosPublicos.Log("Salve", " vai deletar  id:" + COM.get_id());
-                }
+
+             //   ComentarioDAO comentarioDAO = new ComentarioDAO();
+             //   List<Comentario> lsComentarios = comentarioDAO.SelecionaComentarioPorData(dataAtual.getTime());
+             //   MetodosPublicos.Log("retorno", " Retornou com:" + lsComentarios.size());
+//                Atividade atv = new Atividade();
+//                atv.setId(1);
+              //  DaoSession daoSession = ((App) getApplicationContext()).getDaoSession();
+                //  ComentarioDao comentarioDao  =daoSession.getComentarioDao();
+                Sincronizacao sc = new Sincronizacao();
+                sc.SincronizaComentarios(MainActivity.this);
+//                ComentarioDao daoCom = daoSession.getComentarioDao();
+//                //   ComentarioDao cDao
+//                daoCom = daoSession.getComentarioDao();
+//                //  List<Comentario> lsComentario = ComentarioDAO.SelecionaComentarioPorAtividade(atv);
+                //    Comentario COM = new Comentario(null, 0, "comentario de teste da Apllicação".toString(), new Date(), MetodosPublicos.SelecionaSessaoId(MainActivity.this));
+//                daoCom.save(COM);
+
+                //    MetodosPublicos.Log("Salve", " salvou com id:" + COM.get_id());
+
+//                int id = 0;
+//                try {
+//                    if (COM.get_id() > 0) {
+//                        id = ComentarioDAO.SalvarComentario(COM);
+//                    }
+//                } catch (Exception e) {
+//                    MetodosPublicos.Log("ERROR", e.toString());
+//                }
+
+//                if (COM.get_id() == 0 || id == 0) {
+//                    daoCom.deleteByKey(COM.get_id());
+//                    MetodosPublicos.Log("Salve", " vai deletar  id:" + COM.get_id());
+//                }
                 //   SalvarComentario
                 //  MetodosPublicos.Log("com", "total: " + lsComentario.size());
 

@@ -12,6 +12,8 @@ import android.view.View;
 
 import com.gplearning.gplearning.Enums.RecursosEnum;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -129,6 +131,20 @@ public class MetodosPublicos {
         editor.commit();
     }
 
+    public static Date SelecionaUltimaSincronizacao(Context context, RecursosEnum recursos) throws ParseException {
+        SharedPreferences shared = context.getSharedPreferences(key_sync, MODE_PRIVATE);
+        DateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        if (recursos == RecursosEnum.Comentario) {
+            String data = shared.getString(key_sync_comentario, null);
+            if (data != null)
+                return formato.parse(data);
+        } else if (recursos == RecursosEnum.atividades) {
+            String data = shared.getString(key_sync_comentario, null);
+            if (data != null)
+                return formato.parse(data);
+        }
+        return null;
+    }
 
     public static final boolean IsConnected(Context context) {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

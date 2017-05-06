@@ -12,15 +12,14 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class ComentarioDAO extends UrlDomain {
 
 
     public List<Comentario> SelecionaComentarioPorAtividade(Atividade atividade) {
-        String url = UrlDefault += "/comentario/index/" + atividade.getId();
+        String url = UrlDefault + "/comentario/index/" + atividade.getId();
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
@@ -50,25 +49,95 @@ public class ComentarioDAO extends UrlDomain {
 
     public boolean DeletaComentario(Comentario comentario) {
         if (comentario != null && comentario.getId() > 0) {
-            String url = UrlDefault + "/comentario/excluir/"; // + comentario.getId();
+            String url = UrlDefault + "/comentario/excluir/";// + comentario.getId();
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+            // restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
 
             MetodosPublicos.Log("DAO", " vai deletar url:" + url);
-
-            Map<String, Integer> vars = new HashMap<String, Integer>();
-            vars.put("com_id", comentario.getId());
-
-            boolean responseEntity = restTemplate.postForObject(url, null, Boolean.class, vars);
-            MetodosPublicos.Log("DAO", " retornou com :" + responseEntity);
+            // ResponseEntity<Boolean> responseEntity = restTemplate.getForEntity(url, Boolean.class);
+            ResponseEntity<Boolean> responseEntity = restTemplate.postForEntity(url, comentario, Boolean.class);
+            return responseEntity.getBody();
 
 
-//            ResponseEntity<Boolean> responseEntity = restTemplate.getForEntity(url, Boolean.class);
-//            return responseEntity.getBody();
+            //   MultiValueMap<String, Integer> map = new LinkedMultiValueMap<String, Integer>();
+            //  map.add("com_id", comentario.getId());
+
+
+            //  RestTemplate restTemplate = new RestTemplate();
+            //  restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            //  restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+            //  MetodosPublicos.Log("DAO", " vai salvar url:" + url);
+
+            //  ResponseEntity<Integer> responseEntity = restTemplate.postForEntity(url, comentario, Integer.class);
+            //   MetodosPublicos.Log("DAO", " retornou com :" + responseEntity.getBody());
+
+            //----------------
+//            HttpHeaders headers = new HttpHeaders();
+//            ///    headers.setContentType(MediaType.APPLICATION_JSON);
+//            HttpEntity<MultiValueMap<String, Integer>> request = new HttpEntity<>(map, headers);
+//            ResponseEntity<Boolean> response = restTemplate.postForEntity(url, request, Boolean.class);
+//            MetodosPublicos.Log("DAO", " retornou com :" + response);
+//            return response.getBody();
+
+
+//            restTemplate.setMessageConverters(
+//                    Arrays.<HttpMessageConverter<?>>asList(new HttpMessageConverter[]{new FormHttpMessageConverter(), new StringHttpMessageConverter()}));
+//            Boolean resp = restTemplate.postForObject(url, map, Boolean.class);
+//
+//            return resp;
+
+            //  boolean responseEntity = restTemplate.postForObject(url, null, Boolean.class, vars);
+            //   MetodosPublicos.Log("DAO", " retornou com :" + responseEntity);
+            //    return restTemplate.exchange(url, HttpMethod.POST, map, Boolean.class);
+
+
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.setContentType(MediaType.APPLICATION_JSON);
+//            HttpEntity<Integer> request = new HttpEntity<Integer>(comentario.getId(), headers);
+//            restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
+//            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+//            ResponseEntity<Boolean> response = restTemplate.exchange(url, HttpMethod.POST, request, Boolean.class, map);
+
+
+            //--------------------------------------------
+//            HttpMessageConverter<?> formHttpMessageConverter = new FormHttpMessageConverter();
+//            HttpMessageConverter<?> stringHttpMessageConverter = new StringHttpMessageConverter();
+//            List<HttpMessageConverter> msgConverters = new ArrayList<HttpMessageConverter>();
+//            msgConverters.add(formHttpMessageConverter);
+//            msgConverters.add(stringHttpMessageConverter);
+//// Prepare acceptable media type
+//            List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+//            acceptableMediaTypes.add(MediaType.ALL);
+//// Prepare header
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.setAccept(acceptableMediaTypes);
+//            HttpEntity<MultiValueMap<String, Integer>> httpEntity = new HttpEntity<MultiValueMap<String, Integer>>(map, headers);
+//            ResponseEntity<Boolean> resp = restTemplate.exchange(url, HttpMethod.POST, httpEntity, Boolean.class);
+////return  response;
+//            MetodosPublicos.Log("DAO", " retornou com :" + resp);
 
         }
         return false;
     }
+
+
+    public List<Comentario> SelecionaComentarioPorData(Date date) {
+        String url = UrlDefault + "/comentario/date/";
+        Comentario comentario = new Comentario();
+        comentario.setCriacao(date);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        MetodosPublicos.Log("DAO", " vai seleecioanr url:" + url + " com a data:" + date);
+        ResponseEntity<Comentario[]> responseEntity = restTemplate.postForEntity(url, comentario, Comentario[].class);
+        Comentario[] comentarioArray = responseEntity.getBody();
+        if (comentarioArray != null && comentarioArray.length > 0)
+            return Arrays.asList(comentarioArray);
+        return null;
+
+    }
+
 
 }
