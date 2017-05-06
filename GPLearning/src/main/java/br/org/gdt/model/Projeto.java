@@ -80,9 +80,6 @@ public class Projeto implements Serializable {
     @OneToMany(mappedBy = "projeto", cascade = CascadeType.REMOVE)
     private List<EAP> eaps;
 
-    @OneToMany(mappedBy = "projeto", cascade = CascadeType.REMOVE)
-    private List<Etapa> etapas;
-
     public Projeto() {
     }
 
@@ -220,14 +217,6 @@ public class Projeto implements Serializable {
 
     public void setEaps(List<EAP> eaps) {
         this.eaps = eaps;
-    }
-
-    public List<Etapa> getEtapas() {
-        return etapas;
-    }
-
-    public void setEtapas(List<Etapa> etapas) {
-        this.etapas = etapas;
     }
 
     @Override

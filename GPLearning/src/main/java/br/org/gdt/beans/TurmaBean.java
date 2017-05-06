@@ -6,6 +6,7 @@ import br.org.gdt.model.Pessoa;
 import br.org.gdt.bll.TurmaBLL;
 import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.bll.TurmaParametroBLL;
+import br.org.gdt.enumerated.EtapaProjeto;
 import br.org.gdt.enumerated.TurmaParametroType;
 import br.org.gdt.model.Etapa;
 import br.org.gdt.model.TurmaParametro;
@@ -35,7 +36,6 @@ public class TurmaBean {
     private Pessoa usuario = new Pessoa();
     @ManagedProperty("#{pessoaBLL}")
     private PessoaBLL pessoaBLL;
-    private TurmaParametroType[] turmaParametroTypes;
 
     @ManagedProperty("#{etapaBLL}")
     private EtapaBLL etapaBLL;
@@ -93,6 +93,7 @@ public class TurmaBean {
         turma = (Turma) turmas.getRowData();
         turma = turmaBLL.findById(turma.getId());
         initParametros();
+        inirEtapas();
         return "turmafrm";
     }
 
@@ -119,6 +120,7 @@ public class TurmaBean {
     public String novo() {
         turma = new Turma();
         initParametros();
+        inirEtapas();
         return "turmafrm";
     }
 
@@ -157,14 +159,6 @@ public class TurmaBean {
         }
     }
 
-    public TurmaParametroType[] getTurmaParametroTypes() {
-        return TurmaParametroType.values();
-    }
-
-    public void setTurmaParametroTypes(TurmaParametroType[] turmaParametroTypes) {
-        this.turmaParametroTypes = turmaParametroTypes;
-    }
-
     public String getTurmaParametroType(String type) {
         TurmaParametroType trType = TurmaParametroType.valueOf(type);
         return turmaParametroBLL.getTurmaParametroType(trType);
@@ -172,7 +166,7 @@ public class TurmaBean {
 
     private void initParametros() {
         List<TurmaParametro> lsTurmaParametro = turmaParametroBLL.findbyTurma(turma);
-        TurmaParametroType[] lsTurmaParametroType = getTurmaParametroTypes();
+        TurmaParametroType[] lsTurmaParametroType = TurmaParametroType.values();
         for (TurmaParametroType type : lsTurmaParametroType) {
             String chave = type.toString();
             Boolean hasKey = false;
@@ -194,6 +188,23 @@ public class TurmaBean {
 
     private void inirEtapas() {
         List<Etapa> lsEtapa = etapaBLL.findbyTurma(turma);
+        EtapaProjeto[] lsEtapaProjeto = EtapaProjeto.values();
+        for (EtapaProjeto type : lsEtapaProjeto) {
+            Boolean hasKey = false;
+            for (Etapa eta : lsEtapa) {
+                if (eta.getEtapa().equals(type)) {
+                    hasKey = true;
+                    break;
+                }
+            }
+            if (!hasKey) {
+                Etapa etapa = new Etapa();
+                etapa.setEtapa(type);
+                etapa.setTurma(turma);
+                lsEtapa.add(etapa);
+            }
+        }
+        turma.setEtapas(lsEtapa);
     }
 
     public EtapaBLL getEtapaBLL() {
@@ -203,6 +214,5 @@ public class TurmaBean {
     public void setEtapaBLL(EtapaBLL etapaBLL) {
         this.etapaBLL = etapaBLL;
     }
-    
-    
+
 }

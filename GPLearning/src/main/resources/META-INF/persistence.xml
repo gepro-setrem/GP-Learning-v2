@@ -2,11 +2,13 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="GPLearningPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
-    <class>br.org.gdt.model.Atividade</class>
-    <class>br.org.gdt.model.AtividadeParametro</class>
+    <class>br.org.gdt.model.Avaliacao</class>
     <class>br.org.gdt.model.Comentario</class>
     <class>br.org.gdt.model.EAP</class>
+    <class>br.org.gdt.model.Etapa</class>
+    <class>br.org.gdt.model.EtapaParametro</class>
     <class>br.org.gdt.model.Indicador</class>
+    <class>br.org.gdt.model.IndicadorEtapa</class>
     <class>br.org.gdt.model.Login</class>
     <class>br.org.gdt.model.LoginRole</class>
     <class>br.org.gdt.model.Marco</class>
@@ -32,7 +34,7 @@
       <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
       <property name="hibernate.hbm2ddl.auto" value="update"/>
       <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
-       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
       <!--            <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             
@@ -42,6 +44,6 @@
             <property name="hibernate.connection.username">postgres</property>
             <property name="hibernate.connection.password">postgres</property>
             <property name="hibernate.hbm2ddl.auto">update</property>-->
-        </properties>
-    </persistence-unit>
+    </properties>
+  </persistence-unit>
 </persistence>
