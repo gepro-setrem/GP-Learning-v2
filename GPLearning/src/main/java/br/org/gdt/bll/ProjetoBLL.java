@@ -34,6 +34,16 @@ public class ProjetoBLL extends BLL<Projeto> {
         if (aluno != null && aluno.getId() > 0) {
             lsProjeto = dao.findbyAluno(aluno);
         }
+        if (lsProjeto.size() > 0) {
+            for (Projeto projeto : lsProjeto) {
+                if (projeto.getGerente() != null) {
+                    projeto.getGerente().setLogin(null);
+                    projeto.getGerente().setProjetos(null);
+                    projeto.getGerente().setProjetosgerente(null);
+
+                }
+            }
+        }
         return lsProjeto;
     }
 
