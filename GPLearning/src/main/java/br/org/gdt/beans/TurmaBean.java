@@ -207,11 +207,12 @@ public class TurmaBean {
         if (lsTurmaParametro == null) {
             lsTurmaParametro = new ArrayList<>();
         }
-        for (TurmaParametroType type : getTurmaParametroTypes()) {
+        TurmaParametroType[] lsTurmaParametroType = getTurmaParametroTypes();
+        for (TurmaParametroType type : lsTurmaParametroType) {
             String chave = type.toString();
             Boolean hasKey = false;
             for (TurmaParametro trp : lsTurmaParametro) {
-                if (trp.getChave() == chave) {
+                if (trp.getChave().equals(chave)) {
                     hasKey = true;
                     break;
                 }

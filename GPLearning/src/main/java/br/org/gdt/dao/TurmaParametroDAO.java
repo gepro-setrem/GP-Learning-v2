@@ -23,7 +23,7 @@ public class TurmaParametroDAO extends DAO<TurmaParametro> {
     }
 
     public List<TurmaParametro> findbyTurma(Turma turma) {
-        return entityManager.createQuery("from TurmaParametro where turma = :t")
+        return entityManager.createQuery("from TurmaParametro where turma = :t order by id")
                 .setParameter("t", turma).getResultList();
     }
 }

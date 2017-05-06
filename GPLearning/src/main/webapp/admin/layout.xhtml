@@ -61,9 +61,10 @@
                             <h:link outcome="/admin/indicadorlst">Indicadores</h:link>
                         </li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right" style="display: #{homeBean.hasSession ? 'block' : 'none'}">
+                    <ul class="nav navbar-nav navbar-right" style="display: #{homeBean.hasSession ? 'block' : 'none'}; margin: 0;">
                         <li><h:link outcome="/user/projetolst.xhtml">Meus Projetos</h:link></li>
-                        <li><p class="navbar-text navbar-right" style="">Olá, <h:outputText class="navbar-link" value="#{homeBean.usuario.nome}"/>. <h:outputLink value="../logout">Sair</h:outputLink></p></li>
+                        <li><p class="navbar-text">Olá, #{homeBean.usuario.nome}</p></li>
+                        <li><h:outputLink value="../logout">Sair <i class="fa-sign-out"></i></h:outputLink></li>
                     </ul>
                 </div>
             </div>

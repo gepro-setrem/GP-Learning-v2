@@ -3,7 +3,8 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:define name="head">
         <h:outputScript name="./js/jquery-3.2.0.min.js"/>
         <h:outputScript name="./js/bootstrap.min.js"/>
@@ -46,23 +47,36 @@
                         </div>
                     </div>
                     <div class="row">
+                        <ui:repeat var="item" value="#{turmaBean.turma.turmaParametros}" varStatus="status">
+                            <div class="col-xs-12 text-left form-group">
+                                <c:set var="label" value="#{turmaBean.getTurmaParametroType(item.chave)}"/>
+                                <a class="btn btn-link">#{label}</a>
+                                <div id="#{item.chave}" class="collapse in">
+                                    <h:inputHidden value="#{turmaBean.turma.turmaParametros[status.index].chave}"/>
+                                    <h:inputHidden value="#{turmaBean.turma.turmaParametros[status.index].id}"/>
+                                    <h:inputTextarea class="form-control" rows="5" value="#{turmaBean.turma.turmaParametros[status.index].valor}" pt:placeholder="#{label}"/>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
+<!--                    <div class="row">
                         <div class="col-sm-4 col-xs-12">
                             <ul class="nav nav-pills nav-stacked">
-                                <ui:repeat var="item" value="#{turmaBean.turmaParametroTypes}" varStatus="status">
-                                    <li role="presentation" class="#{status.index == 0 ? 'active' : ''}"><a href="##{item}" data-toggle="tab">#{turmaBean.getTurmaParametroType(item.toString())}</a></li>
+                                <ui:repeat var="item" value="{turmaBean.turmaParametroTypes}" varStatus="status">
+                                    <li role="presentation" class="{status.index == 0 ? 'active' : ''}"><a href="{item}" data-toggle="tab">{turmaBean.getTurmaParametroType(item.toString())}</a></li>
                                 </ui:repeat>
                             </ul>    
                         </div>
                         <div class="tab-content col-sm-8 col-xs-12">
-                            <ui:repeat var="item" value="#{turmaBean.turma.turmaParametros}" varStatus="status">
-                                <div class="tab-pane #{status.index == 0 ? 'active' : ''}" id="#{item.chave}">
-                                    <h:inputHidden value="#{turmaBean.turma.turmaParametros[status.index].chave}"/>
-                                    <h:inputHidden value="#{turmaBean.turma.turmaParametros[status.index].id}"/>
-                                    <h:inputTextarea class="form-control" rows="5" value="#{turmaBean.turma.turmaParametros[status.index].valor}"/>
+                            <ui:repeat var="item" value="{turmaBean.turma.turmaParametros}" varStatus="status">
+                                <div class="tab-pane {status.index == 0 ? 'active' : ''}" id="{item.chave}">
+                                    <h:inputHidden value="{turmaBean.turma.turmaParametros[status.index].chave}"/>
+                                    <h:inputHidden value="{turmaBean.turma.turmaParametros[status.index].id}"/>
+                                    <h:inputTextarea class="form-control" rows="5" value="{turmaBean.turma.turmaParametros[status.index].valor}"/>
                                 </div>
                             </ui:repeat>
                         </div>
-                    </div>
+                    </div>-->
 
                     <div style="text-align: right;">
                         <h:button class="btn btn-default" outcome="turmalst" value="Cancelar" style="margin-right: 5px;"/>
