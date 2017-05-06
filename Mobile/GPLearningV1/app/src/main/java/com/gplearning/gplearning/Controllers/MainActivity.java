@@ -18,15 +18,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.gplearning.gplearning.DAO.App;
-import com.gplearning.gplearning.DAO.ComentarioDAO;
 import com.gplearning.gplearning.Enums.Fragments;
 import com.gplearning.gplearning.Models.Comentario;
+import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 import com.gplearning.gplearning.Utils.Sincronizacao;
 
-import java.util.Calendar;
 import java.util.List;
 
 //import android.support.v4.app.Fragment;
@@ -217,15 +216,18 @@ public class MainActivity extends AppCompatActivity
                 //  Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
                 //   Log.i("WB", quote.toString());
 
+             //   DaoSession daoSession = ((App) getApplicationContext()).getDaoSession();
+             //   ComentarioDao comentarioDao = daoSession.getComentarioDao();
+
+              //  List<Comentario> lsComentariosLite = comentarioDao.queryBuilder().whereOr(ComentarioDao.Properties._id.lt(20), (ComentarioDao.Properties.Deletado.eq(true))).where(ComentarioDao.Properties.Id.gt(0)).list();
 
 
-             //   ComentarioDAO comentarioDAO = new ComentarioDAO();
-             //   List<Comentario> lsComentarios = comentarioDAO.SelecionaComentarioPorData(dataAtual.getTime());
-             //   MetodosPublicos.Log("retorno", " Retornou com:" + lsComentarios.size());
+                //   ComentarioDAO comentarioDAO = new ComentarioDAO();
+                //   List<Comentario> lsComentarios = comentarioDAO.SelecionaComentarioPorData(dataAtual.getTime());
+                //   MetodosPublicos.Log("retorno", " Retornou com:" + lsComentariosLite.size());
 //                Atividade atv = new Atividade();
 //                atv.setId(1);
-              //  DaoSession daoSession = ((App) getApplicationContext()).getDaoSession();
-                //  ComentarioDao comentarioDao  =daoSession.getComentarioDao();
+
                 Sincronizacao sc = new Sincronizacao();
                 sc.SincronizaComentarios(MainActivity.this);
 //                ComentarioDao daoCom = daoSession.getComentarioDao();

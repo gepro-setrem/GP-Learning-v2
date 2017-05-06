@@ -4,25 +4,22 @@ package com.gplearning.gplearning.DAO;
 import com.gplearning.gplearning.Models.Atividade;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
-import com.gplearning.gplearning.Utils.UrlDomain;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class ComentarioDAO extends UrlDomain {
+public class ComentarioDAO extends DefaultDAO {
 
 
     public List<Comentario> SelecionaComentarioPorAtividade(Atividade atividade) {
         String url = UrlDefault + "/comentario/index/" + atividade.getId();
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+
+        RestTemplate restTemplate = getResTemplateDefault();
+
         MetodosPublicos.Log("DAO", " vai seleecioanr url:" + url);
         ResponseEntity<Comentario[]> responseEntity = restTemplate.getForEntity(url, Comentario[].class);
         Comentario[] comentarioArray = responseEntity.getBody();
@@ -34,9 +31,7 @@ public class ComentarioDAO extends UrlDomain {
 
     public int SalvarComentario(Comentario comentario) {
         String url = UrlDefault + "/comentario/salvar/";
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        RestTemplate restTemplate = getResTemplateDefault();
         MetodosPublicos.Log("DAO", " vai salvar url:" + url);
 
         ResponseEntity<Integer> responseEntity = restTemplate.postForEntity(url, comentario, Integer.class);
@@ -50,9 +45,7 @@ public class ComentarioDAO extends UrlDomain {
     public boolean DeletaComentario(Comentario comentario) {
         if (comentario != null && comentario.getId() > 0) {
             String url = UrlDefault + "/comentario/excluir/";// + comentario.getId();
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+            RestTemplate restTemplate = getResTemplateDefault();
             // restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
 
             MetodosPublicos.Log("DAO", " vai deletar url:" + url);
@@ -127,9 +120,7 @@ public class ComentarioDAO extends UrlDomain {
         String url = UrlDefault + "/comentario/date/";
         Comentario comentario = new Comentario();
         comentario.setCriacao(date);
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        RestTemplate restTemplate = getResTemplateDefault();
         MetodosPublicos.Log("DAO", " vai seleecioanr url:" + url + " com a data:" + date);
         ResponseEntity<Comentario[]> responseEntity = restTemplate.postForEntity(url, comentario, Comentario[].class);
         Comentario[] comentarioArray = responseEntity.getBody();

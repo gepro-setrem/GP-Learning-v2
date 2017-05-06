@@ -68,7 +68,7 @@ public class ComentarioActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-      //  new SincronizaComentarios().execute();
+        //  new SincronizaComentarios().execute();
     }
 
     @Override
@@ -88,18 +88,18 @@ public class ComentarioActivity extends AppCompatActivity {
         EditText coment = (EditText) findViewById(R.id.comentarioNovo);
         try {
             if (!coment.getText().toString().isEmpty()) {
-                Comentario COM = new Comentario(null, 0, coment.getText().toString(), new Date(), MetodosPublicos.SelecionaSessaoId(this));
-
+                final Comentario COM = new Comentario(null, 0, coment.getText().toString(), new Date(), MetodosPublicos.SelecionaSessaoId(this));
+                final ComentarioDAO comentarioDAO = new ComentarioDAO();
                 long id = dao.insert(COM);
                 MetodosPublicos.Log("Event", "id:" + COM.get_id());
 
                 if (id > 0) {
                     new SalvaComentario().execute(COM);
-                    coment.setText("");
-                    lsComentario.add(COM);
-                    comentarioAdapter.notifyItemInserted(lsComentario.size() - 1);
-                    recyclerView.smoothScrollToPosition(lsComentario.size() - 1);
                 }
+                coment.setText("");
+                lsComentario.add(COM);
+                comentarioAdapter.notifyItemInserted(lsComentario.size() - 1);
+                recyclerView.smoothScrollToPosition(lsComentario.size() - 1);
             }
         } catch (Exception e) {
             MetodosPublicos.Log("ERROR", e.toString());
@@ -123,9 +123,12 @@ public class ComentarioActivity extends AppCompatActivity {
                     if (MetodosPublicos.IsConnected(ComentarioActivity.this) && comentario != null && comentario.getId() > 0)
                         new DeletaComentario().execute(comentario);
                     else {
-                        comentario.setDeletado(true);
-                        dao.update(comentario);
-                        // dao.deleteByKey(comentario.get_id());
+                        if (comentario.getId() > 0) {
+                            comentario.setDeletado(true);
+                            dao.update(comentario);
+                        } else {
+                            dao.deleteByKey(comentario.get_id());
+                        }
                     }
 
                 } catch (Exception e) {
@@ -162,32 +165,40 @@ public class ComentarioActivity extends AppCompatActivity {
             super.onPostExecute(comentario);
             if (comentario != null) {
                 dao.update(comentario);
-
             }
         }
     }
 
-    private class DeletaComentario extends AsyncTask<Comentario, String, Comentario> {
+    private class DeletaComentario extends AsyncTask<Comentario, String, Boolean> {
+        Comentario comentario;
+
+        public DeletaComentario() {
+
+        }
 
         @Override
-        protected Comentario doInBackground(Comentario... comentarios) {
+        protected Boolean doInBackground(Comentario... comentarios) {
             try {
                 if (MetodosPublicos.IsConnected(ComentarioActivity.this)) {
                     ComentarioDAO comentarioDAO = new ComentarioDAO();
-                    return comentarioDAO.DeletaComentario(comentarios[0]) ? comentarios[0] : null;
+                    this.comentario = comentarios[0];
+                    return comentarioDAO.DeletaComentario(comentarios[0]);
                 }
             } catch (Exception e) {
                 MetodosPublicos.Log("ERROR", e.toString());
             }
-            return null;
+            return false;
         }
 
         @Override
-        protected void onPostExecute(Comentario comentario) {
-            super.onPostExecute(comentario);
-            MetodosPublicos.Log("error", "Deletou:" + (comentario != null));
-            if (comentario != null) {
+        protected void onPostExecute(Boolean deletado) {
+            super.onPostExecute(deletado);
+            MetodosPublicos.Log("error", "Deletou:" + deletado);
+            if (deletado) {
                 dao.deleteByKey(comentario.get_id());
+            } else {
+                comentario.setDeletado(true);
+                dao.update(comentario);
             }
 
         }

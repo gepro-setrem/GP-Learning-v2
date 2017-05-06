@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.gplearning.gplearning.Adapters.ProjetoAdapter;
 import com.gplearning.gplearning.DAO.App;
+import com.gplearning.gplearning.DAO.ProjetoDAO;
 import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.Models.Pessoa;
 import com.gplearning.gplearning.Models.Projeto;
@@ -203,12 +204,18 @@ public class ProjetoFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
+//            try {
+//                Thread.sleep(3000);
+//            } catch (InterruptedException ex) {
+//                Thread.currentThread().interrupt();
+//            }
+            ProjetoDAO projetoDAO = new ProjetoDAO();
+
+            if (MetodosPublicos.ModoAcessoAluno(getActivity())) {
+                lsProjetos.addAll(projetoDAO.SelecionaProjetosAluno(MetodosPublicos.SelecionaSessaoidExterno(getActivity())));//getProjetos()); //dao.loadAll();
+            } else {
+                lsProjetos.addAll(projetoDAO.SelecionaProjetosProfessor(MetodosPublicos.SelecionaSessaoidExterno(getActivity())));
             }
-            lsProjetos.addAll(getProjetos()); //dao.loadAll();
             MetodosPublicos.Log("projetos", " retorno com:" + lsProjetos.size());
             return true;
         }

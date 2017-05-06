@@ -5,7 +5,6 @@ import android.content.Context;
 
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.DAO.ComentarioDAO;
-import com.gplearning.gplearning.Enums.RecursosEnum;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.DaoSession;
@@ -22,55 +21,64 @@ public class Sincronizacao {
     }
 
     public void SincronizaComentarios(Context context) throws ParseException {
-        final ComentarioDAO comentarioDAO = new ComentarioDAO();
-        DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
-        final ComentarioDao daoLite = daoSession.getComentarioDao();
-        Calendar dataAtual = Calendar.getInstance();
-        dataAtual.add(Calendar.DAY_OF_MONTH, -1);
-        Date ultimaSincronizacao = dataAtual.getTime();  //MetodosPublicos.SelecionaUltimaSincronizacao(context, RecursosEnum.Comentario);
-        List<Comentario> lsComentariosAPI = comentarioDAO.SelecionaComentarioPorData(ultimaSincronizacao);
-        List<Comentario> lsComentariosLite = daoLite.queryBuilder().where(ComentarioDao.Properties.Criacao.ge(ultimaSincronizacao)).list();
-        if (lsComentariosAPI != null) {
-            for (Comentario com : lsComentariosAPI) {
-                if (!EstaNaListaComentario(com, lsComentariosLite))
-                    daoLite.insert(com);
-            }
-        }
-
-        if (lsComentariosLite != null) {
-            for (final Comentario com : lsComentariosLite) {
-                if (!EstaNaListaComentario(com, lsComentariosAPI)) {// esta apenas no SQLite
-                    if (com.getId() > 0) { // tem id= foi deletado no servidor
-                        daoLite.deleteByKey(com.get_id());
-                    } else {// não tem ID= é um novo comentário
-//                        new Thread(new Runnable() {
-//                            @Override
-//                            public void run() {
-                        int id = comentarioDAO.SalvarComentario(com);
-                        if (id > 0) {
-                            com.setId(id);
-                            daoLite.update(com);
-                        }
-//                            }
-//                        }).start();
-                    }
-                } else {
-                    if (com.getDeletado()) {
-//                        new Thread(new Runnable() {
-//                            @Override
-//                            public void run() {
-                        boolean deletado = comentarioDAO.DeletaComentario(com);
-                        if (deletado)
-                            daoLite.deleteByKey(com.get_id());
-//                            }
-//                        }).start();
+        if (MetodosPublicos.IsConnected(context)) {
+            final ComentarioDAO comentarioDAO = new ComentarioDAO();
+            DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
+            final ComentarioDao daoLite = daoSession.getComentarioDao();
+            Calendar dataAtual = Calendar.getInstance();
+            dataAtual.add(Calendar.DAY_OF_MONTH, -1);
+            Date ultimaSincronizacao = dataAtual.getTime();  //MetodosPublicos.SelecionaUltimaSincronizacao(context, RecursosEnum.Comentario);
+            List<Comentario> lsComentariosAPI = comentarioDAO.SelecionaComentarioPorData(ultimaSincronizacao);
+            List<Comentario> lsComentariosLite = daoLite.queryBuilder().list();// .whereOr(ComentarioDao.Properties.Id.eq(0), (ComentarioDao.Properties.Deletado.eq(true))).list();
+            if (lsComentariosAPI != null) {
+                for (Comentario com : lsComentariosAPI) {
+                    if (!EstaNaListaComentario(com, lsComentariosLite)) {
+                        MetodosPublicos.Log("log", "Inserrir lite o id:" + com.getId());
+                        daoLite.insert(com);
                     }
                 }
             }
+
+            lsComentariosLite = daoLite.queryBuilder().whereOr(ComentarioDao.Properties.Id.eq(0), (ComentarioDao.Properties.Deletado.eq(true))).list();
+            if (lsComentariosLite != null) {
+                for (final Comentario com : lsComentariosLite) {
+                    if (!EstaNaListaComentario(com, lsComentariosAPI)) {// esta apenas no SQLite
+                        if (com.getId() > 0) { // tem id= foi deletado no servidor
+                            MetodosPublicos.Log("log", "deletou lite o id:" + com.getId());
+                            daoLite.deleteByKey(com.get_id());
+                        } else {// não tem ID= é um novo comentário
+//                        new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
+                            int id = comentarioDAO.SalvarComentario(com);
+                            if (id > 0) {
+                                MetodosPublicos.Log("log", "cadastrou o id:" + id);
+                                com.setId(id);
+                                daoLite.update(com);
+                            } else {
+                                MetodosPublicos.Log("log", "errou ao cadastrar o id:" + com.get_id());
+                            }
+//                            }
+//                        }).start();
+                        }
+                    } else {
+                        if (com.getDeletado()) {
+//                        new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
+                            boolean deletado = comentarioDAO.DeletaComentario(com);
+                            if (deletado)
+                                daoLite.deleteByKey(com.get_id());
+//                            }
+//                        }).start();
+                        }
+                    }
+                }
+            }
+            lsComentariosLite = daoLite.queryBuilder().whereOr(ComentarioDao.Properties.Id.eq(0), (ComentarioDao.Properties.Deletado.eq(true))).list();
+            MetodosPublicos.Log("Retono", " agora com os registros desatualizados:" + lsComentariosLite.size());
+            // MetodosPublicos.SalvaUltimaSincronizacao(context, RecursosEnum.Comentario, new Date());
         }
-
-        MetodosPublicos.SalvaUltimaSincronizacao(context, RecursosEnum.Comentario, new Date());
-
     }
 
 
