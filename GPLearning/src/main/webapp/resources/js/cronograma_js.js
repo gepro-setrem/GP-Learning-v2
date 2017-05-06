@@ -1,6 +1,5 @@
 $(function () {
     loadTarefa();
-
     $('#tarefaModal').on('hidden.bs.modal', function (e) {
         $('body').removeClass('modal-open');
         ReloadNumbers();
@@ -30,7 +29,6 @@ $(document).on('click', '.marco [type=checkbox]', function () {
         });
     }
 });
-
 $(document).on('click', '.tarefaEdit', function () {
     var tarefa = $(this).parents('.tarefa:eq(0)');
     //var ordem = eap.find('[name=ordem]').val();
@@ -49,18 +47,15 @@ $(document).on('click', '.tarefaEdit', function () {
     });
     $('#tarefaModal').modal('show');
 });
-
 $(document).on('click', '#tarefaModal .addRecurso', function () {
     var html = $('.HtmlExample .recurso').clone();
     $('#tarefaModal .recursos > tbody').append(html);
 });
-
 $(document).on('click', '#tarefaModal .deletaRecurso', function () {
     $(this).parents('.recurso:eq(0)').remove();
 });
-
 $(document).on('click', '#tarefaModal .salvaTarefa', function () {
-    //var form = $('#eapModal [name]');
+//var form = $('#eapModal [name]');
     var obj = Object();
     //obj.projeto = {id: (parseInt($('#pro_id').val()) || 0)};
     var pai_id = parseInt($('#tarefaModal [name="pai.id"]').val()) || 0;
@@ -71,9 +66,16 @@ $(document).on('click', '#tarefaModal .salvaTarefa', function () {
         obj.eap = {id: eap_id};
     obj.id = parseInt($('#tarefaModal [name="id"]').val()) || 0;
     obj.nome = $('#tarefaModal [name="nome"]').val();
+    obj.marco = $('#tarefaModal [name="marco"]').val();
     obj.conclusao = $('#tarefaModal [name="conclusao"]').val();
     obj.inicio = $('#tarefaModal [name="inicio"]').val();
     obj.termino = $('#tarefaModal [name="termino"]').val();
+    if ($.trim(obj.conclusao) != '')
+        obj.conclusao += 'T00:00:00.000-03:00';
+    if ($.trim(obj.inicio) != '')
+        obj.inicio += 'T00:00:00.000-03:00';
+    if ($.trim(obj.termino) != '')
+        obj.termino += 'T00:00:00.000-03:00';
     obj.recursos = [];
     $('#tarefaModal [name="recurso"]').each(function (index, item) {
         var recurso = $.trim($(item).val());
@@ -81,7 +83,15 @@ $(document).on('click', '#tarefaModal .salvaTarefa', function () {
             obj.recursos.push({nome: recurso});
         }
     });
-    if ($.trim(obj.nome) != '') {
+    var isValid = $.trim(obj.nome) != '';
+    if (!isValid)
+        alert("O nome é obrigatório!")
+    if (isValid) {
+        isValid = obj.inicio <= obj.termino;
+        if (!isValid)
+            alert("A data de início não pode ser maior que a data de término!")
+    }
+    if (isValid) {
         ShowLoader();
         $.ajax({
             type: 'POST',
@@ -115,7 +125,9 @@ $(document).on('click', '#tarefaModal .salvaTarefa', function () {
                         tarefa.find('.lsRecursos').append('<input type="hidden" name="recurso" value="' + item.nome + '"/>');
                     });
                     tarefa.find('.recursos').html(recursos.slice(0, -2));
-                    tarefa.find('.nome').html(responser + '- ' + $('#tarefaModal [name=nome]').val());
+                    tarefa.find('.nome').html(obj.nome);
+                    tarefa.find('.inicio').html(ToDate(obj.inicio));
+                    tarefa.find('.termino').html(ToDate(obj.termino));
                     ReloadNumbers();
                     $('#tarefaModal').modal('hide');
                 }
@@ -125,7 +137,6 @@ $(document).on('click', '#tarefaModal .salvaTarefa', function () {
         });
     }
 });
-
 $(document).on('click', '#tarefaModal .deletaTarefa', function () {
     var id = parseInt($('#tarefaModal').find('[name=id]').val()) || 0;
     var confirm = false;
@@ -163,6 +174,7 @@ function DeleteRecursive(id) {
 
 $(document).on('click', '.tarefaAdd', function () {
     var tarefa = $(this).parents('.tarefa:eq(0)');
+    $('#tarefaModal .recursos > tbody').html('');
     $('#tarefaModal [name]').val('');
     var id = parseInt($(tarefa).find('[name="id"]').val()) || 0;
     //var idPai = parseInt($(tarefa).find('[name="pai.id]"').val()) || 0;
@@ -177,7 +189,6 @@ $(document).on('click', '.tarefaAdd', function () {
     if (id > 0 || idEap > 0)
         $('#tarefaModal').modal('show');
 });
-
 function CalculaLargura() {
     var pacotes = $('.eap_list .eap_column');
     pacotes.each(function (index, item) {
@@ -267,6 +278,8 @@ function printRecursiveTarefa(tarefa) {
         html.find('[name="conclusao"]').val(tarefa.conclusao);
         html.find('[name="marco"]').val(tarefa.marco);
         html.find('.marco [type=checkbox]').prop('checked', tarefa.marco);
+        html.find('.inicio').html(ToDate(tarefa.inicio));
+        html.find('.termino').html(ToDate(tarefa.termino));
         var recursos = '';
         if (tarefa.recursos) {
             $(tarefa.recursos).each(function (index, item) {
@@ -275,8 +288,7 @@ function printRecursiveTarefa(tarefa) {
             });
         }
         html.find('.recursos').html(recursos.slice(0, -2));
-        html.find('.nome').html(tarefa.id + ' - ' + tarefa.nome);
-
+        html.find('.nome').html(tarefa.nome);
         if (tarefa.tarefas) {
             $(tarefa.tarefas).each(function (index, item) {
                 printRecursiveTarefa(item);
@@ -290,12 +302,14 @@ function printRecursiveEAP(eap) {
         var html = $('.HtmlExample .tarefa').clone();
         $('.tarefas tbody').append(html);
         html.find('.marco').html('');
+        html.addClass('eap');
+        html.find('.inicio').html(ToDate(eap.inicio));
+        html.find('.termino').html(ToDate(eap.termino));
         html.find('.tarefaEdit').remove();
         html.find('[name="eap.id"]').val(eap.id);
         if (eap.pai)
             html.find('[name="eap.pai.id"]').val(eap.pai.id);
-
-        html.find('.nome').html(eap.id + ' - ' + eap.nome);
+        html.find('.nome').html(eap.nome);
         if (eap.tarefas) {
             $(eap.tarefas).each(function (index, item) {
                 printRecursiveTarefa(item);
@@ -307,4 +321,22 @@ function printRecursiveEAP(eap) {
             });
         }
     }
+}
+
+function ToDate(date) {
+    date = date || '';
+    if (date.indexOf('T') < 0)
+        date += 'T00:00';
+    var d = new Date(date);
+    if (d != 'Invalid Date') {
+        var dia = d.getDate();
+        if (dia < 10)
+            dia = '0' + dia;
+        var mes = d.getMonth() + 1;
+        if (mes < 10)
+            mes = '0' + mes;
+        var ano = d.getFullYear();
+        return dia + '/' + mes + '/' + ano;
+    }
+    return "";
 }

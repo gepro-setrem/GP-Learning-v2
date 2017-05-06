@@ -51,7 +51,7 @@ public class Tarefa implements Serializable {
     @JoinColumn(name = "eap_id")
     private EAP eap;
 
-    @OneToMany(mappedBy = "tarefa", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "tarefa", cascade = CascadeType.ALL)
     private List<Recurso> recursos;
 
     @OneToMany(mappedBy = "pai", cascade = CascadeType.REMOVE)

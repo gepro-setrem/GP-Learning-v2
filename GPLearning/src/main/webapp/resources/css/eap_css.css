@@ -62,7 +62,7 @@ textarea{max-width: 100%;}
     width: 10px;
     height: 100%;
     content: "";
-    border: 2px solid #ddd;
+    border: 2px solid #ccc;
     border-right-width: 0;
     border-bottom-width: 0;
 }
@@ -75,7 +75,7 @@ textarea{max-width: 100%;}
     width: 10px;
     height: 50px;
     content: "";
-    border-left: 2px solid #ddd;
+    border-left: 2px solid #ccc;
 }
 
 .eap_item:not(.eap_column):last-child:after{
@@ -91,9 +91,8 @@ textarea{max-width: 100%;}
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 2px;
     content: "";
-    background-color: #ddd;
+    border-top: 2px solid #ccc;
 }
 .eap_column:first-child:before{
     left: 50%;
@@ -111,10 +110,11 @@ textarea{max-width: 100%;}
     top: 0;
     bottom: 0;
     left: 50%;
-    width: 2px;
+    width: 0;
     height: 10px;
     content: "";
-    background-color: #ddd;
+    border-left: 2px solid #ccc;
+    
 }
 .eap_column > .eap:before{
     border: 0;
@@ -140,7 +140,7 @@ textarea{max-width: 100%;}
     bottom: 0;
     left: 50%;
     height: 20px;
-    border-left: 2px solid #ddd;
+    border-left: 2px solid #ccc;
     content: "";
     height: 10px;   
 }

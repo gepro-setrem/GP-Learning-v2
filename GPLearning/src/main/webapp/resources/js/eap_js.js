@@ -41,7 +41,19 @@ $(document).on('click', '#eapModal .salvaEAP', function () {
     obj.inicio = $('#eapModal [name="inicio"]').val();
     obj.termino = $('#eapModal [name="termino"]').val();
     obj.valor = parseFloat($('#eapModal [name="valor"]').val()) || 0;
-    if ($.trim(obj.nome) != '') {
+    if ($.trim(obj.inicio) != '')
+        obj.inicio += 'T00:00:00.000-03:00';
+    if ($.trim(obj.termino) != '')
+        obj.termino += 'T00:00:00.000-03:00';
+    var isValid = $.trim(obj.nome) != '';
+    if (!isValid)
+        alert("O nome é obrigatório!")
+    if (isValid) {
+        isValid = obj.inicio <= obj.termino;
+        if (!isValid)
+            alert("A data de início não pode ser maior que a data de término!")
+    }
+    if (isValid) {
         ShowLoader();
         $.ajax({
             type: 'POST',
@@ -64,7 +76,7 @@ $(document).on('click', '#eapModal .salvaEAP', function () {
                         var value = $(item).val();
                         eap.find('[name="' + name + '"]').val(value);
                     });
-                    eap.find('.eap_nome').html(responser + '- ' + $('#eapModal [name=nome]').val());
+                    eap.find('.eap_nome').html($('#eapModal [name=nome]').val());
                     $('#eapModal').modal('hide');
                 }
             }, error: function (error) {
@@ -177,7 +189,7 @@ function printRecursiveEAP(eap) {
         html.find('[name="inicio"]').val(eap.inicio);
         html.find('[name="termino"]').val(eap.termino);
         html.find('[name="valor"]').val(eap.valor);
-        html.find('.eap_nome').html(eap.id + ' - ' + eap.nome);
+        html.find('.eap_nome').html(eap.nome);
 
         if (eap.eaps) {
             $(eap.eaps).each(function (index, item) {

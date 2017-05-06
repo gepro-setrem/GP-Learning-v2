@@ -27,14 +27,14 @@
                         <div class="col-xs-12 form-group">
                             <h:inputHidden value="#{projetoBean.projeto.id}" id="pro_id"/>
                             <!--<h:inputHidden value="5" id="pro_id"/>-->
-                            <a onclick="loadTarefa();" style="float: right; cursor: pointer;"><i class="fa-refresh"></i></a>
+                            <a class="btn btn-primary btn-xs" onclick="loadTarefa();" style="float: right; margin: 1px;"><i class="fa-refresh"></i> Atualizar</a>
                             <table class="tarefas">
                                 <thead>
                                     <tr>
                                         <th>Marco</th>
                                         <th>Tarefa</th>
-                                        <th>Início</th>
-                                        <th>Término</th>
+                                        <th class="text-center" style="width: 100px;">Início</th>
+                                        <th class="text-center" style="width: 100px;">Término</th>
                                         <th>Recursos</th>
                                     </tr>
                                 </thead>
@@ -74,8 +74,8 @@
                         <a class="btn btn-primary btn-xs tarefaAdd"><i class="fa-plus"></i></a>
                         <a class="btn btn-success btn-xs tarefaEdit"><i class="fa-pencil"></i></a>
                     </td>
-                    <td class="data"></td>
-                    <td class="data"></td>
+                    <td class="inicio text-center"></td>
+                    <td class="termino text-center"></td>
                     <td class="recursos"></td>
                 </tr>
                 <tr class="recurso">
@@ -99,17 +99,19 @@
                             <input type="hidden" name="pai.id"/>
                             <input type="hidden" name="id"/>
                             <input type="hidden" name="eap.id"/>
+                            <input type="hidden" name="marco"/>
+                            <input type="hidden" name="conclusao"/>
                             <div class="form-group">
-                                <label>Nome:</label>
+                                <label>Nome*:</label>
                                 <input class="form-control" type="text" placeholder="Nome" name="nome"/>
                             </div>
                             <div class="form-group">
                                 <label>Início:</label>
-                                <input class="form-control" type="datetime-local" placeholder="Início" name="inicio"/>
+                                <input class="form-control" type="date" name="inicio"/>
                             </div>
                             <div class="form-group">
                                 <label>Término:</label>
-                                <input class="form-control" type="datetime-local" placeholder="Término" name="termino"/>
+                                <input class="form-control" type="date" name="termino"/>
                             </div>
 
                             <div class="form-group">

@@ -14,12 +14,12 @@ public class TarefaDAO extends DAO<Tarefa> {
     }
 
     public List<Tarefa> findbyTarefa(Tarefa tarefa) {
-        return entityManager.createQuery("from Tarefa where pai = :t")
+        return entityManager.createQuery("from Tarefa where pai = :t order by id")
                 .setParameter("t", tarefa).getResultList();
     }
 
     public List<Tarefa> findbyEAP(EAP eap) {
-        return entityManager.createQuery("from Tarefa where eap = :e")
+        return entityManager.createQuery("from Tarefa where eap = :e order by id")
                 .setParameter("e", eap).getResultList();
     }
 

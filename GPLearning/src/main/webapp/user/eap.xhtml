@@ -26,7 +26,7 @@
                         <div class="col-xs-12"><label style="white-space: pre-wrap;">#{projetoBean.getDescricao('descricaoTelaCriarEAP')}</label></div>
                         <div class="col-xs-12 form-group">
                             <h:inputHidden value="#{projetoBean.projeto.id}" id="pro_id"/>
-                            <a onclick="loadEAP();" style="float: right; cursor: pointer;"><i class="fa-refresh"></i></a>
+                            <a class="btn btn-primary btn-xs" onclick="loadEAP();" style="float: right; cursor: pointer;"><i class="fa-refresh"></i> Atualizar</a>
                             <div class="eap_list"></div>
                         </div>
                         <div class="col-xs-12 text-center">
@@ -76,7 +76,7 @@
                             <input type="hidden" name="id"/>
                             <input type="hidden" name="ordem"/>
                             <div class="form-group">
-                                <label>Nome:</label>
+                                <label>Nome*:</label>
                                 <input class="form-control" type="text" placeholder="Nome" name="nome"/>
                             </div>
                             <div class="form-group">
