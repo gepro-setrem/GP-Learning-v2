@@ -20,7 +20,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.Enums.Fragments;
+import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.Pessoa;
+import com.gplearning.gplearning.Models.PessoaDao;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 import com.gplearning.gplearning.Utils.Sincronizacao;
@@ -68,10 +72,22 @@ public class MainActivity extends AppCompatActivity
             //   SharedPreferences shModo = getSharedPreferences("modoAcesso", MODE_PRIVATE);
             //  String modoAcesso = shModo.getString("modoAcesso", null);
 
+            Intent intent = getIntent();
+            if (intent != null) {
+                Log.i("Event", "Tem Intent");
+                Bundle bundle = intent.getExtras();
+                if (bundle != null) {
+                    if (bundle.containsKey("LOGIN")) {
+                        AtualizaHeaderMain();
+                    }
+                }
+            }
+
+
             if (!MetodosPublicos.ExisteModoAcesso(this)) { //modoAcesso == null) {
                 changefragment(Fragments.nivelAcesso.toString());
             } else {
-                Intent intent = getIntent();
+                //  Intent intent = getIntent();
                 if (intent != null) {
                     Log.i("Event", "Tem Intent");
                     Bundle bundle = intent.getExtras();
@@ -82,6 +98,8 @@ public class MainActivity extends AppCompatActivity
                             Log.i("Event", "PAGE " + page);
                             changefragment(page);
                         }
+
+
                     } else {
                         Log.i("Event", "CArrega projetos");
                         changefragment(Fragments.projetos.toString());
@@ -95,15 +113,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View hView = navigationView.getHeaderView(0);
-        ((TextView) hView.findViewById(R.id.headerName)).setText(MetodosPublicos.SelecionaSessaoNome(this));
-        ((TextView) hView.findViewById(R.id.headerEmail)).setText(MetodosPublicos.SelecionaSessaoEmail(this));
-        byte[] image = MetodosPublicos.SelecionaSessaoImagemBytes(this);
-        if (image.length > 0) {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-            ((ImageView) hView.findViewById(R.id.headerImage)).setImageBitmap(bitmap);
-        }
+
     }
 
     @Override
@@ -144,9 +154,9 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
-            // MetodosPublicos.SalvaSessao(this, null, null, null, 0);
+             MetodosPublicos.SalvaSessao(this, null, null, null, 0);
 
-            new getAssync().execute();
+          //  new getAssync().execute();
 
             return true;
         }
@@ -293,6 +303,21 @@ public class MainActivity extends AppCompatActivity
 //        }
 //        // END_INCLUDE(connect)
 //    }
-
+    public void AtualizaHeaderMain() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView = navigationView.getHeaderView(0);
+        ((TextView) hView.findViewById(R.id.headerName)).setText(MetodosPublicos.SelecionaSessaoNome(this));
+        ((TextView) hView.findViewById(R.id.headerEmail)).setText(MetodosPublicos.SelecionaSessaoEmail(this));
+        DaoSession daoSession = ((App) getApplicationContext()).getDaoSession();
+        PessoaDao pessoaDao = daoSession.getPessoaDao();
+        Pessoa pessoa = pessoaDao.load(MetodosPublicos.SelecionaSessaoId(this));
+        if (pessoa != null) {
+            byte[] image = pessoa.getImagem();
+            if (image != null && image.length > 0) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+                ((ImageView) hView.findViewById(R.id.headerImage)).setImageBitmap(bitmap);
+            }
+        }
+    }
 
 }

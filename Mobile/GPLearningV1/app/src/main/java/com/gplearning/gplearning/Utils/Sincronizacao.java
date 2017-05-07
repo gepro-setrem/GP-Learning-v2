@@ -11,6 +11,7 @@ import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.Models.Projeto;
+import com.gplearning.gplearning.Models.ProjetoDao;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -21,6 +22,8 @@ public class Sincronizacao {
 
     public static void SincronizaApp(Context context, PapelUsuario papel) {
         ProjetoDAO projetoDAO = new ProjetoDAO();
+        DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
+        ProjetoDao daoProjeto = daoSession.getProjetoDao();
         List<Projeto> lsProjetos;  // =  projetoDAO.Sel
         int id = MetodosPublicos.SelecionaSessaoidExterno(context);
         if (papel == PapelUsuario.user)
@@ -29,9 +32,12 @@ public class Sincronizacao {
             lsProjetos = projetoDAO.SelecionaProjetosProfessor(id);
 
         if (lsProjetos != null && lsProjetos.size() > 0) {
-            
+            for (Projeto projeto : lsProjetos) {
+                Projeto prj = daoProjeto.load(projeto.getId());
+                if (prj == null)
+                    daoProjeto.insert(projeto);
+            }
         }
-
     }
 
     public static void SincronizaComentarios(Context context) throws ParseException {

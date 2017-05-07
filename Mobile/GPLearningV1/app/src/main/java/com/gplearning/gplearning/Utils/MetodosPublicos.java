@@ -38,7 +38,7 @@ public class MetodosPublicos {
 
 
     /// metodos de Dados do usuário/Sessão
-    public static void SalvaSessao(Context context, Long id, String nome, String email, int idExterno, byte[] imageBytes) {
+    public static void SalvaSessao(Context context, Long id, String nome, String email, int idExterno) {
         SharedPreferences pref = context.getSharedPreferences(key_login, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         Log("sessao", "idI:" + id + " idEx:" + idExterno + " nome:" + nome + " email:" + email);
@@ -49,7 +49,7 @@ public class MetodosPublicos {
 
         editor.putString(key_nome, nome);
         editor.putString(key_email, email);
-        editor.putString(key_image, imageBytes.toString());
+       // editor.putString(key_image, imageBytes.toString());
 
         if (idExterno > 0)
             editor.putInt(key_idExterno, idExterno);
@@ -85,11 +85,17 @@ public class MetodosPublicos {
         return user_idExterno;
     }
 
-    public static byte[] SelecionaSessaoImagemBytes(Context context) {
-        SharedPreferences shared = context.getSharedPreferences(key_login, MODE_PRIVATE);
-        String image = shared.getString(key_image, "");
-        return Base64.decode(image, Base64.DEFAULT);
-    }
+//    public static byte[] SelecionaSessaoImagemBytes(Context context) {
+//        try {
+//            SharedPreferences shared = context.getSharedPreferences(key_login, MODE_PRIVATE);
+//
+//            String image = shared.getString(key_image, "");
+//            return Base64.decode(image, Base64.DEFAULT);
+//        } catch (Exception e) {
+//            MetodosPublicos.Log("IMAGEM", e.toString());
+//        }
+//        return null;
+//    }
 
     public static boolean ExisteSessao(Context context) {
         SharedPreferences shared = context.getSharedPreferences(key_login, MODE_PRIVATE);

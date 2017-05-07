@@ -263,7 +263,7 @@ public class LoginActivity extends AppCompatActivity {
 
         private final String email;
         private final String password;
-        private long idExterno = 0;
+        private boolean admim;
 
         UserLoginTask(String email, String password) {
             this.email = email;
@@ -281,10 +281,24 @@ public class LoginActivity extends AppCompatActivity {
 
                 userDAO = new UsuarioDAO();
 
-                return userDAO.Login(session, email, password);
-
+                Pessoa pessoa = userDAO.Login(session, email, password);
+                if (pessoa != null) {
+                    MetodosPublicos.SalvaSessao(LoginActivity.this, pessoa.get_id(), pessoa.getNome(), email, pessoa.getId());
+                    //sincroniza APP
+                    Sincronizacao.SincronizaApp(LoginActivity.this, PapelUsuario.user);
+                    List<LoginRole> lsLoginRoles = pessoa.getLogin() != null ? pessoa.getLogin().getLoginRoles() : null;
+                    if (lsLoginRoles != null) {
+                        for (LoginRole lg : lsLoginRoles) {
+                            if (lg.getRole() == PapelUsuario.admin) {
+                                admim = true;
+                                Sincronizacao.SincronizaApp(LoginActivity.this, PapelUsuario.admin);
+                                break;
+                            }
+                        }
+                    }
+                }
                 // Log.i("gpl LG", "ID:" + idExterno);
-
+                return pessoa;
             } catch (Exception e) {
                 MetodosPublicos.Log("", e.toString());
                 return null;
@@ -300,21 +314,16 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(false);
 
             if (user != null) {
-                MetodosPublicos.SalvaSessao(LoginActivity.this, user.get_id(), user.getNome(), email, user.getId(), user.getImagem());
-                //sincroniza APP
-                Sincronizacao.SincronizaApp(PapelUsuario.user);
-                List<LoginRole> lsLoginRoles = user.getLogin() != null ? user.getLogin().getLoginRoles() : null;
-                if (lsLoginRoles != null) {
-                    for (LoginRole lg : lsLoginRoles) {
-                        if (lg.getRole() == PapelUsuario.admin) {
-                            Sincronizacao.SincronizaApp(PapelUsuario.admin);
-                            break;
-                        }
-                    }
+
+                Intent intent;
+                if (admim) {
+                    intent = new Intent(LoginActivity.this, NivelAcessoActivity.class);
+                } else {
+                    intent = new Intent(LoginActivity.this, MainActivity.class);
                 }
 
-                Intent secondActivity = new Intent(LoginActivity.this, NivelAcessoActivity.class);
-                startActivityForResult(secondActivity, RESULT_OK);
+                intent.putExtra("LOGIN", "0");
+                startActivityForResult(intent, RESULT_OK);
                 finish();
                 overridePendingTransition(R.animator.push_left_in, R.animator.push_left_out);
             } else {

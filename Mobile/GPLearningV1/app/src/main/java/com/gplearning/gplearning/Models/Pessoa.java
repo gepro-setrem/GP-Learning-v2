@@ -77,6 +77,21 @@ public class Pessoa {
         this.criacao = criacao;
     }
 
+    @Generated(hash = 428879721)
+    public Pessoa(Long _id, int id, String nome, String email, String telefone, StatusPessoa status, int karma, byte[] imagem, long tur_id,
+                  Date criacao) {
+        this._id = _id;
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.status = status;
+        this.karma = karma;
+        this.imagem = imagem;
+        this.tur_id = tur_id;
+        this.criacao = criacao;
+    }
+
     public Long get_id() {
         return _id;
     }
@@ -212,9 +227,7 @@ public class Pessoa {
         myDao.update(this);
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 403681025)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;

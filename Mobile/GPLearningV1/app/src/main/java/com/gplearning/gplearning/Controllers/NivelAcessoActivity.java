@@ -3,6 +3,7 @@ package com.gplearning.gplearning.Controllers;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.gplearning.gplearning.Enums.Fragments;
@@ -11,15 +12,30 @@ import com.gplearning.gplearning.Utils.MetodosPublicos;
 
 public class NivelAcessoActivity extends AppCompatActivity {
 
+    private boolean atualizaHeader;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nivel_acesso);
+        Intent intent = getIntent();
+        if (intent != null) {
+            Log.i("Event", "Tem Intent");
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                if (bundle.containsKey("LOGIN")) {
+                    atualizaHeader = true;
+                }
+            }
+        }
+
     }
 
     public void AcessoAluno(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("PAGE", Fragments.projetos.toString());
+        if (atualizaHeader)
+            intent.putExtra("LOGIN", "");
         SetAcessoAluno();
         startActivity(intent);
         finish();

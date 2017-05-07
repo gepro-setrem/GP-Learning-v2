@@ -1,15 +1,17 @@
 package com.gplearning.gplearning.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gplearning.gplearning.Converters.PapelUsuarioConverter;
 import com.gplearning.gplearning.Enums.PapelUsuario;
 
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Transient;
-import org.greenrobot.greendao.annotation.Generated;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(nameInDb = "login_role")
 public class LoginRole {
 
