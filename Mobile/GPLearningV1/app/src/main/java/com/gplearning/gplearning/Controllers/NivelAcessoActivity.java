@@ -18,17 +18,6 @@ public class NivelAcessoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nivel_acesso);
-        Intent intent = getIntent();
-        if (intent != null) {
-            Log.i("Event", "Tem Intent");
-            Bundle bundle = intent.getExtras();
-            if (bundle != null) {
-                if (bundle.containsKey("LOGIN")) {
-                    atualizaHeader = true;
-                }
-            }
-        }
-
     }
 
     public void AcessoAluno(View view) {

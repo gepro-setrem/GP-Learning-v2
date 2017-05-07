@@ -8,19 +8,21 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
+import org.greenrobot.greendao.annotation.OrderBy;
+import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(nameInDb = "projeto")
 public class Projeto {
 
-//    @Id(autoincrement = true)
-//    private Long _id;
-
     @Id
-    private Long id;
+    private Long _id;
+
+    private int id;
     private String nome;
     private String descricao;
     private String empresa;
@@ -30,18 +32,30 @@ public class Projeto {
     private String planoEscopo;
     private String planoProjeto;
 
-    //  private Pessoa gerente;
     private Date criacao;
     private Date alteracao;
     private String comentarioInstrutor;
 
-    private long ger_id;
-    @ToOne(joinProperty = "ger_id")
+    private Long idGerente;
+    @ToOne(joinProperty = "idGerente")
     private Pessoa gerente;
 
-    private long tur_id;
-    @ToOne(joinProperty = "tur_id")
+    private Long idTurma;
+    @ToOne(joinProperty = "idTurma")
     private Turma turma;
+
+    private Long idTermoAbertura;
+    @ToOne(joinProperty = "idTermoAbertura")
+    private TermoAbertura termoAbertura;
+
+    @ToMany(referencedJoinProperty = "IdProjeto")
+    @OrderBy("_id ASC")
+    private List<Stakeholder> lsStakeholders;
+
+    @ToMany(referencedJoinProperty = "IdProjeto")
+    @OrderBy("_id ASC")
+    private List<Requisito> lsRequisito;
+
 
     /**
      * Used to resolve relations
@@ -61,6 +75,9 @@ public class Projeto {
     @Generated(hash = 1191549063)
     private transient Long turma__resolvedKey;
 
+    @Generated(hash = 1091460758)
+    private transient Long termoAbertura__resolvedKey;
+
     public Projeto() {
     }
 
@@ -68,28 +85,9 @@ public class Projeto {
         this.nome = nome;
     }
 
-
     @Keep
-    public Projeto(Long id, String nome, String descricao, String empresa,
-                   String estado, String escopo, Date criacao, Date alteracao,
-                   String comentarioInstrutor, long ger_id, long tur_id) {
-        this.id = id;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.empresa = empresa;
-        this.estado = estado;
-        this.escopo = escopo;
-        this.criacao = criacao;
-        this.alteracao = alteracao;
-        this.comentarioInstrutor = comentarioInstrutor;
-        this.ger_id = ger_id;
-        this.tur_id = tur_id;
-    }
-
-    @Generated(hash = 731642018)
-    public Projeto(Long id, String nome, String descricao, String empresa, String estado,
-                   String escopo, String planoEscopo, String planoProjeto, Date criacao,
-                   Date alteracao, String comentarioInstrutor, long ger_id, long tur_id) {
+    public Projeto(Long _id, int id, String nome, String descricao, String empresa, String estado, String escopo, String planoEscopo, String planoProjeto, Date criacao, Date alteracao, String comentarioInstrutor, Long idGerente, Long idTurma, Long idTermoAbertura) {
+        this._id = _id;
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -101,18 +99,26 @@ public class Projeto {
         this.criacao = criacao;
         this.alteracao = alteracao;
         this.comentarioInstrutor = comentarioInstrutor;
-        this.ger_id = ger_id;
-        this.tur_id = tur_id;
+        this.idGerente = idGerente;
+        this.idTurma = idTurma;
+        this.idTermoAbertura = idTermoAbertura;
     }
 
-    public Long getIdExterno() {
-        return this.id;
+    public Long get_id() {
+        return _id;
     }
 
-    public void setIdExterno(Long idExterno) {
-        this.id = idExterno;
+    public void set_id(Long _id) {
+        this._id = _id;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -178,28 +184,38 @@ public class Projeto {
         this.comentarioInstrutor = comentarioInstrutor;
     }
 
-    public long getGer_id() {
-        return ger_id;
+    public Long getIdGerente() {
+        return idGerente;
     }
 
-    public void setGer_id(long ger_id) {
-        this.ger_id = ger_id;
+    public void setIdGerente(Long idGerente) {
+        this.idGerente = idGerente;
     }
 
-    public long getTur_id() {
-        return tur_id;
+    public Long getIdTurma() {
+        return idTurma;
     }
 
-    public void setTur_id(long tur_id) {
-        this.tur_id = tur_id;
+    public void setIdTurma(Long idTurma) {
+        this.idTurma = idTurma;
     }
 
-    public Long getId() {
-        return this.id;
+    public Long getIdTermoAbertura() {
+        return idTermoAbertura;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdTermoAbertura(Long idTermoAbertura) {
+        this.idTermoAbertura = idTermoAbertura;
+    }
+
+    @Keep
+    public TermoAbertura getTermoAbertura() {
+        return termoAbertura;
+    }
+
+    @Keep
+    public void setTermoAbertura(TermoAbertura termoAbertura) {
+        this.termoAbertura = termoAbertura;
     }
 
     @Keep
@@ -220,6 +236,26 @@ public class Projeto {
     @Keep
     public void setTurma(Turma turma) {
         this.turma = turma;
+    }
+
+    @Keep
+    public List<Stakeholder> getLsStakeholders() {
+        return lsStakeholders;
+    }
+
+    @Keep
+    public void setLsStakeholders(List<Stakeholder> lsStakeholders) {
+        this.lsStakeholders = lsStakeholders;
+    }
+
+    @Keep
+    public List<Requisito> getLsRequisito() {
+        return lsRequisito;
+    }
+
+    @Keep
+    public void setLsRequisito(List<Requisito> lsRequisito) {
+        this.lsRequisito = lsRequisito;
     }
 
     /**
@@ -272,6 +308,22 @@ public class Projeto {
 
     public void setPlanoProjeto(String planoProjeto) {
         this.planoProjeto = planoProjeto;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 1778292413)
+    public synchronized void resetLsStakeholders() {
+        lsStakeholders = null;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 777732352)
+    public synchronized void resetLsRequisito() {
+        lsRequisito = null;
     }
 
     /** called by internal mechanisms, do not call yourself. */

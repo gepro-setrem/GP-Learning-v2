@@ -1,18 +1,19 @@
 package com.gplearning.gplearning.Models;
 
 
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.ToOne;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
 
 @Entity(nameInDb = "stakeholder")
 public class Stakeholder {
     @Id
-    private int id;
+    private Long _id;
 
+    private int id;
     private String nome;
     private String contribuicao;
     private String papel;
@@ -21,11 +22,15 @@ public class Stakeholder {
     @ToOne(joinProperty = "IdProjeto")
     private Projeto projeto;
 
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 2085601650)
     private transient StakeholderDao myDao;
 
@@ -33,7 +38,8 @@ public class Stakeholder {
     private transient Integer projeto__resolvedKey;
 
     @Keep
-    public Stakeholder(int id, String nome, String contribuicao, String papel, int idProjeto) {
+    public Stakeholder(Long _id, int id, String nome, String contribuicao, String papel, int idProjeto) {
+        this._id = _id;
         this.id = id;
         this.nome = nome;
         this.contribuicao = contribuicao;
@@ -41,7 +47,6 @@ public class Stakeholder {
         IdProjeto = idProjeto;
     }
 
-    @Generated(hash = 1507418917)
     public Stakeholder() {
     }
 
@@ -129,6 +134,14 @@ public class Stakeholder {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
+    }
+
+    public Long get_id() {
+        return this._id;
+    }
+
+    public void set_id(Long _id) {
+        this._id = _id;
     }
 
     /** called by internal mechanisms, do not call yourself. */

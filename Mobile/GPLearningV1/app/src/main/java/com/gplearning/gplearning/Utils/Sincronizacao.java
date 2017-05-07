@@ -10,8 +10,26 @@ import com.gplearning.gplearning.Enums.PapelUsuario;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.Marco;
+import com.gplearning.gplearning.Models.MarcoDao;
+import com.gplearning.gplearning.Models.Pessoa;
+import com.gplearning.gplearning.Models.PessoaDao;
+import com.gplearning.gplearning.Models.Premissas;
+import com.gplearning.gplearning.Models.PremissasDao;
 import com.gplearning.gplearning.Models.Projeto;
 import com.gplearning.gplearning.Models.ProjetoDao;
+import com.gplearning.gplearning.Models.Requisito;
+import com.gplearning.gplearning.Models.RequisitoDao;
+import com.gplearning.gplearning.Models.RequisitoTermoAbertura;
+import com.gplearning.gplearning.Models.RequisitoTermoAberturaDao;
+import com.gplearning.gplearning.Models.Restricoes;
+import com.gplearning.gplearning.Models.RestricoesDao;
+import com.gplearning.gplearning.Models.Stakeholder;
+import com.gplearning.gplearning.Models.StakeholderDao;
+import com.gplearning.gplearning.Models.TermoAbertura;
+import com.gplearning.gplearning.Models.TermoAberturaDao;
+import com.gplearning.gplearning.Models.Turma;
+import com.gplearning.gplearning.Models.TurmaDao;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -24,6 +42,16 @@ public class Sincronizacao {
         ProjetoDAO projetoDAO = new ProjetoDAO();
         DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
         ProjetoDao daoProjeto = daoSession.getProjetoDao();
+        PessoaDao daoPessoa = daoSession.getPessoaDao();
+        TurmaDao daoTurma = daoSession.getTurmaDao();
+        TermoAberturaDao daoTermoAbertura = daoSession.getTermoAberturaDao();
+        MarcoDao daoMarco = daoSession.getMarcoDao();
+        PremissasDao daoPremissas = daoSession.getPremissasDao();
+        RequisitoTermoAberturaDao daoRTA = daoSession.getRequisitoTermoAberturaDao();
+        RestricoesDao daoRestricoes = daoSession.getRestricoesDao();
+        RequisitoDao daoRequisito = daoSession.getRequisitoDao();
+        StakeholderDao daoStakeholder = daoSession.getStakeholderDao();
+
         List<Projeto> lsProjetos;  // =  projetoDAO.Sel
         int id = MetodosPublicos.SelecionaSessaoidExterno(context);
         if (papel == PapelUsuario.user)
@@ -33,12 +61,97 @@ public class Sincronizacao {
 
         if (lsProjetos != null && lsProjetos.size() > 0) {
             for (Projeto projeto : lsProjetos) {
-                Projeto prj = daoProjeto.load(projeto.getId());
-                if (prj == null)
+                Projeto prj = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(projeto.getId())).unique(); //.load(projeto.getId());
+                if (prj == null) {
                     daoProjeto.insert(projeto);
+                    Projeto pCompleto = projetoDAO.SelecionaProjetoCompleto(projeto.getId());
+                    if (pCompleto != null) {
+                        if (pCompleto.getIdGerente() > 0) {
+                            Pessoa gerente = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(pCompleto.getIdGerente())).unique();
+                            if (gerente == null) {
+                                daoPessoa.insert(pCompleto.getGerente());
+                            }
+                        }
+
+                        if (pCompleto.getIdTurma() > 0) {
+                            Turma turma = daoTurma.queryBuilder().where(TurmaDao.Properties.Id.eq(pCompleto.getIdTurma())).unique();
+                            if (turma == null)
+                                daoTurma.insert(pCompleto.getTurma());
+                        }
+
+                        if (pCompleto.getIdTermoAbertura() > 0) {
+                            TermoAbertura termoAbertura = daoTermoAbertura.queryBuilder().where(TermoAberturaDao.Properties.Id.eq(pCompleto.getIdTermoAbertura())).unique();
+                            if (termoAbertura == null) {
+                                daoTermoAbertura.insert(termoAbertura);
+//
+                                if (termoAbertura.getLsMarco() != null) {
+                                    for (Marco marco : termoAbertura.getLsMarco()) {
+                                        if (daoMarco.queryBuilder().where(MarcoDao.Properties.Id.eq(marco.getId())).count() == 0) {
+                                            daoMarco.insert(marco);
+                                        }
+                                    }
+                                }
+
+                                if (termoAbertura.getLsPremissas() != null) {
+                                    for (Premissas premissas : termoAbertura.getLsPremissas()) {
+                                        if (daoPremissas.queryBuilder().where(PremissasDao.Properties.Id.eq(premissas.getId())).count() == 0) {
+                                            daoPremissas.insert(premissas);
+                                        }
+                                    }
+                                }
+
+                                if (termoAbertura.getLsRequisitoTermoAbertura() != null) {
+                                    for (RequisitoTermoAbertura RTA : termoAbertura.getLsRequisitoTermoAbertura()) {
+                                        if (daoRTA.queryBuilder().where(RequisitoTermoAberturaDao.Properties.Id.eq(RTA.getId())).count() == 0) {
+                                            daoRTA.insert(RTA);
+                                        }
+                                    }
+                                }
+
+                                if (termoAbertura.getLsRestricoes() != null) {
+                                    for (Restricoes restricoes : termoAbertura.getLsRestricoes()) {
+                                        if (daoRestricoes.queryBuilder().where(RestricoesDao.Properties.Id.eq(restricoes.getId())).count() == 0) {
+                                            daoRestricoes.insert(restricoes);
+                                        }
+                                    }
+                                }
+//
+                            }
+                        }
+
+                        if (pCompleto.getLsRequisito() != null) {
+                            for (Requisito requisito : pCompleto.getLsRequisito()) {
+                                if (daoRequisito.queryBuilder().where(RequisitoDao.Properties.Id.eq(requisito.getId())).count() == 0) {
+                                    daoRequisito.insert(requisito);
+                                }
+                            }
+                        }
+
+                        if (pCompleto.getLsStakeholders() != null) {
+                            for (Stakeholder stakeholder : pCompleto.getLsStakeholders()) {
+                                if (daoStakeholder.queryBuilder().where(StakeholderDao.Properties.Id.eq(stakeholder.getId())).count() == 0) {
+                                    daoStakeholder.insert(stakeholder);
+                                }
+                            }
+                        }
+
+                    }
+
+
+                }
             }
         }
     }
+
+
+//    public static void AtualizaApp(Projeto projeto) {
+//        if (projeto != null) {
+//           if(projeto.getGer_id()>0){
+//               Pessoa gerrente =
+//           }
+//        }
+//    }
+
 
     public static void SincronizaComentarios(Context context) throws ParseException {
         if (MetodosPublicos.IsConnected(context)) {

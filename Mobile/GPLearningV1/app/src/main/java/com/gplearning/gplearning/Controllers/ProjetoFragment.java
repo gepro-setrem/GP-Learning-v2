@@ -21,7 +21,6 @@ import com.gplearning.gplearning.Adapters.ProjetoAdapter;
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.DAO.ProjetoDAO;
 import com.gplearning.gplearning.Models.DaoSession;
-import com.gplearning.gplearning.Models.Pessoa;
 import com.gplearning.gplearning.Models.Projeto;
 import com.gplearning.gplearning.Models.ProjetoDao;
 import com.gplearning.gplearning.R;
@@ -89,7 +88,7 @@ public class ProjetoFragment extends Fragment {
             recyclerView.addOnItemTouchListener(new MetodosPublicos.RecyclerItemClickListener(getActivity(), recyclerView, new MetodosPublicos.RecyclerItemClickListener.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    Fragment fragment = EtapasFragment.newInstance(lsProjetos.get(position).getId());
+                    Fragment fragment = EtapasFragment.newInstance(lsProjetos.get(position).get_id());
                     FragmentManager manager = getActivity().getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_frame, fragment).commit();
                     Log.i("Event", "Clicou");
@@ -142,45 +141,45 @@ public class ProjetoFragment extends Fragment {
 //        }
         //   PessoaDao
 
-        Projeto pj = new Projeto();
-        pj.setId(Long.valueOf(1));
-        pj.setNome("Projeto de melhoria de rede de computadores de uma fábrica de móveis");
-        Pessoa pessoa = new Pessoa();
-        pessoa.setNome("Tiago Luis cesa Seibel");
-        pj.setGerente(pessoa);
-        pj.setEmpresa("Jaeli Móveis");
-        lsProjetos.add(pj);
-
-        pj = new Projeto();
-        pj.setId(Long.valueOf(2));
-        pj.setNome("Instalação e Configuração da Rede de computadores");
-        pj.setGerente(pessoa);
-        pj.setEmpresa("Empresa CTT");
-        lsProjetos.add(pj);
-
-
-        pj = new Projeto();
-        pj.setId(Long.valueOf(3));
-        pj.setNome("Projeto CTT Logística");
-        pj.setGerente(pessoa);
-        pj.setEmpresa("CTT Logística");
-        lsProjetos.add(pj);
-
-
-        pj = new Projeto();
-        pj.setId(Long.valueOf(4));
-        pj.setNome("Projeto de software para empresa ABC");
-        pj.setGerente(pessoa);
-        pj.setEmpresa("Empresa ABC");
-        lsProjetos.add(pj);
-
-
-        pj = new Projeto();
-        pj.setId(Long.valueOf(1));
-        pj.setNome("VesteFin");
-        pj.setGerente(pessoa);
-        pj.setEmpresa("VesteBem");
-        lsProjetos.add(pj);
+//        Projeto pj = new Projeto();
+//        pj.setId(Long.valueOf(1));
+//        pj.setNome("Projeto de melhoria de rede de computadores de uma fábrica de móveis");
+//        Pessoa pessoa = new Pessoa();
+//        pessoa.setNome("Tiago Luis cesa Seibel");
+//        pj.setGerente(pessoa);
+//        pj.setEmpresa("Jaeli Móveis");
+//        lsProjetos.add(pj);
+//
+//        pj = new Projeto();
+//        pj.setId(Long.valueOf(2));
+//        pj.setNome("Instalação e Configuração da Rede de computadores");
+//        pj.setGerente(pessoa);
+//        pj.setEmpresa("Empresa CTT");
+//        lsProjetos.add(pj);
+//
+//
+//        pj = new Projeto();
+//        pj.setId(Long.valueOf(3));
+//        pj.setNome("Projeto CTT Logística");
+//        pj.setGerente(pessoa);
+//        pj.setEmpresa("CTT Logística");
+//        lsProjetos.add(pj);
+//
+//
+//        pj = new Projeto();
+//        pj.setId(Long.valueOf(4));
+//        pj.setNome("Projeto de software para empresa ABC");
+//        pj.setGerente(pessoa);
+//        pj.setEmpresa("Empresa ABC");
+//        lsProjetos.add(pj);
+//
+//
+//        pj = new Projeto();
+//        pj.setId(Long.valueOf(1));
+//        pj.setNome("VesteFin");
+//        pj.setGerente(pessoa);
+//        pj.setEmpresa("VesteBem");
+//        lsProjetos.add(pj);
 
         return lsProjetos;
     }

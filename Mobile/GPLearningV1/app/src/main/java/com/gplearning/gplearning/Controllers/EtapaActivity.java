@@ -95,7 +95,7 @@ public class EtapaActivity extends AppCompatActivity {
             if (atv.getEtapa() == EtapaProjeto.DescricaoProjeto ||
                     atv.getEtapa() == EtapaProjeto.JustificativaProjeto) {
                 TermoAberturaDao termoAberturaDao = daoSession.getTermoAberturaDao();
-                TermoAbertura termoAbertura = termoAberturaDao.queryBuilder().where(TermoAberturaDao.Properties.Pro_id.eq(atv.getPro_id())).unique();
+                TermoAbertura termoAbertura = termoAberturaDao.queryBuilder().where(TermoAberturaDao.Properties.IdProjeto.eq(atv.getPro_id())).unique();
                 if (termoAbertura != null) {
                     if (atv.getEtapa() == EtapaProjeto.DescricaoProjeto)
                         etapaTextView.setText(termoAbertura.getDescricao());
@@ -133,7 +133,7 @@ public class EtapaActivity extends AppCompatActivity {
             } else {
 
                 TermoAberturaDao termoAberturaDao = daoSession.getTermoAberturaDao();
-                TermoAbertura termoAbertura = termoAberturaDao.queryBuilder().where(TermoAberturaDao.Properties.Pro_id.eq(atv.getPro_id())).unique();
+                TermoAbertura termoAbertura = termoAberturaDao.queryBuilder().where(TermoAberturaDao.Properties.IdProjeto.eq(atv.getPro_id())).unique();
 
                 if (atv.getEtapa() == EtapaProjeto.Premissas) {
                     ArrayAdapter<Premissas> adapter = new ArrayAdapter<Premissas>(this, android.R.layout.simple_list_item_1, termoAbertura.getLsPremissas());

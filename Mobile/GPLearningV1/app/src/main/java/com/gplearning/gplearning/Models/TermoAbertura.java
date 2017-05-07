@@ -1,7 +1,6 @@
 package com.gplearning.gplearning.Models;
 
 
-import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -11,20 +10,22 @@ import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
 import java.util.List;
+import org.greenrobot.greendao.DaoException;
 
 @Entity(nameInDb = "termoAbertura")
 public class TermoAbertura {
 
     @Id
-    private int id;
+    private Long _id;
 
+    private int id;
     private String descricao;
     private String justificativa;
     private Date criacao;
     private Date alteracao;
 
-    private int pro_id;
-    @ToOne(joinProperty = "pro_id")
+    private int idProjeto;
+    @ToOne(joinProperty = "idProjeto")
     private Projeto projeto;
 
 
@@ -60,13 +61,22 @@ public class TermoAbertura {
     }
 
     @Keep
-    public TermoAbertura(int id, String descricao, String justificativa, Date criacao, Date alteracao, int pro_id) {
+    public TermoAbertura(Long _id, int id, String descricao, String justificativa, Date criacao, Date alteracao, int idProjeto) {
+        this._id = _id;
         this.id = id;
         this.descricao = descricao;
         this.justificativa = justificativa;
         this.criacao = criacao;
         this.alteracao = alteracao;
-        this.pro_id = pro_id;
+        this.idProjeto = idProjeto;
+    }
+
+    public Long get_id() {
+        return _id;
+    }
+
+    public void set_id(Long _id) {
+        this._id = _id;
     }
 
     public int getId() {
@@ -109,12 +119,12 @@ public class TermoAbertura {
         this.alteracao = alteracao;
     }
 
-    public int getPro_id() {
-        return pro_id;
+    public int getIdProjeto() {
+        return idProjeto;
     }
 
-    public void setPro_id(int pro_id) {
-        this.pro_id = pro_id;
+    public void setIdProjeto(int idProjeto) {
+        this.idProjeto = idProjeto;
     }
 
     @Keep
@@ -125,6 +135,70 @@ public class TermoAbertura {
     @Keep
     public void setProjeto(Projeto projeto) {
         this.projeto = projeto;
+    }
+
+    @Keep
+    public List<Restricoes> getLsRestricoes() {
+        return lsRestricoes;
+    }
+
+    @Keep
+    public void setLsRestricoes(List<Restricoes> lsRestricoes) {
+        this.lsRestricoes = lsRestricoes;
+    }
+
+    @Keep
+    public List<Premissas> getLsPremissas() {
+        return lsPremissas;
+    }
+
+    @Keep
+    public void setLsPremissas(List<Premissas> lsPremissas) {
+        this.lsPremissas = lsPremissas;
+    }
+
+    @Keep
+    public List<Marco> getLsMarco() {
+        return lsMarco;
+    }
+
+    @Keep
+    public void setLsMarco(List<Marco> lsMarco) {
+        this.lsMarco = lsMarco;
+    }
+
+    @Keep
+    public List<RequisitoTermoAbertura> getLsRequisitoTermoAbertura() {
+        return lsRequisitoTermoAbertura;
+    }
+
+    @Keep
+    public void setLsRequisitoTermoAbertura(List<RequisitoTermoAbertura> lsRequisitoTermoAbertura) {
+        this.lsRequisitoTermoAbertura = lsRequisitoTermoAbertura;
+    }
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 831465351)
+    public synchronized void resetLsRestricoes() {
+        lsRestricoes = null;
+    }
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 718023656)
+    public synchronized void resetLsPremissas() {
+        lsPremissas = null;
+    }
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 479589052)
+    public synchronized void resetLsMarco() {
+        lsMarco = null;
+    }
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 1369674208)
+    public synchronized void resetLsRequisitoTermoAbertura() {
+        lsRequisitoTermoAbertura = null;
     }
 
     /**
@@ -161,121 +235,6 @@ public class TermoAbertura {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
-    }
-
-    /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
-     */
-    @Generated(hash = 1321194083)
-    public List<Restricoes> getLsRestricoes() {
-        if (lsRestricoes == null) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            RestricoesDao targetDao = daoSession.getRestricoesDao();
-            List<Restricoes> lsRestricoesNew = targetDao._queryTermoAbertura_LsRestricoes(id);
-            synchronized (this) {
-                if (lsRestricoes == null) {
-                    lsRestricoes = lsRestricoesNew;
-                }
-            }
-        }
-        return lsRestricoes;
-    }
-
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
-    @Generated(hash = 831465351)
-    public synchronized void resetLsRestricoes() {
-        lsRestricoes = null;
-    }
-
-    /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
-     */
-    @Generated(hash = 1747667354)
-    public List<Premissas> getLsPremissas() {
-        if (lsPremissas == null) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            PremissasDao targetDao = daoSession.getPremissasDao();
-            List<Premissas> lsPremissasNew = targetDao._queryTermoAbertura_LsPremissas(id);
-            synchronized (this) {
-                if (lsPremissas == null) {
-                    lsPremissas = lsPremissasNew;
-                }
-            }
-        }
-        return lsPremissas;
-    }
-
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    @Generated(hash = 718023656)
-    public synchronized void resetLsPremissas() {
-        lsPremissas = null;
-    }
-
-    /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
-     */
-    @Generated(hash = 111619938)
-    public List<Marco> getLsMarco() {
-        if (lsMarco == null) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            MarcoDao targetDao = daoSession.getMarcoDao();
-            List<Marco> lsMarcoNew = targetDao._queryTermoAbertura_LsMarco(id);
-            synchronized (this) {
-                if (lsMarco == null) {
-                    lsMarco = lsMarcoNew;
-                }
-            }
-        }
-        return lsMarco;
-    }
-
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    @Generated(hash = 479589052)
-    public synchronized void resetLsMarco() {
-        lsMarco = null;
-    }
-
-    /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
-     */
-    @Generated(hash = 1302167210)
-    public List<RequisitoTermoAbertura> getLsRequisitoTermoAbertura() {
-        if (lsRequisitoTermoAbertura == null) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            RequisitoTermoAberturaDao targetDao = daoSession.getRequisitoTermoAberturaDao();
-            List<RequisitoTermoAbertura> lsRequisitoTermoAberturaNew = targetDao
-                    ._queryTermoAbertura_LsRequisitoTermoAbertura(id);
-            synchronized (this) {
-                if (lsRequisitoTermoAbertura == null) {
-                    lsRequisitoTermoAbertura = lsRequisitoTermoAberturaNew;
-                }
-            }
-        }
-        return lsRequisitoTermoAbertura;
-    }
-
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    @Generated(hash = 1369674208)
-    public synchronized void resetLsRequisitoTermoAbertura() {
-        lsRequisitoTermoAbertura = null;
     }
 
     /** called by internal mechanisms, do not call yourself. */

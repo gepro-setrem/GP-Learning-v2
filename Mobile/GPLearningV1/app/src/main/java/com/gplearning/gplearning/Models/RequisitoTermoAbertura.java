@@ -2,42 +2,56 @@ package com.gplearning.gplearning.Models;
 
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.ToOne;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
-import org.greenrobot.greendao.annotation.NotNull;
 
 @Entity(nameInDb = "requisitoTermoAbertura")
 public class RequisitoTermoAbertura {
 
     @Id
+    private Long _id;
+
     private int id;
     private String nome;
     private String descricao;
 
-    private int IdTermoAbertura;
+    private Long IdTermoAbertura;
     @ToOne(joinProperty = "IdTermoAbertura")
     private TermoAbertura termoAbertura;
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 958475097)
     private transient RequisitoTermoAberturaDao myDao;
-    @Generated(hash = 1154405152)
-    private transient Integer termoAbertura__resolvedKey;
+    @Generated(hash = 1091460758)
+    private transient Long termoAbertura__resolvedKey;
 
     public RequisitoTermoAbertura() {
     }
 
     @Keep
-    public RequisitoTermoAbertura(int id, String nome, String descricao, int IdTermoAbertura) {
+    public RequisitoTermoAbertura(Long _id, int id, String nome, String descricao, Long IdTermoAbertura) {
+        this._id = _id;
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.IdTermoAbertura = IdTermoAbertura;
+    }
+
+    public Long get_id() {
+        return _id;
+    }
+
+    public void set_id(Long _id) {
+        this._id = _id;
     }
 
     public int getId() {
@@ -64,45 +78,22 @@ public class RequisitoTermoAbertura {
         this.descricao = descricao;
     }
 
-    public int getIdTermoAbertura() {
+    public Long getIdTermoAbertura() {
         return IdTermoAbertura;
     }
 
-    public void setIdTermoAbertura(int IdTermoAbertura) {
-        this.IdTermoAbertura = IdTermoAbertura;
+    public void setIdTermoAbertura(Long idTermoAbertura) {
+        IdTermoAbertura = idTermoAbertura;
     }
 
-    /** To-one relationship, resolved on first access. */
-    @Generated(hash = 626913611)
+    @Keep
     public TermoAbertura getTermoAbertura() {
-        int __key = this.IdTermoAbertura;
-        if (termoAbertura__resolvedKey == null || !termoAbertura__resolvedKey.equals(__key)) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            TermoAberturaDao targetDao = daoSession.getTermoAberturaDao();
-            TermoAbertura termoAberturaNew = targetDao.load(__key);
-            synchronized (this) {
-                termoAbertura = termoAberturaNew;
-                termoAbertura__resolvedKey = __key;
-            }
-        }
         return termoAbertura;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 744447317)
-    public void setTermoAbertura(@NotNull TermoAbertura termoAbertura) {
-        if (termoAbertura == null) {
-            throw new DaoException(
-                    "To-one property 'IdTermoAbertura' has not-null constraint; cannot set to-one to null");
-        }
-        synchronized (this) {
-            this.termoAbertura = termoAbertura;
-            IdTermoAbertura = termoAbertura.getId();
-            termoAbertura__resolvedKey = IdTermoAbertura;
-        }
+    @Keep
+    public void setTermoAbertura(TermoAbertura termoAbertura) {
+        this.termoAbertura = termoAbertura;
     }
 
     /**

@@ -321,8 +321,6 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     intent = new Intent(LoginActivity.this, MainActivity.class);
                 }
-
-                intent.putExtra("LOGIN", "0");
                 startActivityForResult(intent, RESULT_OK);
                 finish();
                 overridePendingTransition(R.animator.push_left_in, R.animator.push_left_out);

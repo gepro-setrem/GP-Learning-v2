@@ -33,8 +33,8 @@ public class Pessoa {
 
     private byte[] imagem;
 
-    private long tur_id;
-    @ToOne(joinProperty = "tur_id")
+    private long idTurma;
+    @ToOne(joinProperty = "idTurma")
     private Turma turma;
 
     @Transient
@@ -65,7 +65,7 @@ public class Pessoa {
     }
 
     @Keep
-    public Pessoa(Long _id, int id, String nome, String email, String telefone, StatusPessoa status, int karma, long tur_id, Date criacao) {
+    public Pessoa(Long _id, int id, String nome, String email, String telefone, StatusPessoa status, int karma, long idTurma, Date criacao) {
         this._id = _id;
         this.id = id;
         this.nome = nome;
@@ -73,13 +73,13 @@ public class Pessoa {
         this.telefone = telefone;
         this.status = status;
         this.karma = karma;
-        this.tur_id = tur_id;
+        this.idTurma = idTurma;
         this.criacao = criacao;
     }
 
-    @Generated(hash = 428879721)
-    public Pessoa(Long _id, int id, String nome, String email, String telefone, StatusPessoa status, int karma, byte[] imagem, long tur_id,
-                  Date criacao) {
+    @Generated(hash = 195737676)
+    public Pessoa(Long _id, int id, String nome, String email, String telefone, StatusPessoa status, int karma, byte[] imagem, long idTurma,
+            Date criacao) {
         this._id = _id;
         this.id = id;
         this.nome = nome;
@@ -88,9 +88,11 @@ public class Pessoa {
         this.status = status;
         this.karma = karma;
         this.imagem = imagem;
-        this.tur_id = tur_id;
+        this.idTurma = idTurma;
         this.criacao = criacao;
     }
+
+
 
     public Long get_id() {
         return _id;
@@ -157,12 +159,12 @@ public class Pessoa {
         this.criacao = criacao;
     }
 
-    public long getTur_id() {
-        return tur_id;
+    public long getIdTurma() {
+        return idTurma;
     }
 
-    public void setTur_id(long tur_id) {
-        this.tur_id = tur_id;
+    public void setIdTurma(long idTurma) {
+        this.idTurma = idTurma;
     }
 
     public byte[] getImagem() {

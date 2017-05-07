@@ -1,18 +1,19 @@
 package com.gplearning.gplearning.Models;
 
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
 
 
 @Entity(nameInDb = "marco")
 public class Marco {
     @Id
+    private Long _id;
     private int id;
 
     private String objetivo;
@@ -23,11 +24,15 @@ public class Marco {
     @ToOne(joinProperty = "IdTermoAbertura")
     private TermoAbertura termoAbertura;
 
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 1715484190)
     private transient MarcoDao myDao;
 
@@ -38,11 +43,20 @@ public class Marco {
     }
 
     @Keep
-    public Marco(int id, String objetivo, Date previsao, int IdTermoAbertura) {
+    public Marco(Long _id, int id, String objetivo, Date previsao, int IdTermoAbertura) {
+        this._id = _id;
         this.id = id;
         this.objetivo = objetivo;
         this.previsao = previsao;
         this.IdTermoAbertura = IdTermoAbertura;
+    }
+
+    public Long get_id() {
+        return _id;
+    }
+
+    public void set_id(Long _id) {
+        this._id = _id;
     }
 
     public int getId() {

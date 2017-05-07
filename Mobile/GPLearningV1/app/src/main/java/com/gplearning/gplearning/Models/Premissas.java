@@ -12,6 +12,7 @@ import org.greenrobot.greendao.annotation.ToOne;
 public class Premissas {
 
     @Id
+    private Long _id;
     private int id;
 
     private String descricao;
@@ -40,10 +41,19 @@ public class Premissas {
     }
 
     @Keep
-    public Premissas(int id, String descricao, int IdTermoAbertura) {
+    public Premissas(Long _id, int id, String descricao, int IdTermoAbertura) {
+        this._id = _id;
         this.id = id;
         this.descricao = descricao;
         this.IdTermoAbertura = IdTermoAbertura;
+    }
+
+    public Long get_id() {
+        return _id;
+    }
+
+    public void set_id(Long _id) {
+        this._id = _id;
     }
 
     public int getId() {

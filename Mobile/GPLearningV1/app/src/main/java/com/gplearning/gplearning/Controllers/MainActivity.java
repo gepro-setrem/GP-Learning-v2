@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        AtualizaHeaderMain();
 
         if (!MetodosPublicos.ExisteSessao(this)) {
             Log.i("Event", "string null, vai para login");
@@ -69,25 +70,10 @@ public class MainActivity extends AppCompatActivity
             startActivity(intentL);
         } else {
 
-            //   SharedPreferences shModo = getSharedPreferences("modoAcesso", MODE_PRIVATE);
-            //  String modoAcesso = shModo.getString("modoAcesso", null);
-
-            Intent intent = getIntent();
-            if (intent != null) {
-                Log.i("Event", "Tem Intent");
-                Bundle bundle = intent.getExtras();
-                if (bundle != null) {
-                    if (bundle.containsKey("LOGIN")) {
-                        AtualizaHeaderMain();
-                    }
-                }
-            }
-
-
             if (!MetodosPublicos.ExisteModoAcesso(this)) { //modoAcesso == null) {
                 changefragment(Fragments.nivelAcesso.toString());
             } else {
-                //  Intent intent = getIntent();
+                Intent intent = getIntent();
                 if (intent != null) {
                     Log.i("Event", "Tem Intent");
                     Bundle bundle = intent.getExtras();
@@ -98,8 +84,6 @@ public class MainActivity extends AppCompatActivity
                             Log.i("Event", "PAGE " + page);
                             changefragment(page);
                         }
-
-
                     } else {
                         Log.i("Event", "CArrega projetos");
                         changefragment(Fragments.projetos.toString());
@@ -154,9 +138,9 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
-             MetodosPublicos.SalvaSessao(this, null, null, null, 0);
+            MetodosPublicos.SalvaSessao(this, null, null, null, 0);
 
-          //  new getAssync().execute();
+            //  new getAssync().execute();
 
             return true;
         }

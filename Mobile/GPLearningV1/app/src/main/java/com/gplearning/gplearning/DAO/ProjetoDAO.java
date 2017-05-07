@@ -21,7 +21,7 @@ public class ProjetoDAO extends DefaultDAO {
 
         ResponseEntity<Projeto[]> responseEntity = restTemplate.getForEntity(url, Projeto[].class);
         Projeto[] projetos = responseEntity.getBody();
-        MetodosPublicos.Log("SeleP"," selcet de projetos com:"+projetos.length);
+        MetodosPublicos.Log("SeleP", " selcet de projetos com:" + projetos.length);
         return Arrays.asList(projetos);
     }
 
@@ -31,6 +31,14 @@ public class ProjetoDAO extends DefaultDAO {
 
     public List<Projeto> SelecionaProjetosProfessor(int id) {
         return SelecionaProjetos(PapelUsuario.admin, id);
+    }
+
+
+    public Projeto SelecionaProjetoCompleto(int pro_id) {
+        String url = UrlDefault + "/projeto/index/projeto/" + pro_id;
+        RestTemplate restTemplate = getResTemplateDefault();
+        Projeto projeto = restTemplate.getForObject(url, Projeto.class);
+        return projeto;
     }
 
 }

@@ -1,51 +1,68 @@
 package com.gplearning.gplearning.Models;
 
 
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.ToOne;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
 
 @Entity(nameInDb = "requisito")
 public class Requisito {
 
     @Id
-    private int Id;
+    private Long _id;
+
+    private int id;
+
     private String nome;
     private String descricao;
 
     private int IdProjeto;
     @ToOne(joinProperty = "IdProjeto")
     private Projeto projeto;
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 1327084183)
     private transient RequisitoDao myDao;
     @Generated(hash = 415564391)
     private transient Integer projeto__resolvedKey;
 
     @Keep
-    public Requisito(int id, String nome, String descricao, int idProjeto) {
-        Id = id;
+    public Requisito(Long _id, int id, String nome, String descricao, int idProjeto) {
+        this._id = _id;
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         IdProjeto = idProjeto;
     }
 
+
     @Generated(hash = 1369335710)
     public Requisito() {
     }
 
+    public Long get_id() {
+        return _id;
+    }
+
+    public void set_id(Long _id) {
+        this._id = _id;
+    }
+
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getNome() {
