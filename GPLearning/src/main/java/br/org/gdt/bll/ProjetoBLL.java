@@ -120,7 +120,9 @@ public class ProjetoBLL extends BLL<Projeto> {
                 projeto.setEaps(eapbll.findbyProjeto(projeto));
                 projeto.setRequisitos(requisitoBLL.findbyProjeto(projeto));
                 projeto.setStakeholders(stakeholderBLL.findbyProjeto(projeto));
-                projeto.setTermoabertura(termoAberturaBLL.findByProjeto(projeto));
+                projeto.setTermoabertura(termoAberturaBLL.findByProjetoCompleto(projeto));
+                projeto.setComponentes(null);
+                
                 return projeto;
             }
         }

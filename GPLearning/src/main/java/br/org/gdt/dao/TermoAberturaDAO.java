@@ -78,6 +78,7 @@ public class TermoAberturaDAO extends DAO<TermoAbertura> {
         TermoAbertura termoAbertura = null;
         if (lsTermoAbertura != null && lsTermoAbertura.size() > 0) {
             termoAbertura = lsTermoAbertura.get(0);
+            termoAbertura.setProjeto(null);
         }
         return termoAbertura;
     }

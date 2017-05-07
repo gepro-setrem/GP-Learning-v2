@@ -9,11 +9,17 @@ import org.springframework.stereotype.Service;
 
 @Service("requisitoTermoAberturaBLL")
 public class RequisitoTermoAberturaBLL extends BLL<RequisitoTermoAbertura> {
-
+    
     @Autowired
     private RequisitoTermoAberturaDAO dao;
-
+    
     public List<RequisitoTermoAbertura> findbyTermoAbertura(TermoAbertura termoabertura) {
-        return dao.TermoAbertura(termoabertura);
+        List<RequisitoTermoAbertura> lsAberturas = dao.TermoAbertura(termoabertura);
+        if (lsAberturas != null) {
+            for (RequisitoTermoAbertura rta : lsAberturas) {
+                rta.setTermoabertura(null);
+            }
+        }
+        return lsAberturas;
     }
 }

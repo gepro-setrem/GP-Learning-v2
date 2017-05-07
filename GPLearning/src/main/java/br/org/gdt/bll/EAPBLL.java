@@ -18,6 +18,11 @@ public class EAPBLL extends BLL<EAP> {
         List<EAP> lsEAP = new ArrayList<>();
         if (projeto != null && projeto.getId() > 0) {
             lsEAP = dao.findbyProjeto(projeto);
+            if(lsEAP!=null){
+                for(EAP eap:lsEAP){
+                    eap.setProjeto(null);
+                }
+            }
         }
         return lsEAP;
     }

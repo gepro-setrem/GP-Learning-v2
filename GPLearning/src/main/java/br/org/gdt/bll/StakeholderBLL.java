@@ -14,6 +14,14 @@ public class StakeholderBLL extends BLL<Stakeholder> {
     private StakeholderDAO dao;
 
     public List<Stakeholder> findbyProjeto(Projeto projeto) {
-        return dao.findbyProjeto(projeto);
+        List<Stakeholder> lsStakeholders = dao.findbyProjeto(projeto);
+        if (lsStakeholders != null) {
+            for (Stakeholder stakeholder : lsStakeholders) {
+                stakeholder.setProjeto(null);
+            }
+        }
+        return lsStakeholders;
     }
+    
+    
 }

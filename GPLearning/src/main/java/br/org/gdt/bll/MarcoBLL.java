@@ -9,11 +9,17 @@ import org.springframework.stereotype.Service;
 
 @Service("marcoBLL")
 public class MarcoBLL extends BLL<Marco> {
-
+    
     @Autowired
     private MarcoDAO dao;
-
+    
     public List<Marco> findbyTermoAbertura(TermoAbertura termoabertura) {
-        return dao.findbyTermoAbertura(termoabertura);
+        List<Marco> lsMarco = dao.findbyTermoAbertura(termoabertura);
+        if (lsMarco != null) {
+            for (Marco marco : lsMarco) {
+                marco.setTermoabertura(null);
+            }
+        }
+        return lsMarco;
     }
 }

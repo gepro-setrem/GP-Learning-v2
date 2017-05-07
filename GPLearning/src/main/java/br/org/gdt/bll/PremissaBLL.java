@@ -14,6 +14,12 @@ public class PremissaBLL extends BLL<Premissa> {
     private PremissaDAO dao;
 
     public List<Premissa> findbyTermoAbertura(TermoAbertura termoabertura) {
-        return dao.findbyTermoAbertura(termoabertura);
+        List<Premissa> lsPremissas = dao.findbyTermoAbertura(termoabertura);
+        if (lsPremissas != null) {
+            for (Premissa premissa : lsPremissas) {
+                premissa.setTermoabertura(null);
+            }
+        }
+        return lsPremissas;
     }
 }

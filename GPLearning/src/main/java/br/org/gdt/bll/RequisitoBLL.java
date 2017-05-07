@@ -14,6 +14,12 @@ public class RequisitoBLL extends BLL<Requisito> {
     private RequisitoDAO dao;
 
     public List<Requisito> findbyProjeto(Projeto projeto) {
-        return dao.findbyProjeto(projeto);
+        List<Requisito> lsRequisitos = dao.findbyProjeto(projeto);
+        if (lsRequisitos != null) {
+            for (Requisito requisito : lsRequisitos) {
+                requisito.setProjeto(null);
+            }
+        }
+        return lsRequisitos;
     }
 }
