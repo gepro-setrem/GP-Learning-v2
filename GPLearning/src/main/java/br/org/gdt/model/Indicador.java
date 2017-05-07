@@ -34,7 +34,7 @@ public class Indicador implements Serializable {
     @JoinColumn(name = "pes_id")
     public Pessoa professor;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "indicadores", cascade = CascadeType.REMOVE)
     private List<Etapa> etapas;
 
     public Indicador() {

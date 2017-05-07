@@ -64,7 +64,7 @@
                         </div>
                         <div class="tab-pane row" id="gamificacao" style="padding-top: 15px;">
                             <ui:repeat var="item" value="#{turmaBean.turma.etapas}" varStatus="status">
-                                <div class="col-xs-12 text-left form-group">
+                                <div class="col-md-4 col-sm-6 col-xs-12 text-left form-group">
                                     <c:set var="label" value="#{turmaBean.getEtapaProjeto(item.etapa)}"/>
                                     <a class="btn btn-link">#{label}</a>
                                     <div id="#{item.etapa}" class="collapse in">

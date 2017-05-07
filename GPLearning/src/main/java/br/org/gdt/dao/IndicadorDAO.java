@@ -20,7 +20,7 @@ public class IndicadorDAO extends DAO<Indicador> {
     }
 
     public List<Indicador> findbyEtapa(Etapa etapa) {
-        return entityManager.createQuery("select i from Indicador as i join i.etapas as eta where etap = :e")
+        return entityManager.createQuery("select i from Indicador as i join i.etapas as eta where eta = :e")
                 .setParameter("e", etapa).getResultList();
     }
 }

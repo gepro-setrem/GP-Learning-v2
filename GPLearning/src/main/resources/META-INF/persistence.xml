@@ -8,7 +8,6 @@
     <class>br.org.gdt.model.Etapa</class>
     <class>br.org.gdt.model.EtapaParametro</class>
     <class>br.org.gdt.model.Indicador</class>
-    <class>br.org.gdt.model.IndicadorEtapa</class>
     <class>br.org.gdt.model.Login</class>
     <class>br.org.gdt.model.LoginRole</class>
     <class>br.org.gdt.model.Marco</class>
