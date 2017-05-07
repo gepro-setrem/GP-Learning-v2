@@ -34,6 +34,8 @@ public class ProjetoBLL extends BLL<Projeto> {
     private EAPBLL eapbll;
     @Autowired
     private TermoAberturaBLL termoAberturaBLL;
+    @Autowired
+    private TarefaBLL tarefaBLL;
 
     public List<Projeto> findbyAluno(Pessoa aluno) {
         List<Projeto> lsProjeto = new ArrayList<>();
@@ -117,12 +119,14 @@ public class ProjetoBLL extends BLL<Projeto> {
                 projeto.getGerente().setIndicadoresprofessor(null);
                 projeto.getGerente().setTurmasprofessor(null);
                 // projeto.getGerente().setTurma(null);
-                projeto.setEaps(eapbll.findbyProjeto(projeto));
+                List<EAP> eaps = new ArrayList<>();
+                eaps.add(tarefaBLL.findbyEAP(projeto));
+                projeto.setEaps(eaps); //eapbll.findbyProjeto(projeto));
                 projeto.setRequisitos(requisitoBLL.findbyProjeto(projeto));
                 projeto.setStakeholders(stakeholderBLL.findbyProjeto(projeto));
                 projeto.setTermoabertura(termoAberturaBLL.findByProjetoCompleto(projeto));
                 projeto.setComponentes(null);
-                
+
                 return projeto;
             }
         }
