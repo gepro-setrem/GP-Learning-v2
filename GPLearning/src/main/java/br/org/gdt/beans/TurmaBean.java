@@ -1,6 +1,7 @@
 package br.org.gdt.beans;
 
 import br.org.gdt.bll.EtapaBLL;
+import br.org.gdt.bll.IndicadorBLL;
 import br.org.gdt.model.Turma;
 import br.org.gdt.model.Pessoa;
 import br.org.gdt.bll.TurmaBLL;
@@ -9,6 +10,7 @@ import br.org.gdt.bll.TurmaParametroBLL;
 import br.org.gdt.enumerated.EtapaProjeto;
 import br.org.gdt.enumerated.TurmaParametroType;
 import br.org.gdt.model.Etapa;
+import br.org.gdt.model.Indicador;
 import br.org.gdt.model.TurmaParametro;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,10 @@ public class TurmaBean {
 
     @ManagedProperty("#{etapaBLL}")
     private EtapaBLL etapaBLL;
+
+    @ManagedProperty("#{indicadorBLL}")
+    private IndicadorBLL indicadorBLL;
+    private List<Indicador> indicadores;
 
     public TurmaBean() {
     }
@@ -93,7 +99,7 @@ public class TurmaBean {
         turma = (Turma) turmas.getRowData();
         turma = turmaBLL.findById(turma.getId());
         initParametros();
-        inirEtapas();
+        initEtapas();
         return "turmafrm";
     }
 
@@ -120,7 +126,7 @@ public class TurmaBean {
     public String novo() {
         turma = new Turma();
         initParametros();
-        inirEtapas();
+        initEtapas();
         return "turmafrm";
     }
 
@@ -191,7 +197,7 @@ public class TurmaBean {
         turma.setTurmaParametros(lsTurmaParametro);
     }
 
-    private void inirEtapas() {
+    private void initEtapas() {
         List<Etapa> lsEtapa = etapaBLL.findbyTurma(turma);
         EtapaProjeto[] lsEtapaProjeto = EtapaProjeto.values();
         for (EtapaProjeto type : lsEtapaProjeto) {
@@ -220,4 +226,21 @@ public class TurmaBean {
         this.etapaBLL = etapaBLL;
     }
 
+    public IndicadorBLL getIndicadorBLL() {
+        return indicadorBLL;
+    }
+
+    public void setIndicadorBLL(IndicadorBLL indicadorBLL) {
+        this.indicadorBLL = indicadorBLL;
+    }
+
+    public List<Indicador> getIndicadores() {
+        getUsuario();
+        indicadores = indicadorBLL.findbyProfessor(usuario);
+        return indicadores;
+    }
+
+    public void setIndicadores(List<Indicador> indicadores) {
+        this.indicadores = indicadores;
+    }
 }

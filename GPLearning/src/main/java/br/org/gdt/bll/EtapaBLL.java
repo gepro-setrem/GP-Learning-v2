@@ -4,6 +4,7 @@ import br.org.gdt.dao.EtapaDAO;
 import br.org.gdt.enumerated.EtapaProjeto;
 import br.org.gdt.model.Etapa;
 import br.org.gdt.model.Turma;
+import br.org.gdt.model.IndicadorEtapa;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,17 @@ public class EtapaBLL extends BLL<Etapa> {
 
     @Autowired
     private EtapaDAO dao;
+    @Autowired
+    private IndicadorEtapaBLL indicadorEtapaBLL;
 
     public List<Etapa> findbyTurma(Turma turma) {
         List<Etapa> lsEtapa = new ArrayList<>();
         if (turma != null && turma.getId() > 0) {
             lsEtapa = dao.findbyTurma(turma);
+            for (Etapa etapa : lsEtapa) {
+                List<IndicadorEtapa> lsIndicadorEtapa = indicadorEtapaBLL.findbyEtapa(etapa);
+                etapa.setIndicadorEtapas(lsIndicadorEtapa);
+            }
         }
         return lsEtapa;
     }

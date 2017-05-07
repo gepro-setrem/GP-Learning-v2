@@ -57,6 +57,9 @@ public class Etapa implements Serializable {
     @OneToMany(mappedBy = "etapa")
     private List<Comentario> comentarios;
 
+    @OneToMany(mappedBy = "etapa")
+    private List<IndicadorEtapa> indicadorEtapas;
+
     public String getNome() {
         return nome;
     }
@@ -135,6 +138,14 @@ public class Etapa implements Serializable {
 
     public void setComentarios(List<Comentario> comentarios) {
         this.comentarios = comentarios;
+    }
+
+    public List<IndicadorEtapa> getIndicadorEtapas() {
+        return indicadorEtapas;
+    }
+
+    public void setIndicadorEtapas(List<IndicadorEtapa> indicadorEtapas) {
+        this.indicadorEtapas = indicadorEtapas;
     }
 
     @Override

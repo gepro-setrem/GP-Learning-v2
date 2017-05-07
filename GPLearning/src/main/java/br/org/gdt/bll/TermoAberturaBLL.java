@@ -17,7 +17,6 @@ public class TermoAberturaBLL extends BLL<TermoAbertura> {
     }
 
     public TermoAbertura findByProjeto(Projeto projeto) {
-      return dao.findByProjeto(projeto);
-
+        return dao.findByProjeto(projeto);
     }
 }

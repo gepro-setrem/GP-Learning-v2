@@ -121,7 +121,7 @@ public class ProjetoBLL extends BLL<Projeto> {
                 projeto.setRequisitos(requisitoBLL.findbyProjeto(projeto));
                 projeto.setStakeholders(stakeholderBLL.findbyProjeto(projeto));
                 projeto.setTermoabertura(termoAberturaBLL.findByProjeto(projeto));
-
+                return projeto;
             }
         }
         return null;

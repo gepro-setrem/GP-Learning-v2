@@ -73,7 +73,12 @@ public class TermoAberturaDAO extends DAO<TermoAbertura> {
     }
 
     public TermoAbertura findByProjeto(Projeto projeto) {
-        return (TermoAbertura) entityManager.createQuery("from TermoAbertura where projeto = :p")
-                .setParameter("p", projeto).getSingleResult();
+        List<TermoAbertura> lsTermoAbertura = entityManager.createQuery("from TermoAbertura where projeto = :p")
+                .setParameter("p", projeto).getResultList();
+        TermoAbertura termoAbertura = null;
+        if (lsTermoAbertura != null && lsTermoAbertura.size() > 0) {
+            termoAbertura = lsTermoAbertura.get(0);
+        }
+        return termoAbertura;
     }
 }
