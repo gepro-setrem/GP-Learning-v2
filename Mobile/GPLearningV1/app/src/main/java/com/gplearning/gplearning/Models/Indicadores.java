@@ -1,20 +1,24 @@
 package com.gplearning.gplearning.Models;
 
 
-import org.greenrobot.greendao.DaoException;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.OrderBy;
 import org.greenrobot.greendao.annotation.ToMany;
 
 import java.util.List;
+import org.greenrobot.greendao.DaoException;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(nameInDb = "indicadores")
 public class Indicadores {
 
     @Id
-    private long id;
+    private long _id;
     private String nome;
     private int valor;
     private int tipo;
@@ -28,10 +32,14 @@ public class Indicadores {
     @ToMany(referencedJoinProperty = "idIndicador")
     @OrderBy("_id ASC")
     private List<IndicadoresAtividades> lsIndicadoresAtividades;
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 2078571539)
     private transient IndicadoresDao myDao;
 
@@ -39,24 +47,23 @@ public class Indicadores {
         this.nome = nome;
     }
 
-    @Generated(hash = 1706605952)
-    public Indicadores(long id, String nome, int valor, int tipo) {
-        this.id = id;
+    @Keep
+    public Indicadores(long _id, String nome, int valor, int tipo) {
+        this._id = _id;
         this.nome = nome;
         this.valor = valor;
         this.tipo = tipo;
     }
 
-    @Generated(hash = 1820549493)
     public Indicadores() {
     }
 
-    public long getId() {
-        return id;
+    public long get_id() {
+        return _id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void set_id(long _id) {
+        this._id = _id;
     }
 
     public String getNome() {
@@ -83,28 +90,14 @@ public class Indicadores {
         this.tipo = tipo;
     }
 
-    /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
-     */
-    @Generated(hash = 713559389)
+    @Keep
     public List<IndicadoresAtividades> getLsIndicadoresAtividades() {
-        if (lsIndicadoresAtividades == null) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            IndicadoresAtividadesDao targetDao = daoSession
-                    .getIndicadoresAtividadesDao();
-            List<IndicadoresAtividades> lsIndicadoresAtividadesNew = targetDao
-                    ._queryIndicadores_LsIndicadoresAtividades(id);
-            synchronized (this) {
-                if (lsIndicadoresAtividades == null) {
-                    lsIndicadoresAtividades = lsIndicadoresAtividadesNew;
-                }
-            }
-        }
         return lsIndicadoresAtividades;
+    }
+
+    @Keep
+    public void setLsIndicadoresAtividades(List<IndicadoresAtividades> lsIndicadoresAtividades) {
+        this.lsIndicadoresAtividades = lsIndicadoresAtividades;
     }
 
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
@@ -155,5 +148,4 @@ public class Indicadores {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getIndicadoresDao() : null;
     }
-
 }

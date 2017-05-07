@@ -1,10 +1,12 @@
 package com.gplearning.gplearning.Models;
 
 
-import org.greenrobot.greendao.DaoException;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.OrderBy;
 import org.greenrobot.greendao.annotation.ToMany;
@@ -12,16 +14,17 @@ import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
 import java.util.List;
+import org.greenrobot.greendao.DaoException;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 @Entity(nameInDb = "tarefa")
 public class Tarefa {
 
-    @Id(autoincrement = true)
+    @Id
     private Long _id;
 
     private Long id;
-    @NotNull
     private String nome;
     private Date termino;
 
@@ -29,21 +32,31 @@ public class Tarefa {
     @ToOne(joinProperty = "idEap")
     private Eap eap;
 
+    private Long idTarefa;
+    @ToOne(joinProperty = "idTarefa")
+    private Tarefa TarefaPai;
 
     @ToMany(referencedJoinProperty = "idTarefa")
     @OrderBy("_id ASC")
-    private List<SubTarefa> lsSubTarefas;
+    private List<Tarefa> lsTarefas;
 
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 1744162860)
     private transient TarefaDao myDao;
 
     @Generated(hash = 626929379)
     private transient Long eap__resolvedKey;
+
+    @Generated(hash = 1823071567)
+    private transient Long TarefaPai__resolvedKey;
 
 
     public Tarefa() {
@@ -55,13 +68,14 @@ public class Tarefa {
 
     // @Transient = notMappep
 
-    @Generated(hash = 158035812)
-    public Tarefa(Long _id, Long id, @NotNull String nome, Date termino, Long idEap) {
+    @Generated(hash = 350609841)
+    public Tarefa(Long _id, Long id, String nome, Date termino, Long idEap, Long idTarefa) {
         this._id = _id;
         this.id = id;
         this.nome = nome;
         this.termino = termino;
         this.idEap = idEap;
+        this.idTarefa = idTarefa;
     }
 
     public Long get_id() {
@@ -107,65 +121,49 @@ public class Tarefa {
     public void setIdEap(long idEap) {
         this.idEap = idEap;
     }
-    /** To-one relationship, resolved on first access. */
-    @Generated(hash = 863157900)
+
+    @Keep
     public Eap getEap() {
-        Long __key = this.idEap;
-        if (eap__resolvedKey == null || !eap__resolvedKey.equals(__key)) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            EapDao targetDao = daoSession.getEapDao();
-            Eap eapNew = targetDao.load(__key);
-            synchronized (this) {
-                eap = eapNew;
-                eap__resolvedKey = __key;
-            }
-        }
         return eap;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 605830076)
+    @Keep
     public void setEap(Eap eap) {
-        synchronized (this) {
-            this.eap = eap;
-            idEap = eap == null ? null : eap.get_id();
-            eap__resolvedKey = idEap;
-        }
+        this.eap = eap;
     }
 
-    /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
-     */
-    @Generated(hash = 1843028590)
-    public List<SubTarefa> getLsSubTarefas() {
-        if (lsSubTarefas == null) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            SubTarefaDao targetDao = daoSession.getSubTarefaDao();
-            List<SubTarefa> lsSubTarefasNew = targetDao._queryTarefa_LsSubTarefas(_id);
-            synchronized (this) {
-                if (lsSubTarefas == null) {
-                    lsSubTarefas = lsSubTarefasNew;
-                }
-            }
-        }
-        return lsSubTarefas;
+    public Long getIdTarefa() {
+        return idTarefa;
     }
 
-    public void setLsSubTarefas(List<SubTarefa> lsSubTarefas) {
-        this.lsSubTarefas = lsSubTarefas;
+    public void setIdTarefa(Long idTarefa) {
+        this.idTarefa = idTarefa;
+    }
+
+    @Keep
+    public Tarefa getTarefaPai() {
+        return TarefaPai;
+    }
+
+    @Keep
+    public void setTarefaPai(Tarefa tarefaPai) {
+        TarefaPai = tarefaPai;
+    }
+
+    @Keep
+    public List<Tarefa> getLsTarefas() {
+        return lsTarefas;
+    }
+
+    @Keep
+    public void setLsTarefas(List<Tarefa> lsTarefas) {
+        this.lsTarefas = lsTarefas;
     }
 
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    @Generated(hash = 312574848)
-    public synchronized void resetLsSubTarefas() {
-        lsSubTarefas = null;
+    @Generated(hash = 997083221)
+    public synchronized void resetLsTarefas() {
+        lsTarefas = null;
     }
 
     /**

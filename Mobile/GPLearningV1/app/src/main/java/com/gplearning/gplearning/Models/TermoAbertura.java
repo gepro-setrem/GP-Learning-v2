@@ -1,6 +1,9 @@
 package com.gplearning.gplearning.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -10,8 +13,8 @@ import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
 import java.util.List;
-import org.greenrobot.greendao.DaoException;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(nameInDb = "termoAbertura")
 public class TermoAbertura {
 
@@ -177,25 +180,33 @@ public class TermoAbertura {
         this.lsRequisitoTermoAbertura = lsRequisitoTermoAbertura;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 831465351)
     public synchronized void resetLsRestricoes() {
         lsRestricoes = null;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 718023656)
     public synchronized void resetLsPremissas() {
         lsPremissas = null;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 479589052)
     public synchronized void resetLsMarco() {
         lsMarco = null;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 1369674208)
     public synchronized void resetLsRequisitoTermoAbertura() {
         lsRequisitoTermoAbertura = null;

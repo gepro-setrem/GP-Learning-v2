@@ -1,15 +1,18 @@
 package com.gplearning.gplearning.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(nameInDb = "turma")
 public class Turma {
 
@@ -28,17 +31,22 @@ public class Turma {
     @ToOne(joinProperty = "pro_id")
     private Pessoa professor;
 
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 1752625201)
     private transient TurmaDao myDao;
 
     @Generated(hash = 502892095)
     private transient Long professor__resolvedKey;
 
+    @Keep
     public Turma() {
     }
 
@@ -52,7 +60,6 @@ public class Turma {
         this.alteracao = alteracao;
         this.pro_id = pro_id;
     }
-
 
 
     public Long get_id() {

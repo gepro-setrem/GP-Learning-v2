@@ -1,5 +1,7 @@
 package com.gplearning.gplearning.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -9,7 +11,7 @@ import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(nameInDb = "marco")
 public class Marco {
     @Id

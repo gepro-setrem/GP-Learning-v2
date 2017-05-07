@@ -1,13 +1,16 @@
 package com.gplearning.gplearning.Models;
 
 
-import org.greenrobot.greendao.DaoException;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.NotNull;
+import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.ToOne;
+import org.greenrobot.greendao.DaoException;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 @Entity(nameInDb = "parametrosAtividade")
 public class ParametrosAtividade {
@@ -19,18 +22,22 @@ public class ParametrosAtividade {
 
     private long atv_id;
     @ToOne(joinProperty = "atv_id")
-    private Atividade atividade;
+    private Etapa etapa;
 
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 140681715)
     private transient ParametrosAtividadeDao myDao;
 
-    @Generated(hash = 403996642)
-    private transient Long atividade__resolvedKey;
+    @Generated(hash = 298126781)
+    private transient Long etapa__resolvedKey;
 
 
     public ParametrosAtividade(long _id) {
@@ -41,7 +48,7 @@ public class ParametrosAtividade {
         this.nome = nome;
     }
 
-    @Generated(hash = 170652758)
+    @Keep
     public ParametrosAtividade(long _id, String nome, String valor, long atv_id) {
         this._id = _id;
         this.nome = nome;
@@ -49,7 +56,7 @@ public class ParametrosAtividade {
         this.atv_id = atv_id;
     }
 
-    @Generated(hash = 1323943023)
+    @Keep
     public ParametrosAtividade() {
     }
 
@@ -85,38 +92,14 @@ public class ParametrosAtividade {
         this.atv_id = atv_id;
     }
 
-    /** To-one relationship, resolved on first access. */
-    @Generated(hash = 1109923230)
-    public Atividade getAtividade() {
-        long __key = this.atv_id;
-        if (atividade__resolvedKey == null
-                || !atividade__resolvedKey.equals(__key)) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            AtividadeDao targetDao = daoSession.getAtividadeDao();
-            Atividade atividadeNew = targetDao.load(__key);
-            synchronized (this) {
-                atividade = atividadeNew;
-                atividade__resolvedKey = __key;
-            }
-        }
-        return atividade;
+    @Keep
+    public Etapa getEtapa() {
+        return etapa;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 1570123940)
-    public void setAtividade(@NotNull Atividade atividade) {
-        if (atividade == null) {
-            throw new DaoException(
-                    "To-one property 'atv_id' has not-null constraint; cannot set to-one to null");
-        }
-        synchronized (this) {
-            this.atividade = atividade;
-            atv_id = atividade.get_id();
-            atividade__resolvedKey = atv_id;
-        }
+    @Keep
+    public void setEtapa(Etapa etapa) {
+        this.etapa = etapa;
     }
 
     /**

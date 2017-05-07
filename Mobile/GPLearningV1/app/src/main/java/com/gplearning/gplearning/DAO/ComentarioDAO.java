@@ -1,7 +1,7 @@
 package com.gplearning.gplearning.DAO;
 
 
-import com.gplearning.gplearning.Models.Atividade;
+import com.gplearning.gplearning.Models.Etapa;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 
@@ -15,8 +15,8 @@ import java.util.List;
 public class ComentarioDAO extends DefaultDAO {
 
 
-    public List<Comentario> SelecionaComentarioPorAtividade(Atividade atividade) {
-        String url = UrlDefault + "/comentario/index/" + atividade.getId();
+    public List<Comentario> SelecionaComentarioPorAtividade(Etapa etapa) {
+        String url = UrlDefault + "/comentario/index/" + etapa.getId();
 
         RestTemplate restTemplate = getResTemplateDefault();
 

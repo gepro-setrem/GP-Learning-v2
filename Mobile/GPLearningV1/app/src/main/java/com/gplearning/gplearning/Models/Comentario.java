@@ -32,9 +32,9 @@ public class Comentario {
 
     private boolean deletado;//define que este comentário esta deletado
 
-    private Long IdAtividade;
-    @ToOne(joinProperty = "IdAtividade")
-    private Atividade atividade;
+    private Long IdEtapa;
+    @ToOne(joinProperty = "IdEtapa")
+    private Etapa etapa;
 
     private Long IdRemetente;
     @ToOne(joinProperty = "IdRemetente")
@@ -52,11 +52,11 @@ public class Comentario {
     @Generated(hash = 978109081)
     private transient ComentarioDao myDao;
 
-    @Generated(hash = 403996642)
-    private transient Long atividade__resolvedKey;
-
     @Generated(hash = 603090513)
     private transient Long remetente__resolvedKey;
+
+    @Generated(hash = 298126781)
+    private transient Long etapa__resolvedKey;
 
 
     public Comentario() {
@@ -78,13 +78,13 @@ public class Comentario {
 
     @Generated(hash = 1065863250)
     public Comentario(Long _id, int id, @NotNull String descricao, Date criacao,
-            boolean deletado, Long IdAtividade, Long IdRemetente) {
+            boolean deletado, Long IdEtapa, Long IdRemetente) {
         this._id = _id;
         this.id = id;
         this.descricao = descricao;
         this.criacao = criacao;
         this.deletado = deletado;
-        this.IdAtividade = IdAtividade;
+        this.IdEtapa = IdEtapa;
         this.IdRemetente = IdRemetente;
     }
 
@@ -120,22 +120,22 @@ public class Comentario {
         this.criacao = criacao;
     }
 
-    public Long getIdAtividade() {
-        return IdAtividade;
+    public Long getIdEtapa() {
+        return IdEtapa;
     }
 
-    public void setIdAtividade(Long idAtividade) {
-        IdAtividade = idAtividade;
-    }
-
-    @Keep
-    public Atividade getAtividade() {
-        return atividade;
+    public void setIdEtapa(Long idEtapa) {
+        IdEtapa = idEtapa;
     }
 
     @Keep
-    public void setAtividade(Atividade atividade) {
-        this.atividade = atividade;
+    public Etapa getEtapa() {
+        return etapa;
+    }
+
+    @Keep
+    public void setEtapa(Etapa etapa) {
+        this.etapa = etapa;
     }
 
     public Long getIdRemetente() {

@@ -17,9 +17,10 @@ import android.widget.TextView;
 
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.Enums.EtapaProjeto;
-import com.gplearning.gplearning.Models.Atividade;
+import com.gplearning.gplearning.Models.Etapa;
 import com.gplearning.gplearning.Models.AtividadeDao;
 import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.EtapaDao;
 import com.gplearning.gplearning.Models.Pessoa;
 import com.gplearning.gplearning.Models.PessoaDao;
 import com.gplearning.gplearning.R;
@@ -40,9 +41,9 @@ public class EtapasFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "projetoId";
 
-    //  private List<Atividade> lsAtividades;
+    //  private List<Etapa> lsAtividades;
     private Long projetoId;
-    private AtividadeDao atividadeDao;
+    private EtapaDao etapaDao;
     private OnFragmentInteractionListener mListener;
 
     public EtapasFragment() {
@@ -102,9 +103,9 @@ public class EtapasFragment extends Fragment {
 
 
 
-        atividadeDao = session.getAtividadeDao();
-        List<Atividade> lsAtividades = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId)).list();
-        PassaValoresEtapas(lsAtividades);
+        etapaDao = session.getEtapaDao();
+        List<Etapa> lsEtapas = etapaDao.queryBuilder().where(EtapaDao.Properties.Pro_id.eq(projetoId)).list();
+        PassaValoresEtapas(lsEtapas);
 
 
     }
@@ -147,7 +148,7 @@ public class EtapasFragment extends Fragment {
     /// Icones
     /// http://www.flaticon.com/packs/business-and-finance-11
     /// http://www.flaticon.com/packs/reports-and-analytics/2
-    private void PassaValoresEtapas(List<Atividade> lsAtividades) {
+    private void PassaValoresEtapas(List<Etapa> lsEtapas) {
 
 
         // descricao
@@ -177,10 +178,10 @@ public class EtapasFragment extends Fragment {
         });
 
 
-        // Atividade atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaDescricao)).unique();
-        if (lsAtividades != null && lsAtividades.size() > 0) {
+        // Etapa atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaDescricao)).unique();
+        if (lsEtapas != null && lsEtapas.size() > 0) {
 
-            for (final Atividade atv : lsAtividades) {
+            for (final Etapa atv : lsEtapas) {
                 if (atv.getEtapa() == EtapaProjeto.DescricaoProjeto) {
                     ((RatingBar) getActivity().findViewById(R.id.etapaProjetoDescricaoTARatingBar)).setRating(atv.getPontuacaoMedia());
                     ((ImageButton) getActivity().findViewById(R.id.etapaProjetoDescricaoTAbtn)).setOnClickListener(new View.OnClickListener() {

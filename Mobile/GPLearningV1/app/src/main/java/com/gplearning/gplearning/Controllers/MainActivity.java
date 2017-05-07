@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity
                 //   ComentarioDAO comentarioDAO = new ComentarioDAO();
                 //   List<Comentario> lsComentarios = comentarioDAO.SelecionaComentarioPorData(dataAtual.getTime());
                 //   MetodosPublicos.Log("retorno", " Retornou com:" + lsComentariosLite.size());
-//                Atividade atv = new Atividade();
+//                Etapa atv = new Etapa();
 //                atv.setId(1);
 
                 Sincronizacao sc = new Sincronizacao();

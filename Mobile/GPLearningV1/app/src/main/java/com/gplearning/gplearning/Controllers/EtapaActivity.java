@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.Enums.EtapaProjeto;
-import com.gplearning.gplearning.Models.Atividade;
-import com.gplearning.gplearning.Models.AtividadeDao;
+import com.gplearning.gplearning.Models.Etapa;
 import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.EtapaDao;
 import com.gplearning.gplearning.Models.Marco;
 import com.gplearning.gplearning.Models.Premissas;
 import com.gplearning.gplearning.Models.Projeto;
@@ -33,7 +33,7 @@ import java.util.List;
 
 public class EtapaActivity extends AppCompatActivity {
 
-    private Long idAtividade;
+    private Long idEtapa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +44,9 @@ public class EtapaActivity extends AppCompatActivity {
         if (intent != null && intent.getExtras() != null && intent.getExtras().containsKey("ID")) {
             Long id = intent.getExtras().getLong("ID");
             DaoSession daoSession = ((App) getApplication()).getDaoSession();
-            AtividadeDao atividadeDao = daoSession.getAtividadeDao();
+            EtapaDao etapaDao = daoSession.getEtapaDao();
             ///selecionar atividade
-            Atividade atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties._id.eq(id)).unique(); //AtividadeDao.Properties.Etapa = EtapaProjeto.Escopo).
+            Etapa atv = etapaDao.queryBuilder().where(EtapaDao.Properties._id.eq(id)).unique(); //AtividadeDao.Properties.Etapa = EtapaProjeto.Escopo).
             if (atv != null && atv.get_id() > 0) {
                 AtualizaValores(atv);
                 SetTitle(atv.getEtapa());
@@ -57,7 +57,7 @@ public class EtapaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EtapaActivity.this, ComentarioActivity.class);
-                intent.putExtra("ID", idAtividade);
+                intent.putExtra("ID", idEtapa);
                 startActivity(intent);
             }
         });
@@ -80,7 +80,7 @@ public class EtapaActivity extends AppCompatActivity {
      * Atualiza a view, conforme o tipo de atividade;
      * @param atv
      */
-    private void AtualizaValores(Atividade atv) {
+    private void AtualizaValores(Etapa atv) {
         DaoSession daoSession = ((App) getApplication()).getDaoSession();
 
         if (atv.getEtapa() == EtapaProjeto.DescricaoProjeto ||

@@ -1,12 +1,16 @@
 package com.gplearning.gplearning.Models;
 
 
-import org.greenrobot.greendao.DaoException;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.ToOne;
+import org.greenrobot.greendao.DaoException;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 @Entity(nameInDb = "indicadores_atividades")
 public class IndicadoresAtividades {
@@ -20,21 +24,25 @@ public class IndicadoresAtividades {
 
     private Long idAtividade;
     @ToOne(joinProperty = "idAtividade")
-    private Atividade atividade;
+    private Etapa etapa;
 
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 1007608956)
     private transient IndicadoresAtividadesDao myDao;
 
     @Generated(hash = 806692465)
     private transient Long indicador__resolvedKey;
 
-    @Generated(hash = 403996642)
-    private transient Long atividade__resolvedKey;
+    @Generated(hash = 298126781)
+    private transient Long etapa__resolvedKey;
 
     public IndicadoresAtividades(long _id) {
         this._id = _id;
@@ -65,42 +73,24 @@ public class IndicadoresAtividades {
     public IndicadoresAtividades() {
     }
 
+    @Keep
     public Long getIdIndicador() {
         return idIndicador;
     }
 
+    @Keep
     public void setIdIndicador(Long idIndicador) {
         this.idIndicador = idIndicador;
     }
 
-    /** To-one relationship, resolved on first access. */
-    @Generated(hash = 289010054)
+    @Keep
     public Indicadores getIndicador() {
-        Long __key = this.idIndicador;
-        if (indicador__resolvedKey == null
-                || !indicador__resolvedKey.equals(__key)) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            IndicadoresDao targetDao = daoSession.getIndicadoresDao();
-            Indicadores indicadorNew = targetDao.load(__key);
-            synchronized (this) {
-                indicador = indicadorNew;
-                indicador__resolvedKey = __key;
-            }
-        }
         return indicador;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 1611246607)
+    @Keep
     public void setIndicador(Indicadores indicador) {
-        synchronized (this) {
-            this.indicador = indicador;
-            idIndicador = indicador == null ? null : indicador.getId();
-            indicador__resolvedKey = idIndicador;
-        }
+        this.indicador = indicador;
     }
 
     public Long getIdAtividade() {
@@ -111,34 +101,14 @@ public class IndicadoresAtividades {
         this.idAtividade = idAtividade;
     }
 
-    /** To-one relationship, resolved on first access. */
-    @Generated(hash = 1873052142)
-    public Atividade getAtividade() {
-        Long __key = this.idAtividade;
-        if (atividade__resolvedKey == null
-                || !atividade__resolvedKey.equals(__key)) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            AtividadeDao targetDao = daoSession.getAtividadeDao();
-            Atividade atividadeNew = targetDao.load(__key);
-            synchronized (this) {
-                atividade = atividadeNew;
-                atividade__resolvedKey = __key;
-            }
-        }
-        return atividade;
+    @Keep
+    public Etapa getEtapa() {
+        return etapa;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 354233269)
-    public void setAtividade(Atividade atividade) {
-        synchronized (this) {
-            this.atividade = atividade;
-            idAtividade = atividade == null ? null : atividade.get_id();
-            atividade__resolvedKey = idAtividade;
-        }
+    @Keep
+    public void setEtapa(Etapa etapa) {
+        this.etapa = etapa;
     }
 
     /**

@@ -20,8 +20,8 @@ import java.util.List;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Entity(nameInDb = "atividade")
-public class Atividade {
+@Entity(nameInDb = "etapa")
+public class Etapa {
     @Id
     private Long _id;
 
@@ -45,9 +45,13 @@ public class Atividade {
     @OrderBy("_id ASC")
     private List<IndicadoresAtividades> lsIndicadoresAtividades;
 
-    private long pro_id;
-    @ToOne(joinProperty = "pro_id")
-    private Projeto projeto;
+//    private long pro_id;
+//    @ToOne(joinProperty = "pro_id")
+//    private Projeto projeto;
+
+    private Long idTurma;
+    @ToOne(joinProperty = "idTurma")
+    private Turma turma;
 
     @ToMany(referencedJoinProperty = "atv_id")
     @OrderBy("_id ASC")
@@ -59,14 +63,12 @@ public class Atividade {
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /**
-     * Used for active entity operations.
-     */
-    @Generated(hash = 1139238037)
-    private transient AtividadeDao myDao;
+    /** Used for active entity operations. */
+    @Generated(hash = 1970263667)
+    private transient EtapaDao myDao;
 
-    @Generated(hash = 1369604525)
-    private transient Long projeto__resolvedKey;
+    @Generated(hash = 1191549063)
+    private transient Long turma__resolvedKey;
 
     public int getPontuacaoMedia() {
         return pontuacaoMedia;
@@ -76,17 +78,17 @@ public class Atividade {
         this.pontuacaoMedia = pontuacaoMedia;
     }
 
-    public Atividade(long _id) {
+    public Etapa(long _id) {
         this._id = _id;
     }
 
-    public Atividade(String nome, EtapaProjeto etapa) {
+    public Etapa(String nome, EtapaProjeto etapa) {
         this.nome = nome;
         this.etapa = etapa;
     }
 
     @Keep
-    public Atividade(long _id, int id, String nome, Date criacao, Date termino, Date conclusao, EtapaProjeto etapa, long pro_id) {
+    public Etapa(long _id, int id, String nome, Date criacao, Date termino, Date conclusao, EtapaProjeto etapa, Long idTurma) {
         this._id = _id;
         this.id = id;
         this.nome = nome;
@@ -94,17 +96,16 @@ public class Atividade {
         this.termino = termino;
         this.conclusao = conclusao;
         this.etapa = etapa;
-        this.pro_id = pro_id;
+        this.idTurma = idTurma;
     }
 
     @Keep
-    public Atividade() {
+    public Etapa() {
     }
 
 
-    @Generated(hash = 558728208)
-    public Atividade(Long _id, int id, String nome, Date criacao, Date termino, Date conclusao, EtapaProjeto etapa,
-                     int pontuacaoMedia, long pro_id) {
+    public Etapa(Long _id, int id, String nome, Date criacao, Date termino, Date conclusao, EtapaProjeto etapa,
+                 int pontuacaoMedia) {
         this._id = _id;
         this.id = id;
         this.nome = nome;
@@ -113,7 +114,20 @@ public class Atividade {
         this.conclusao = conclusao;
         this.etapa = etapa;
         this.pontuacaoMedia = pontuacaoMedia;
-        this.pro_id = pro_id;
+    }
+
+    @Generated(hash = 862528198)
+    public Etapa(Long _id, int id, String nome, Date criacao, Date termino, Date conclusao, EtapaProjeto etapa, int pontuacaoMedia,
+            Long idTurma) {
+        this._id = _id;
+        this.id = id;
+        this.nome = nome;
+        this.criacao = criacao;
+        this.termino = termino;
+        this.conclusao = conclusao;
+        this.etapa = etapa;
+        this.pontuacaoMedia = pontuacaoMedia;
+        this.idTurma = idTurma;
     }
 
     public Long get_id() {
@@ -172,29 +186,29 @@ public class Atividade {
         this.etapa = etapa;
     }
 
-    public long getPro_id() {
-        return pro_id;
+    public Long getIdTurma() {
+        return idTurma;
     }
 
-    public void setPro_id(long pro_id) {
-        this.pro_id = pro_id;
-    }
-
-    @Keep
-    public Projeto getProjeto() {
-        return projeto;
+    public void setIdTurma(Long idTurma) {
+        this.idTurma = idTurma;
     }
 
     @Keep
-    public void setProjeto(Projeto projeto) {
-        this.projeto = projeto;
+    public Turma getTurma() {
+        return turma;
+    }
+
+    @Keep
+    public void setTurma(Turma turma) {
+        this.turma = turma;
     }
 
     /**
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
      */
-    @Generated(hash = 1628339806)
+    @Generated(hash = 64157708)
     public List<IndicadoresAtividades> getLsIndicadoresAtividades() {
         if (lsIndicadoresAtividades == null) {
             final DaoSession daoSession = this.daoSession;
@@ -202,7 +216,7 @@ public class Atividade {
                 throw new DaoException("Entity is detached from DAO context");
             }
             IndicadoresAtividadesDao targetDao = daoSession.getIndicadoresAtividadesDao();
-            List<IndicadoresAtividades> lsIndicadoresAtividadesNew = targetDao._queryAtividade_LsIndicadoresAtividades(_id);
+            List<IndicadoresAtividades> lsIndicadoresAtividadesNew = targetDao._queryEtapa_LsIndicadoresAtividades(_id);
             synchronized (this) {
                 if (lsIndicadoresAtividades == null) {
                     lsIndicadoresAtividades = lsIndicadoresAtividadesNew;
@@ -220,7 +234,7 @@ public class Atividade {
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
      */
-    @Generated(hash = 158109193)
+    @Generated(hash = 143405805)
     public List<ParametrosAtividade> getLsParametros() {
         if (lsParametros == null) {
             final DaoSession daoSession = this.daoSession;
@@ -228,7 +242,7 @@ public class Atividade {
                 throw new DaoException("Entity is detached from DAO context");
             }
             ParametrosAtividadeDao targetDao = daoSession.getParametrosAtividadeDao();
-            List<ParametrosAtividade> lsParametrosNew = targetDao._queryAtividade_LsParametros(_id);
+            List<ParametrosAtividade> lsParametrosNew = targetDao._queryEtapa_LsParametros(_id);
             synchronized (this) {
                 if (lsParametros == null) {
                     lsParametros = lsParametrosNew;
@@ -296,10 +310,10 @@ public class Atividade {
 
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 715426895)
+    @Generated(hash = 551121054)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getAtividadeDao() : null;
+        myDao = daoSession != null ? daoSession.getEtapaDao() : null;
     }
 
 }

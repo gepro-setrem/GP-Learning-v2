@@ -1,12 +1,16 @@
 package com.gplearning.gplearning.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.ToOne;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 @Entity(nameInDb = "premissas")
 public class Premissas {
