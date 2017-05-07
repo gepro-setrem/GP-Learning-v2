@@ -1,5 +1,6 @@
 package br.org.gdt.dao;
 
+import br.org.gdt.model.Etapa;
 import br.org.gdt.model.Indicador;
 import br.org.gdt.model.Pessoa;
 import java.util.List;
@@ -16,5 +17,10 @@ public class IndicadorDAO extends DAO<Indicador> {
         List<Indicador> lsIndicador = entityManager.createQuery("from Indicador as t where t.professor = :p")
                 .setParameter("p", pessoa).getResultList();
         return lsIndicador;
+    }
+
+    public List<Indicador> findbyEtapa(Etapa etapa) {
+        return entityManager.createQuery("select i from Indicador as i join i.etapas as eta where etap = :e")
+                .setParameter("e", etapa).getResultList();
     }
 }

@@ -1,6 +1,7 @@
 package br.org.gdt.bll;
 
 import br.org.gdt.dao.IndicadorDAO;
+import br.org.gdt.model.Etapa;
 import br.org.gdt.model.Indicador;
 import br.org.gdt.model.Pessoa;
 import java.util.ArrayList;
@@ -15,6 +16,18 @@ public class IndicadorBLL extends BLL<Indicador> {
     private IndicadorDAO dao;
 
     public List<Indicador> findbyProfessor(Pessoa professor) {
-        return dao.findbyProfessor(professor);
+        List<Indicador> lsIndicador = new ArrayList<>();
+        if (professor != null && professor.getId() > 0) {
+            lsIndicador = dao.findbyProfessor(professor);
+        }
+        return lsIndicador;
+    }
+
+    public List<Indicador> findbyEtapa(Etapa etapa) {
+        List<Indicador> lsIndicador = new ArrayList<>();
+        if (etapa != null && etapa.getId() > 0) {
+            lsIndicador = dao.findbyEtapa(etapa);
+        }
+        return lsIndicador;
     }
 }

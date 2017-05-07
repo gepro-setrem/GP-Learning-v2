@@ -36,8 +36,12 @@ public class Avaliacao implements Serializable {
     private EtapaParametro etapaParametro;
 
     @ManyToOne
-    @JoinColumn(name = "ndt_id")
-    private IndicadorEtapa indicadorEtapa;
+    @JoinColumn(name = "eta_id")
+    private Etapa etapa;
+
+    @ManyToOne
+    @JoinColumn(name = "ind_id")
+    private Indicador indicador;
 
     @ManyToOne
     @JoinColumn(name = "pro_id")
@@ -78,12 +82,20 @@ public class Avaliacao implements Serializable {
         this.etapaParametro = etapaParametro;
     }
 
-    public IndicadorEtapa getIndicadorEtapa() {
-        return indicadorEtapa;
+    public Etapa getEtapa() {
+        return etapa;
     }
 
-    public void setIndicadorEtapa(IndicadorEtapa indicadorEtapa) {
-        this.indicadorEtapa = indicadorEtapa;
+    public void setEtapa(Etapa etapa) {
+        this.etapa = etapa;
+    }
+
+    public Indicador getIndicador() {
+        return indicador;
+    }
+
+    public void setIndicador(Indicador indicador) {
+        this.indicador = indicador;
     }
 
     public Projeto getProjeto() {

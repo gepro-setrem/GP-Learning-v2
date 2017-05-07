@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -57,8 +58,8 @@ public class Etapa implements Serializable {
     @OneToMany(mappedBy = "etapa")
     private List<Comentario> comentarios;
 
-    @OneToMany(mappedBy = "etapa")
-    private List<IndicadorEtapa> indicadorEtapas;
+    @ManyToMany
+    private List<Indicador> indicadores;
 
     public String getNome() {
         return nome;
@@ -140,12 +141,12 @@ public class Etapa implements Serializable {
         this.comentarios = comentarios;
     }
 
-    public List<IndicadorEtapa> getIndicadorEtapas() {
-        return indicadorEtapas;
+    public List<Indicador> getIndicadores() {
+        return indicadores;
     }
 
-    public void setIndicadorEtapas(List<IndicadorEtapa> indicadorEtapas) {
-        this.indicadorEtapas = indicadorEtapas;
+    public void setIndicadores(List<Indicador> indicadores) {
+        this.indicadores = indicadores;
     }
 
     @Override
