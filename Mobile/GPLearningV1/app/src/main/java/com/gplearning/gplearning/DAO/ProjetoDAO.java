@@ -15,7 +15,7 @@ import java.util.List;
 public class ProjetoDAO extends DefaultDAO {
 
     private List<Projeto> SelecionaProjetos(PapelUsuario papel, int id) {
-        String url = UrlDefault + "/projeto/index/" + (papel == PapelUsuario.aluno ? "aluno" : "professor") + "/" + id;
+        String url = UrlDefault + "/projeto/index/" + (papel == PapelUsuario.user ? "aluno" : "professor") + "/" + id;
         List<Projeto> lsProjetos = new ArrayList<>();
         RestTemplate restTemplate = getResTemplateDefault();
 
@@ -26,11 +26,11 @@ public class ProjetoDAO extends DefaultDAO {
     }
 
     public List<Projeto> SelecionaProjetosAluno(int id) {
-        return SelecionaProjetos(PapelUsuario.aluno, id);
+        return SelecionaProjetos(PapelUsuario.user, id);
     }
 
     public List<Projeto> SelecionaProjetosProfessor(int id) {
-        return SelecionaProjetos(PapelUsuario.aluno, id);
+        return SelecionaProjetos(PapelUsuario.admin, id);
     }
 
 }

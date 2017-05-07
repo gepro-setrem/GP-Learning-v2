@@ -4,15 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gplearning.gplearning.Converters.StatusPessoaConverter;
 import com.gplearning.gplearning.Enums.StatusPessoa;
 
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.ToOne;
+import org.greenrobot.greendao.annotation.Transient;
 
 import java.util.Date;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 
@@ -30,20 +31,26 @@ public class Pessoa {
     private StatusPessoa status;
     private int karma;
 
+    private byte[] imagem;
 
     private long tur_id;
     @ToOne(joinProperty = "tur_id")
     private Turma turma;
 
-
+    @Transient
+    private Login login;
 
     private Date criacao;
 
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 1409126797)
     private transient PessoaDao myDao;
 
@@ -89,6 +96,7 @@ public class Pessoa {
     public String getNome() {
         return nome;
     }
+
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -142,6 +150,22 @@ public class Pessoa {
         this.tur_id = tur_id;
     }
 
+    public byte[] getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
+    }
+
+    public Login getLogin() {
+        return login;
+    }
+
+    public void setLogin(Login login) {
+        this.login = login;
+    }
+
     @Keep
     public Turma getTurma() {
         return turma;
@@ -188,7 +212,9 @@ public class Pessoa {
         myDao.update(this);
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     @Generated(hash = 403681025)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;

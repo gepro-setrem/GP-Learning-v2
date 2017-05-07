@@ -1,6 +1,8 @@
 package com.gplearning.gplearning.Controllers;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -15,18 +17,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.Enums.Fragments;
-import com.gplearning.gplearning.Models.Comentario;
-import com.gplearning.gplearning.Models.ComentarioDao;
-import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 import com.gplearning.gplearning.Utils.Sincronizacao;
-
-import java.util.List;
 
 //import android.support.v4.app.Fragment;
 
@@ -102,6 +99,11 @@ public class MainActivity extends AppCompatActivity
         View hView = navigationView.getHeaderView(0);
         ((TextView) hView.findViewById(R.id.headerName)).setText(MetodosPublicos.SelecionaSessaoNome(this));
         ((TextView) hView.findViewById(R.id.headerEmail)).setText(MetodosPublicos.SelecionaSessaoEmail(this));
+        byte[] image = MetodosPublicos.SelecionaSessaoImagemBytes(this);
+        if (image.length > 0) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+            ((ImageView) hView.findViewById(R.id.headerImage)).setImageBitmap(bitmap);
+        }
     }
 
     @Override
@@ -216,10 +218,10 @@ public class MainActivity extends AppCompatActivity
                 //  Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
                 //   Log.i("WB", quote.toString());
 
-             //   DaoSession daoSession = ((App) getApplicationContext()).getDaoSession();
-             //   ComentarioDao comentarioDao = daoSession.getComentarioDao();
+                //   DaoSession daoSession = ((App) getApplicationContext()).getDaoSession();
+                //   ComentarioDao comentarioDao = daoSession.getComentarioDao();
 
-              //  List<Comentario> lsComentariosLite = comentarioDao.queryBuilder().whereOr(ComentarioDao.Properties._id.lt(20), (ComentarioDao.Properties.Deletado.eq(true))).where(ComentarioDao.Properties.Id.gt(0)).list();
+                //  List<Comentario> lsComentariosLite = comentarioDao.queryBuilder().whereOr(ComentarioDao.Properties._id.lt(20), (ComentarioDao.Properties.Deletado.eq(true))).where(ComentarioDao.Properties.Id.gt(0)).list();
 
 
                 //   ComentarioDAO comentarioDAO = new ComentarioDAO();

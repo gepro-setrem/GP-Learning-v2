@@ -5,9 +5,12 @@ import android.content.Context;
 
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.DAO.ComentarioDAO;
+import com.gplearning.gplearning.DAO.ProjetoDAO;
+import com.gplearning.gplearning.Enums.PapelUsuario;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.Projeto;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -16,11 +19,22 @@ import java.util.List;
 
 public class Sincronizacao {
 
-    public void SincronizaApp() {
+    public static void SincronizaApp(Context context, PapelUsuario papel) {
+        ProjetoDAO projetoDAO = new ProjetoDAO();
+        List<Projeto> lsProjetos;  // =  projetoDAO.Sel
+        int id = MetodosPublicos.SelecionaSessaoidExterno(context);
+        if (papel == PapelUsuario.user)
+            lsProjetos = projetoDAO.SelecionaProjetosAluno(id);
+        else
+            lsProjetos = projetoDAO.SelecionaProjetosProfessor(id);
+
+        if (lsProjetos != null && lsProjetos.size() > 0) {
+            
+        }
 
     }
 
-    public void SincronizaComentarios(Context context) throws ParseException {
+    public static void SincronizaComentarios(Context context) throws ParseException {
         if (MetodosPublicos.IsConnected(context)) {
             final ComentarioDAO comentarioDAO = new ComentarioDAO();
             DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
@@ -82,7 +96,7 @@ public class Sincronizacao {
     }
 
 
-    private boolean EstaNaListaComentario(Comentario com, List<Comentario> lsComentarios) {
+    private static boolean EstaNaListaComentario(Comentario com, List<Comentario> lsComentarios) {
         if (lsComentarios != null && lsComentarios.size() > 0) {
             for (Comentario CM : lsComentarios) {
                 if (CM.getId() == com.getId())

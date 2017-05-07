@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,10 +20,15 @@ import android.widget.TextView;
 
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.DAO.UsuarioDAO;
+import com.gplearning.gplearning.Enums.PapelUsuario;
 import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.LoginRole;
 import com.gplearning.gplearning.Models.Pessoa;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
+import com.gplearning.gplearning.Utils.Sincronizacao;
+
+import java.util.List;
 
 /**
  * A login screen that offers login via email/password.
@@ -277,12 +281,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 userDAO = new UsuarioDAO();
 
-             return userDAO.Login(session, email, password);
+                return userDAO.Login(session, email, password);
 
-               // Log.i("gpl LG", "ID:" + idExterno);
+                // Log.i("gpl LG", "ID:" + idExterno);
 
             } catch (Exception e) {
-                MetodosPublicos.Log("",e.toString());
+                MetodosPublicos.Log("", e.toString());
                 return null;
             }
 
@@ -295,8 +299,20 @@ public class LoginActivity extends AppCompatActivity {
             mAuthTask = null;
             showProgress(false);
 
-            if (user!=null) {
-                MetodosPublicos.SalvaSessao(LoginActivity.this, user.get_id(), user.getNome(), email, user.getId());
+            if (user != null) {
+                MetodosPublicos.SalvaSessao(LoginActivity.this, user.get_id(), user.getNome(), email, user.getId(), user.getImagem());
+                //sincroniza APP
+                Sincronizacao.SincronizaApp(PapelUsuario.user);
+                List<LoginRole> lsLoginRoles = user.getLogin() != null ? user.getLogin().getLoginRoles() : null;
+                if (lsLoginRoles != null) {
+                    for (LoginRole lg : lsLoginRoles) {
+                        if (lg.getRole() == PapelUsuario.admin) {
+                            Sincronizacao.SincronizaApp(PapelUsuario.admin);
+                            break;
+                        }
+                    }
+                }
+
                 Intent secondActivity = new Intent(LoginActivity.this, NivelAcessoActivity.class);
                 startActivityForResult(secondActivity, RESULT_OK);
                 finish();

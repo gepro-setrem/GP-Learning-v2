@@ -211,6 +211,7 @@ public class ProjetoFragment extends Fragment {
 //            }
             ProjetoDAO projetoDAO = new ProjetoDAO();
 
+            ///select no sqlite
             if (MetodosPublicos.ModoAcessoAluno(getActivity())) {
                 lsProjetos.addAll(projetoDAO.SelecionaProjetosAluno(MetodosPublicos.SelecionaSessaoidExterno(getActivity())));//getProjetos()); //dao.loadAll();
             } else {

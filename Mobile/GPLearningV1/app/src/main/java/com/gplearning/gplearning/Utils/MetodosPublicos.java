@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -23,6 +24,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class MetodosPublicos {
     private static String key_nome = "user_nome";
     private static String key_email = "user_email";
+    private static String key_image = "user_imagem";
     private static String key_login = "login";
     private static String key_id = "user_id";
     private static String key_idExterno = "user_id_externo";
@@ -36,7 +38,7 @@ public class MetodosPublicos {
 
 
     /// metodos de Dados do usuário/Sessão
-    public static void SalvaSessao(Context context, Long id, String nome, String email, int idExterno) {
+    public static void SalvaSessao(Context context, Long id, String nome, String email, int idExterno, byte[] imageBytes) {
         SharedPreferences pref = context.getSharedPreferences(key_login, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         Log("sessao", "idI:" + id + " idEx:" + idExterno + " nome:" + nome + " email:" + email);
@@ -47,6 +49,8 @@ public class MetodosPublicos {
 
         editor.putString(key_nome, nome);
         editor.putString(key_email, email);
+        editor.putString(key_image, imageBytes.toString());
+
         if (idExterno > 0)
             editor.putInt(key_idExterno, idExterno);
         editor.commit();
@@ -79,6 +83,12 @@ public class MetodosPublicos {
         SharedPreferences shared = context.getSharedPreferences(key_login, MODE_PRIVATE);
         int user_idExterno = shared.getInt(key_idExterno, 0);
         return user_idExterno;
+    }
+
+    public static byte[] SelecionaSessaoImagemBytes(Context context) {
+        SharedPreferences shared = context.getSharedPreferences(key_login, MODE_PRIVATE);
+        String image = shared.getString(key_image, "");
+        return Base64.decode(image, Base64.DEFAULT);
     }
 
     public static boolean ExisteSessao(Context context) {

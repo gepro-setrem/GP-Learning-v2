@@ -10,7 +10,7 @@
     android:background="@color/primary"
     tools:context="com.gplearning.gplearning.Controllers.LoginActivity">
 
-    <!-- Login progress -->
+    <!-- LoginRole progress -->
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"

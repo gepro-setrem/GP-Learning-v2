@@ -15,11 +15,11 @@ class DefaultDAO extends UrlDomain {
     ///  public static final String UrlDefaut="http://gplearning.com/";
     String valor = UrlDefault;
 
-
-    public List<Pessoa> SelectAll() {
-        List<Pessoa> lsUsuario = new ArrayList<>();
-        return lsUsuario;
-    }
+//
+//    public List<Pessoa> SelectAll() {
+//        List<Pessoa> lsUsuario = new ArrayList<>();
+//        return lsUsuario;
+//    }
 
 
     public RestTemplate getResTemplateDefault(){
