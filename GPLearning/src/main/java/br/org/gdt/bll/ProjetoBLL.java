@@ -2,9 +2,11 @@ package br.org.gdt.bll;
 
 import br.org.gdt.dao.ProjetoDAO;
 import br.org.gdt.dao.PessoaDAO;
+import static br.org.gdt.enumerated.EtapaProjeto.Eap;
 import br.org.gdt.model.Projeto;
 import br.org.gdt.model.TermoAbertura;
 import br.org.gdt.model.Turma;
+import br.org.gdt.model.EAP;
 import br.org.gdt.model.Pessoa;
 import br.org.gdt.model.Requisito;
 import br.org.gdt.model.Stakeholder;
@@ -28,6 +30,10 @@ public class ProjetoBLL extends BLL<Projeto> {
     private RequisitoBLL requisitoBLL;
     @Autowired
     private StakeholderBLL stakeholderBLL;
+    @Autowired
+    private EAPBLL eapbll;
+    @Autowired
+    private TermoAberturaBLL termoAberturaBLL;
 
     public List<Projeto> findbyAluno(Pessoa aluno) {
         List<Projeto> lsProjeto = new ArrayList<>();
@@ -40,7 +46,14 @@ public class ProjetoBLL extends BLL<Projeto> {
                     projeto.getGerente().setLogin(null);
                     projeto.getGerente().setProjetos(null);
                     projeto.getGerente().setProjetosgerente(null);
-
+                    projeto.getGerente().setIndicadoresprofessor(null);
+                    projeto.getGerente().setTurmasprofessor(null);
+                    projeto.getGerente().setTurma(null);
+                    projeto.setComponentes(null);
+                    projeto.setEaps(null);
+                    projeto.setRequisitos(null);
+                    projeto.setStakeholders(null);
+                    projeto.setTermoabertura(null);
                 }
             }
         }
@@ -93,4 +106,25 @@ public class ProjetoBLL extends BLL<Projeto> {
         }
         return projeto;
     }
+
+    public Projeto findProjetoCompleto(int pro_id) {
+        if (pro_id > 0) {
+            Projeto projeto = dao.findbyId(pro_id);
+            if (projeto != null) {
+                projeto.getGerente().setLogin(null);
+                projeto.getGerente().setProjetos(null);
+                projeto.getGerente().setProjetosgerente(null);
+                projeto.getGerente().setIndicadoresprofessor(null);
+                projeto.getGerente().setTurmasprofessor(null);
+                // projeto.getGerente().setTurma(null);
+                projeto.setEaps(eapbll.findbyProjeto(projeto));
+                projeto.setRequisitos(requisitoBLL.findbyProjeto(projeto));
+                projeto.setStakeholders(stakeholderBLL.findbyProjeto(projeto));
+                projeto.setTermoabertura(termoAberturaBLL.findByProjeto(projeto));
+
+            }
+        }
+        return null;
+    }
+
 }

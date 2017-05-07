@@ -71,4 +71,9 @@ public class TermoAberturaDAO extends DAO<TermoAbertura> {
         System.out.println("Buscando por relatórios, concluído");
         return tabertura;
     }
+
+    public TermoAbertura findByProjeto(Projeto projeto) {
+        return (TermoAbertura) entityManager.createQuery("from TermoAbertura where projeto = :p")
+                .setParameter("p", projeto).getSingleResult();
+    }
 }

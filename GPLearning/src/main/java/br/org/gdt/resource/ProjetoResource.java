@@ -47,4 +47,14 @@ public class ProjetoResource {
         return null;
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/index/projeto/{pro_id}")
+    public Projeto getProjeto(@PathParam("pro_id") int pro_id) {
+        if (pro_id > 0) {
+            return projetoBLL.findProjetoCompleto(pro_id);
+        }
+        return null;
+    }
+
 }
