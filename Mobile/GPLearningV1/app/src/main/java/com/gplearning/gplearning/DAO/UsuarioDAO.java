@@ -4,6 +4,8 @@ package com.gplearning.gplearning.DAO;
 import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.Models.Pessoa;
 import com.gplearning.gplearning.Models.PessoaDao;
+import com.gplearning.gplearning.Models.Turma;
+import com.gplearning.gplearning.Models.TurmaDao;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 
 import org.springframework.web.client.RestTemplate;
@@ -25,6 +27,12 @@ public class UsuarioDAO extends DefaultDAO {
         //  Pessoa user = null;// = response.
         if (user != null && user.getId() > 0) {
             PessoaDao dao = session.getPessoaDao();
+            TurmaDao daoTurma = session.getTurmaDao();
+            if (user.getTurma() != null) {
+                Turma turma = user.getTurma();
+                long idTurma = daoTurma.insert(turma);
+                user.setIdTurma(idTurma);
+            }
             dao.insert(user);
             return user;
         }

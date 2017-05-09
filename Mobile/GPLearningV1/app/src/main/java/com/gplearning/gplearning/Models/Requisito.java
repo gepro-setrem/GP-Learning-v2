@@ -23,8 +23,8 @@ public class Requisito {
     private String nome;
     private String descricao;
 
-    private int IdProjeto;
-    @ToOne(joinProperty = "IdProjeto")
+    private int idProjeto;
+    @ToOne(joinProperty = "idProjeto")
     private Projeto projeto;
     /**
      * Used to resolve relations
@@ -45,7 +45,7 @@ public class Requisito {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
-        IdProjeto = idProjeto;
+        this.idProjeto = idProjeto;
     }
 
 
@@ -86,11 +86,11 @@ public class Requisito {
     }
 
     public int getIdProjeto() {
-        return IdProjeto;
+        return idProjeto;
     }
 
     public void setIdProjeto(int idProjeto) {
-        IdProjeto = idProjeto;
+        this.idProjeto = idProjeto;
     }
 
     @Keep

@@ -101,10 +101,11 @@ public class ProjetoFragment extends Fragment {
                     Log.i("Event", "Long Click");
                 }
             }));
-            DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
-            dao = daoSession.getProjetoDao();
-            new CarregaProjetos().execute();
         }
+
+        DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
+        dao = daoSession.getProjetoDao();
+        new CarregaProjetos().execute();
         return view;
     }
 
@@ -205,19 +206,22 @@ public class ProjetoFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(String... strings) {
+
 //            try {
 //                Thread.sleep(3000);
 //            } catch (InterruptedException ex) {
 //                Thread.currentThread().interrupt();
 //            }
-            ProjetoDAO projetoDAO = new ProjetoDAO();
+         //   ProjetoDAO projetoDAO = new ProjetoDAO();
             DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
             ///select no sqlite
             if (MetodosPublicos.ModoAcessoAluno(getActivity())) {
                 PessoaDao pessoaDao = daoSession.getPessoaDao();
                 ProjetoDao projetoDao = daoSession.getProjetoDao();
                 Pessoa user = pessoaDao.load(MetodosPublicos.SelecionaSessaoId(getActivity()));
-                lsProjetos.addAll(projetoDao.queryBuilder().where(ProjetoDao.Properties.IdTurma.eq(user.getIdTurma())).list());
+                MetodosPublicos.Log("projetos", " Turmar do user:" + user.getId() + " da turma:" + user.getIdTurma());
+
+                lsProjetos.addAll(projetoDao.loadAll()); //.queryBuilder().where(ProjetoDao.Properties.IdTurma.eq(user.getIdTurma())).list());
                 //  lsProjetos.addAll(projetoDAO.SelecionaProjetosAluno(MetodosPublicos.SelecionaSessaoidExterno(getActivity())));//getProjetos()); //dao.loadAll();
             } else {
                 //lsProjetos.addAll(projetoDAO.SelecionaProjetosProfessor(MetodosPublicos.SelecionaSessaoidExterno(getActivity())));

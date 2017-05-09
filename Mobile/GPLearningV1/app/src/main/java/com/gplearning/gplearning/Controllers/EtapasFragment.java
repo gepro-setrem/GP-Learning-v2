@@ -21,13 +21,13 @@ import com.gplearning.gplearning.Models.Etapa;
 import com.gplearning.gplearning.Models.EtapaDao;
 import com.gplearning.gplearning.Models.Pessoa;
 import com.gplearning.gplearning.Models.PessoaDao;
+import com.gplearning.gplearning.Models.Projeto;
 import com.gplearning.gplearning.Models.ProjetoDao;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 
 import java.lang.reflect.Field;
 import java.util.List;
-
 
 
 /**
@@ -42,13 +42,9 @@ public class EtapasFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "projetoId";
 
-    //  private List<Etapa> lsAtividades;
     private Long idProjeto;
     private EtapaDao etapaDao;
     private OnFragmentInteractionListener mListener;
-//
-//    private static final String key_idEtapa = "IdEtapa";
-//    private static final String key_idProjeto = "IdProjeto";
 
     public EtapasFragment() {
     }
@@ -100,19 +96,18 @@ public class EtapasFragment extends Fragment {
         DaoSession session = ((App) getActivity().getApplication()).getDaoSession();
         PessoaDao pessoaDao = session.getPessoaDao();
         List<Pessoa> lsPessoas = pessoaDao.loadAll();
+        ProjetoDao projetoDao = session.getProjetoDao();
+        Projeto projeto = projetoDao.load(idProjeto);
 
-        ((TextView) getActivity().findViewById(R.id.etapaProjetoNomeTxt)).setText("Nome do projeto");
-        ((TextView) getActivity().findViewById(R.id.etapaProjetoEmpresaTxt)).setText("Nome da Empresa");
-        ((TextView) getActivity().findViewById(R.id.etapaProjetoGerenteTxt)).setText("Nome do Gerente");
-
+        ((TextView) getActivity().findViewById(R.id.etapaProjetoNomeTxt)).setText(projeto.getNome());
+        ((TextView) getActivity().findViewById(R.id.etapaProjetoEmpresaTxt)).setText(projeto.getEmpresa());
+        if (projeto.getGerente() != null)
+            ((TextView) getActivity().findViewById(R.id.etapaProjetoGerenteTxt)).setText(projeto.getGerente().getNome());
 
         etapaDao = session.getEtapaDao();
-        ProjetoDao projetoDao = session.getProjetoDao();
-        Long idTurma = projetoDao.load(idProjeto).getIdTurma();
+        Long idTurma = projeto.getIdTurma();
         List<Etapa> lsEtapas = etapaDao.queryBuilder().where(EtapaDao.Properties.IdTurma.eq(idTurma)).list();
         PassaValoresEtapas(lsEtapas);
-
-
     }
 
     @Override
@@ -182,6 +177,7 @@ public class EtapasFragment extends Fragment {
 //            }
 //        });
 
+        AtribuiEventoClick(((ImageButton) getActivity().findViewById(R.id.etapaProjetoDescricaoTAbtn)), Long.valueOf(0));
 
         // Etapa atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(idProjeto), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaDescricao)).unique();
         if (lsEtapas != null && lsEtapas.size() > 0) {
@@ -292,6 +288,7 @@ public class EtapasFragment extends Fragment {
 
 
     private void AtribuiEventoClick(ImageButton imageButton, final Long idEtapa) {
+        MetodosPublicos.Log("Event", "Atribui evento image View");
         (imageButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -13,7 +13,7 @@ import org.greenrobot.greendao.DaoException;
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 @Entity(nameInDb = "parametrosAtividade")
-public class ParametrosAtividade {
+public class EtapaParametro {
     @Id(autoincrement = true)
     private long _id;
 
@@ -30,26 +30,24 @@ public class ParametrosAtividade {
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /**
-     * Used for active entity operations.
-     */
-    @Generated(hash = 140681715)
-    private transient ParametrosAtividadeDao myDao;
+    /** Used for active entity operations. */
+    @Generated(hash = 1732233031)
+    private transient EtapaParametroDao myDao;
 
     @Generated(hash = 298126781)
     private transient Long etapa__resolvedKey;
 
 
-    public ParametrosAtividade(long _id) {
+    public EtapaParametro(long _id) {
         this._id = _id;
     }
 
-    public ParametrosAtividade(String nome) {
+    public EtapaParametro(String nome) {
         this.nome = nome;
     }
 
     @Keep
-    public ParametrosAtividade(long _id, String nome, String valor, long atv_id) {
+    public EtapaParametro(long _id, String nome, String valor, long atv_id) {
         this._id = _id;
         this.nome = nome;
         this.valor = valor;
@@ -57,7 +55,7 @@ public class ParametrosAtividade {
     }
 
     @Keep
-    public ParametrosAtividade() {
+    public EtapaParametro() {
     }
 
     public long get_id() {
@@ -139,9 +137,9 @@ public class ParametrosAtividade {
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 239183957)
+    @Generated(hash = 1765391698)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getParametrosAtividadeDao() : null;
+        myDao = daoSession != null ? daoSession.getEtapaParametroDao() : null;
     }
 }

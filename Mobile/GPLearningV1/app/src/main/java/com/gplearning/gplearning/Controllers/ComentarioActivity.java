@@ -107,37 +107,38 @@ public class ComentarioActivity extends AppCompatActivity {
     }
 
     public void PopupDeletaComentario(final int position) {
-        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle(R.string.comment_delete);
-        alert.setCancelable(true);
-        alert.setNeutralButton(R.string.cancel, null);
-        alert.setNegativeButton(R.string.delete, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                try {
-                    Comentario comentario = dao.load(comentarioAdapter.getItemId(position));
-                    Log.i("Event", "Vai deletar o comet id:" + comentario.get_id());
-                    lsComentario.remove(position);
-                    comentarioAdapter.notifyItemRemoved(position);
+        final Comentario comentario = dao.load(comentarioAdapter.getItemId(position));
+        if (comentario != null && comentario.getIdRemetente() == MetodosPublicos.SelecionaSessaoId(this)) {
+            final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle(R.string.comment_delete);
+            alert.setCancelable(true);
+            alert.setNeutralButton(R.string.cancel, null);
+            alert.setNegativeButton(R.string.delete, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    try {
+                        Log.i("Event", "Vai deletar o comet id:" + comentario.get_id());
+                        lsComentario.remove(position);
+                        comentarioAdapter.notifyItemRemoved(position);
 
-                    if (MetodosPublicos.IsConnected(ComentarioActivity.this) && comentario != null && comentario.getId() > 0)
-                        new DeletaComentario().execute(comentario);
-                    else {
-                        if (comentario.getId() > 0) {
-                            comentario.setDeletado(true);
-                            dao.update(comentario);
-                        } else {
-                            dao.deleteByKey(comentario.get_id());
+                        if (MetodosPublicos.IsConnected(ComentarioActivity.this) && comentario != null && comentario.getId() > 0)
+                            new DeletaComentario().execute(comentario);
+                        else {
+                            if (comentario.getId() > 0) {
+                                comentario.setDeletado(true);
+                                dao.update(comentario);
+                            } else {
+                                dao.deleteByKey(comentario.get_id());
+                            }
                         }
+
+                    } catch (Exception e) {
+                        Log.e("ERROR", e.toString());
                     }
-
-                } catch (Exception e) {
-                    Log.e("ERROR", e.toString());
                 }
-            }
-        });
-        alert.show();
-
+            });
+            alert.show();
+        }
     }
 
 

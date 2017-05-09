@@ -8,9 +8,12 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
+import org.greenrobot.greendao.annotation.OrderBy;
+import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(nameInDb = "turma")
@@ -30,6 +33,10 @@ public class Turma {
     private long pro_id;
     @ToOne(joinProperty = "pro_id")
     private Pessoa professor;
+
+    @ToMany(referencedJoinProperty = "idTurma")
+    @OrderBy("_id ASC")
+    private List<Etapa> etapas;
 
     /**
      * Used to resolve relations
@@ -128,6 +135,16 @@ public class Turma {
         this.professor = professor;
     }
 
+    @Keep
+    public List<Etapa> getEtapas() {
+        return etapas;
+    }
+    
+    @Keep
+    public void setEtapas(List<Etapa> etapas) {
+        this.etapas = etapas;
+    }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.
@@ -162,6 +179,12 @@ public class Turma {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
+    }
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 1925714574)
+    public synchronized void resetEtapas() {
+        etapas = null;
     }
 
     /** called by internal mechanisms, do not call yourself. */

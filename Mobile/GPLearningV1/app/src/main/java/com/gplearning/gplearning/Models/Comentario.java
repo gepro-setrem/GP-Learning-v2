@@ -32,12 +32,12 @@ public class Comentario {
 
     private boolean deletado;//define que este comentário esta deletado
 
-    private Long IdEtapa;
-    @ToOne(joinProperty = "IdEtapa")
+    private Long idEtapa;
+    @ToOne(joinProperty = "idEtapa")
     private Etapa etapa;
 
-    private Long IdRemetente;
-    @ToOne(joinProperty = "IdRemetente")
+    private Long idRemetente;
+    @ToOne(joinProperty = "idRemetente")
     private Pessoa remetente;
 
     /**
@@ -68,25 +68,26 @@ public class Comentario {
 
     @Keep
     public Comentario(Long _id, int id, @NotNull String descricao, Date criacao,
-                      Long IdRemetente) {
+                      Long idRemetente) {
         this._id = _id;
         this.id = id;
         this.descricao = descricao;
         this.criacao = criacao;
-        this.IdRemetente = IdRemetente;
+        this.idRemetente = idRemetente;
     }
 
-    @Generated(hash = 237938031)
+    @Generated(hash = 2114313461)
     public Comentario(Long _id, int id, @NotNull String descricao, Date criacao,
-            boolean deletado, Long IdEtapa, Long IdRemetente) {
+            boolean deletado, Long idEtapa, Long idRemetente) {
         this._id = _id;
         this.id = id;
         this.descricao = descricao;
         this.criacao = criacao;
         this.deletado = deletado;
-        this.IdEtapa = IdEtapa;
-        this.IdRemetente = IdRemetente;
+        this.idEtapa = idEtapa;
+        this.idRemetente = idRemetente;
     }
+
 
 
     public Long get_id() {
@@ -122,11 +123,11 @@ public class Comentario {
     }
 
     public Long getIdEtapa() {
-        return IdEtapa;
+        return idEtapa;
     }
 
     public void setIdEtapa(Long idEtapa) {
-        IdEtapa = idEtapa;
+        this.idEtapa = idEtapa;
     }
 
     @Keep
@@ -140,11 +141,11 @@ public class Comentario {
     }
 
     public Long getIdRemetente() {
-        return IdRemetente;
+        return idRemetente;
     }
 
     public void setIdRemetente(Long idRemetente) {
-        IdRemetente = idRemetente;
+        this.idRemetente = idRemetente;
     }
 
     @Keep

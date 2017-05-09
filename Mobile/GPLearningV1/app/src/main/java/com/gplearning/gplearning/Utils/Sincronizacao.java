@@ -66,23 +66,36 @@ public class Sincronizacao {
                     daoProjeto.insert(projeto);
                     Projeto pCompleto = projetoDAO.SelecionaProjetoCompleto(projeto.getId());
                     if (pCompleto != null) {
+                        Projeto PRJ = daoProjeto.load(projeto.get_id());
                         if (pCompleto.getGerente() != null && pCompleto.getGerente().getId() > 0) {
+                            //MetodosPublicos.Log("Event", "antes de chegar ID GERENTE:" + projeto.getIdGerente());
                             Pessoa gerente = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(pCompleto.getGerente().getId())).unique();
                             if (gerente == null) {
-                                daoPessoa.insert(pCompleto.getGerente());
+                                long idGerente = daoPessoa.insert(pCompleto.getGerente());
+                                PRJ.setIdGerente(idGerente);
+                            } else {
+                                PRJ.setIdGerente(gerente.get_id());
                             }
+                            //  daoProjeto.update(projeto);
+                            //  MetodosPublicos.Log("Event", "Depois ID GERENTE:" + projeto.getIdGerente());
+                            // Projeto PRJ2 = daoProjeto.load(PRJ.get_id());
                         }
 
                         if (pCompleto.getTurma() != null && pCompleto.getTurma().getId() > 0) {
                             Turma turma = daoTurma.queryBuilder().where(TurmaDao.Properties.Id.eq(pCompleto.getTurma().getId())).unique();
-                            if (turma == null)
-                                daoTurma.insert(pCompleto.getTurma());
+                            if (turma == null) {
+                                long idTurma = daoTurma.insert(pCompleto.getTurma());
+                                PRJ.setIdTurma(idTurma);
+                            } else {
+                                PRJ.setIdTurma(turma.get_id());
+                            }
                         }
 
                         if (pCompleto.getTermoAbertura() != null && pCompleto.getTermoAbertura().getId() > 0) {
                             TermoAbertura termoAbertura = daoTermoAbertura.queryBuilder().where(TermoAberturaDao.Properties.Id.eq(pCompleto.getTermoAbertura().getId())).unique();
                             if (termoAbertura == null) {
-                                daoTermoAbertura.insert(termoAbertura);
+                                long idTermoAbertura = daoTermoAbertura.insert(termoAbertura);
+                                projeto.setIdTermoAbertura(idTermoAbertura);
 
                                 if (termoAbertura.getLsMarco() != null) {
                                     for (Marco marco : termoAbertura.getLsMarco()) {
@@ -115,7 +128,8 @@ public class Sincronizacao {
                                         }
                                     }
                                 }
-//
+                            } else {
+                                projeto.setIdTermoAbertura(termoAbertura.get_id());
                             }
                         }
 
@@ -134,9 +148,8 @@ public class Sincronizacao {
                                 }
                             }
                         }
-
+                        daoProjeto.update(PRJ);
                     }
-
 
                 }
             }

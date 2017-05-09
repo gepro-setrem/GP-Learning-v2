@@ -48,14 +48,17 @@ public class Projeto {
     @ToOne(joinProperty = "idTermoAbertura")
     private TermoAbertura termoAbertura;
 
-    @ToMany(referencedJoinProperty = "IdProjeto")
+    @ToMany(referencedJoinProperty = "idProjeto")
     @OrderBy("_id ASC")
     private List<Stakeholder> stakeholders;
 
-    @ToMany(referencedJoinProperty = "IdProjeto")
+    @ToMany(referencedJoinProperty = "idProjeto")
     @OrderBy("_id ASC")
     private List<Requisito> requisitos;
 
+    @ToMany(referencedJoinProperty = "idProjeto")
+    @OrderBy("_id ASC")
+    private List<Eap> eaps;
 
     /**
      * Used to resolve relations
@@ -258,6 +261,16 @@ public class Projeto {
         this.requisitos = requisitos;
     }
 
+    @Keep
+    public List<Eap> getEaps() {
+        return eaps;
+    }
+
+    @Keep
+    public void setEaps(List<Eap> eaps) {
+        this.eaps = eaps;
+    }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.
@@ -310,16 +323,26 @@ public class Projeto {
         this.planoProjeto = planoProjeto;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 1273581113)
     public synchronized void resetStakeholders() {
         stakeholders = null;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 1681398261)
     public synchronized void resetRequisitos() {
         requisitos = null;
+    }
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 667306427)
+    public synchronized void resetEaps() {
+        eaps = null;
     }
 
     /** called by internal mechanisms, do not call yourself. */

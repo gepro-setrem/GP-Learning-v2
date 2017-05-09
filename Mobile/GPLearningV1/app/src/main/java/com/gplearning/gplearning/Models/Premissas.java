@@ -3,12 +3,12 @@ package com.gplearning.gplearning.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.ToOne;
+import org.greenrobot.greendao.DaoException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 
@@ -21,8 +21,8 @@ public class Premissas {
 
     private String descricao;
 
-    private int IdTermoAbertura;
-    @ToOne(joinProperty = "IdTermoAbertura")
+    private int idTermoAbertura;
+    @ToOne(joinProperty = "idTermoAbertura")
     private TermoAbertura termoAbertura;
 
     /**
@@ -45,11 +45,11 @@ public class Premissas {
     }
 
     @Keep
-    public Premissas(Long _id, int id, String descricao, int IdTermoAbertura) {
+    public Premissas(Long _id, int id, String descricao, int idTermoAbertura) {
         this._id = _id;
         this.id = id;
         this.descricao = descricao;
-        this.IdTermoAbertura = IdTermoAbertura;
+        this.idTermoAbertura = idTermoAbertura;
     }
 
     public Long get_id() {
@@ -77,11 +77,11 @@ public class Premissas {
     }
 
     public int getIdTermoAbertura() {
-        return IdTermoAbertura;
+        return idTermoAbertura;
     }
 
-    public void setIdTermoAbertura(int IdTermoAbertura) {
-        this.IdTermoAbertura = IdTermoAbertura;
+    public void setIdTermoAbertura(int idTermoAbertura) {
+        this.idTermoAbertura = idTermoAbertura;
     }
 
     @Keep
@@ -130,15 +130,11 @@ public class Premissas {
         myDao.update(this);
     }
 
-    @Override
-    public String toString() {
-        return descricao;
-    }
-
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1461463140)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getPremissasDao() : null;
     }
+
 }

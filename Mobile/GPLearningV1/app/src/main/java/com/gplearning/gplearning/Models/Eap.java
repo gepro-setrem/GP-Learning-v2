@@ -3,17 +3,17 @@ package com.gplearning.gplearning.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.NotNull;
+import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.OrderBy;
 import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
 import java.util.List;
+import org.greenrobot.greendao.DaoException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(nameInDb = "eap")
@@ -37,8 +37,8 @@ public class Eap {
     @OrderBy("_id ASC")
     private List<Tarefa> lsTarefas;
 
-    private long pro_id;
-    @ToOne(joinProperty = "pro_id")
+    private long idProjeto;
+    @ToOne(joinProperty = "idProjeto")
     private Projeto projeto;
 
     /**
@@ -59,19 +59,19 @@ public class Eap {
     @Generated(hash = 1369604525)
     private transient Long projeto__resolvedKey;
 
-    @Generated(hash = 1760530958)
+    @Keep
     public Eap() {
     }
 
-    @Generated(hash = 678906174)
-    public Eap(Long _id, Long id, String nome, Date entrega, double valor, Long idPai, long pro_id) {
+    @Keep
+    public Eap(Long _id, Long id, String nome, Date entrega, double valor, Long idPai, long idProjeto) {
         this._id = _id;
         this.id = id;
         this.nome = nome;
         this.entrega = entrega;
         this.valor = valor;
         this.idPai = idPai;
-        this.pro_id = pro_id;
+        this.idProjeto = idProjeto;
     }
 
     public Long get_id() {
@@ -118,142 +118,65 @@ public class Eap {
         this.valor = valor;
     }
 
-    /**
-     * To-one relationship, resolved on first access.
-     */
-    @Generated(hash = 1872235245)
+    public Long getIdPai() {
+        return idPai;
+    }
+
+    @Keep
     public Eap getEapPai() {
-        Long __key = this.idPai;
-        if (EapPai__resolvedKey == null || !EapPai__resolvedKey.equals(__key)) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            EapDao targetDao = daoSession.getEapDao();
-            Eap EapPaiNew = targetDao.load(__key);
-            synchronized (this) {
-                EapPai = EapPaiNew;
-                EapPai__resolvedKey = __key;
-            }
-        }
         return EapPai;
     }
 
-    public long getPro_id() {
-        return pro_id;
+    @Keep
+    public void setEapPai(Eap eapPai) {
+        EapPai = eapPai;
     }
 
-    public void setPro_id(long pro_id) {
-        this.pro_id = pro_id;
-    }
-
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
-    @Generated(hash = 1592426740)
-    public void setEapPai(Eap EapPai) {
-        synchronized (this) {
-            this.EapPai = EapPai;
-            idPai = EapPai == null ? null : EapPai.get_id();
-            EapPai__resolvedKey = idPai;
-        }
-    }
-
-    /**
-     * To-one relationship, resolved on first access.
-     */
-    @Generated(hash = 1517119008)
-    public Projeto getProjeto() {
-        long __key = this.pro_id;
-        if (projeto__resolvedKey == null || !projeto__resolvedKey.equals(__key)) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            ProjetoDao targetDao = daoSession.getProjetoDao();
-            Projeto projetoNew = targetDao.load(__key);
-            synchronized (this) {
-                projeto = projetoNew;
-                projeto__resolvedKey = __key;
-            }
-        }
-        return projeto;
-    }
-
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
-    @Generated(hash = 1979152853)
-    public void setProjeto(@NotNull Projeto projeto) {
-        if (projeto == null) {
-            throw new DaoException("To-one property 'pro_id' has not-null constraint; cannot set to-one to null");
-        }
-        synchronized (this) {
-            this.projeto = projeto;
-            pro_id = projeto.get_id();
-            projeto__resolvedKey = pro_id;
-        }
-    }
-
-    /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
-     */
-    @Generated(hash = 48231749)
+    @Keep
     public List<Eap> getLsEapSub() {
-        if (lsEapSub == null) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            EapDao targetDao = daoSession.getEapDao();
-            List<Eap> lsEapSubNew = targetDao._queryEap_LsEapSub(_id);
-            synchronized (this) {
-                if (lsEapSub == null) {
-                    lsEapSub = lsEapSubNew;
-                }
-            }
-        }
         return lsEapSub;
     }
 
+    @Keep
     public void setLsEapSub(List<Eap> lsEapSub) {
         this.lsEapSub = lsEapSub;
     }
 
-    /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
-     */
-    @Generated(hash = 805333019)
+    @Keep
     public List<Tarefa> getLsTarefas() {
-        if (lsTarefas == null) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            TarefaDao targetDao = daoSession.getTarefaDao();
-            List<Tarefa> lsTarefasNew = targetDao._queryEap_LsTarefas(_id);
-            synchronized (this) {
-                if (lsTarefas == null) {
-                    lsTarefas = lsTarefasNew;
-                }
-            }
-        }
         return lsTarefas;
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
+    @Keep
+    public void setLsTarefas(List<Tarefa> lsTarefas) {
+        this.lsTarefas = lsTarefas;
+    }
+
+    public long getIdProjeto() {
+        return idProjeto;
+    }
+
+    public void setIdProjeto(long idProjeto) {
+        this.idProjeto = idProjeto;
+    }
+
+    @Keep
+    public Projeto getProjeto() {
+        return projeto;
+    }
+
+    @Keep
+    public void setProjeto(Projeto projeto) {
+        this.projeto = projeto;
+    }
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
     @Generated(hash = 2081873823)
     public synchronized void resetLsEapSub() {
         lsEapSub = null;
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
     @Generated(hash = 997083221)
     public synchronized void resetLsTarefas() {
         lsTarefas = null;
@@ -293,10 +216,6 @@ public class Eap {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
-    }
-
-    public Long getIdPai() {
-        return this.idPai;
     }
 
     /** called by internal mechanisms, do not call yourself. */

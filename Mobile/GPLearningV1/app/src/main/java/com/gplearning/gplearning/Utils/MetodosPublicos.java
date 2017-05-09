@@ -110,7 +110,7 @@ public class MetodosPublicos {
     public static boolean ModoAcessoAluno(Context context) {
         SharedPreferences shared = context.getSharedPreferences(key_modoAcesso, MODE_PRIVATE);
         String modoAcesso = shared.getString(key_modoAcesso, null);
-        boolean acessoAluno = modoAcesso != null && modoAcesso.equals(key_acessoProfessor);
+        boolean acessoAluno = modoAcesso != null && modoAcesso.equals(key_acessoAluno);
         return acessoAluno;
     }
 

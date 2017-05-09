@@ -3,18 +3,17 @@ package com.gplearning.gplearning.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
-import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.OrderBy;
 import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
 import java.util.List;
-import org.greenrobot.greendao.DaoException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 
@@ -94,10 +93,6 @@ public class Tarefa {
         this.id = id;
     }
 
-    public void setIdEap(Long idEap) {
-        this.idEap = idEap;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -114,11 +109,11 @@ public class Tarefa {
         this.termino = termino;
     }
 
-    public long getIdEap() {
+    public Long getIdEap() {
         return idEap;
     }
 
-    public void setIdEap(long idEap) {
+    public void setIdEap(Long idEap) {
         this.idEap = idEap;
     }
 
@@ -208,4 +203,6 @@ public class Tarefa {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getTarefaDao() : null;
     }
+
+
 }

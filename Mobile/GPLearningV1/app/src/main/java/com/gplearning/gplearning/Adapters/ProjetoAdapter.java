@@ -7,11 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Models.Projeto;
 import com.gplearning.gplearning.R;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +38,9 @@ public class ProjetoAdapter extends RecyclerView.Adapter {
         ViewHolderAdapter holder = (ViewHolderAdapter) viewHolder;
         Projeto prj = lsProjeto.get(position);
         holder.texto.setText(prj.getNome());
-        holder.texto2.setText(prj.getGerente().getNome());
+        if (prj.getGerente() != null) {
+            holder.texto2.setText(prj.getGerente().getNome());
+        }
     }
 
     @Override

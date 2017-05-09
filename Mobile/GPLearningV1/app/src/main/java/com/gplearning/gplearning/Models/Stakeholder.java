@@ -21,8 +21,8 @@ public class Stakeholder {
     private String contribuicao;
     private String papel;
 
-    private int IdProjeto;
-    @ToOne(joinProperty = "IdProjeto")
+    private int idProjeto;
+    @ToOne(joinProperty = "idProjeto")
     private Projeto projeto;
 
     /**
@@ -47,7 +47,7 @@ public class Stakeholder {
         this.nome = nome;
         this.contribuicao = contribuicao;
         this.papel = papel;
-        IdProjeto = idProjeto;
+        this.idProjeto = idProjeto;
     }
 
     public Stakeholder() {
@@ -86,11 +86,11 @@ public class Stakeholder {
     }
 
     public int getIdProjeto() {
-        return IdProjeto;
+        return idProjeto;
     }
 
     public void setIdProjeto(int idProjeto) {
-        IdProjeto = idProjeto;
+        this.idProjeto = idProjeto;
     }
 
     @Keep

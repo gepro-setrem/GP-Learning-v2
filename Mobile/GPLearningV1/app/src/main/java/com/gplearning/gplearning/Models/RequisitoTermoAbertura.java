@@ -22,8 +22,8 @@ public class RequisitoTermoAbertura {
     private String nome;
     private String descricao;
 
-    private Long IdTermoAbertura;
-    @ToOne(joinProperty = "IdTermoAbertura")
+    private Long idTermoAbertura;
+    @ToOne(joinProperty = "idTermoAbertura")
     private TermoAbertura termoAbertura;
     /**
      * Used to resolve relations
@@ -42,12 +42,12 @@ public class RequisitoTermoAbertura {
     }
 
     @Keep
-    public RequisitoTermoAbertura(Long _id, int id, String nome, String descricao, Long IdTermoAbertura) {
+    public RequisitoTermoAbertura(Long _id, int id, String nome, String descricao, Long idTermoAbertura) {
         this._id = _id;
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
-        this.IdTermoAbertura = IdTermoAbertura;
+        this.idTermoAbertura = idTermoAbertura;
     }
 
     public Long get_id() {
@@ -83,11 +83,11 @@ public class RequisitoTermoAbertura {
     }
 
     public Long getIdTermoAbertura() {
-        return IdTermoAbertura;
+        return idTermoAbertura;
     }
 
     public void setIdTermoAbertura(Long idTermoAbertura) {
-        IdTermoAbertura = idTermoAbertura;
+        this.idTermoAbertura = idTermoAbertura;
     }
 
     @Keep

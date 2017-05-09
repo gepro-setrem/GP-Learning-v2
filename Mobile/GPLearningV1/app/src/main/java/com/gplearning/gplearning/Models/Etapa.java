@@ -33,21 +33,11 @@ public class Etapa {
     private Date conclusao;
     @Convert(converter = EtapaProjetoConverter.class, columnType = String.class)
     private EtapaProjeto etapa;
-    //  private int pontuacaoMedia;
 
-//    @ToMany
-//    @JoinEntity(entity = IndicadoresAtividades.class,
-//            sourceProperty = "idAtividade",
-//            targetProperty = "idIndicador")
-//    private List<IndicadoresAtividades> lsIndicadoresAtividades;
 
     @ToMany(referencedJoinProperty = "idAtividade")
     @OrderBy("_id ASC")
     private List<IndicadoresAtividades> lsIndicadoresAtividades;
-
-//    private long pro_id;
-//    @ToOne(joinProperty = "pro_id")
-//    private Projeto projeto;
 
     private Long idTurma;
     @ToOne(joinProperty = "idTurma")
@@ -55,7 +45,11 @@ public class Etapa {
 
     @ToMany(referencedJoinProperty = "atv_id")
     @OrderBy("_id ASC")
-    private List<ParametrosAtividade> lsParametros;
+    private List<EtapaParametro> etapaParametros;
+
+    @ToMany(referencedJoinProperty = "idEtapa")
+    @OrderBy("criacao ASC")
+    private List<Comentario> comentarios;
 
     /**
      * Used to resolve relations
@@ -81,31 +75,9 @@ public class Etapa {
         this.etapa = etapa;
     }
 
-    @Keep
-    public Etapa(long _id, int id, String nome, Date criacao, Date termino, Date conclusao, EtapaProjeto etapa, Long idTurma) {
-        this._id = _id;
-        this.id = id;
-        this.nome = nome;
-        this.criacao = criacao;
-        this.termino = termino;
-        this.conclusao = conclusao;
-        this.etapa = etapa;
-        this.idTurma = idTurma;
-    }
 
     @Keep
     public Etapa() {
-    }
-
-
-    public Etapa(Long _id, int id, String nome, Date criacao, Date termino, Date conclusao, EtapaProjeto etapa) {
-        this._id = _id;
-        this.id = id;
-        this.nome = nome;
-        this.criacao = criacao;
-        this.termino = termino;
-        this.conclusao = conclusao;
-        this.etapa = etapa;
     }
 
     @Generated(hash = 92658830)
@@ -119,6 +91,7 @@ public class Etapa {
         this.etapa = etapa;
         this.idTurma = idTurma;
     }
+
 
     public Long get_id() {
         return _id;
@@ -205,13 +178,23 @@ public class Etapa {
     }
 
     @Keep
-    public List<ParametrosAtividade> getLsParametros() {
-        return lsParametros;
+    public List<EtapaParametro> getEtapaParametros() {
+        return etapaParametros;
     }
 
     @Keep
-    public void setLsParametros(List<ParametrosAtividade> lsParametros) {
-        this.lsParametros = lsParametros;
+    public void setEtapaParametros(List<EtapaParametro> etapaParametros) {
+        this.etapaParametros = etapaParametros;
+    }
+
+    @Keep
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    @Keep
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
     }
 
     /**
@@ -225,9 +208,9 @@ public class Etapa {
     /**
      * Resets a to-many relationship, making the next get call to query for a fresh result.
      */
-    @Generated(hash = 1599991901)
-    public synchronized void resetLsParametros() {
-        lsParametros = null;
+    @Generated(hash = 1746642629)
+    public synchronized void resetEtapaParametros() {
+        etapaParametros = null;
     }
 
     /**
@@ -266,6 +249,11 @@ public class Etapa {
         myDao.update(this);
     }
 
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 1940070317)
+    public synchronized void resetComentarios() {
+        comentarios = null;
+    }
 
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 551121054)

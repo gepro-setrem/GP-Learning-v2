@@ -22,8 +22,8 @@ public class Marco {
 
     private Date previsao;
 
-    private int IdTermoAbertura;
-    @ToOne(joinProperty = "IdTermoAbertura")
+    private int idTermoAbertura;
+    @ToOne(joinProperty = "idTermoAbertura")
     private TermoAbertura termoAbertura;
 
     /**
@@ -45,12 +45,12 @@ public class Marco {
     }
 
     @Keep
-    public Marco(Long _id, int id, String objetivo, Date previsao, int IdTermoAbertura) {
+    public Marco(Long _id, int id, String objetivo, Date previsao, int idTermoAbertura) {
         this._id = _id;
         this.id = id;
         this.objetivo = objetivo;
         this.previsao = previsao;
-        this.IdTermoAbertura = IdTermoAbertura;
+        this.idTermoAbertura = idTermoAbertura;
     }
 
     public Long get_id() {
@@ -86,11 +86,11 @@ public class Marco {
     }
 
     public int getIdTermoAbertura() {
-        return IdTermoAbertura;
+        return idTermoAbertura;
     }
 
-    public void setIdTermoAbertura(int IdTermoAbertura) {
-        this.IdTermoAbertura = IdTermoAbertura;
+    public void setIdTermoAbertura(int idTermoAbertura) {
+        this.idTermoAbertura = idTermoAbertura;
     }
 
     @Keep
@@ -145,4 +145,6 @@ public class Marco {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getMarcoDao() : null;
     }
+
+
 }

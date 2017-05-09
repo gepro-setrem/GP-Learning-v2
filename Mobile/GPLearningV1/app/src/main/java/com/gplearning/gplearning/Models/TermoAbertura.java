@@ -32,16 +32,16 @@ public class TermoAbertura {
     private Projeto projeto;
 
 
-    @ToMany(referencedJoinProperty = "IdTermoAbertura")
+    @ToMany(referencedJoinProperty = "idTermoAbertura")
     private List<Restricoes> lsRestricoes;
 
-    @ToMany(referencedJoinProperty = "IdTermoAbertura")
+    @ToMany(referencedJoinProperty = "idTermoAbertura")
     private List<Premissas> lsPremissas;
 
-    @ToMany(referencedJoinProperty = "IdTermoAbertura")
+    @ToMany(referencedJoinProperty = "idTermoAbertura")
     private List<Marco> lsMarco;
 
-    @ToMany(referencedJoinProperty = "IdTermoAbertura")
+    @ToMany(referencedJoinProperty = "idTermoAbertura")
     private List<RequisitoTermoAbertura> lsRequisitoTermoAbertura;
 
 

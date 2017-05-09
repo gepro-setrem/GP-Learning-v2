@@ -20,8 +20,8 @@ public class Restricoes {
     private int id;
     private String descricao;
 
-    private int IdTermoAbertura;
-    @ToOne(joinProperty = "IdTermoAbertura")
+    private int idTermoAbertura;
+    @ToOne(joinProperty = "idTermoAbertura")
     private TermoAbertura termoAbertura;
 
     /**
@@ -43,11 +43,11 @@ public class Restricoes {
     }
 
     @Keep
-    public Restricoes(Long _id, int id, String descricao, int IdTermoAbertura) {
+    public Restricoes(Long _id, int id, String descricao, int idTermoAbertura) {
         this._id = _id;
         this.id = id;
         this.descricao = descricao;
-        this.IdTermoAbertura = IdTermoAbertura;
+        this.idTermoAbertura = idTermoAbertura;
     }
 
     public Long get_id() {
@@ -75,11 +75,11 @@ public class Restricoes {
     }
 
     public int getIdTermoAbertura() {
-        return IdTermoAbertura;
+        return idTermoAbertura;
     }
 
-    public void setIdTermoAbertura(int IdTermoAbertura) {
-        this.IdTermoAbertura = IdTermoAbertura;
+    public void setIdTermoAbertura(int idTermoAbertura) {
+        this.idTermoAbertura = idTermoAbertura;
     }
 
     @Keep
@@ -134,4 +134,5 @@ public class Restricoes {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getRestricoesDao() : null;
     }
+
 }
