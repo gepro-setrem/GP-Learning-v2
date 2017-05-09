@@ -13,28 +13,22 @@
                     <h4>Listagem de Turmas</h4>
                 </div>
                 <div class="panel-body">
-
                     <div class="alert-warning">
                         <h:messages />
                     </div>
-
                     <p:dataTable class="table table-hover" var="turma" value="#{turmaBean.turmas}">
-                        <p:column>
-                            <f:facet name="header">Nome da Turma</f:facet>
+                        <p:column headerText="Nome da Turma">
                             <h:outputText value="#{turma.nome}"/>
                         </p:column>
-                        <p:column style="text-align: center; width: 260px">
-                            <f:facet name="header">Ano</f:facet>
+                        <p:column headerText="Ano" style="text-align: center; width: 260px">
                             <h:outputText value="#{turma.ano}"/>
                         </p:column>
 
                         <p:column headerText="Opções" style="width: 300px; text-align: center;">
-                            <f:facet name="header">Opções</f:facet>
                             <h:commandLink action="#{turmaBean.editar()}" class="btn btn-success btn-xs" style="color: #fff; margin-right: 5px;"><i class="fa-pencil"></i> Editar</h:commandLink>
                             <h:commandLink action="#{turmaBean.excluir()}" class="btn btn-danger btn-xs" style="color: #fff; margin-right: 5px;" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fa-trash"></i> Excluir</h:commandLink>
                             <h:commandLink action="#{turmaBean.duplicar()}" class="btn btn-primary btn-xs" style="color: #fff" onclick="return confirm('Tem certeza que deseja duplicar esta turma?')"><i class="fa-clone"></i> Duplicar</h:commandLink>
                         </p:column>
-
                     </p:dataTable>
                 </div>
             </div>

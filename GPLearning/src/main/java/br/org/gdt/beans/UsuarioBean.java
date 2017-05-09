@@ -57,10 +57,12 @@ public class UsuarioBean {
     }
 
     public Pessoa getUsuario() {
-        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) external.getRequest();
-        String email = request.getRemoteUser();
-        usuario = pessoaBLL.findbyEmail(email);
+        if (usuario == null || usuario.getId() == 0) {
+            ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
+            HttpServletRequest request = (HttpServletRequest) external.getRequest();
+            String email = request.getRemoteUser();
+            usuario = pessoaBLL.findbyEmail(email);
+        }
         return usuario;
     }
 
@@ -69,16 +71,10 @@ public class UsuarioBean {
     }
 
     public DataModel getUsuarios() {
-        usuario = getUsuario();
-//        turmas = turmaService.findbyProfessor(usuario);
-//        List<Pessoa> usuariosdaturma = new ArrayList<>();
-//
-//        //Uma turma do tipo Turma, será preenchida com os objetos da datamodel turmas
-//        for (Turma turmafor : turmas) {
-//            usuariosdaturma.addAll(turmafor.getAcademicos());
-//        }
-        usuarios = new ListDataModel(pessoaBLL.findbyProfessor(usuario));
-        // usuarios = new ListDataModel(dao.findByTurma(turmas));
+        getUsuario();
+        if (usuarios == null) {
+            usuarios = new ListDataModel(pessoaBLL.findbyProfessor(usuario));
+        }
         return usuarios;
     }
 
@@ -87,7 +83,7 @@ public class UsuarioBean {
     }
 
     public List<Turma> getTurmas() {
-        usuario = getUsuario();
+        getUsuario();
         turmas = turmaBLL.findbyProfessor(usuario);
         return turmas;
     }
@@ -104,7 +100,7 @@ public class UsuarioBean {
                 dataIs = new DataInputStream(userImage.getInputstream());
                 dataIs.readFully(imgDataBa);
             } catch (IOException ex) {
-                Logger.getLogger(Projeto2Bean.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UsuarioBean.class.getName()).log(Level.SEVERE, null, ex);
             }
             login.setEmail(pessoa.getEmail());
             LoginRole loginRole = new LoginRole();
@@ -130,6 +126,7 @@ public class UsuarioBean {
                 login.setPessoa(pessoa);
                 loginBLL.insert(login);
             }
+            usuarios = null;
             return "usuariolst";
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para salvar, é necessário preencher todos os campos!"));

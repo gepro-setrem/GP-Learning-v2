@@ -36,3 +36,10 @@ textarea{
     border-radius: 6px;
     box-shadow: rgba(0, 0, 0, 0.2) 0 0 16px 0;
 }
+
+.etapa_desc{
+    white-space: pre-wrap;
+    margin-bottom: 20px;
+    margin-top: -15px;
+    display: block;
+}

@@ -1,11 +1,17 @@
 package br.org.gdt.beans;
 
+import br.org.gdt.bll.EtapaBLL;
 import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.bll.ProjetoBLL;
+import br.org.gdt.bll.TermoAberturaBLL;
 import br.org.gdt.bll.TurmaBLL;
+import br.org.gdt.enumerated.EtapaProjeto;
+import br.org.gdt.model.Etapa;
 import br.org.gdt.model.Pessoa;
 import br.org.gdt.model.Projeto;
+import br.org.gdt.model.TermoAbertura;
 import br.org.gdt.model.Turma;
+import br.org.gdt.model.EAP;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -15,17 +21,19 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.servlet.http.HttpServletRequest;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 
 @ManagedBean
 @SessionScoped
 public class ProjetoProfessorBean {
 
-    private Projeto projeto;
+    private Projeto projeto = new Projeto();
     @ManagedProperty("#{projetoBLL}")
     private ProjetoBLL projetoBLL;
     private DataModel projetos;
 
-    private Pessoa usuario;
+    private Pessoa usuario = new Pessoa();
     @ManagedProperty("#{pessoaBLL}")
     private PessoaBLL pessoaBLL;
 
@@ -33,7 +41,26 @@ public class ProjetoProfessorBean {
     private TurmaBLL turmaBLL;
     private List<Turma> turmas;
 
+    @ManagedProperty("#{etapaBLL}")
+    private EtapaBLL etapaBLL;
+    private List<Etapa> etapas;
+
+    private EtapaProjeto[] etapaProjetos;
+
+    @ManagedProperty("#{termoAberturaBLL}")
+    private TermoAberturaBLL termoAberturaBLL;
+    private TermoAbertura termoabertura = new TermoAbertura();
+
+    private TreeNode eap;
+
     public ProjetoProfessorBean() {
+    }
+
+    public String avaliar() {
+        projeto = (Projeto) projetos.getRowData();
+        projeto = projetoBLL.findProjetoCompleto(projeto.getId());
+        termoabertura = termoAberturaBLL.findByProjetoCompleto(projeto);
+        return "avaliacao";
     }
 
     public Projeto getProjeto() {
@@ -53,9 +80,10 @@ public class ProjetoProfessorBean {
     }
 
     public DataModel getProjetos() {
-        usuario = getUsuario();
-        projetos = new ListDataModel(projetoBLL.findbyProfessor(usuario));
-        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        getUsuario();
+        if (projetos == null) {
+            projetos = new ListDataModel(projetoBLL.findbyProfessor(usuario));
+        }
         return projetos;
     }
 
@@ -64,10 +92,12 @@ public class ProjetoProfessorBean {
     }
 
     public Pessoa getUsuario() {
-        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) external.getRequest();
-        String email = request.getRemoteUser();
-        usuario = pessoaBLL.findbyEmail(email);
+        if (usuario == null || usuario.getId() == 0) {
+            ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
+            HttpServletRequest request = (HttpServletRequest) external.getRequest();
+            String email = request.getRemoteUser();
+            usuario = pessoaBLL.findbyEmail(email);
+        }
         return usuario;
     }
 
@@ -92,13 +122,89 @@ public class ProjetoProfessorBean {
     }
 
     public List<Turma> getTurmas() {
-        usuario = getUsuario();
-        turmas = turmaBLL.findbyProfessor(usuario);
+        getUsuario();
+        if (turmas == null) {
+            turmas = turmaBLL.findbyProfessor(usuario);
+        }
         return turmas;
     }
 
     public void setTurmas(List<Turma> turmas) {
         this.turmas = turmas;
+    }
+
+    public EtapaProjeto[] getEtapaProjetos() {
+        this.etapaProjetos = EtapaProjeto.values();
+        return this.etapaProjetos;
+    }
+
+    public void setEtapaProjetos(EtapaProjeto[] etapaProjetos) {
+        this.etapaProjetos = etapaProjetos;
+    }
+
+    public EtapaBLL getEtapaBLL() {
+        return etapaBLL;
+    }
+
+    public void setEtapaBLL(EtapaBLL etapaBLL) {
+        this.etapaBLL = etapaBLL;
+    }
+
+    public List<Etapa> getEtapas() {
+        if (projeto != null && projeto.getTurma() != null && projeto.getTurma().getId() > 0) {
+            Turma turma = turmaBLL.findById(projeto.getTurma().getId());
+            etapas = etapaBLL.findbyTurma(turma);
+        }
+        return etapas;
+    }
+
+    public void setEtapas(List<Etapa> etapas) {
+        this.etapas = etapas;
+    }
+
+    public TermoAberturaBLL getTermoAberturaBLL() {
+        return termoAberturaBLL;
+    }
+
+    public void setTermoAberturaBLL(TermoAberturaBLL termoAberturaBLL) {
+        this.termoAberturaBLL = termoAberturaBLL;
+    }
+
+    public TermoAbertura getTermoabertura() {
+        return termoabertura;
+    }
+
+    public void setTermoabertura(TermoAbertura termoabertura) {
+        this.termoabertura = termoabertura;
+    }
+
+    public TreeNode getEap() {
+        if (projeto != null && projeto.getEaps() != null && projeto.getEaps().size() > 0) {
+            EAP e = projeto.getEaps().get(0);
+            eap = new DefaultTreeNode("", null);
+            childNode(e, eap, "1");
+        }
+        return eap;
+    }
+
+    private TreeNode childNode(EAP e, TreeNode pai, String number) {
+        if (e != null) {
+            String label = number + " - " + e.getNome();
+            TreeNode node = new DefaultTreeNode(label, pai);
+            if (e.getEaps() != null) {
+                int i = 1;
+                for (EAP e2 : e.getEaps()) {
+                    childNode(e2, node, number + "." + i);
+                    i++;
+                }
+            }
+            return node;
+        }
+        return null;
+    }
+
+    public void setEap(TreeNode eap) {
+        this.eap = eap;
     }
 
 }

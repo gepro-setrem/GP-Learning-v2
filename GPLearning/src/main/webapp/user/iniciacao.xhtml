@@ -19,9 +19,10 @@
                     <div class="panel-heading">
                         <h4>Grupo de Processos: Iniciação</h4>
                     </div>
+                    <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-xs-12"><label style="white-space: pre-wrap;">#{projetoBean.getDescricao('descricaoTelaGrupoProcessosIniciacao')}</label></div>
+                            <div class="col-xs-12"><label class="etapa_desc">#{projetoBean.getDescricao('descricaoTelaGrupoProcessosIniciacao')}</label></div>
                             <div class="col-md-2 col-sm-3 col-xs-4">
                                 <h:link outcome="termoaberturadescricao">
                                     <h:graphicImage library="img/" name="Desenv TA.png" style="width: 100%;"/>

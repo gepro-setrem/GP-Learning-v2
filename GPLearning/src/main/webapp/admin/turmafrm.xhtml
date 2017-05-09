@@ -14,9 +14,7 @@
                     <h4>Manutenção de Turmas</h4>
                 </div>
                 <div class="panel-body">
-                    <div class="alert-warning">
-                        <h:messages />
-                    </div>
+                    <div class="alert-warning"><h:messages /></div>
                     <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#turma">Turma</a></li>
                         <li><a data-toggle="tab" href="#descricoes">Descrições</a></li>
@@ -51,8 +49,8 @@
                         </div>
                         <div class="tab-pane row" id="descricoes" style="padding-top: 15px;">
                             <ui:repeat var="item" value="#{turmaBean.turma.turmaParametros}" varStatus="status">
+                                <c:set var="label" value="#{turmaBean.getTurmaParametroType(item.chave)}"/>
                                 <div class="col-xs-12 text-left form-group">
-                                    <c:set var="label" value="#{turmaBean.getTurmaParametroType(item.chave)}"/>
                                     <a class="btn btn-link">#{label}</a>
                                     <div id="#{item.chave}" class="collapse in">
                                         <h:inputHidden value="#{turmaBean.turma.turmaParametros[status.index].chave}"/>

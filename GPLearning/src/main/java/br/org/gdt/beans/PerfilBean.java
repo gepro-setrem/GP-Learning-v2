@@ -58,7 +58,7 @@ public class PerfilBean implements Serializable {
                 dataIs = new DataInputStream(userImage.getInputstream());
                 dataIs.readFully(imgDataBa);
             } catch (IOException ex) {
-                Logger.getLogger(Projeto2Bean.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PerfilBean.class.getName()).log(Level.SEVERE, null, ex);
             }
             login.setEmail(usuario.getEmail());
             Pessoa oldUser = pessoaBLL.findById(user_id);

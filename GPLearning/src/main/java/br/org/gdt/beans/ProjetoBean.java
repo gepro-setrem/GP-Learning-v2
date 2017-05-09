@@ -7,7 +7,6 @@ import br.org.gdt.enumerated.Role;
 import br.org.gdt.enumerated.Status;
 import br.org.gdt.model.Pessoa;
 import br.org.gdt.model.Projeto;
-import br.org.gdt.model.TermoAbertura;
 import br.org.gdt.model.Turma;
 import br.org.gdt.model.TurmaParametro;
 import java.util.ArrayList;
@@ -141,10 +140,12 @@ public class ProjetoBean {
     }
 
     public Pessoa getUsuario() {
-        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) external.getRequest();
-        String email = request.getRemoteUser();
-        usuario = pessoaBLL.findbyEmail(email);
+        if (usuario == null || usuario.getId() == 0) {
+            ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
+            HttpServletRequest request = (HttpServletRequest) external.getRequest();
+            String email = request.getRemoteUser();
+            usuario = pessoaBLL.findbyEmail(email);
+        }
         return usuario;
     }
 
@@ -159,9 +160,10 @@ public class ProjetoBean {
     }
 
     public DataModel getProjetos() {
-        usuario = getUsuario();
-        List<Projeto> lsProjeto = projetoBLL.findbyAluno(usuario);
-        projetos = new ListDataModel(lsProjeto);
+        getUsuario();
+        if (projetos == null) {
+            projetos = new ListDataModel(projetoBLL.findbyAluno(usuario));
+        }
         return projetos;
     }
 
@@ -170,9 +172,6 @@ public class ProjetoBean {
     }
 
     public Projeto getProjeto() {
-        if (projeto != null && projeto.getId() > 0) {
-            projeto = projetoBLL.findById(projeto.getId());
-        }
         return projeto;
     }
 
@@ -197,8 +196,10 @@ public class ProjetoBean {
     }
 
     public List<Pessoa> getUsuarios() {
-        Turma turma = usuario.getTurma();
-        usuarios = pessoaBLL.findbyTurmaUsers(turma, Role.user, "");
+        if (usuarios == null) {
+            Turma turma = usuario.getTurma();
+            usuarios = pessoaBLL.findbyTurmaUsers(turma, Role.user, "");
+        }
         return usuarios;
     }
 

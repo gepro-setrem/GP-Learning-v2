@@ -18,21 +18,24 @@ import org.primefaces.model.StreamedContent;
 @SessionScoped
 public class HomeBean {
 
-    private Pessoa usuario;
+    private Pessoa usuario = new Pessoa();
     @ManagedProperty("#{pessoaBLL}")
     private PessoaBLL pessoaBLL;
     private String layoutTitle;
     private boolean hasSession;
+    private StreamedContent imagem;
 
     public HomeBean() {
 
     }
 
     public Pessoa getUsuario() {
-        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) external.getRequest();
-        String email = request.getRemoteUser();
-        usuario = pessoaBLL.findbyEmail(email);
+        if (usuario == null || usuario.getId() == 0) {
+            ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
+            HttpServletRequest request = (HttpServletRequest) external.getRequest();
+            String email = request.getRemoteUser();
+            usuario = pessoaBLL.findbyEmail(email);
+        }
         return usuario;
     }
 
@@ -70,15 +73,14 @@ public class HomeBean {
         this.hasSession = hasSession;
     }
 
-    private StreamedContent imagem;
-
     public StreamedContent getImagem() throws IOException {
         getUsuario();
         InputStream is = null;
         if (usuario.getImagem() != null) {
             is = new ByteArrayInputStream(usuario.getImagem());
+            imagem = new DefaultStreamedContent(is, "", "" + usuario.getId());
         }
-        return new DefaultStreamedContent(is, "", "" + usuario.getId());
+        return imagem;
     }
 
 }

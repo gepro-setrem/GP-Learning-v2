@@ -50,10 +50,12 @@ public class TurmaBean {
     }
 
     public Pessoa getUsuario() {
-        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) external.getRequest();
-        String email = request.getRemoteUser();
-        usuario = pessoaBLL.findbyEmail(email);
+        if (usuario == null || usuario.getId() == 0) {
+            ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
+            HttpServletRequest request = (HttpServletRequest) external.getRequest();
+            String email = request.getRemoteUser();
+            usuario = pessoaBLL.findbyEmail(email);
+        }
         return usuario;
     }
 
@@ -70,8 +72,10 @@ public class TurmaBean {
     }
 
     public DataModel getTurmas() {
-        usuario = getUsuario();
-        turmas = new ListDataModel(turmaBLL.findbyProfessor(usuario));
+        getUsuario();
+        if (turmas == null) {
+            turmas = new ListDataModel(turmaBLL.findbyProfessor(usuario));
+        }
         return turmas;
     }
 
@@ -88,6 +92,7 @@ public class TurmaBean {
             } else {
                 turmaBLL.insert(turma);
             }
+            turmas = null;
             return "turmalst";
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para salvar, é necessário preencher o nome e ano da turma!"));
