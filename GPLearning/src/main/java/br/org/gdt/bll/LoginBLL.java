@@ -13,6 +13,9 @@ public class LoginBLL extends BLL<Login> {
     @Autowired
     private LoginDAO dao;
 
+    @Autowired
+    private EtapaBLL etapaBLL;
+
     public Login findbyPessoa(Pessoa pessoa) {
         if (pessoa != null && pessoa.getId() > 0) {
             return dao.findbyPessoa(pessoa);
@@ -32,11 +35,16 @@ public class LoginBLL extends BLL<Login> {
                 }
                 user.getLogin().setPessoa(null);
                 user.setIndicadoresprofessor(null);
-                //user.setLogin(null);
                 user.setProjetos(null);
                 user.setProjetosgerente(null);
-                user.setTurma(null);
                 user.setTurmasprofessor(null);
+                if (user.getTurma() != null) {
+                    user.getTurma().setProfessor(null);
+                    user.getTurma().setAcademicos(null);
+                    user.getTurma().setProjetos(null);
+                    user.getTurma().setTurmaParametros(null);
+                    user.getTurma().setEtapas(etapaBLL.findbyTurma(user.getTurma()));
+                }
             }
         }
         return user;

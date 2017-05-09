@@ -36,6 +36,8 @@ public class ProjetoBLL extends BLL<Projeto> {
     private TermoAberturaBLL termoAberturaBLL;
     @Autowired
     private TarefaBLL tarefaBLL;
+    @Autowired
+    private EtapaBLL etapaBLL;
 
     public List<Projeto> findbyAluno(Pessoa aluno) {
         List<Projeto> lsProjeto = new ArrayList<>();
@@ -44,19 +46,7 @@ public class ProjetoBLL extends BLL<Projeto> {
         }
         if (lsProjeto.size() > 0) {
             for (Projeto projeto : lsProjeto) {
-                if (projeto.getGerente() != null) {
-                    projeto.getGerente().setLogin(null);
-                    projeto.getGerente().setProjetos(null);
-                    projeto.getGerente().setProjetosgerente(null);
-                    projeto.getGerente().setIndicadoresprofessor(null);
-                    projeto.getGerente().setTurmasprofessor(null);
-                    projeto.getGerente().setTurma(null);
-                    projeto.setComponentes(null);
-                    projeto.setEaps(null);
-                    projeto.setRequisitos(null);
-                    projeto.setStakeholders(null);
-                    projeto.setTermoabertura(null);
-                }
+                projeto = CleanProjeto(projeto);
             }
         }
         return lsProjeto;
@@ -89,8 +79,9 @@ public class ProjetoBLL extends BLL<Projeto> {
     public List<Projeto> findbyProfessor(Pessoa professor) {
         List<Projeto> projetos = dao.findbyProfessor(professor);
         for (Projeto projeto : projetos) {
-            List<Pessoa> componentes = pessoaBLL.findbyProjeto(projeto);
-            projeto.setComponentes(componentes);
+            projeto = CleanProjeto(projeto);
+//            List<Pessoa> componentes = pessoaBLL.findbyProjeto(projeto);
+//            projeto.setComponentes(componentes);
         }
         return projetos;
     }
@@ -118,7 +109,15 @@ public class ProjetoBLL extends BLL<Projeto> {
                 projeto.getGerente().setProjetosgerente(null);
                 projeto.getGerente().setIndicadoresprofessor(null);
                 projeto.getGerente().setTurmasprofessor(null);
-                // projeto.getGerente().setTurma(null);
+                projeto.getGerente().setTurma(null);
+
+                if (projeto.getTurma() != null) {
+                    projeto.getTurma().setAcademicos(null);
+                    projeto.getTurma().setProjetos(null);
+                    projeto.getTurma().setTurmaParametros(null);
+                    projeto.getTurma().setEtapas(etapaBLL.findbyTurma(projeto.getTurma()));
+                }
+
                 List<EAP> eaps = new ArrayList<>();
                 eaps.add(tarefaBLL.findbyEAP(projeto));
                 projeto.setEaps(eaps); //eapbll.findbyProjeto(projeto));
@@ -133,4 +132,27 @@ public class ProjetoBLL extends BLL<Projeto> {
         return null;
     }
 
+    private Projeto CleanProjeto(Projeto projeto) {
+        if (projeto.getGerente() != null) {
+            projeto.getGerente().setLogin(null);
+            projeto.getGerente().setProjetos(null);
+            projeto.getGerente().setProjetosgerente(null);
+            projeto.getGerente().setIndicadoresprofessor(null);
+            projeto.getGerente().setTurmasprofessor(null);
+            projeto.getGerente().setTurma(null);
+        }
+        if (projeto.getTurma() != null) {
+            projeto.getTurma().setAcademicos(null);
+            projeto.getTurma().setProjetos(null);
+            projeto.getTurma().setEtapas(null);
+            projeto.getTurma().setTurmaParametros(null);
+            projeto.getTurma().setProfessor(null);
+        }
+        projeto.setComponentes(null);
+        projeto.setEaps(null);
+        projeto.setRequisitos(null);
+        projeto.setStakeholders(null);
+        projeto.setTermoabertura(null);
+        return projeto;
+    }
 }
