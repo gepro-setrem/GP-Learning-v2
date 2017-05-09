@@ -51,8 +51,6 @@ public class ProjetoProfessorBean {
     private TermoAberturaBLL termoAberturaBLL;
     private TermoAbertura termoabertura = new TermoAbertura();
 
-    private TreeNode eap;
-
     public ProjetoProfessorBean() {
     }
 
@@ -178,33 +176,32 @@ public class ProjetoProfessorBean {
         this.termoabertura = termoabertura;
     }
 
-    public TreeNode getEap() {
+    public String getEAP() {
         if (projeto != null && projeto.getEaps() != null && projeto.getEaps().size() > 0) {
-            EAP e = projeto.getEaps().get(0);
-            eap = new DefaultTreeNode("", null);
-            childNode(e, eap, "1");
-        }
-        return eap;
-    }
-
-    private TreeNode childNode(EAP e, TreeNode pai, String number) {
-        if (e != null) {
-            String label = number + " - " + e.getNome();
-            TreeNode node = new DefaultTreeNode(label, pai);
-            if (e.getEaps() != null) {
-                int i = 1;
-                for (EAP e2 : e.getEaps()) {
-                    childNode(e2, node, number + "." + i);
-                    i++;
-                }
-            }
-            return node;
+            EAP eap = projeto.getEaps().get(0);
+            String html = getNode(eap, "1", 1);
+            html = "<ul class=\"eap_pai\">" + html + "</ul>";
+            return html;
         }
         return null;
     }
 
-    public void setEap(TreeNode eap) {
-        this.eap = eap;
+    private String getNode(EAP eap, String number, int vez) {
+        String html = "";
+        if (eap != null) {
+            String label = number + " - " + eap.getNome();
+            html += "<li class=\"eap_item " + (vez == 2 ? "eap_column" : "") + "\"><div class=\"eap\"><div class=\"eap_nome\">" + label + "</div></div><ul class=\"eap_pai\">";
+            vez++;
+            if (eap.getEaps() != null) {
+                int i = 1;
+                for (EAP child : eap.getEaps()) {
+                    html += getNode(child, number + "." + i, vez);
+                    i++;
+                }
+            }
+            html += "</ul></li>";
+        }
+        return html;
     }
 
 }

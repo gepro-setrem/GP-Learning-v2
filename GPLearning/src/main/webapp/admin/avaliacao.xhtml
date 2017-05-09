@@ -117,25 +117,9 @@
                                         </h:panelGroup>
 
                                         <h:panelGroup rendered="#{item.etapa == 'Eap' and projetoProfessorBean.projeto.eaps != null}">
-                                            <p:tree value="#{projetoProfessorBean.eap}" var="node" style="width: 100%; border: 0;" >   
-                                                <p:treeNode>
-                                                    <div class="eap">
-                                                        <div class="eap_nome">#{node.nome}</div>
-                                                    </div>
-                                                </p:treeNode>
-                                            </p:tree>
-                                            <!--<ul class="eap_pai">
-                                                    <li class="eap_item">
-                                                        <div class="eap">
-                                                            <div class="eap_nome"></div>
-                                                        </div>
-                                                        <ul class="eap_pai">
-                                                            <p:treeNode>
-                                                                {node}
-                                                            </p:treeNode>
-                                                        </ul>
-                                                    </li>
-                                                </ul>-->
+                                            <div class="eap_list">
+                                                <h:outputText value=" #{projetoProfessorBean.EAP}" escape="false"/>
+                                            </div>
                                         </h:panelGroup>
 
                                         <h:panelGroup rendered="#{item.etapa == 'Cronograma'}">
