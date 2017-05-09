@@ -76,7 +76,7 @@ public class Comentario {
         this.IdRemetente = IdRemetente;
     }
 
-    @Generated(hash = 1065863250)
+    @Generated(hash = 237938031)
     public Comentario(Long _id, int id, @NotNull String descricao, Date criacao,
             boolean deletado, Long IdEtapa, Long IdRemetente) {
         this._id = _id;
@@ -87,6 +87,7 @@ public class Comentario {
         this.IdEtapa = IdEtapa;
         this.IdRemetente = IdRemetente;
     }
+
 
     public Long get_id() {
         return _id;

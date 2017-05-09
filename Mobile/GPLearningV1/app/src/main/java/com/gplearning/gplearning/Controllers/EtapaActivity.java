@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.Enums.EtapaProjeto;
-import com.gplearning.gplearning.Models.Etapa;
 import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.Etapa;
 import com.gplearning.gplearning.Models.EtapaDao;
 import com.gplearning.gplearning.Models.Marco;
 import com.gplearning.gplearning.Models.Premissas;
@@ -28,12 +28,15 @@ import com.gplearning.gplearning.Models.StakeholderDao;
 import com.gplearning.gplearning.Models.TermoAbertura;
 import com.gplearning.gplearning.Models.TermoAberturaDao;
 import com.gplearning.gplearning.R;
+import com.gplearning.gplearning.Utils.MetodosPublicos;
 
 import java.util.List;
 
 public class EtapaActivity extends AppCompatActivity {
 
+
     private Long idEtapa;
+    private Long idProjeto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +45,12 @@ public class EtapaActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null && intent.getExtras() != null && intent.getExtras().containsKey("ID")) {
-            Long id = intent.getExtras().getLong("ID");
+            idEtapa = intent.getExtras().getLong(MetodosPublicos.key_idEtapa);
+            idProjeto = intent.getExtras().getLong(MetodosPublicos.key_idProjeto);
             DaoSession daoSession = ((App) getApplication()).getDaoSession();
             EtapaDao etapaDao = daoSession.getEtapaDao();
             ///selecionar atividade
-            Etapa atv = etapaDao.queryBuilder().where(EtapaDao.Properties._id.eq(id)).unique(); //AtividadeDao.Properties.Etapa = EtapaProjeto.Escopo).
+            Etapa atv = etapaDao.queryBuilder().where(EtapaDao.Properties._id.eq(idEtapa)).unique(); //AtividadeDao.Properties.Etapa = EtapaProjeto.Escopo).
             if (atv != null && atv.get_id() > 0) {
                 AtualizaValores(atv);
                 SetTitle(atv.getEtapa());
@@ -57,7 +61,7 @@ public class EtapaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EtapaActivity.this, ComentarioActivity.class);
-                intent.putExtra("ID", idEtapa);
+                intent.putExtra(MetodosPublicos.key_idEtapa, idEtapa);
                 startActivity(intent);
             }
         });
@@ -78,6 +82,7 @@ public class EtapaActivity extends AppCompatActivity {
 
     /**
      * Atualiza a view, conforme o tipo de atividade;
+     *
      * @param atv
      */
     private void AtualizaValores(Etapa atv) {
@@ -95,7 +100,7 @@ public class EtapaActivity extends AppCompatActivity {
             if (atv.getEtapa() == EtapaProjeto.DescricaoProjeto ||
                     atv.getEtapa() == EtapaProjeto.JustificativaProjeto) {
                 TermoAberturaDao termoAberturaDao = daoSession.getTermoAberturaDao();
-                TermoAbertura termoAbertura = termoAberturaDao.queryBuilder().where(TermoAberturaDao.Properties.IdProjeto.eq(atv.getPro_id())).unique();
+                TermoAbertura termoAbertura = termoAberturaDao.queryBuilder().where(TermoAberturaDao.Properties.IdProjeto.eq(idProjeto)).unique();
                 if (termoAbertura != null) {
                     if (atv.getEtapa() == EtapaProjeto.DescricaoProjeto)
                         etapaTextView.setText(termoAbertura.getDescricao());
@@ -104,7 +109,7 @@ public class EtapaActivity extends AppCompatActivity {
                 }
             } else {
                 ProjetoDao projetoDao = daoSession.getProjetoDao();
-                Projeto projeto = projetoDao.queryBuilder().where(ProjetoDao.Properties.Id.eq(atv.getPro_id())).unique();
+                Projeto projeto = projetoDao.queryBuilder().where(ProjetoDao.Properties.Id.eq(idProjeto)).unique();
 
                 if (atv.getEtapa() == EtapaProjeto.PlanoGerenciamentoEscopo) {
                     etapaTextView.setText(projeto.getPlanoEscopo());
@@ -121,19 +126,19 @@ public class EtapaActivity extends AppCompatActivity {
 
             if (atv.getEtapa() == EtapaProjeto.Stakeholders) {
                 StakeholderDao stakeholderDao = daoSession.getStakeholderDao();
-                List<Stakeholder> lsStakeholders = stakeholderDao.queryBuilder().where(StakeholderDao.Properties.IdProjeto.eq(atv.getPro_id())).list();
+                List<Stakeholder> lsStakeholders = stakeholderDao.queryBuilder().where(StakeholderDao.Properties.IdProjeto.eq(idProjeto)).list();
                 ArrayAdapter<Stakeholder> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lsStakeholders);
                 listview.setAdapter(adapter);
 
             } else if (atv.getEtapa() == EtapaProjeto.Requisitos) {//IMPLEMENTAR ESTES METODOS AINDA!!!
                 RequisitoDao requisitoDao = daoSession.getRequisitoDao();
-                List<Requisito> lsRequisitos = requisitoDao.queryBuilder().where(RequisitoDao.Properties.IdProjeto.eq(atv.getPro_id())).list();
+                List<Requisito> lsRequisitos = requisitoDao.queryBuilder().where(RequisitoDao.Properties.IdProjeto.eq(idProjeto)).list();
                 ArrayAdapter<Requisito> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lsRequisitos);
                 listview.setAdapter(adapter);
             } else {
 
                 TermoAberturaDao termoAberturaDao = daoSession.getTermoAberturaDao();
-                TermoAbertura termoAbertura = termoAberturaDao.queryBuilder().where(TermoAberturaDao.Properties.IdProjeto.eq(atv.getPro_id())).unique();
+                TermoAbertura termoAbertura = termoAberturaDao.queryBuilder().where(TermoAberturaDao.Properties.IdProjeto.eq(idProjeto)).unique();
 
                 if (atv.getEtapa() == EtapaProjeto.Premissas) {
                     ArrayAdapter<Premissas> adapter = new ArrayAdapter<Premissas>(this, android.R.layout.simple_list_item_1, termoAbertura.getLsPremissas());

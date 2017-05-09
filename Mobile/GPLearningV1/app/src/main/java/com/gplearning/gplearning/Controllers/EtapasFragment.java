@@ -12,21 +12,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.Enums.EtapaProjeto;
-import com.gplearning.gplearning.Models.Etapa;
-import com.gplearning.gplearning.Models.AtividadeDao;
 import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.Etapa;
 import com.gplearning.gplearning.Models.EtapaDao;
 import com.gplearning.gplearning.Models.Pessoa;
 import com.gplearning.gplearning.Models.PessoaDao;
+import com.gplearning.gplearning.Models.ProjetoDao;
 import com.gplearning.gplearning.R;
+import com.gplearning.gplearning.Utils.MetodosPublicos;
 
 import java.lang.reflect.Field;
 import java.util.List;
+
 
 
 /**
@@ -42,9 +43,12 @@ public class EtapasFragment extends Fragment {
     private static final String ARG_PARAM1 = "projetoId";
 
     //  private List<Etapa> lsAtividades;
-    private Long projetoId;
+    private Long idProjeto;
     private EtapaDao etapaDao;
     private OnFragmentInteractionListener mListener;
+//
+//    private static final String key_idEtapa = "IdEtapa";
+//    private static final String key_idProjeto = "IdProjeto";
 
     public EtapasFragment() {
     }
@@ -57,10 +61,10 @@ public class EtapasFragment extends Fragment {
 //     * @return A new instance of fragment EtapasFragment.
 //     */
     // TODO: Rename and change types and number of parameters
-    public static EtapasFragment newInstance(Long projetoId) {
+    public static EtapasFragment newInstance(Long idProjeto) {
         EtapasFragment fragment = new EtapasFragment();
         Bundle args = new Bundle();
-        args.putLong(ARG_PARAM1, projetoId);
+        args.putLong(ARG_PARAM1, idProjeto);
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,7 +75,7 @@ public class EtapasFragment extends Fragment {
         setHasOptionsMenu(true);
 
         if (getArguments() != null) {
-            projetoId = getArguments().getLong(ARG_PARAM1);
+            idProjeto = getArguments().getLong(ARG_PARAM1);
         }
     }
 
@@ -102,9 +106,10 @@ public class EtapasFragment extends Fragment {
         ((TextView) getActivity().findViewById(R.id.etapaProjetoGerenteTxt)).setText("Nome do Gerente");
 
 
-
         etapaDao = session.getEtapaDao();
-        List<Etapa> lsEtapas = etapaDao.queryBuilder().where(EtapaDao.Properties.Pro_id.eq(projetoId)).list();
+        ProjetoDao projetoDao = session.getProjetoDao();
+        Long idTurma = projetoDao.load(idProjeto).getIdTurma();
+        List<Etapa> lsEtapas = etapaDao.queryBuilder().where(EtapaDao.Properties.IdTurma.eq(idTurma)).list();
         PassaValoresEtapas(lsEtapas);
 
 
@@ -168,54 +173,135 @@ public class EtapasFragment extends Fragment {
         // escopo  --  http://www.flaticon.com/free-icon/notebook_330705
 
 
-        ((ImageButton) getActivity().findViewById(R.id.etapaProjetoDescricaoTAbtn)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), EtapaActivity.class);
-                intent.putExtra("ID",0 );
-                startActivity(intent);
-            }
-        });
+//        ((ImageButton) getActivity().findViewById(R.id.etapaProjetoDescricaoTAbtn)).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getActivity(), EtapaActivity.class);
+//                intent.putExtra("ID", 0);
+//                startActivity(intent);
+//            }
+//        });
 
 
-        // Etapa atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaDescricao)).unique();
+        // Etapa atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(idProjeto), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaDescricao)).unique();
         if (lsEtapas != null && lsEtapas.size() > 0) {
 
             for (final Etapa atv : lsEtapas) {
                 if (atv.getEtapa() == EtapaProjeto.DescricaoProjeto) {
-                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoDescricaoTARatingBar)).setRating(atv.getPontuacaoMedia());
-                    ((ImageButton) getActivity().findViewById(R.id.etapaProjetoDescricaoTAbtn)).setOnClickListener(new View.OnClickListener() {
+                    // ((RatingBar) getActivity().findViewById(R.id.etapaProjetoDescricaoTARatingBar)).setRating(atv.getPontuacaoMedia());
+                    AtribuiEventoClick(((ImageButton) getActivity().findViewById(R.id.etapaProjetoDescricaoTAbtn)), atv.get_id());
+//                    ((ImageButton) getActivity().findViewById(R.id.etapaProjetoDescricaoTAbtn)).setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            Intent intent = new Intent(getActivity(), EtapaActivity.class);
+//                            intent.putExtra("ID", atv.get_id());
+//                            startActivity(intent);
+//                        }
+//                    });
+                } else if (atv.getEtapa() == EtapaProjeto.JustificativaProjeto) {
+                    //((RatingBar) getActivity().findViewById(R.id.etapaProjetoJustificativaTARatingBar)).setRating(atv.getPontuacaoMedia());
+                    ((ImageButton) getActivity().findViewById(R.id.etapaProjetoJustificativaTAbtn)).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(getActivity(), EtapaActivity.class);
-                            intent.putExtra("ID",atv.get_id() );
+                            intent.putExtra("ID", atv.get_id());
                             startActivity(intent);
                         }
                     });
-                } else if (atv.getEtapa() == EtapaProjeto.JustificativaProjeto)
-                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoJustificativaTARatingBar)).setRating(atv.getPontuacaoMedia());
-                else if (atv.getEtapa() == EtapaProjeto.Premissas)
-                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoPremissasTARatingBar)).setRating(atv.getPontuacaoMedia());
-                else if (atv.getEtapa() == EtapaProjeto.Restricoes)
-                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRestricoesTARatingBar)).setRating(atv.getPontuacaoMedia());
-                else if (atv.getEtapa() == EtapaProjeto.Marcos)
-                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoMarcosTARatingBar)).setRating(atv.getPontuacaoMedia());
-                else if (atv.getEtapa() == EtapaProjeto.RequisitosTermoAbertura)
-                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosTARatingBar)).setRating(atv.getPontuacaoMedia());
-                else if (atv.getEtapa() == EtapaProjeto.Stakeholders)
-                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoStakeholdersTARatingBar)).setRating(atv.getPontuacaoMedia());
-                else if (atv.getEtapa() == EtapaProjeto.PlanoGerenciamentoEscopo)
-                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)).setRating(atv.getPontuacaoMedia());
-                else if (atv.getEtapa() == EtapaProjeto.Requisitos)
-                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosRatingBar)).setRating(atv.getPontuacaoMedia());
-                else if (atv.getEtapa() == EtapaProjeto.Escopo)
-                    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)).setRating(atv.getPontuacaoMedia());
-
+                } else if (atv.getEtapa() == EtapaProjeto.Premissas) {
+                    //   ((RatingBar) getActivity().findViewById(R.id.etapaProjetoPremissasTARatingBar)).setRating(atv.getPontuacaoMedia());
+                    ((ImageButton) getActivity().findViewById(R.id.etapaProjetoPremissasTAbtn)).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getActivity(), EtapaActivity.class);
+                            intent.putExtra("ID", atv.get_id());
+                            startActivity(intent);
+                        }
+                    });
+                } else if (atv.getEtapa() == EtapaProjeto.Restricoes) {
+                    // ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRestricoesTARatingBar)).setRating(atv.getPontuacaoMedia());
+                    ((ImageButton) getActivity().findViewById(R.id.etapaProjetoRestricoesTAbtn)).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getActivity(), EtapaActivity.class);
+                            intent.putExtra("ID", atv.get_id());
+                            startActivity(intent);
+                        }
+                    });
+                } else if (atv.getEtapa() == EtapaProjeto.Marcos) {
+                    //  ((RatingBar) getActivity().findViewById(R.id.etapaProjetoMarcosTARatingBar)).setRating(atv.getPontuacaoMedia());
+                    ((ImageButton) getActivity().findViewById(R.id.etapaProjetoMarcosTAbtn)).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getActivity(), EtapaActivity.class);
+                            intent.putExtra("ID", atv.get_id());
+                            startActivity(intent);
+                        }
+                    });
+                } else if (atv.getEtapa() == EtapaProjeto.RequisitosTermoAbertura) {
+                    //((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosTARatingBar)).setRating(atv.getPontuacaoMedia());
+                    ((ImageButton) getActivity().findViewById(R.id.etapaProjetoRequisitosTAbtn)).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getActivity(), EtapaActivity.class);
+                            intent.putExtra("ID", atv.get_id());
+                            startActivity(intent);
+                        }
+                    });
+                } else if (atv.getEtapa() == EtapaProjeto.Stakeholders) {
+                    //((RatingBar) getActivity().findViewById(R.id.etapaProjetoStakeholdersTARatingBar)).setRating(atv.getPontuacaoMedia());
+                    ((ImageButton) getActivity().findViewById(R.id.etapaProjetoStakeholdersTAbtn)).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getActivity(), EtapaActivity.class);
+                            intent.putExtra("ID", atv.get_id());
+                            startActivity(intent);
+                        }
+                    });
+                } else if (atv.getEtapa() == EtapaProjeto.PlanoGerenciamentoEscopo) {
+                    // ((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)).setRating(atv.getPontuacaoMedia());
+                    ((ImageButton) getActivity().findViewById(R.id.etapaProjetoEscopobtn)).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getActivity(), EtapaActivity.class);
+                            intent.putExtra("ID", atv.get_id());
+                            startActivity(intent);
+                        }
+                    });
+                } else if (atv.getEtapa() == EtapaProjeto.Requisitos) {
+                    //    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosRatingBar)).setRating(atv.getPontuacaoMedia());
+                    AtribuiEventoClick(((ImageButton) getActivity().findViewById(R.id.etapaProjetoRequisitosbtn)), atv.get_id());
+                } else if (atv.getEtapa() == EtapaProjeto.Escopo) {
+                    //   ((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)).setRating(atv.getPontuacaoMedia());
+                    AtribuiEventoClick(((ImageButton) getActivity().findViewById(R.id.etapaProjetoEscopobtn)), atv.get_id());
+//                    ((ImageButton) getActivity().findViewById(R.id.etapaProjetoEscopobtn)).setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            Intent intent = new Intent(getActivity(), EtapaActivity.class);
+//                            intent.putExtra("ID", atv.get_id());
+//                            startActivity(intent);
+//                        }
+//                    });
+                }
             }
-            //        atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(projetoId), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaJustificativa)).unique();
+            //        atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(idProjeto), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaJustificativa)).unique();
             //        if (atv != null)
             //            ((RatingBar) getActivity().findViewById(R.id.etapaprojetoJu)).setRating(atv.getPontuacaoMedia());
         }
+    }
+
+
+    private void AtribuiEventoClick(ImageButton imageButton, final Long idEtapa) {
+        (imageButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), EtapaActivity.class);
+                intent.putExtra(MetodosPublicos.key_idEtapa, idEtapa);
+                intent.putExtra(MetodosPublicos.key_idProjeto, idProjeto);
+
+                startActivity(intent);
+            }
+        });
     }
 
 }

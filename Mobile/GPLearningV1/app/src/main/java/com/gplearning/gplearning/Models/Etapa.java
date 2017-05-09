@@ -33,7 +33,7 @@ public class Etapa {
     private Date conclusao;
     @Convert(converter = EtapaProjetoConverter.class, columnType = String.class)
     private EtapaProjeto etapa;
-    private int pontuacaoMedia;
+    //  private int pontuacaoMedia;
 
 //    @ToMany
 //    @JoinEntity(entity = IndicadoresAtividades.class,
@@ -63,20 +63,14 @@ public class Etapa {
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 1970263667)
     private transient EtapaDao myDao;
 
     @Generated(hash = 1191549063)
     private transient Long turma__resolvedKey;
-
-    public int getPontuacaoMedia() {
-        return pontuacaoMedia;
-    }
-
-    public void setPontuacaoMedia(int pontuacaoMedia) {
-        this.pontuacaoMedia = pontuacaoMedia;
-    }
 
     public Etapa(long _id) {
         this._id = _id;
@@ -104,8 +98,7 @@ public class Etapa {
     }
 
 
-    public Etapa(Long _id, int id, String nome, Date criacao, Date termino, Date conclusao, EtapaProjeto etapa,
-                 int pontuacaoMedia) {
+    public Etapa(Long _id, int id, String nome, Date criacao, Date termino, Date conclusao, EtapaProjeto etapa) {
         this._id = _id;
         this.id = id;
         this.nome = nome;
@@ -113,12 +106,10 @@ public class Etapa {
         this.termino = termino;
         this.conclusao = conclusao;
         this.etapa = etapa;
-        this.pontuacaoMedia = pontuacaoMedia;
     }
 
-    @Generated(hash = 862528198)
-    public Etapa(Long _id, int id, String nome, Date criacao, Date termino, Date conclusao, EtapaProjeto etapa, int pontuacaoMedia,
-            Long idTurma) {
+    @Generated(hash = 92658830)
+    public Etapa(Long _id, int id, String nome, Date criacao, Date termino, Date conclusao, EtapaProjeto etapa, Long idTurma) {
         this._id = _id;
         this.id = id;
         this.nome = nome;
@@ -126,7 +117,6 @@ public class Etapa {
         this.termino = termino;
         this.conclusao = conclusao;
         this.etapa = etapa;
-        this.pontuacaoMedia = pontuacaoMedia;
         this.idTurma = idTurma;
     }
 
@@ -204,54 +194,22 @@ public class Etapa {
         this.turma = turma;
     }
 
-    /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
-     */
-    @Generated(hash = 64157708)
+    @Keep
     public List<IndicadoresAtividades> getLsIndicadoresAtividades() {
-        if (lsIndicadoresAtividades == null) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            IndicadoresAtividadesDao targetDao = daoSession.getIndicadoresAtividadesDao();
-            List<IndicadoresAtividades> lsIndicadoresAtividadesNew = targetDao._queryEtapa_LsIndicadoresAtividades(_id);
-            synchronized (this) {
-                if (lsIndicadoresAtividades == null) {
-                    lsIndicadoresAtividades = lsIndicadoresAtividadesNew;
-                }
-            }
-        }
         return lsIndicadoresAtividades;
     }
 
+    @Keep
     public void setLsIndicadoresAtividades(List<IndicadoresAtividades> lsIndicadoresAtividades) {
         this.lsIndicadoresAtividades = lsIndicadoresAtividades;
     }
 
-    /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
-     */
-    @Generated(hash = 143405805)
+    @Keep
     public List<ParametrosAtividade> getLsParametros() {
-        if (lsParametros == null) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            ParametrosAtividadeDao targetDao = daoSession.getParametrosAtividadeDao();
-            List<ParametrosAtividade> lsParametrosNew = targetDao._queryEtapa_LsParametros(_id);
-            synchronized (this) {
-                if (lsParametros == null) {
-                    lsParametros = lsParametrosNew;
-                }
-            }
-        }
         return lsParametros;
     }
 
+    @Keep
     public void setLsParametros(List<ParametrosAtividade> lsParametros) {
         this.lsParametros = lsParametros;
     }

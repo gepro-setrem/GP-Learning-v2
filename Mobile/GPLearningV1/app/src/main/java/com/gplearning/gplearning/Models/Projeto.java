@@ -50,11 +50,11 @@ public class Projeto {
 
     @ToMany(referencedJoinProperty = "IdProjeto")
     @OrderBy("_id ASC")
-    private List<Stakeholder> lsStakeholders;
+    private List<Stakeholder> stakeholders;
 
     @ToMany(referencedJoinProperty = "IdProjeto")
     @OrderBy("_id ASC")
-    private List<Requisito> lsRequisito;
+    private List<Requisito> requisitos;
 
 
     /**
@@ -239,23 +239,23 @@ public class Projeto {
     }
 
     @Keep
-    public List<Stakeholder> getLsStakeholders() {
-        return lsStakeholders;
+    public List<Stakeholder> getStakeholders() {
+        return stakeholders;
     }
 
     @Keep
-    public void setLsStakeholders(List<Stakeholder> lsStakeholders) {
-        this.lsStakeholders = lsStakeholders;
+    public void setStakeholders(List<Stakeholder> stakeholders) {
+        this.stakeholders = stakeholders;
     }
 
     @Keep
-    public List<Requisito> getLsRequisito() {
-        return lsRequisito;
+    public List<Requisito> getRequisitos() {
+        return requisitos;
     }
 
     @Keep
-    public void setLsRequisito(List<Requisito> lsRequisito) {
-        this.lsRequisito = lsRequisito;
+    public void setRequisitos(List<Requisito> requisitos) {
+        this.requisitos = requisitos;
     }
 
     /**
@@ -310,20 +310,16 @@ public class Projeto {
         this.planoProjeto = planoProjeto;
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
-    @Generated(hash = 1778292413)
-    public synchronized void resetLsStakeholders() {
-        lsStakeholders = null;
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 1273581113)
+    public synchronized void resetStakeholders() {
+        stakeholders = null;
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
-    @Generated(hash = 777732352)
-    public synchronized void resetLsRequisito() {
-        lsRequisito = null;
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 1681398261)
+    public synchronized void resetRequisitos() {
+        requisitos = null;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -332,4 +328,6 @@ public class Projeto {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getProjetoDao() : null;
     }
+
+
 }

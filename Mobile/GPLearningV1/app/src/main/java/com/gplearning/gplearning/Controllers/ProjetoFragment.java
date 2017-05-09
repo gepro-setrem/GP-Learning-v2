@@ -21,6 +21,8 @@ import com.gplearning.gplearning.Adapters.ProjetoAdapter;
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.DAO.ProjetoDAO;
 import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.Pessoa;
+import com.gplearning.gplearning.Models.PessoaDao;
 import com.gplearning.gplearning.Models.Projeto;
 import com.gplearning.gplearning.Models.ProjetoDao;
 import com.gplearning.gplearning.R;
@@ -209,12 +211,16 @@ public class ProjetoFragment extends Fragment {
 //                Thread.currentThread().interrupt();
 //            }
             ProjetoDAO projetoDAO = new ProjetoDAO();
-
+            DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
             ///select no sqlite
             if (MetodosPublicos.ModoAcessoAluno(getActivity())) {
-                lsProjetos.addAll(projetoDAO.SelecionaProjetosAluno(MetodosPublicos.SelecionaSessaoidExterno(getActivity())));//getProjetos()); //dao.loadAll();
+                PessoaDao pessoaDao = daoSession.getPessoaDao();
+                ProjetoDao projetoDao = daoSession.getProjetoDao();
+                Pessoa user = pessoaDao.load(MetodosPublicos.SelecionaSessaoId(getActivity()));
+                lsProjetos.addAll(projetoDao.queryBuilder().where(ProjetoDao.Properties.IdTurma.eq(user.getIdTurma())).list());
+                //  lsProjetos.addAll(projetoDAO.SelecionaProjetosAluno(MetodosPublicos.SelecionaSessaoidExterno(getActivity())));//getProjetos()); //dao.loadAll();
             } else {
-                lsProjetos.addAll(projetoDAO.SelecionaProjetosProfessor(MetodosPublicos.SelecionaSessaoidExterno(getActivity())));
+                //lsProjetos.addAll(projetoDAO.SelecionaProjetosProfessor(MetodosPublicos.SelecionaSessaoidExterno(getActivity())));
             }
             MetodosPublicos.Log("projetos", " retorno com:" + lsProjetos.size());
             return true;

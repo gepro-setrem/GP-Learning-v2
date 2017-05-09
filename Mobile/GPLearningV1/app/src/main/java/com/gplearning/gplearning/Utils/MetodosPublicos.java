@@ -37,6 +37,9 @@ public class MetodosPublicos {
     private static String key_sync_atividade = "last_sync_atividade";
 
 
+    public static final String key_idEtapa = "IdEtapa";
+    public static final String key_idProjeto = "IdProjeto";
+
     /// metodos de Dados do usuário/Sessão
     public static void SalvaSessao(Context context, Long id, String nome, String email, int idExterno) {
         SharedPreferences pref = context.getSharedPreferences(key_login, MODE_PRIVATE);

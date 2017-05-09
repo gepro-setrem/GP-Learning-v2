@@ -39,6 +39,7 @@
     <!-- Strings relacionadas ao login -->
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">Login</string>
+    <string name="login_loader_desc">Estamos preparando o aplicativo com os seus dados, por favor, aguarde um instante.</string>
 
     <string name="prompt_email">E-mail</string>
     <string name="prompt_password">Senha</string>

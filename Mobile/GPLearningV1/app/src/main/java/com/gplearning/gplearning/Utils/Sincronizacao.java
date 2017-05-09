@@ -66,24 +66,24 @@ public class Sincronizacao {
                     daoProjeto.insert(projeto);
                     Projeto pCompleto = projetoDAO.SelecionaProjetoCompleto(projeto.getId());
                     if (pCompleto != null) {
-                        if (pCompleto.getIdGerente() > 0) {
-                            Pessoa gerente = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(pCompleto.getIdGerente())).unique();
+                        if (pCompleto.getGerente() != null && pCompleto.getGerente().getId() > 0) {
+                            Pessoa gerente = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(pCompleto.getGerente().getId())).unique();
                             if (gerente == null) {
                                 daoPessoa.insert(pCompleto.getGerente());
                             }
                         }
 
-                        if (pCompleto.getIdTurma() > 0) {
-                            Turma turma = daoTurma.queryBuilder().where(TurmaDao.Properties.Id.eq(pCompleto.getIdTurma())).unique();
+                        if (pCompleto.getTurma() != null && pCompleto.getTurma().getId() > 0) {
+                            Turma turma = daoTurma.queryBuilder().where(TurmaDao.Properties.Id.eq(pCompleto.getTurma().getId())).unique();
                             if (turma == null)
                                 daoTurma.insert(pCompleto.getTurma());
                         }
 
-                        if (pCompleto.getIdTermoAbertura() > 0) {
-                            TermoAbertura termoAbertura = daoTermoAbertura.queryBuilder().where(TermoAberturaDao.Properties.Id.eq(pCompleto.getIdTermoAbertura())).unique();
+                        if (pCompleto.getTermoAbertura() != null && pCompleto.getTermoAbertura().getId() > 0) {
+                            TermoAbertura termoAbertura = daoTermoAbertura.queryBuilder().where(TermoAberturaDao.Properties.Id.eq(pCompleto.getTermoAbertura().getId())).unique();
                             if (termoAbertura == null) {
                                 daoTermoAbertura.insert(termoAbertura);
-//
+
                                 if (termoAbertura.getLsMarco() != null) {
                                     for (Marco marco : termoAbertura.getLsMarco()) {
                                         if (daoMarco.queryBuilder().where(MarcoDao.Properties.Id.eq(marco.getId())).count() == 0) {
@@ -119,16 +119,16 @@ public class Sincronizacao {
                             }
                         }
 
-                        if (pCompleto.getLsRequisito() != null) {
-                            for (Requisito requisito : pCompleto.getLsRequisito()) {
+                        if (pCompleto.getRequisitos() != null) {
+                            for (Requisito requisito : pCompleto.getRequisitos()) {
                                 if (daoRequisito.queryBuilder().where(RequisitoDao.Properties.Id.eq(requisito.getId())).count() == 0) {
                                     daoRequisito.insert(requisito);
                                 }
                             }
                         }
 
-                        if (pCompleto.getLsStakeholders() != null) {
-                            for (Stakeholder stakeholder : pCompleto.getLsStakeholders()) {
+                        if (pCompleto.getStakeholders() != null) {
+                            for (Stakeholder stakeholder : pCompleto.getStakeholders()) {
                                 if (daoStakeholder.queryBuilder().where(StakeholderDao.Properties.Id.eq(stakeholder.getId())).count() == 0) {
                                     daoStakeholder.insert(stakeholder);
                                 }
