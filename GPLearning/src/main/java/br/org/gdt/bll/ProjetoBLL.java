@@ -124,7 +124,22 @@ public class ProjetoBLL extends BLL<Projeto> {
                 projeto.setRequisitos(requisitoBLL.findbyProjeto(projeto));
                 projeto.setStakeholders(stakeholderBLL.findbyProjeto(projeto));
                 projeto.setTermoabertura(termoAberturaBLL.findByProjetoCompleto(projeto));
-                projeto.setComponentes(null);
+
+                List<Pessoa> compenentes = pessoaBLL.findbyProjeto(projeto);
+                if (compenentes != null) {
+                    for (Pessoa com : compenentes) {
+                        com.setIndicadoresprofessor(null);
+                        com.setLogin(null);
+                        com.setProjetos(null);
+                        com.setTurma(null);
+                        com.setTurmasprofessor(null);
+                        com.setProjetos(null);
+                        com.setProjetosgerente(null);
+                    }
+                    projeto.setComponentes(compenentes);
+                } else {
+                    projeto.setComponentes(null);
+                }
 
                 return projeto;
             }

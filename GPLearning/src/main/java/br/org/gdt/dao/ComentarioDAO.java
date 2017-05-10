@@ -14,9 +14,9 @@ public class ComentarioDAO extends DAO<Comentario> {
         classe = Comentario.class;
     }
     
-    public List<Comentario> findbyAtividade(Etapa atividade){
-        return entityManager.createQuery("from Comentario where atividade = :a")
-                .setParameter("a", atividade).getResultList();
+    public List<Comentario> findbyEtapa(Etapa etapa){
+        return entityManager.createQuery("from Comentario where etapa = :a")
+                .setParameter("a", etapa).getResultList();
 //          return entityManager.createQuery("select c from Comentario as c left join c.atividade as atv where atv = :a")
 //                .setParameter("a", atividade).getResultList();
     }

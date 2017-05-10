@@ -36,14 +36,14 @@ public class ComentarioResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/index/{atv_id}")
-    public List<Comentario> getAll(@PathParam("atv_id") int atv_id) {
-        System.out.println("chegou no metodo id:" + atv_id);
+    @Path("/index/{eta_id}")
+    public List<Comentario> getAll(@PathParam("eta_id") int eta_id) {
+        System.out.println("chegou no metodo id:" + eta_id);
         List<Comentario> lsComentario = new ArrayList<Comentario>();
-        if (atv_id > 0) {
-            Etapa atv = etapaBLL.findById(atv_id);
-            if (atv != null && atv.getId() > 0) {
-                lsComentario = comentarioBLL.findbyAtividade(atv);
+        if (eta_id > 0) {
+            Etapa etapa = etapaBLL.findById(eta_id);
+            if (etapa != null && etapa.getId() > 0) {
+                lsComentario = comentarioBLL.findbyEtapa(etapa);
             }
         }
         return lsComentario;
