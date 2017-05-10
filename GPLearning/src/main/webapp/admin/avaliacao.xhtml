@@ -8,6 +8,7 @@
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="head"> 
         <h:outputStylesheet name="./css/eap_css.css"/>
+        <h:outputStylesheet name="./css/cronograma_css.css"/>
     </ui:define>
     <ui:define name="content">
         <h:form>
@@ -28,104 +29,137 @@
                     <div class="tab-content">
                         <ui:repeat var="item" value="#{projetoProfessorBean.etapas}" varStatus="status">
                             <c:set var="label" value="#{turmaBean.getEtapaProjeto(item.etapa)}"/>
-                            <div class="tab-pane row #{status.index == 0 ? 'active' : ''}" id="#{item.etapa}" style="padding-top: 15px;">
-                                <div class="col-xs-12">
-                                    <h:panelGroup rendered="#{projetoProfessorBean.termoabertura != null}">
-                                        <h:panelGroup rendered="#{item.etapa == 'DescricaoProjeto'}">
-                                            #{projetoProfessorBean.termoabertura.descricao}
+                            <div class="tab-pane #{status.index == 0 ? 'active' : ''}" id="#{item.etapa}" style="padding-top: 15px;">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <h:panelGroup rendered="#{projetoProfessorBean.termoabertura != null}">
+                                            <h:panelGroup rendered="#{item.etapa == 'DescricaoProjeto'}">
+                                                #{projetoProfessorBean.termoabertura.descricao}
+                                            </h:panelGroup>
+
+                                            <h:panelGroup rendered="#{item.etapa == 'JustificativaProjeto'}">
+                                                #{projetoProfessorBean.termoabertura.justificativa}
+                                            </h:panelGroup>
+
+                                            <h:panelGroup rendered="#{item.etapa == 'Premissas' and projetoProfessorBean.termoabertura.premissas != null}">
+                                                <p:dataTable class="table table-hover" var="premissa" value="#{projetoProfessorBean.termoabertura.premissas}" emptyMessage="Nenhum registro encontrado.">
+                                                    <p:column headerText="Descrição da Premissa">
+                                                        <h:outputText value="#{premissa.descricao}"/>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </h:panelGroup>
+
+                                            <h:panelGroup rendered="#{item.etapa == 'Restricoes' and projetoProfessorBean.termoabertura.restricoes != null}">
+                                                <p:dataTable class="table table-hover" var="restricao" value="#{projetoProfessorBean.termoabertura.restricoes}" emptyMessage="Nenhum registro encontrado.">
+                                                    <p:column headerText="Descrição da Restrição">
+                                                        <h:outputText value="#{restricao.descricao}"/>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </h:panelGroup>
+
+                                            <h:panelGroup rendered="#{item.etapa == 'Marcos' and projetoProfessorBean.termoabertura.marcos != null}">
+                                                <p:dataTable class="table table-hover" var="marco" value="#{projetoProfessorBean.termoabertura.marcos}" emptyMessage="Nenhum registro encontrado.">
+                                                    <p:column headerText="Objetivo">
+                                                        <h:outputText value="#{marco.objetivo}"/>
+                                                    </p:column>
+
+                                                    <p:column headerText="Previsão" style="width: 150px;">
+                                                        <h:outputText value="#{marco.previsao}"> <f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </h:panelGroup>
+
+                                            <h:panelGroup rendered="#{item.etapa == 'RequisitosTermoAbertura' and projetoProfessorBean.termoabertura.requisitosTermoAberturas != null}">
+                                                <p:dataTable class="table table-hover" var="requisito" value="#{projetoProfessorBean.termoabertura.requisitosTermoAberturas}" emptyMessage="Nenhum registro encontrado.">
+                                                    <p:column headerText="Requisito">
+                                                        <h:outputText value="#{requisito.nome}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Descrição">
+                                                        <h:outputText value="#{requisito.descricao}"/>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </h:panelGroup>
+
                                         </h:panelGroup>
 
-                                        <h:panelGroup rendered="#{item.etapa == 'JustificativaProjeto'}">
-                                            #{projetoProfessorBean.termoabertura.justificativa}
+                                        <h:panelGroup rendered="#{projetoProfessorBean.projeto != null}">
+                                            <h:panelGroup rendered="#{item.etapa == 'Stakeholders' and projetoProfessorBean.projeto.stakeholders != null}">
+                                                <p:dataTable class="table table-hover" var="stakeholder" value="#{projetoProfessorBean.projeto.stakeholders}" emptyMessage="Nenhum registro encontrado.">
+                                                    <p:column headerText="Nome">
+                                                        <h:outputText value="#{stakeholder.nome}"/>
+                                                    </p:column>
+
+                                                    <p:column headerText="Papel">
+                                                        <h:outputText value="#{stakeholder.papel}"/>
+                                                    </p:column>
+
+                                                    <p:column headerText="Contribuição">
+                                                        <h:outputText value="#{stakeholder.contribuicao}"/>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </h:panelGroup>
+
+                                            <h:panelGroup rendered="#{item.etapa == 'PlanoGerenciamentoEscopo'}">
+                                                #{projetoProfessorBean.projeto.planoEscopo}
+                                            </h:panelGroup>
+
+                                            <h:panelGroup rendered="#{item.etapa == 'Requisitos' and projetoProfessorBean.projeto.requisitos != null}">
+                                                <p:dataTable class="table table-hover" var="requisito" value="#{projetoProfessorBean.projeto.requisitos}" emptyMessage="Nenhum registro encontrado.">
+                                                    <p:column headerText="Requisito">
+                                                        <h:outputText value="#{requisito.nome}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Descrição">
+                                                        <h:outputText value="#{requisito.descricao}"/>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </h:panelGroup>
+
+                                            <h:panelGroup rendered="#{item.etapa == 'Escopo'}">
+                                                #{projetoProfessorBean.projeto.escopo}
+                                            </h:panelGroup>
+
+                                            <h:panelGroup rendered="#{item.etapa == 'Eap' and projetoProfessorBean.projeto.eaps != null}">
+                                                <div class="eap_list">
+                                                    <h:outputText value=" #{projetoProfessorBean.htmlEAP}" escape="false"/>
+                                                </div>
+                                            </h:panelGroup>
+
+                                            <h:panelGroup rendered="#{item.etapa == 'Cronograma'}">
+                                                <table class="tarefas">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Marco</th>
+                                                            <th>Tarefa</th>
+                                                            <th class="text-center" style="width: 100px;">Início</th>
+                                                            <th class="text-center" style="width: 100px;">Término</th>
+                                                            <th>Recursos</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <h:outputText value=" #{projetoProfessorBean.htmlCronograma}" escape="false"/>
+                                                        <!--                                                    <tr><td colspan="5">Nenhum registro encontrado!</td></tr>-->
+                                                    </tbody>
+                                                </table>
+                                            </h:panelGroup>
                                         </h:panelGroup>
-
-                                        <h:panelGroup rendered="#{item.etapa == 'Premissas' and projetoProfessorBean.termoabertura.premissas != null}">
-                                            <p:dataTable class="table table-hover" var="premissa" value="#{projetoProfessorBean.termoabertura.premissas}" emptyMessage="Nenhum registro encontrado.">
-                                                <p:column headerText="Descrição da Premissa">
-                                                    <h:outputText value="#{premissa.descricao}"/>
-                                                </p:column>
-                                            </p:dataTable>
-                                        </h:panelGroup>
-
-                                        <h:panelGroup rendered="#{item.etapa == 'Restricoes' and projetoProfessorBean.termoabertura.restricoes != null}">
-                                            <p:dataTable class="table table-hover" var="restricao" value="#{projetoProfessorBean.termoabertura.restricoes}" emptyMessage="Nenhum registro encontrado.">
-                                                <p:column headerText="Descrição da Restrição">
-                                                    <h:outputText value="#{restricao.descricao}"/>
-                                                </p:column>
-                                            </p:dataTable>
-                                        </h:panelGroup>
-
-                                        <h:panelGroup rendered="#{item.etapa == 'Marcos' and projetoProfessorBean.termoabertura.marcos != null}">
-                                            <p:dataTable class="table table-hover" var="marco" value="#{projetoProfessorBean.termoabertura.marcos}" emptyMessage="Nenhum registro encontrado.">
-                                                <p:column headerText="Objetivo">
-                                                    <h:outputText value="#{marco.objetivo}"/>
-                                                </p:column>
-
-                                                <p:column headerText="Previsão" style="width: 150px;">
-                                                    <h:outputText value="#{marco.previsao}"> <f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>
-                                                </p:column>
-                                            </p:dataTable>
-                                        </h:panelGroup>
-
-                                        <h:panelGroup rendered="#{item.etapa == 'RequisitosTermoAbertura' and projetoProfessorBean.termoabertura.requisitosTermoAberturas != null}">
-                                            <p:dataTable class="table table-hover" var="requisito" value="#{projetoProfessorBean.termoabertura.requisitosTermoAberturas}" emptyMessage="Nenhum registro encontrado.">
-                                                <p:column headerText="Requisito">
-                                                    <h:outputText value="#{requisito.nome}"/>
-                                                </p:column>
-                                                <p:column headerText="Descrição">
-                                                    <h:outputText value="#{requisito.descricao}"/>
-                                                </p:column>
-                                            </p:dataTable>
-                                        </h:panelGroup>
-
-                                    </h:panelGroup>
-
-                                    <h:panelGroup rendered="#{projetoProfessorBean.projeto != null}">
-                                        <h:panelGroup rendered="#{item.etapa == 'Stakeholders' and projetoProfessorBean.projeto.stakeholders != null}">
-                                            <p:dataTable class="table table-hover" var="stakeholder" value="#{projetoProfessorBean.projeto.stakeholders}" emptyMessage="Nenhum registro encontrado.">
-                                                <p:column headerText="Nome">
-                                                    <h:outputText value="#{stakeholder.nome}"/>
-                                                </p:column>
-
-                                                <p:column headerText="Papel">
-                                                    <h:outputText value="#{stakeholder.papel}"/>
-                                                </p:column>
-
-                                                <p:column headerText="Contribuição">
-                                                    <h:outputText value="#{stakeholder.contribuicao}"/>
-                                                </p:column>
-                                            </p:dataTable>
-                                        </h:panelGroup>
-
-                                        <h:panelGroup rendered="#{item.etapa == 'PlanoGerenciamentoEscopo'}">
-                                            #{projetoProfessorBean.projeto.planoEscopo}
-                                        </h:panelGroup>
-
-                                        <h:panelGroup rendered="#{item.etapa == 'Requisitos' and projetoProfessorBean.projeto.requisitos != null}">
-                                            <p:dataTable class="table table-hover" var="requisito" value="#{projetoProfessorBean.projeto.requisitos}" emptyMessage="Nenhum registro encontrado.">
-                                                <p:column headerText="Requisito">
-                                                    <h:outputText value="#{requisito.nome}"/>
-                                                </p:column>
-                                                <p:column headerText="Descrição">
-                                                    <h:outputText value="#{requisito.descricao}"/>
-                                                </p:column>
-                                            </p:dataTable>
-                                        </h:panelGroup>
-
-                                        <h:panelGroup rendered="#{item.etapa == 'Escopo'}">
-                                            #{projetoProfessorBean.projeto.escopo}
-                                        </h:panelGroup>
-
-                                        <h:panelGroup rendered="#{item.etapa == 'Eap' and projetoProfessorBean.projeto.eaps != null}">
-                                            <div class="eap_list">
-                                                <h:outputText value=" #{projetoProfessorBean.EAP}" escape="false"/>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-body row">
+                                        <ui:repeat var="indicador" value="#{item.indicadores}" varStatus="statusInd">
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                                <div class="row form-group">
+                                                    <label class="col-xs-6 text-right">#{indicador.nome}:</label>
+                                                    <div class="col-xs-6">
+                                                        <p:rating value="#{projetoProfessorBean.getAvaliacao(item, indicador).valor}" stars="5">
+                                                            <!--                                            <p:ajax event="rate" listener="{ratingView.onrate}" update="messages" />
+                                                                                                        <p:ajax event="cancel" listener="{ratingView.oncancel}" update="messages" />-->
+                                                        </p:rating>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </h:panelGroup>
-
-                                        <h:panelGroup rendered="#{item.etapa == 'Cronograma'}">
-                                            Cronograma
-                                        </h:panelGroup>
-                                    </h:panelGroup>
+                                        </ui:repeat>
+                                    </div>
                                 </div>
                             </div>
                         </ui:repeat>

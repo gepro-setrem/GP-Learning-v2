@@ -310,14 +310,14 @@ function printRecursiveEAP(eap) {
         if (eap.pai)
             html.find('[name="eap.pai.id"]').val(eap.pai.id);
         html.find('.nome').html(eap.nome);
-        if (eap.tarefas) {
-            $(eap.tarefas).each(function (index, item) {
-                printRecursiveTarefa(item);
-            });
-        }
         if (eap.eaps) {
             $(eap.eaps).each(function (index, item) {
                 printRecursiveEAP(item);
+            });
+        }
+        if (eap.tarefas) {
+            $(eap.tarefas).each(function (index, item) {
+                printRecursiveTarefa(item);
             });
         }
     }

@@ -1,17 +1,24 @@
 package br.org.gdt.beans;
 
+import br.org.gdt.bll.AvaliacaoBLL;
 import br.org.gdt.bll.EtapaBLL;
 import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.bll.ProjetoBLL;
 import br.org.gdt.bll.TermoAberturaBLL;
 import br.org.gdt.bll.TurmaBLL;
 import br.org.gdt.enumerated.EtapaProjeto;
+import br.org.gdt.model.Avaliacao;
 import br.org.gdt.model.Etapa;
 import br.org.gdt.model.Pessoa;
 import br.org.gdt.model.Projeto;
 import br.org.gdt.model.TermoAbertura;
 import br.org.gdt.model.Turma;
 import br.org.gdt.model.EAP;
+import br.org.gdt.model.Indicador;
+import br.org.gdt.model.Recurso;
+import br.org.gdt.model.Tarefa;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -21,8 +28,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.servlet.http.HttpServletRequest;
-import org.primefaces.model.DefaultTreeNode;
-import org.primefaces.model.TreeNode;
 
 @ManagedBean
 @SessionScoped
@@ -51,10 +56,19 @@ public class ProjetoProfessorBean {
     private TermoAberturaBLL termoAberturaBLL;
     private TermoAbertura termoabertura = new TermoAbertura();
 
+    @ManagedProperty("#{avaliacaoBLL}")
+    private AvaliacaoBLL avaliacaoBLL;
+
+    private String htmlEAP;
+    private String htmlCronograma;
+
     public ProjetoProfessorBean() {
     }
 
     public String avaliar() {
+        etapas = null;
+        htmlEAP = null;
+        htmlCronograma = null;
         projeto = (Projeto) projetos.getRowData();
         projeto = projetoBLL.findProjetoCompleto(projeto.getId());
         termoabertura = termoAberturaBLL.findByProjetoCompleto(projeto);
@@ -149,9 +163,14 @@ public class ProjetoProfessorBean {
     }
 
     public List<Etapa> getEtapas() {
-        if (projeto != null && projeto.getTurma() != null && projeto.getTurma().getId() > 0) {
-            Turma turma = turmaBLL.findById(projeto.getTurma().getId());
-            etapas = etapaBLL.findbyTurma(turma);
+        if (etapas == null) {
+            if (projeto != null && projeto.getTurma() != null && projeto.getTurma().getId() > 0) {
+                etapas = etapaBLL.findbyTurma(projeto.getTurma());
+                for (Etapa etapa : etapas) {
+                    List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyEtapa(etapa);
+                    etapa.setAvaliacoes(lsAvaliacao);
+                }
+            }
         }
         return etapas;
     }
@@ -176,26 +195,18 @@ public class ProjetoProfessorBean {
         this.termoabertura = termoabertura;
     }
 
-    public String getEAP() {
-        if (projeto != null && projeto.getEaps() != null && projeto.getEaps().size() > 0) {
-            EAP eap = projeto.getEaps().get(0);
-            String html = getNode(eap, "1", 1);
-            html = "<ul class=\"eap_pai\">" + html + "</ul>";
-            return html;
-        }
-        return null;
-    }
-
-    private String getNode(EAP eap, String number, int vez) {
+    private String getEAPNode(EAP eap, String number, int vez) {
         String html = "";
         if (eap != null) {
-            String label = number + " - " + eap.getNome();
-            html += "<li class=\"eap_item " + (vez == 2 ? "eap_column" : "") + "\"><div class=\"eap\"><div class=\"eap_nome\">" + label + "</div></div><ul class=\"eap_pai\">";
+            html += "<li class=\"eap_item " + (vez == 2 ? "eap_column" : "") + "\"><div class=\"eap\">";
+            html += "<div class=\"eap_header\"><a class=\"btn btn-xs eapIcon eap_number\">" + number + "</a></div>";
+            html += "<div class=\"eap_nome\">" + eap.getNome() + "</div>";
+            html += "</div><ul class=\"eap_pai\">";
             vez++;
             if (eap.getEaps() != null) {
                 int i = 1;
                 for (EAP child : eap.getEaps()) {
-                    html += getNode(child, number + "." + i, vez);
+                    html += getEAPNode(child, number + "." + i, vez);
                     i++;
                 }
             }
@@ -204,4 +215,104 @@ public class ProjetoProfessorBean {
         return html;
     }
 
+    public String getHtmlEAP() {
+        if (htmlEAP == null || htmlEAP.isEmpty()) {
+            if (projeto != null && projeto.getEaps() != null && projeto.getEaps().size() > 0) {
+                EAP eap = projeto.getEaps().get(0);
+                String html = getEAPNode(eap, "1", 1);
+                html = "<ul class=\"eap_pai\">" + html + "</ul>";
+                htmlEAP = html;
+            }
+        }
+        return htmlEAP;
+    }
+
+    public String getHtmlCronograma() {
+        if (htmlCronograma == null || htmlCronograma.isEmpty()) {
+            if (projeto != null && projeto.getEaps() != null && projeto.getEaps().size() > 0) {
+                EAP eap = projeto.getEaps().get(0);
+                String html = getTarefaNode(eap, null, "1", "");
+                htmlCronograma = html;
+            }
+        }
+        return htmlCronograma;
+    }
+
+    private String FormatDate(Date date) {
+        String d = "";
+        if (date != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            d = sdf.format(date);
+        }
+        return d;
+    }
+
+    private String getTarefaNode(EAP eap, Tarefa tarefa, String number, String html) {
+        String marco = "<i class=\"fa-check\"></i>";
+        if (eap != null) {
+            html += "<tr class=\"tarefa eap\"><td class=\"marco\"></td>";
+            html += "<td><span class=\"indice\">" + number + "</span><span class=\"nome\">" + eap.getNome() + "</span></td>";
+            html += "<td class=\"inicio text-center\">" + FormatDate(eap.getInicio()) + "</td>";
+            html += "<td class=\"termino text-center\">" + FormatDate(eap.getTermino()) + "</td>";
+            html += "<td class=\"recursos\"></td>";
+            html += "</tr>";
+            if (eap.getEaps() != null) {
+                int i = 1;
+                for (EAP ea : eap.getEaps()) {
+                    html = getTarefaNode(ea, null, number + "." + i, html);
+                    i++;
+                }
+            }
+            if (eap.getTarefas() != null) {
+                int i = 1;
+                for (Tarefa tar : eap.getTarefas()) {
+                    html = getTarefaNode(null, tar, number + "." + i, html);
+                    i++;
+                }
+            }
+        }
+        if (tarefa != null) {
+            html += "<tr class=\"tarefa\"><td class=\"marco\">" + (tarefa.getMarco() ? marco : "") + "</td>";
+            html += "<td><span class=\"indice\">" + number + "</span><span class=\"nome\">" + tarefa.getNome() + "</span></td>";
+            html += "<td class=\"inicio text-center\">" + FormatDate(tarefa.getInicio()) + "</td>";
+            html += "<td class=\"termino text-center\">" + FormatDate(tarefa.getTermino()) + "</td>";
+            String recursos = "";
+            if (tarefa.getRecursos() != null) {
+                for (Recurso rec : tarefa.getRecursos()) {
+                    recursos += rec.getNome() + ", ";
+                }
+            }
+            html += "<td class=\"recursos\">" + recursos + "</td>";
+            html += "</tr>";
+            if (tarefa.getTarefas() != null) {
+                int i = 1;
+                for (Tarefa tar : tarefa.getTarefas()) {
+                    html = getTarefaNode(null, tar, number + "." + i, html);
+                    i++;
+                }
+            }
+        }
+        return html;
+    }
+
+    public AvaliacaoBLL getAvaliacaoBLL() {
+        return avaliacaoBLL;
+    }
+
+    public void setAvaliacaoBLL(AvaliacaoBLL avaliacaoBLL) {
+        this.avaliacaoBLL = avaliacaoBLL;
+    }
+
+    public Avaliacao getAvaliacao(Etapa etapa, Indicador indicador) {
+        Avaliacao ava = new Avaliacao();
+        if (etapa != null && indicador != null && etapa.getAvaliacoes() != null) {
+            for (Avaliacao avalia : etapa.getAvaliacoes()) {
+                if (avalia.getIndicador() != null && avalia.getIndicador().getId() == indicador.getId()) {
+                    ava = avalia;
+                    break;
+                }
+            }
+        }
+        return ava;
+    }
 }
