@@ -111,6 +111,8 @@ public class ComentarioActivity extends AppCompatActivity {
                     new SalvaComentario().execute(COM);
                 }
                 coment.setText("");
+                Pessoa remetente = new Pessoa(MetodosPublicos.SelecionaSessaoId(this), MetodosPublicos.SelecionaSessaoNome(this));
+                COM.setRemetente(remetente);
                 lsComentario.add(COM);
                 comentarioAdapter.notifyItemInserted(lsComentario.size() - 1);
                 recyclerView.smoothScrollToPosition(lsComentario.size() - 1);
@@ -163,6 +165,7 @@ public class ComentarioActivity extends AppCompatActivity {
             ComentarioDAO comentarioDAO = new ComentarioDAO();
             try {
                 if (MetodosPublicos.IsConnected(ComentarioActivity.this)) { //se estiver conectado na internet envia
+                    comentarios[0].setRemetente(null);
                     int id = comentarioDAO.SalvarComentario(comentarios[0]);
                     if (id > 0) {
                         comentarios[0].setId(id);

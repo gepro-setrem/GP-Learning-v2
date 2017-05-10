@@ -6,5 +6,6 @@ public enum Fragments {
     nivelAcesso,
     projetos,
     comentarios,
+    perfil,
 
 }

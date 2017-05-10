@@ -4,15 +4,21 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.gplearning.gplearning.Enums.RecursosEnum;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,6 +37,8 @@ public class MetodosPublicos {
     private static String key_modoAcesso = "user_modo_acesso";
     private static String key_acessoAluno = "user_acesso_aluno";
     private static String key_acessoProfessor = "user_acesso_professor";
+
+    private static String key_imagemUser = "imagem_user_";
 
     private static String key_sync = "sync";
     private static String key_sync_comentario = "last_sync_comentario";
@@ -52,7 +60,7 @@ public class MetodosPublicos {
 
         editor.putString(key_nome, nome);
         editor.putString(key_email, email);
-       // editor.putString(key_image, imageBytes.toString());
+        // editor.putString(key_image, imageBytes.toString());
 
         if (idExterno > 0)
             editor.putInt(key_idExterno, idExterno);
@@ -87,6 +95,57 @@ public class MetodosPublicos {
         int user_idExterno = shared.getInt(key_idExterno, 0);
         return user_idExterno;
     }
+
+    public static void SaveImageUser(Context context, Long id, byte[] imagem) {
+        String nomeImagem = key_imagemUser + id + ".jpg";
+        saveArrayToSDCard(context, nomeImagem, imagem);
+    }
+
+    public static void CarregaimagemPerfil(Context context, ImageView imageView, Long idPessoa) {
+        File path = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File file = new File(path, key_imagemUser + idPessoa + ".jpg");
+        if (file != null) {
+            //     return file.getAbsolutePath();
+            Picasso.with(context).load(file).into(imageView);
+        }
+    }
+
+    public static String SelecionaCaminhoImagem(Context context, Long idPessoa) {
+        //  return Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + key_imagemUser + idPessoa + ".jpg";
+        // File file = new File
+        File path = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        // File file = new File(path, key_imagemUser + idPessoa + ".jpg");
+//        File sdCard = Environment.getExternalStorageDirectory();
+//        File directory = new File(sdCard.getAbsolutePath());
+
+        File file = new File(path, key_imagemUser + idPessoa + ".jpg");
+        if (file != null)
+            return file.getAbsolutePath();
+
+        return "notFound";
+    }
+
+    private static void saveArrayToSDCard(Context context, String fileName, byte[] imagem) {
+        File path = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File file = new File(path, fileName);
+        try {
+            OutputStream os = new FileOutputStream(file);
+            os.write(imagem);
+            os.close();
+        } catch (IOException e) {
+            Log.w("ExternalStorage", "Error writing", e);
+        }
+        Log("IMAGE", " salvou a imagem em:" + file.getAbsolutePath());
+    }
+
+    private static boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
 
 //    public static byte[] SelecionaSessaoImagemBytes(Context context) {
 //        try {

@@ -1,8 +1,6 @@
 package com.gplearning.gplearning.Controllers;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -154,15 +152,14 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-
         if (item.getItemId() == R.id.nav_project) {
-            // Handle the camera action
             changefragment(Fragments.projetos.toString());
         } else if (item.getItemId() == R.id.nav_comments) {
             changefragment(Fragments.comentarios.toString());
         } else if (item.getItemId() == R.id.nav_area) {
             changefragment(Fragments.nivelAcesso.toString());
+        } else if (item.getItemId() == R.id.nav_profile) {
+            changefragment(Fragments.perfil.toString());
         }
 
         return true;
@@ -180,6 +177,10 @@ public class MainActivity extends AppCompatActivity
             //  fragment = new ProjetoFragment();
         } else if (fragments == Fragments.nivelAcesso.toString()) {
             Intent intent = new Intent(this, NivelAcessoActivity.class);
+            startActivity(intent);
+        } else if (fragments == Fragments.perfil.toString()) {
+            Intent intent = new Intent(this, PerfilActivity.class);
+            intent.putExtra("ID", MetodosPublicos.SelecionaSessaoId(this));
             startActivity(intent);
         }
 //        else { //if (fragments == Fragments.nivelAcesso) {
@@ -296,11 +297,16 @@ public class MainActivity extends AppCompatActivity
         PessoaDao pessoaDao = daoSession.getPessoaDao();
         Pessoa pessoa = pessoaDao.load(MetodosPublicos.SelecionaSessaoId(this));
         if (pessoa != null) {
-            byte[] image = pessoa.getImagem();
-            if (image != null && image.length > 0) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-                ((ImageView) hView.findViewById(R.id.headerImage)).setImageBitmap(bitmap);
-            }
+            MetodosPublicos.CarregaimagemPerfil(this, ((ImageView) hView.findViewById(R.id.headerImage)), pessoa.get_id());
+            String path = MetodosPublicos.SelecionaCaminhoImagem(this, pessoa.get_id());
+            MetodosPublicos.Log("Img", "caminho Imagem:" + path);
+//            BitmapFactory.Options options = new BitmapFactory.Options();
+//            options.inSampleSize = 8;
+//            final Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+//            ((ImageView) hView.findViewById(R.id.headerImage)).setImageBitmap(bitmap);
+            // Picasso.with(this).setLoggingEnabled(true);
+            // ((ImageView) hView.findViewById(R.id.headerImage)).setVisibility(View.VISIBLE);
+            //  Picasso.with(this).load(new File(path)).into(((ImageView) hView.findViewById(R.id.headerImage)));
         }
     }
 

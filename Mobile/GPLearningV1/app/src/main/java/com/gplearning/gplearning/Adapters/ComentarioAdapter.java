@@ -11,7 +11,9 @@ import android.widget.TextView;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,9 +52,11 @@ public class ComentarioAdapter extends RecyclerView.Adapter {
         holder.texto.setText(comentario.getDescricao());
         holder.data.setText(dateFormat.format(comentario.getCriacao()));
         MetodosPublicos.Log("Event", " idRemetente:" + comentario.getIdRemetente() + " remetente null:" + (comentario.getRemetente() == null));
-       // Pessoa user =
+        // Pessoa user =
         if (comentario.getRemetente() != null) {
             holder.usuario.setText(comentario.getRemetente().getNome());
+            String path = MetodosPublicos.SelecionaCaminhoImagem(context, comentario.getRemetente().get_id());
+            Picasso.with(context).load(new File(path)).into(holder.imagem);
 //            byte[] image = comentario.getRemetente().getImagem();
 //            if (image != null && image.length > 0) {
 //                Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);

@@ -287,6 +287,11 @@ public class LoginActivity extends AppCompatActivity {
             Pessoa pessoa = userDAO.Login(session, email, password);
             if (pessoa != null) {
                 MetodosPublicos.SalvaSessao(LoginActivity.this, pessoa.get_id(), pessoa.getNome(), email, pessoa.getId());
+                if (pessoa.getImagem() != null && pessoa.getImagem().length > 0) {
+                    MetodosPublicos.SaveImageUser(LoginActivity.this, pessoa.get_id(), pessoa.getImagem());
+                }
+
+
                 //sincroniza APP
                 Sincronizacao.SincronizaApp(LoginActivity.this, PapelUsuario.user);
                 List<LoginRole> lsLoginRoles = pessoa.getLogin() != null ? pessoa.getLogin().getLoginRoles() : null;

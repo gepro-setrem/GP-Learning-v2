@@ -31,6 +31,7 @@ public class Pessoa {
     private StatusPessoa status;
     private int karma;
 
+    @Transient
     private byte[] imagem;
 
     private long idTurma;
@@ -64,6 +65,11 @@ public class Pessoa {
         this._id = _id;
     }
 
+    public Pessoa(Long _id, String nome) {
+        this._id = _id;
+        this.nome = nome;
+    }
+
     @Keep
     public Pessoa(Long _id, int id, String nome, String email, String telefone, StatusPessoa status, int karma, long idTurma, Date criacao) {
         this._id = _id;
@@ -76,22 +82,6 @@ public class Pessoa {
         this.idTurma = idTurma;
         this.criacao = criacao;
     }
-
-    @Generated(hash = 195737676)
-    public Pessoa(Long _id, int id, String nome, String email, String telefone, StatusPessoa status, int karma, byte[] imagem, long idTurma,
-            Date criacao) {
-        this._id = _id;
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.telefone = telefone;
-        this.status = status;
-        this.karma = karma;
-        this.imagem = imagem;
-        this.idTurma = idTurma;
-        this.criacao = criacao;
-    }
-
 
 
     public Long get_id() {

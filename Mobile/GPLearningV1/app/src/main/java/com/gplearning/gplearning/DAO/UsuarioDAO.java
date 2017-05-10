@@ -1,6 +1,10 @@
 package com.gplearning.gplearning.DAO;
 
 
+import android.os.Environment;
+import android.util.Log;
+
+import com.gplearning.gplearning.Controllers.MainActivity;
 import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.Models.Pessoa;
 import com.gplearning.gplearning.Models.PessoaDao;
@@ -10,6 +14,10 @@ import com.gplearning.gplearning.Utils.MetodosPublicos;
 
 import org.springframework.web.client.RestTemplate;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +41,9 @@ public class UsuarioDAO extends DefaultDAO {
                 long idTurma = daoTurma.insert(turma);
                 user.setIdTurma(idTurma);
             }
+
             dao.insert(user);
+
             return user;
         }
         return null;
@@ -47,6 +57,13 @@ public class UsuarioDAO extends DefaultDAO {
         // String url = UrlDefau;
         return lsUsuario;
     }
+
+
+
+
+
+
+
 
 
 }
