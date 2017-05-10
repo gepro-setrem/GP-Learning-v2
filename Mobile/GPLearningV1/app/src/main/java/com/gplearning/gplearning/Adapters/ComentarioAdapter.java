@@ -5,11 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.R;
+import com.gplearning.gplearning.Utils.MetodosPublicos;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +49,16 @@ public class ComentarioAdapter extends RecyclerView.Adapter {
         Comentario comentario = lsComentario.get(position);
         holder.texto.setText(comentario.getDescricao());
         holder.data.setText(dateFormat.format(comentario.getCriacao()));
+        MetodosPublicos.Log("Event", " idRemetente:" + comentario.getIdRemetente() + " remetente null:" + (comentario.getRemetente() == null));
+       // Pessoa user =
+        if (comentario.getRemetente() != null) {
+            holder.usuario.setText(comentario.getRemetente().getNome());
+//            byte[] image = comentario.getRemetente().getImagem();
+//            if (image != null && image.length > 0) {
+//                Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+//                holder.imagem.setImageBitmap(bitmap);
+//            }
+        }
     }
 
     @Override
@@ -65,12 +76,14 @@ public class ComentarioAdapter extends RecyclerView.Adapter {
         final TextView texto;
         final TextView usuario;
         final TextView data;
+        final ImageView imagem;
 
         public ViewHolderAdapter(View view) {
             super(view);
             texto = (TextView) view.findViewById(R.id.itemListviewComentTexto);
             usuario = (TextView) view.findViewById(R.id.itemListviewComentNome);
             data = (TextView) view.findViewById(R.id.itemListviewComentData);
+            imagem = (ImageView) view.findViewById(R.id.itemListviewComentImagem);
         }
 
     }

@@ -3,7 +3,6 @@ package com.gplearning.gplearning.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -13,8 +12,10 @@ import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
 import java.util.List;
+import org.greenrobot.greendao.DaoException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+
 @Entity(nameInDb = "termoAbertura")
 public class TermoAbertura {
 
@@ -33,16 +34,16 @@ public class TermoAbertura {
 
 
     @ToMany(referencedJoinProperty = "idTermoAbertura")
-    private List<Restricoes> lsRestricoes;
+    private List<Restricoes> restricoes;
 
     @ToMany(referencedJoinProperty = "idTermoAbertura")
-    private List<Premissas> lsPremissas;
+    private List<Premissas> premissas;
 
     @ToMany(referencedJoinProperty = "idTermoAbertura")
-    private List<Marco> lsMarco;
+    private List<Marco> marcos;
 
     @ToMany(referencedJoinProperty = "idTermoAbertura")
-    private List<RequisitoTermoAbertura> lsRequisitoTermoAbertura;
+    private List<RequisitoTermoAbertura> requisitosTermoAberturas;
 
 
     /**
@@ -141,75 +142,67 @@ public class TermoAbertura {
     }
 
     @Keep
-    public List<Restricoes> getLsRestricoes() {
-        return lsRestricoes;
+    public List<Restricoes> getRestricoes() {
+        return restricoes;
     }
 
     @Keep
-    public void setLsRestricoes(List<Restricoes> lsRestricoes) {
-        this.lsRestricoes = lsRestricoes;
+    public void setRestricoes(List<Restricoes> restricoes) {
+        this.restricoes = restricoes;
     }
 
     @Keep
-    public List<Premissas> getLsPremissas() {
-        return lsPremissas;
+    public List<Premissas> getPremissas() {
+        return premissas;
     }
 
     @Keep
-    public void setLsPremissas(List<Premissas> lsPremissas) {
-        this.lsPremissas = lsPremissas;
+    public void setPremissas(List<Premissas> premissas) {
+        this.premissas = premissas;
     }
 
     @Keep
-    public List<Marco> getLsMarco() {
-        return lsMarco;
+    public List<Marco> getMarcos() {
+        return marcos;
     }
 
     @Keep
-    public void setLsMarco(List<Marco> lsMarco) {
-        this.lsMarco = lsMarco;
+    public void setMarcos(List<Marco> marcos) {
+        this.marcos = marcos;
     }
 
     @Keep
-    public List<RequisitoTermoAbertura> getLsRequisitoTermoAbertura() {
-        return lsRequisitoTermoAbertura;
+    public List<RequisitoTermoAbertura> getRequisitosTermoAberturas() {
+        return requisitosTermoAberturas;
     }
 
     @Keep
-    public void setLsRequisitoTermoAbertura(List<RequisitoTermoAbertura> lsRequisitoTermoAbertura) {
-        this.lsRequisitoTermoAbertura = lsRequisitoTermoAbertura;
+    public void setRequisitosTermoAberturas(List<RequisitoTermoAbertura> requisitosTermoAberturas) {
+        this.requisitosTermoAberturas = requisitosTermoAberturas;
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
-    @Generated(hash = 831465351)
-    public synchronized void resetLsRestricoes() {
-        lsRestricoes = null;
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 1570931294)
+    public synchronized void resetRestricoes() {
+        restricoes = null;
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
-    @Generated(hash = 718023656)
-    public synchronized void resetLsPremissas() {
-        lsPremissas = null;
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 1685454026)
+    public synchronized void resetPremissas() {
+        premissas = null;
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
-    @Generated(hash = 479589052)
-    public synchronized void resetLsMarco() {
-        lsMarco = null;
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 1063508733)
+    public synchronized void resetMarcos() {
+        marcos = null;
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
-    @Generated(hash = 1369674208)
-    public synchronized void resetLsRequisitoTermoAbertura() {
-        lsRequisitoTermoAbertura = null;
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 2036797600)
+    public synchronized void resetRequisitosTermoAberturas() {
+        requisitosTermoAberturas = null;
     }
 
     /**

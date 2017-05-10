@@ -276,35 +276,36 @@ public class LoginActivity extends AppCompatActivity {
         protected Pessoa doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            try {
-                // Simulate network access.
-                // Thread.sleep(2000);
-                DaoSession session = ((App) LoginActivity.this.getApplication()).getDaoSession();
+            //   try {
 
-                userDAO = new UsuarioDAO();
+            // Simulate network access.
+            // Thread.sleep(2000);
+            DaoSession session = ((App) LoginActivity.this.getApplication()).getDaoSession();
 
-                Pessoa pessoa = userDAO.Login(session, email, password);
-                if (pessoa != null) {
-                    MetodosPublicos.SalvaSessao(LoginActivity.this, pessoa.get_id(), pessoa.getNome(), email, pessoa.getId());
-                    //sincroniza APP
-                    Sincronizacao.SincronizaApp(LoginActivity.this, PapelUsuario.user);
-                    List<LoginRole> lsLoginRoles = pessoa.getLogin() != null ? pessoa.getLogin().getLoginRoles() : null;
-                    if (lsLoginRoles != null) {
-                        for (LoginRole lg : lsLoginRoles) {
-                            if (lg.getRole() == PapelUsuario.admin) {
-                                admim = true;
-                                Sincronizacao.SincronizaApp(LoginActivity.this, PapelUsuario.admin);
-                                break;
-                            }
+            userDAO = new UsuarioDAO();
+
+            Pessoa pessoa = userDAO.Login(session, email, password);
+            if (pessoa != null) {
+                MetodosPublicos.SalvaSessao(LoginActivity.this, pessoa.get_id(), pessoa.getNome(), email, pessoa.getId());
+                //sincroniza APP
+                Sincronizacao.SincronizaApp(LoginActivity.this, PapelUsuario.user);
+                List<LoginRole> lsLoginRoles = pessoa.getLogin() != null ? pessoa.getLogin().getLoginRoles() : null;
+                if (lsLoginRoles != null) {
+                    for (LoginRole lg : lsLoginRoles) {
+                        if (lg.getRole() == PapelUsuario.admin) {
+                            admim = true;
+                            Sincronizacao.SincronizaApp(LoginActivity.this, PapelUsuario.admin);
+                            break;
                         }
                     }
                 }
-                // Log.i("gpl LG", "ID:" + idExterno);
-                return pessoa;
-            } catch (Exception e) {
-                MetodosPublicos.Log("", e.toString());
-                return null;
             }
+            // Log.i("gpl LG", "ID:" + idExterno);
+            return pessoa;
+//            } catch (Exception e) {
+//                MetodosPublicos.Log("", e.toString());
+//                return null;
+//            }
 
 
             // TODO: register the new account here.

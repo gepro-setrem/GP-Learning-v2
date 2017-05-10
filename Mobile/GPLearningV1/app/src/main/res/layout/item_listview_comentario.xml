@@ -4,45 +4,57 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
     android:maxHeight="100dp"
-    android:minHeight="20dp"
-    android:orientation="vertical">
+    android:minHeight="50dp"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/itemListviewComentImagem"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/user_default" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/itemListviewComentNome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Nome do usuário"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/itemListviewComentData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="14:30"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!--<View-->
+        <!--android:id="@+id/itemListviewView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:background="@android:color/darker_gray"-->
+        <!--android:visibility="visible" />-->
 
         <TextView
-            android:id="@+id/itemListviewComentNome"
-            android:layout_width="wrap_content"
+            android:id="@+id/itemListviewComentTexto"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:text="Nome do usuário"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:visibility="visible" />
-
-        <TextView
-            android:id="@+id/itemListviewComentData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="14:30"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:text="" />
     </LinearLayout>
-
-    <View
-        android:id="@+id/itemListviewView"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@android:color/darker_gray"
-        android:visibility="visible" />
-
-    <TextView
-        android:id="@+id/itemListviewComentTexto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="" />
 </LinearLayout>

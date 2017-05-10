@@ -74,7 +74,6 @@ public class ProjetoFragment extends Fragment {
 //                fragment fragment = etapasfragment.newinstance(item.get_id());
 //                fragmentmanager manager = getactivity().getsupportfragmentmanager();
 //                manager.begintransaction().replace(r.id.content_frame, fragment).commit();
-//
 //            }
 //        };
 

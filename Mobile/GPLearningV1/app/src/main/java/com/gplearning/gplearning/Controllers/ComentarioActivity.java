@@ -19,6 +19,8 @@ import com.gplearning.gplearning.Enums.RecursosEnum;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.Pessoa;
+import com.gplearning.gplearning.Models.PessoaDao;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 
@@ -43,13 +45,13 @@ public class ComentarioActivity extends AppCompatActivity {
         dao = daoSession.getComentarioDao();
         recyclerView = (RecyclerView) findViewById(R.id.comentarioListView);
 
-        lsComentario = dao.queryBuilder().orderAsc(ComentarioDao.Properties.Criacao).list();
-        comentarioAdapter = new ComentarioAdapter(lsComentario, this); // new ArrayAdapter<Comentario>(this, android.R.layout.simple_list_item_1, lsComentario);
-        recyclerView.setAdapter(comentarioAdapter);
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         ((LinearLayoutManager) layoutManager).setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
+
+        //  lsComentario = dao.queryBuilder().orderAsc(ComentarioDao.Properties.Criacao).list();
+        comentarioAdapter = new ComentarioAdapter(lsComentario, this); // new ArrayAdapter<Comentario>(this, android.R.layout.simple_list_item_1, lsComentario);
+        recyclerView.setAdapter(comentarioAdapter);
 
         recyclerView.addOnItemTouchListener(new MetodosPublicos.RecyclerItemClickListener(this, recyclerView, new MetodosPublicos.RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -63,6 +65,18 @@ public class ComentarioActivity extends AppCompatActivity {
                 PopupDeletaComentario(position);
             }
         }));
+
+        PessoaDao pessoaDao = daoSession.getPessoaDao();
+
+        lsComentario.addAll(dao.queryBuilder().orderAsc(ComentarioDao.Properties.Criacao).list());
+        for (Comentario comentario : lsComentario) {
+            Pessoa pessoa = pessoaDao.load(comentario.getIdRemetente());
+            if (pessoa != null) {
+                comentario.setRemetente(pessoa);
+            }
+        }
+        comentarioAdapter.notifyDataSetChanged();
+        comentarioAdapter.notifyItemInserted(0);
     }
 
     @Override
@@ -211,7 +225,6 @@ public class ComentarioActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             //  List<Comentario> lsComentariosDeletados= dao.
-
             MetodosPublicos.SalvaUltimaSincronizacao(ComentarioActivity.this, RecursosEnum.Comentario, new Date());
             return null;
         }

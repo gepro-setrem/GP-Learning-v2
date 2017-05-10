@@ -17,6 +17,8 @@ import com.gplearning.gplearning.Models.PessoaDao;
 import com.gplearning.gplearning.Models.Premissas;
 import com.gplearning.gplearning.Models.PremissasDao;
 import com.gplearning.gplearning.Models.Projeto;
+import com.gplearning.gplearning.Models.ProjetoComponentes;
+import com.gplearning.gplearning.Models.ProjetoComponentesDao;
 import com.gplearning.gplearning.Models.ProjetoDao;
 import com.gplearning.gplearning.Models.Requisito;
 import com.gplearning.gplearning.Models.RequisitoDao;
@@ -51,6 +53,7 @@ public class Sincronizacao {
         RestricoesDao daoRestricoes = daoSession.getRestricoesDao();
         RequisitoDao daoRequisito = daoSession.getRequisitoDao();
         StakeholderDao daoStakeholder = daoSession.getStakeholderDao();
+        ProjetoComponentesDao componentesDao = daoSession.getProjetoComponentesDao();
 
         List<Projeto> lsProjetos;  // =  projetoDAO.Sel
         int id = MetodosPublicos.SelecionaSessaoidExterno(context);
@@ -76,9 +79,6 @@ public class Sincronizacao {
                             } else {
                                 PRJ.setIdGerente(gerente.get_id());
                             }
-                            //  daoProjeto.update(projeto);
-                            //  MetodosPublicos.Log("Event", "Depois ID GERENTE:" + projeto.getIdGerente());
-                            // Projeto PRJ2 = daoProjeto.load(PRJ.get_id());
                         }
 
                         if (pCompleto.getTurma() != null && pCompleto.getTurma().getId() > 0) {
@@ -91,45 +91,46 @@ public class Sincronizacao {
                             }
                         }
 
-                        if (pCompleto.getTermoAbertura() != null && pCompleto.getTermoAbertura().getId() > 0) {
-                            TermoAbertura termoAbertura = daoTermoAbertura.queryBuilder().where(TermoAberturaDao.Properties.Id.eq(pCompleto.getTermoAbertura().getId())).unique();
+                        if (pCompleto.getTermoabertura() != null && pCompleto.getTermoabertura().getId() > 0) {
+                            TermoAbertura termoAbertura = daoTermoAbertura.queryBuilder().where(TermoAberturaDao.Properties.Id.eq(pCompleto.getTermoabertura().getId())).unique();
                             if (termoAbertura == null) {
-                                long idTermoAbertura = daoTermoAbertura.insert(termoAbertura);
-                                projeto.setIdTermoAbertura(idTermoAbertura);
+                                long idTermoAbertura = daoTermoAbertura.insert(pCompleto.getTermoabertura());
+                                PRJ.setIdTermoAbertura(idTermoAbertura);
+                                termoAbertura = pCompleto.getTermoabertura();
 
-                                if (termoAbertura.getLsMarco() != null) {
-                                    for (Marco marco : termoAbertura.getLsMarco()) {
+                                if (termoAbertura.getMarcos() != null) {
+                                    for (Marco marco : termoAbertura.getMarcos()) {
                                         if (daoMarco.queryBuilder().where(MarcoDao.Properties.Id.eq(marco.getId())).count() == 0) {
                                             daoMarco.insert(marco);
                                         }
                                     }
                                 }
 
-                                if (termoAbertura.getLsPremissas() != null) {
-                                    for (Premissas premissas : termoAbertura.getLsPremissas()) {
+                                if (termoAbertura.getPremissas() != null) {
+                                    for (Premissas premissas : termoAbertura.getPremissas()) {
                                         if (daoPremissas.queryBuilder().where(PremissasDao.Properties.Id.eq(premissas.getId())).count() == 0) {
                                             daoPremissas.insert(premissas);
                                         }
                                     }
                                 }
 
-                                if (termoAbertura.getLsRequisitoTermoAbertura() != null) {
-                                    for (RequisitoTermoAbertura RTA : termoAbertura.getLsRequisitoTermoAbertura()) {
+                                if (termoAbertura.getRequisitosTermoAberturas() != null) {
+                                    for (RequisitoTermoAbertura RTA : termoAbertura.getRequisitosTermoAberturas()) {
                                         if (daoRTA.queryBuilder().where(RequisitoTermoAberturaDao.Properties.Id.eq(RTA.getId())).count() == 0) {
                                             daoRTA.insert(RTA);
                                         }
                                     }
                                 }
 
-                                if (termoAbertura.getLsRestricoes() != null) {
-                                    for (Restricoes restricoes : termoAbertura.getLsRestricoes()) {
+                                if (termoAbertura.getRestricoes() != null) {
+                                    for (Restricoes restricoes : termoAbertura.getRestricoes()) {
                                         if (daoRestricoes.queryBuilder().where(RestricoesDao.Properties.Id.eq(restricoes.getId())).count() == 0) {
                                             daoRestricoes.insert(restricoes);
                                         }
                                     }
                                 }
                             } else {
-                                projeto.setIdTermoAbertura(termoAbertura.get_id());
+                                PRJ.setIdTermoAbertura(termoAbertura.get_id());
                             }
                         }
 
@@ -148,6 +149,23 @@ public class Sincronizacao {
                                 }
                             }
                         }
+
+                        if (pCompleto.getComponentes() != null) {
+                            for (Pessoa pessoa : pCompleto.getComponentes()) {
+                                Long idPessoa;
+                                Pessoa pesBD = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(pessoa.getId())).unique();
+                                if (pesBD == null) {
+                                    idPessoa = daoPessoa.insert(pessoa);
+                                } else {
+                                    idPessoa = pesBD.get_id();
+                                }
+                                if (componentesDao.queryBuilder().where(ProjetoComponentesDao.Properties.IdPessoa.eq(idPessoa), ProjetoComponentesDao.Properties.IdProjeto.eq(PRJ.get_id())).count() == 0) {
+                                    ProjetoComponentes pc = new ProjetoComponentes(PRJ.get_id(), idPessoa);
+                                    componentesDao.insert(pc);
+                                }
+                            }
+                        }
+
                         daoProjeto.update(PRJ);
                     }
 

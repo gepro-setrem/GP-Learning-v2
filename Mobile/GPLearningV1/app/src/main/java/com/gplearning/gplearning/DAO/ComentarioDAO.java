@@ -15,7 +15,7 @@ import java.util.List;
 public class ComentarioDAO extends DefaultDAO {
 
 
-    public List<Comentario> SelecionaComentarioPorAtividade(Etapa etapa) {
+    public List<Comentario> SelecionaComentarioPorEtapa(Etapa etapa) {
         String url = UrlDefault + "/comentario/index/" + etapa.getId();
 
         RestTemplate restTemplate = getResTemplateDefault();

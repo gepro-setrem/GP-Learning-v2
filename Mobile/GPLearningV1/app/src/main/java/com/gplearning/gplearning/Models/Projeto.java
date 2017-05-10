@@ -7,10 +7,12 @@ import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.JoinEntity;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.OrderBy;
 import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.ToOne;
+import org.greenrobot.greendao.annotation.Transient;
 
 import java.util.Date;
 import java.util.List;
@@ -46,7 +48,7 @@ public class Projeto {
 
     private Long idTermoAbertura;
     @ToOne(joinProperty = "idTermoAbertura")
-    private TermoAbertura termoAbertura;
+    private TermoAbertura termoabertura;
 
     @ToMany(referencedJoinProperty = "idProjeto")
     @OrderBy("_id ASC")
@@ -59,6 +61,13 @@ public class Projeto {
     @ToMany(referencedJoinProperty = "idProjeto")
     @OrderBy("_id ASC")
     private List<Eap> eaps;
+
+    @Transient
+    private List<Pessoa> componentes;
+
+    @ToMany
+    @JoinEntity(entity = ProjetoComponentes.class, sourceProperty = "idProjeto", targetProperty = "idPessoa")
+    private List<ProjetoComponentes> ProjetoCompenentes;
 
     /**
      * Used to resolve relations
@@ -78,8 +87,8 @@ public class Projeto {
     @Generated(hash = 1191549063)
     private transient Long turma__resolvedKey;
 
-    @Generated(hash = 1091460758)
-    private transient Long termoAbertura__resolvedKey;
+    @Generated(hash = 1127175732)
+    private transient Long termoabertura__resolvedKey;
 
     public Projeto() {
     }
@@ -211,14 +220,30 @@ public class Projeto {
         this.idTermoAbertura = idTermoAbertura;
     }
 
-    @Keep
-    public TermoAbertura getTermoAbertura() {
-        return termoAbertura;
+    public String getPlanoEscopo() {
+        return this.planoEscopo;
+    }
+
+    public void setPlanoEscopo(String planoEscopo) {
+        this.planoEscopo = planoEscopo;
+    }
+
+    public String getPlanoProjeto() {
+        return this.planoProjeto;
+    }
+
+    public void setPlanoProjeto(String planoProjeto) {
+        this.planoProjeto = planoProjeto;
     }
 
     @Keep
-    public void setTermoAbertura(TermoAbertura termoAbertura) {
-        this.termoAbertura = termoAbertura;
+    public TermoAbertura getTermoabertura() {
+        return termoabertura;
+    }
+
+    @Keep
+    public void setTermoabertura(TermoAbertura termoabertura) {
+        this.termoabertura = termoabertura;
     }
 
     @Keep
@@ -271,6 +296,26 @@ public class Projeto {
         this.eaps = eaps;
     }
 
+    @Keep
+    public List<Pessoa> getComponentes() {
+        return componentes;
+    }
+
+    @Keep
+    public void setComponentes(List<Pessoa> componentes) {
+        this.componentes = componentes;
+    }
+
+    @Keep
+    public List<ProjetoComponentes> getProjetoCompenentes() {
+        return ProjetoCompenentes;
+    }
+
+    @Keep
+    public void setProjetoCompenentes(List<ProjetoComponentes> projetoCompenentes) {
+        ProjetoCompenentes = projetoCompenentes;
+    }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.
@@ -307,21 +352,6 @@ public class Projeto {
         myDao.update(this);
     }
 
-    public String getPlanoEscopo() {
-        return this.planoEscopo;
-    }
-
-    public void setPlanoEscopo(String planoEscopo) {
-        this.planoEscopo = planoEscopo;
-    }
-
-    public String getPlanoProjeto() {
-        return this.planoProjeto;
-    }
-
-    public void setPlanoProjeto(String planoProjeto) {
-        this.planoProjeto = planoProjeto;
-    }
 
     /**
      * Resets a to-many relationship, making the next get call to query for a fresh result.
@@ -339,10 +369,20 @@ public class Projeto {
         requisitos = null;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 667306427)
     public synchronized void resetEaps() {
         eaps = null;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 1297224567)
+    public synchronized void resetProjetoCompenentes() {
+        ProjetoCompenentes = null;
     }
 
     /** called by internal mechanisms, do not call yourself. */

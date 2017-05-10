@@ -141,16 +141,16 @@ public class EtapaActivity extends AppCompatActivity {
                 TermoAbertura termoAbertura = termoAberturaDao.queryBuilder().where(TermoAberturaDao.Properties.IdProjeto.eq(idProjeto)).unique();
 
                 if (atv.getEtapa() == EtapaProjeto.Premissas) {
-                    ArrayAdapter<Premissas> adapter = new ArrayAdapter<Premissas>(this, android.R.layout.simple_list_item_1, termoAbertura.getLsPremissas());
+                    ArrayAdapter<Premissas> adapter = new ArrayAdapter<Premissas>(this, android.R.layout.simple_list_item_1, termoAbertura.getPremissas());
                     listview.setAdapter(adapter);
                 } else if (atv.getEtapa() == EtapaProjeto.RequisitosTermoAbertura) {
-                    ArrayAdapter<RequisitoTermoAbertura> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, termoAbertura.getLsRequisitoTermoAbertura());
+                    ArrayAdapter<RequisitoTermoAbertura> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, termoAbertura.getRequisitosTermoAberturas());
                     listview.setAdapter(adapter);
                 } else if (atv.getEtapa() == EtapaProjeto.Marcos) {
-                    ArrayAdapter<Marco> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, termoAbertura.getLsMarco());
+                    ArrayAdapter<Marco> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, termoAbertura.getMarcos());
                     listview.setAdapter(adapter);
                 } else if (atv.getEtapa() == EtapaProjeto.Restricoes) {
-                    ArrayAdapter<Restricoes> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, termoAbertura.getLsRestricoes());
+                    ArrayAdapter<Restricoes> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, termoAbertura.getRestricoes());
                     listview.setAdapter(adapter);
                 }
             }
