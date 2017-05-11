@@ -32,12 +32,12 @@ public class ComentarioBLL extends BLL<Comentario> {
                         com.getRemetente().setLogin(null);
                         com.getRemetente().setProjetos(null);
                         com.getRemetente().setTurmasprofessor(null);
-                        com.getRemetente().setProjetosgerente(null); 
+                        com.getRemetente().setProjetosgerente(null);
                         com.getRemetente().setIndicadoresprofessor(null);
                     }
-                    if(com.getEtapa()!=null){
+                    if (com.getEtapa() != null) {
                         com.getEtapa().setTurma(null);
-                        com.getEtapa().setComentarios(null);   
+                        com.getEtapa().setComentarios(null);
                         com.getEtapa().setAtividadeParametros(null);
                     }
                 }
@@ -45,14 +45,13 @@ public class ComentarioBLL extends BLL<Comentario> {
         }
         return lsComentario;
     }
-    
-    public List<Comentario> findbyDate(Date date){
+
+    public List<Comentario> findbyDate(Date date) {
         List<Comentario> lsComentarios = new ArrayList<>();
-        if(date!=null){
-          return dao.findbyDate(date);
+        if (date != null) {
+            return dao.findbyDate(date);
         }
         return lsComentarios;
     }
-            
-    
+
 }

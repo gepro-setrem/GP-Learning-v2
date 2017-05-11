@@ -9,6 +9,7 @@
     <ui:define name="head"> 
         <h:outputStylesheet name="./css/eap_css.css"/>
         <h:outputStylesheet name="./css/cronograma_css.css"/>
+        <h:outputStylesheet name="./css/comentario_css.css"/>
     </ui:define>
     <ui:define name="content">
         <h:form>
@@ -146,19 +147,63 @@
                                 </div>
                                 <div class="panel panel-default">
                                     <div class="panel-body row">
-                                        <ui:repeat var="indicador" value="#{item.indicadores}" varStatus="statusInd">
+                                        <ui:repeat var="indicador" value="#{item.indicadores}">
                                             <div class="col-md-4 col-sm-6 col-xs-12">
                                                 <div class="row form-group">
                                                     <label class="col-xs-6 text-right">#{indicador.nome}:</label>
                                                     <div class="col-xs-6">
-                                                        <p:rating value="#{projetoProfessorBean.getAvaliacao(item, indicador).valor}" stars="5">
-                                                            <!--                                            <p:ajax event="rate" listener="{ratingView.onrate}" update="messages" />
-                                                                                                        <p:ajax event="cancel" listener="{ratingView.oncancel}" update="messages" />-->
+                                                        <c:set var="avaliacao" value="#{projetoProfessorBean.getAvaliacao(item, indicador)}"/>
+                                                        <p:rating value="#{avaliacao.valor}" stars="5">
+                                                            <p:ajax event="rate" listener="#{projetoProfessorBean.onrate(avaliacao)}" />
+                                                            <p:ajax event="cancel" listener="#{projetoProfessorBean.oncancel(avaliacao)}"/>
                                                         </p:rating>
                                                     </div>
                                                 </div>
                                             </div>
                                         </ui:repeat>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="comments_panel">
+                                            <div class="new_comment">
+                                                <div class="comment_creator">
+                                                    <h:graphicImage rendered="#{homeBean.usuario.imagem == null}" library="img/" name="usuario.png" class="avatar_image"/>
+                                                    <p:graphicImage rendered="#{homeBean.usuario.imagem != null}" value="#{homeBean.imagem}" class="avatar_image" cache="false"/>
+                                                </div>
+                                                <div class="comment_frame">
+                                                    <div class="comment_box">
+                                                        <textarea id="MES_TMESSAGE" placeholder="Escreva seu comentário aqui!" style="height: 88px;" class=""></textarea>
+                                                        <div class="comment_box_options">
+                                                            <a class="btn btn-success btn-sm"><i class="fa-reply fa-rotate-180"></i> Enviar</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel_comments">
+                                                <div class="all_comments">
+                                                    <ui:repeat var="comentario" value="#{item.comentarios}">
+                                                        <div class="comment" data-idmsg="25" style="opacity: 1;">
+                                                            <div class="comment_creator">
+                                                                <h:graphicImage library="img/" name="usuario.png" class="avatar_image"/>
+                                                                <!--<h:graphicImage rendered="{comentario.remetente.imagem == null}" library="img/" name="usuario.png" class="avatar_image"/>
+                                                                    <p:graphicImage rendered="{comentario.remetente.imagem != null}" value="{projetoProfessorBean.getImagem(comentario.remetente.imagem)}" class="avatar_image" cache="false"/>-->
+                                                            </div>
+                                                            <div class="comment_desc">
+                                                                <a class="avatar_name">#{comentario.remetente.nome}</a>
+                                                                <span class="comment_time">Agora</span>
+                                                                <a class="btn btn-danger btn-xs comment_delete" title="" data-toggle="tooltip" data-original-title="Excluir Comentário"><i class="fa fa-trash"></i></a>
+                                                                <div class="comment_container">
+                                                                    <div class="action_comment">
+                                                                        <div class="comment_message">#{comentario.descricao}</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ui:repeat>     
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

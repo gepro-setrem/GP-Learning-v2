@@ -75,9 +75,8 @@ public class HomeBean {
 
     public StreamedContent getImagem() throws IOException {
         getUsuario();
-        InputStream is = null;
         if (usuario.getImagem() != null) {
-            is = new ByteArrayInputStream(usuario.getImagem());
+            InputStream is = new ByteArrayInputStream(usuario.getImagem());
             imagem = new DefaultStreamedContent(is, "", "" + usuario.getId());
         }
         return imagem;

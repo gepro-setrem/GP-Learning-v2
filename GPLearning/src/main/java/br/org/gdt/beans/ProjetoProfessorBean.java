@@ -1,6 +1,7 @@
 package br.org.gdt.beans;
 
 import br.org.gdt.bll.AvaliacaoBLL;
+import br.org.gdt.bll.ComentarioBLL;
 import br.org.gdt.bll.EtapaBLL;
 import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.bll.ProjetoBLL;
@@ -8,6 +9,7 @@ import br.org.gdt.bll.TermoAberturaBLL;
 import br.org.gdt.bll.TurmaBLL;
 import br.org.gdt.enumerated.EtapaProjeto;
 import br.org.gdt.model.Avaliacao;
+import br.org.gdt.model.Comentario;
 import br.org.gdt.model.Etapa;
 import br.org.gdt.model.Pessoa;
 import br.org.gdt.model.Projeto;
@@ -17,6 +19,9 @@ import br.org.gdt.model.EAP;
 import br.org.gdt.model.Indicador;
 import br.org.gdt.model.Recurso;
 import br.org.gdt.model.Tarefa;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +33,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.servlet.http.HttpServletRequest;
+import org.primefaces.event.RateEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 @ManagedBean
 @SessionScoped
@@ -58,6 +66,9 @@ public class ProjetoProfessorBean {
 
     @ManagedProperty("#{avaliacaoBLL}")
     private AvaliacaoBLL avaliacaoBLL;
+
+    @ManagedProperty("#{comentarioBLL}")
+    private ComentarioBLL comentarioBLL;
 
     private String htmlEAP;
     private String htmlCronograma;
@@ -169,6 +180,8 @@ public class ProjetoProfessorBean {
                 for (Etapa etapa : etapas) {
                     List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyEtapa(etapa);
                     etapa.setAvaliacoes(lsAvaliacao);
+                    List<Comentario> lsComentario = comentarioBLL.findbyEtapa(etapa);
+                    etapa.setComentarios(lsComentario);
                 }
             }
         }
@@ -305,6 +318,10 @@ public class ProjetoProfessorBean {
 
     public Avaliacao getAvaliacao(Etapa etapa, Indicador indicador) {
         Avaliacao ava = new Avaliacao();
+        ava.setEtapa(etapa);
+        ava.setIndicador(indicador);
+        ava.setProjeto(projeto);
+        ava.setValor(0);
         if (etapa != null && indicador != null && etapa.getAvaliacoes() != null) {
             for (Avaliacao avalia : etapa.getAvaliacoes()) {
                 if (avalia.getIndicador() != null && avalia.getIndicador().getId() == indicador.getId()) {
@@ -313,6 +330,46 @@ public class ProjetoProfessorBean {
                 }
             }
         }
+        if (ava.getId() == 0 && etapa != null) {
+            List<Avaliacao> lsAvaliacao = etapa.getAvaliacoes();
+            lsAvaliacao.add(ava);
+            etapa.setAvaliacoes(lsAvaliacao);
+        }
         return ava;
+    }
+
+    public void onrate(Avaliacao avaliacao) {
+        if (avaliacao != null && avaliacao.getEtapa() != null) {
+            avaliacao.setProjeto(projeto);
+            if (avaliacao.getId() > 0) {
+                avaliacaoBLL.update(avaliacao);
+            } else {
+                avaliacao.setCriacao(new Date());
+                avaliacaoBLL.insert(avaliacao);
+            }
+        }
+    }
+
+    public void oncancel(Avaliacao avaliacao) {
+        if (avaliacao != null && avaliacao.getId() > 0) {
+            avaliacaoBLL.delete(avaliacao.getId());
+        }
+    }
+
+    public ComentarioBLL getComentarioBLL() {
+        return comentarioBLL;
+    }
+
+    public void setComentarioBLL(ComentarioBLL comentarioBLL) {
+        this.comentarioBLL = comentarioBLL;
+    }
+
+    public StreamedContent getImagem(byte[] imagem) throws IOException {
+        StreamedContent img = null;
+        if (imagem != null && imagem.length > 0) {
+            InputStream is = new ByteArrayInputStream(imagem);
+            img = new DefaultStreamedContent(is, "", "" + imagem.length);
+        }
+        return img;
     }
 }

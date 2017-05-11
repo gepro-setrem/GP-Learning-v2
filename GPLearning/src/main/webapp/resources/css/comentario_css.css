@@ -1,0 +1,104 @@
+.comment, .new_comment {
+    border-bottom: 1px solid #e2e4e6;
+    margin-left: 38px;
+    min-height: 30px;
+    padding: 10px 0;
+    position: relative;
+}
+
+.comment:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.comment_creator {
+    height: 30px;
+    width: 30px;
+    left: -38px;
+    position: absolute;
+    top: 13px;
+    border-radius: 3px;
+    color: #4d4d4d;
+    display: block;
+    float: left;
+    margin: 0 4px 4px 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.comment_creator .avatar_image {
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
+}
+
+.comment .comment_delete {
+    float: right;
+    cursor: pointer;
+}
+
+.comment .comment_time {
+    color: #8c8c8c;
+    font-size: 12px;
+}
+
+.comment .comment_desc .avatar_name {
+    word-wrap: break-word;
+    color: #4d4d4d;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.comment .comment_desc .action_comment {
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0px 1px 4px 0.5px rgba(0,0,0,.23);
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    clear: both;
+    margin: 6px 0 0 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: inline-block;
+}
+
+.comment .comment_desc .action_comment .comment_message {
+    padding: 9px 11px;
+    word-wrap: break-word;
+}
+
+.comment_box {
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.23);
+    /*margin: 4px 4px 9pt 0;*/
+    border: 1px solid #ddd;
+    position: relative;
+}
+
+#MES_TMESSAGE {
+    background-color: #fff;
+    margin: 0;
+    min-height: 75px;
+    padding: 9px 11px 39px;
+    width: 100%;
+    resize: none;
+    outline: none;
+    overflow: hidden;
+    word-wrap: break-word;
+    height: 75px;
+    border: 0;
+    border-radius: 3px;
+}
+
+.comment_box_options {
+    /*text-align: right;*/
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+}
+
+.comments_panel #no_records_found {
+    margin: 5px 40px;
+}
