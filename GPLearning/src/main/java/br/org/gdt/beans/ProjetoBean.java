@@ -108,6 +108,7 @@ public class ProjetoBean {
                 projeto.setEstado("Iniciação");
                 projetoBLL.insert(projeto);
             }
+            projetos = null;
             return "projetolst";
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para salvar, é necessário que todos os campos sejam preenchidos!"));
@@ -172,6 +173,9 @@ public class ProjetoBean {
     }
 
     public Projeto getProjeto() {
+        if (projeto != null && projeto.getId() > 0) {
+            projeto = projetoBLL.findById(projeto.getId());
+        }
         return projeto;
     }
 
@@ -217,7 +221,7 @@ public class ProjetoBean {
 
     public String getDescricao(String chave) {
         //getUsuario();
-        Turma turma = usuario.getTurma();
+        Turma turma = projeto.getTurma();
         TurmaParametro tp = turmaParametroBLL.getParametro(turma, chave);
         if (tp != null) {
             return tp.getValor();

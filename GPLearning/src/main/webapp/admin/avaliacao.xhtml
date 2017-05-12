@@ -145,31 +145,33 @@
                                         </h:panelGroup>
                                     </div>
                                 </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-body row">
-                                        <ui:repeat var="indicador" value="#{item.indicadores}">
-                                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                                <div class="row form-group">
-                                                    <label class="col-xs-6 text-right">#{indicador.nome}:</label>
-                                                    <div class="col-xs-6">
-                                                        <c:set var="avaliacao" value="#{projetoProfessorBean.getAvaliacao(item, indicador)}"/>
-                                                        <p:rating value="#{avaliacao.valor}" stars="5">
-                                                            <p:ajax event="rate" listener="#{projetoProfessorBean.onrate(avaliacao)}" />
-                                                            <p:ajax event="cancel" listener="#{projetoProfessorBean.oncancel(avaliacao)}"/>
-                                                        </p:rating>
+                                <h:panelGroup rendered="#{item.indicadores != null and item.indicadores.size() > 0}">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body row">
+                                            <ui:repeat var="indicador" value="#{item.indicadores}">
+                                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                                    <div class="row form-group">
+                                                        <label class="col-xs-6 text-right">#{indicador.nome}:</label>
+                                                        <div class="col-xs-6">
+                                                            <c:set var="avaliacao" value="#{projetoProfessorBean.getAvaliacao(item, indicador)}"/>
+                                                            <p:rating value="#{avaliacao.valor}" stars="10">
+                                                                <p:ajax event="rate" listener="#{projetoProfessorBean.onrate(avaliacao)}" />
+                                                                <p:ajax event="cancel" listener="#{projetoProfessorBean.oncancel(avaliacao)}"/>
+                                                            </p:rating>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </ui:repeat>
+                                            </ui:repeat>
+                                        </div>
                                     </div>
-                                </div>
+                                </h:panelGroup>
                                 <div class="panel panel-default">
                                     <div class="panel-body">
                                         <div class="comments_panel">
                                             <div class="new_comment">
                                                 <div class="comment_creator">
-                                                    <h:graphicImage rendered="#{homeBean.usuario.imagem == null}" library="img/" name="usuario.png" class="avatar_image"/>
-                                                    <p:graphicImage rendered="#{homeBean.usuario.imagem != null}" value="#{homeBean.imagem}" class="avatar_image" cache="false"/>
+                                                    <h:graphicImage rendered="#{perfilBean.usuario.imagem == null}" library="img/" name="usuario.png" class="avatar_image"/>
+                                                    <p:graphicImage rendered="#{perfilBean.usuario.imagem != null}" value="#{perfilBean.imagem}" class="avatar_image" cache="false"/>
                                                 </div>
                                                 <div class="comment_frame">
                                                     <div class="comment_box">

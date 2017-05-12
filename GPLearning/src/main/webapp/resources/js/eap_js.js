@@ -1,5 +1,7 @@
 $(function () {
     loadEAP();
+    ApplyDateTime('#eapModal [name=inicio]');
+    ApplyDateTime('#eapModal [name=termino]');
 
     $('#eapModal').on('hidden.bs.modal', function (e) {
         $('body').removeClass('modal-open');
@@ -24,6 +26,16 @@ $(document).on('click', '.eapEdit', function () {
         $('#eapModal .deletaEAP').hide();
     else
         $('#eapModal .deletaEAP').show();
+//    var inicio = moment(eap.find('[name=inicio]').val(), "YYYY-MM-DD").format('DD/MM/YYYY');
+//    if (inicio == 'Invalid date')
+//        inicio = '';
+//    $('#eapModal [name=inicio]').val(inicio);
+//
+//    var inicio = moment(eap.find('[name=termino]').val(), "YYYY-MM-DD").format('DD/MM/YYYY');
+//    if (inicio == 'Invalid date')
+//        inicio = '';
+//    $('#eapModal [name=termino]').val(inicio);
+
     $('#eapModal').modal('show');
 });
 
@@ -42,9 +54,11 @@ $(document).on('click', '#eapModal .salvaEAP', function () {
     obj.termino = $('#eapModal [name="termino"]').val();
     obj.valor = parseFloat($('#eapModal [name="valor"]').val()) || 0;
     if ($.trim(obj.inicio) != '')
-        obj.inicio += 'T00:00:00.000-03:00';
+        obj.inicio = moment(obj.inicio, 'DD/MM/YYYY HH:mm:ss').format('YYYY-MM-DDTHH:mm:ssZZ');
+    //obj.inicio += 'T00:00:00.000-03:00';
     if ($.trim(obj.termino) != '')
-        obj.termino += 'T00:00:00.000-03:00';
+        obj.termino = moment(obj.termino, 'DD/MM/YYYY HH:mm:ss').format('YYYY-MM-DDTHH:mm:ssZZ');
+    //  obj.termino += 'T00:00:00.000-03:00';
     var isValid = $.trim(obj.nome) != '';
     if (!isValid)
         alert("O nome é obrigatório!")
@@ -186,8 +200,16 @@ function printRecursiveEAP(eap) {
         html.find('[name="ordem"]').val(eap.ordem);
         html.find('[name="nome"]').val(eap.nome);
         html.find('[name="descricao"]').val(eap.descricao);
+        if (eap.inicio) {
+            eap.inicio = moment(eap.inicio, 'YYYY-MM-DDTHH:mm').format('DD/MM/YYYY HH:mm');
+        }
         html.find('[name="inicio"]').val(eap.inicio);
+
+        if (eap.termino) {
+            eap.termino = moment(eap.termino, 'YYYY-MM-DDTHH:mm').format('DD/MM/YYYY HH:mm');
+        }
         html.find('[name="termino"]').val(eap.termino);
+
         html.find('[name="valor"]').val(eap.valor);
         html.find('.eap_nome').html(eap.nome);
 
@@ -201,3 +223,17 @@ function printRecursiveEAP(eap) {
 //function number() {
 //    return Math.floor((1 + Math.random()) * 0x10000);
 //}
+
+function ApplyDateTime(selectors) {//$(".Date")
+    //$(selectors).mask("99/99/9999");//, { placeholder: "__/__/____" });
+    $(selectors).datetimepicker({
+        icons: Icons,
+        tooltips: Tooltips,
+        format: 'DD/MM/YYYY HH:mm',
+        useCurrent: false,
+        locale: 'pt-br', //moment.locale('pt-br'),
+        toolbarPlacement: 'bottom',
+        showTodayButton: true,
+        showClear: true,
+    }).on("dp.change", function (e) {});
+}

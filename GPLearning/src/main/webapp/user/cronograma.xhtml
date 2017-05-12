@@ -6,10 +6,13 @@
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="head"> 
         <h:outputStylesheet name="./css/cronograma_css.css"/>
+        <h:outputStylesheet name="./css/bootstrap-datetimepicker.min.css"/>
         <h:outputScript name="./js/jquery-3.2.0.min.js"/>
         <h:outputScript name="./js/bootstrap.min.js"/>
         <h:outputScript name="./js/cronograma_js.js"/>
         <h:outputStylesheet name="./css/check_css.css"/>
+        <h:outputScript name="./js/moment.js"/>
+        <h:outputScript name="./js/bootstrap-datetimepicker.min.js"/>
     </ui:define>
     <ui:define name="menuhorizontal">
         <li><h:link outcome="iniciacao">Iniciação</h:link></li>
@@ -33,8 +36,8 @@
                                     <tr>
                                         <th>Marco</th>
                                         <th>Tarefa</th>
-                                        <th class="text-center" style="width: 100px;">Início</th>
-                                        <th class="text-center" style="width: 100px;">Término</th>
+                                        <th class="text-center" style="width: 140px;">Início</th>
+                                        <th class="text-center" style="width: 140px;">Término</th>
                                         <th>Recursos</th>
                                     </tr>
                                 </thead>
@@ -107,11 +110,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Início:</label>
-                                <input class="form-control" type="date" name="inicio"/>
+                                <input class="form-control" type="text" name="inicio"/>
                             </div>
                             <div class="form-group">
                                 <label>Término:</label>
-                                <input class="form-control" type="date" name="termino"/>
+                                <input class="form-control" type="text" name="termino"/>
                             </div>
 
                             <div class="form-group">

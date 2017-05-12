@@ -1,5 +1,8 @@
 $(function () {
     loadTarefa();
+    ApplyDateTime('#tarefaModal [name=inicio]');
+    ApplyDateTime('#tarefaModal [name=termino]');
+
     $('#tarefaModal').on('hidden.bs.modal', function (e) {
         $('body').removeClass('modal-open');
         ReloadNumbers();
@@ -70,12 +73,22 @@ $(document).on('click', '#tarefaModal .salvaTarefa', function () {
     obj.conclusao = $('#tarefaModal [name="conclusao"]').val();
     obj.inicio = $('#tarefaModal [name="inicio"]').val();
     obj.termino = $('#tarefaModal [name="termino"]').val();
+//    if ($.trim(obj.conclusao) != '')
+//        obj.conclusao += 'T00:00:00.000-03:00';
+//    if ($.trim(obj.inicio) != '')
+//        obj.inicio += 'T00:00:00.000-03:00';
+//    if ($.trim(obj.termino) != '')
+//        obj.termino += 'T00:00:00.000-03:00';
+
     if ($.trim(obj.conclusao) != '')
-        obj.conclusao += 'T00:00:00.000-03:00';
+        obj.conclusao = moment(obj.conclusao, 'DD/MM/YYYY HH:mm:ss').format('YYYY-MM-DDTHH:mm:ssZZ');
+
     if ($.trim(obj.inicio) != '')
-        obj.inicio += 'T00:00:00.000-03:00';
+        obj.inicio = moment(obj.inicio, 'DD/MM/YYYY HH:mm:ss').format('YYYY-MM-DDTHH:mm:ssZZ');
+
     if ($.trim(obj.termino) != '')
-        obj.termino += 'T00:00:00.000-03:00';
+        obj.termino = moment(obj.termino, 'DD/MM/YYYY HH:mm:ss').format('YYYY-MM-DDTHH:mm:ssZZ');
+
     obj.recursos = [];
     $('#tarefaModal [name="recurso"]').each(function (index, item) {
         var recurso = $.trim($(item).val());
@@ -126,8 +139,8 @@ $(document).on('click', '#tarefaModal .salvaTarefa', function () {
                     });
                     tarefa.find('.recursos').html(recursos.slice(0, -2));
                     tarefa.find('.nome').html(obj.nome);
-                    tarefa.find('.inicio').html(ToDate(obj.inicio));
-                    tarefa.find('.termino').html(ToDate(obj.termino));
+                    tarefa.find('.inicio').html($('#tarefaModal [name=inicio]').val());
+                    tarefa.find('.termino').html($('#tarefaModal [name=termino]').val());
                     ReloadNumbers();
                     $('#tarefaModal').modal('hide');
                 }
@@ -273,13 +286,26 @@ function printRecursiveTarefa(tarefa) {
             html.find('[name="eap.id"]').val(tarefa.eap.id);
         html.find('[name="id"]').val(tarefa.id);
         html.find('[name="nome"]').val(tarefa.nome);
+
+        if (tarefa.inicio) {
+            tarefa.inicio = moment(tarefa.inicio, 'YYYY-MM-DDTHH:mm').format('DD/MM/YYYY HH:mm');
+        }
         html.find('[name="inicio"]').val(tarefa.inicio);
+
+        if (tarefa.termino) {
+            tarefa.termino = moment(tarefa.termino, 'YYYY-MM-DDTHH:mm').format('DD/MM/YYYY HH:mm');
+        }
         html.find('[name="termino"]').val(tarefa.termino);
+
+        if (tarefa.conclusao) {
+            tarefa.conclusao = moment(tarefa.conclusao, 'YYYY-MM-DDTHH:mm').format('DD/MM/YYYY HH:mm');
+        }
         html.find('[name="conclusao"]').val(tarefa.conclusao);
+
         html.find('[name="marco"]').val(tarefa.marco);
         html.find('.marco [type=checkbox]').prop('checked', tarefa.marco);
-        html.find('.inicio').html(ToDate(tarefa.inicio));
-        html.find('.termino').html(ToDate(tarefa.termino));
+        html.find('.inicio').html(tarefa.inicio);
+        html.find('.termino').html(tarefa.termino);
         var recursos = '';
         if (tarefa.recursos) {
             $(tarefa.recursos).each(function (index, item) {
@@ -303,8 +329,14 @@ function printRecursiveEAP(eap) {
         $('.tarefas tbody').append(html);
         html.find('.marco').html('');
         html.addClass('eap');
-        html.find('.inicio').html(ToDate(eap.inicio));
-        html.find('.termino').html(ToDate(eap.termino));
+        if (eap.inicio) {
+            eap.inicio = moment(eap.inicio, 'YYYY-MM-DDTHH:mm').format('DD/MM/YYYY HH:mm');
+        }
+        if (eap.termino) {
+            eap.termino = moment(eap.termino, 'YYYY-MM-DDTHH:mm').format('DD/MM/YYYY HH:mm');
+        }
+        html.find('.inicio').html(eap.inicio);
+        html.find('.termino').html(eap.termino);
         html.find('.tarefaEdit').remove();
         html.find('[name="eap.id"]').val(eap.id);
         if (eap.pai)
@@ -323,20 +355,35 @@ function printRecursiveEAP(eap) {
     }
 }
 
-function ToDate(date) {
-    date = date || '';
-    if (date.indexOf('T') < 0)
-        date += 'T00:00';
-    var d = new Date(date);
-    if (d != 'Invalid Date') {
-        var dia = d.getDate();
-        if (dia < 10)
-            dia = '0' + dia;
-        var mes = d.getMonth() + 1;
-        if (mes < 10)
-            mes = '0' + mes;
-        var ano = d.getFullYear();
-        return dia + '/' + mes + '/' + ano;
-    }
-    return "";
+//function ToDate(date) {
+//    date = date || '';
+//    if (date.indexOf('T') < 0)
+//        date += 'T00:00';
+//    var d = new Date(date);
+//    if (d != 'Invalid Date') {
+//        var dia = d.getDate();
+//        if (dia < 10)
+//            dia = '0' + dia;
+//        var mes = d.getMonth() + 1;
+//        if (mes < 10)
+//            mes = '0' + mes;
+//        var ano = d.getFullYear();
+//        return dia + '/' + mes + '/' + ano;
+//    }
+//    return "";
+//}
+
+
+function ApplyDateTime(selectors) {//$(".Date")
+    //$(selectors).mask("99/99/9999");//, { placeholder: "__/__/____" });
+    $(selectors).datetimepicker({
+        icons: Icons,
+        tooltips: Tooltips,
+        format: 'DD/MM/YYYY HH:mm',
+        useCurrent: false,
+        locale: 'pt-br', //moment.locale('pt-br'),
+        toolbarPlacement: 'bottom',
+        showTodayButton: true,
+        showClear: true,
+    }).on("dp.change", function (e) {});
 }

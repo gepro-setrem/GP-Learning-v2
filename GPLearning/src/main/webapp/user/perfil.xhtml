@@ -15,29 +15,29 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-2 col-md-3 col-sm-4 col-xs-5">
-                            <h:graphicImage rendered="#{homeBean.usuario.imagem == null}" library="img/" name="usuario.png" style="width: 100%; height: 100%;"/>
-                            <p:graphicImage rendered="#{homeBean.usuario.imagem != null}" value="#{homeBean.imagem}" style="width: 100%; height: 100%" cache="false"/>
+                            <h:graphicImage rendered="#{perfilBean.usuario.imagem == null}" library="img/" name="usuario.png" style="width: 100%; height: 100%;"/>
+                            <p:graphicImage rendered="#{perfilBean.usuario.imagem != null}" value="#{perfilBean.imagem}" style="width: 100%; height: 100%" cache="false"/>
                         </div>
                         <div class="col-lg-10 col-md-9 col-sm-8 col-xs-7">
                             <div class="row">
                                 <label class="col-sm-6 col-xs-4 text-right">Nome:</label>
-                                <div class="col-sm-6 col-xs-8">#{perfilBean.user.nome}</div>
+                                <div class="col-sm-6 col-xs-8">#{perfilBean.usuario.nome}</div>
                             </div>
                             <div class="row">
                                 <label class="col-sm-6 col-xs-4 text-right">Email:</label>
-                                <div class="col-sm-6 col-xs-8">#{perfilBean.user.email}</div>
+                                <div class="col-sm-6 col-xs-8">#{perfilBean.usuario.email}</div>
                             </div>
                             <div class="row">
                                 <label class="col-sm-6 col-xs-4 text-right">Telefone:</label>
-                                <div class="col-sm-6 col-xs-8">#{perfilBean.user.telefone}</div>
+                                <div class="col-sm-6 col-xs-8">#{perfilBean.usuario.telefone}</div>
                             </div>
                             <div class="row">
                                 <label class="col-sm-6 col-xs-4 text-right">Turma:</label>
-                                <div class="col-sm-6 col-xs-8">#{perfilBean.user.turma}</div>
+                                <div class="col-sm-6 col-xs-8">#{perfilBean.usuario.turma}</div>
                             </div>
                             <div class="row">
                                 <label class="col-sm-6 col-xs-4 text-right">Status:</label>
-                                <div class="col-sm-6 col-xs-8">#{perfilBean.user.status}</div>
+                                <div class="col-sm-6 col-xs-8">#{perfilBean.usuario.status}</div>
                             </div>
                         </div>
                     </div>

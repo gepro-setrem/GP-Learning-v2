@@ -58,8 +58,8 @@ public class IndicadorBean {
 
     public String excluir() throws Exception {
         try {
-            indicador = (Indicador) indicadores.getRowData();
-            indicadorBLL.delete(indicador.getId());
+            Indicador ind = (Indicador) indicadores.getRowData();
+            indicadorBLL.delete(ind.getId());
             indicador = new Indicador();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Indicador excluído com sucesso!"));
         } catch (Exception e) {

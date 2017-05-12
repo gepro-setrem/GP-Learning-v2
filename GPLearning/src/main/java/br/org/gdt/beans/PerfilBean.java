@@ -5,8 +5,10 @@ import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.model.Login;
 import br.org.gdt.model.LoginRole;
 import br.org.gdt.model.Pessoa;
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Level;
@@ -14,14 +16,16 @@ import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class PerfilBean implements Serializable {
 
     private Pessoa usuario = new Pessoa();
@@ -33,6 +37,8 @@ public class PerfilBean implements Serializable {
     @ManagedProperty("#{loginBLL}")
     private LoginBLL loginBLL;
     private Login login = new Login();
+    private boolean hasSession;
+    private StreamedContent imagem;
 
     public PerfilBean() {
     }
@@ -43,15 +49,15 @@ public class PerfilBean implements Serializable {
 
     public String editar() {
         //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para salvar, é necessário preencher todos os campos!"));
-        usuario = getUser();
-        login = usuario.getLogin();
+        user = getUsuario();
+        login = user.getLogin();
         return "perfilfrm";
     }
 
     public String salvar() {
-        getUser();
-        int user_id = user.getId();
-        if (!usuario.getNome().isEmpty() && !usuario.getEmail().isEmpty()) {
+        getUsuario();
+        int user_id = usuario.getId();
+        if (!user.getNome().isEmpty() && !user.getEmail().isEmpty()) {
             byte[] imgDataBa = new byte[(int) userImage.getSize()];
             DataInputStream dataIs;
             try {
@@ -60,21 +66,21 @@ public class PerfilBean implements Serializable {
             } catch (IOException ex) {
                 Logger.getLogger(PerfilBean.class.getName()).log(Level.SEVERE, null, ex);
             }
-            login.setEmail(usuario.getEmail());
+            login.setEmail(user.getEmail());
             Pessoa oldUser = pessoaBLL.findById(user_id);
-            boolean changeEmail = !usuario.getEmail().equals(oldUser.getEmail());
-            usuario.setId(oldUser.getId());
-            usuario.setTurma(oldUser.getTurma());
-            usuario.setStatus(oldUser.getStatus());
-            usuario.setCriacao(oldUser.getCriacao());
+            boolean changeEmail = !user.getEmail().equals(oldUser.getEmail());
+            user.setId(oldUser.getId());
+            user.setTurma(oldUser.getTurma());
+            user.setStatus(oldUser.getStatus());
+            user.setCriacao(oldUser.getCriacao());
             if (imgDataBa != null && imgDataBa.length > 0) {
-                usuario.setImagem(imgDataBa);
+                user.setImagem(imgDataBa);
             } else {
-                usuario.setImagem(oldUser.getImagem());
+                user.setImagem(oldUser.getImagem());
             }
-            usuario.setAlteracao(new Date());
-//            usuario.setLogin(null);
-            pessoaBLL.update(usuario);
+            user.setAlteracao(new Date());
+//            user.setLogin(null);
+            pessoaBLL.update(user);
             if (!login.getSenha().isEmpty() || changeEmail) {
                 Login oldLogin = loginBLL.findbyPessoa(oldUser);
                 if (changeEmail) {
@@ -94,19 +100,12 @@ public class PerfilBean implements Serializable {
                 HttpServletRequest request = (HttpServletRequest) external.getRequest();
                 request.getSession().invalidate();
             }
+            usuario = null;
             return "perfil";
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para salvar, é necessário preencher todos os campos!"));
             return "perfilfrm";
         }
-    }
-
-    public Pessoa getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Pessoa usuario) {
-        this.usuario = usuario;
     }
 
     public PessoaBLL getPessoaBLL() {
@@ -126,11 +125,7 @@ public class PerfilBean implements Serializable {
     }
 
     public Pessoa getUser() {
-        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) external.getRequest();
-        String email = request.getRemoteUser();
-        user = pessoaBLL.findbyEmail(email);
-        return user;
+        return this.user;
     }
 
     public void setUser(Pessoa user) {
@@ -151,6 +146,41 @@ public class PerfilBean implements Serializable {
 
     public void setLoginBLL(LoginBLL loginBLL) {
         this.loginBLL = loginBLL;
+    }
+
+    public Pessoa getUsuario() {
+        if (usuario == null || usuario.getId() == 0) {
+            ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
+            HttpServletRequest request = (HttpServletRequest) external.getRequest();
+            String email = request.getRemoteUser();
+            usuario = pessoaBLL.findbyEmail(email);
+        }
+        return usuario;
+    }
+
+    public void setUsuario(Pessoa usuario) {
+        this.usuario = usuario;
+    }
+
+    public boolean isHasSession() {
+        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) external.getRequest();
+        String email = request.getRemoteUser();
+        hasSession = email != null && !email.isEmpty();
+        return hasSession;
+    }
+
+    public void setHasSession(boolean hasSession) {
+        this.hasSession = hasSession;
+    }
+
+    public StreamedContent getImagem() throws IOException {
+        getUsuario();
+        if (usuario.getImagem() != null) {
+            InputStream is = new ByteArrayInputStream(usuario.getImagem());
+            imagem = new DefaultStreamedContent(is, "", "" + usuario.getId());
+        }
+        return imagem;
     }
 
 }
