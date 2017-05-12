@@ -91,6 +91,11 @@ public class Recursos {
         this.tarefa = tarefa;
     }
 
+    @Override
+    public String toString() {
+        return nome;
+    }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.

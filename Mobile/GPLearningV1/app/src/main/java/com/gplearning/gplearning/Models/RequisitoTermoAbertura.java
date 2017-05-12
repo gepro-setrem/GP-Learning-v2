@@ -100,6 +100,11 @@ public class RequisitoTermoAbertura {
         this.termoAbertura = termoAbertura;
     }
 
+    @Override
+    public String toString() {
+        return nome;
+    }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.

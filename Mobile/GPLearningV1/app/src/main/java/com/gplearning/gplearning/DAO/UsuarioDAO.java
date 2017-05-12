@@ -1,11 +1,9 @@
 package com.gplearning.gplearning.DAO;
 
 
-import android.os.Environment;
-import android.util.Log;
-
-import com.gplearning.gplearning.Controllers.MainActivity;
 import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.Etapa;
+import com.gplearning.gplearning.Models.EtapaDao;
 import com.gplearning.gplearning.Models.Pessoa;
 import com.gplearning.gplearning.Models.PessoaDao;
 import com.gplearning.gplearning.Models.Turma;
@@ -14,10 +12,6 @@ import com.gplearning.gplearning.Utils.MetodosPublicos;
 
 import org.springframework.web.client.RestTemplate;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,15 +29,10 @@ public class UsuarioDAO extends DefaultDAO {
         //  Pessoa user = null;// = response.
         if (user != null && user.getId() > 0) {
             PessoaDao dao = session.getPessoaDao();
-            TurmaDao daoTurma = session.getTurmaDao();
             if (user.getTurma() != null) {
-                Turma turma = user.getTurma();
-                long idTurma = daoTurma.insert(turma);
-                user.setIdTurma(idTurma);
+                user.setIdTurma(SalvaTurmaSqLite(session, user.getTurma()));
             }
-
             dao.insert(user);
-
             return user;
         }
         return null;
@@ -59,11 +48,24 @@ public class UsuarioDAO extends DefaultDAO {
     }
 
 
+    private Long SalvaTurmaSqLite(DaoSession session, Turma turma) {
+        TurmaDao daoTurma = session.getTurmaDao();
+        EtapaDao daoEtapa = session.getEtapaDao();
 
+        if (turma != null) {
+            long idTurma = daoTurma.insert(turma);
+            MetodosPublicos.Log("turma", "salvo turmaid:" + idTurma);
+            if (turma.getEtapas() != null) {
+                for (Etapa etapa : turma.getEtapas()) {
+                    etapa.setIdTurma(idTurma);
+                    daoEtapa.insert(etapa);
+                    MetodosPublicos.Log("turma", "salvo etapa:" + etapa.get_id());
+                }
+            }
+        }
 
-
-
-
+        return turma.get_id();
+    }
 
 
 }

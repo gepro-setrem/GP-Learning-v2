@@ -23,7 +23,7 @@ public class Requisito {
     private String nome;
     private String descricao;
 
-    private int idProjeto;
+    private Long idProjeto;
     @ToOne(joinProperty = "idProjeto")
     private Projeto projeto;
     /**
@@ -36,11 +36,11 @@ public class Requisito {
      */
     @Generated(hash = 1327084183)
     private transient RequisitoDao myDao;
-    @Generated(hash = 415564391)
-    private transient Integer projeto__resolvedKey;
+    @Generated(hash = 1369604525)
+    private transient Long projeto__resolvedKey;
 
     @Keep
-    public Requisito(Long _id, int id, String nome, String descricao, int idProjeto) {
+    public Requisito(Long _id, int id, String nome, String descricao, Long idProjeto) {
         this._id = _id;
         this.id = id;
         this.nome = nome;
@@ -85,11 +85,11 @@ public class Requisito {
         this.descricao = descricao;
     }
 
-    public int getIdProjeto() {
+    public Long getIdProjeto() {
         return idProjeto;
     }
 
-    public void setIdProjeto(int idProjeto) {
+    public void setIdProjeto(Long idProjeto) {
         this.idProjeto = idProjeto;
     }
 
@@ -101,6 +101,11 @@ public class Requisito {
     @Keep
     public void setProjeto(Projeto projeto) {
         this.projeto = projeto;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
     }
 
     /**

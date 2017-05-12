@@ -40,6 +40,7 @@ import java.util.List;
 
 public class Sincronizacao {
 
+
     public static void SincronizaApp(Context context, PapelUsuario papel) {
         ProjetoDAO projetoDAO = new ProjetoDAO();
         DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
@@ -94,6 +95,7 @@ public class Sincronizacao {
                         if (pCompleto.getTermoabertura() != null && pCompleto.getTermoabertura().getId() > 0) {
                             TermoAbertura termoAbertura = daoTermoAbertura.queryBuilder().where(TermoAberturaDao.Properties.Id.eq(pCompleto.getTermoabertura().getId())).unique();
                             if (termoAbertura == null) {
+                                pCompleto.getTermoabertura().setIdProjeto(PRJ.get_id());
                                 long idTermoAbertura = daoTermoAbertura.insert(pCompleto.getTermoabertura());
                                 PRJ.setIdTermoAbertura(idTermoAbertura);
                                 termoAbertura = pCompleto.getTermoabertura();
@@ -101,6 +103,7 @@ public class Sincronizacao {
                                 if (termoAbertura.getMarcos() != null) {
                                     for (Marco marco : termoAbertura.getMarcos()) {
                                         if (daoMarco.queryBuilder().where(MarcoDao.Properties.Id.eq(marco.getId())).count() == 0) {
+                                            marco.setIdTermoAbertura(termoAbertura.get_id());
                                             daoMarco.insert(marco);
                                         }
                                     }
@@ -109,6 +112,7 @@ public class Sincronizacao {
                                 if (termoAbertura.getPremissas() != null) {
                                     for (Premissas premissas : termoAbertura.getPremissas()) {
                                         if (daoPremissas.queryBuilder().where(PremissasDao.Properties.Id.eq(premissas.getId())).count() == 0) {
+                                            premissas.setIdTermoAbertura(termoAbertura.get_id());
                                             daoPremissas.insert(premissas);
                                         }
                                     }
@@ -117,6 +121,7 @@ public class Sincronizacao {
                                 if (termoAbertura.getRequisitosTermoAberturas() != null) {
                                     for (RequisitoTermoAbertura RTA : termoAbertura.getRequisitosTermoAberturas()) {
                                         if (daoRTA.queryBuilder().where(RequisitoTermoAberturaDao.Properties.Id.eq(RTA.getId())).count() == 0) {
+                                            RTA.setIdTermoAbertura(termoAbertura.get_id());
                                             daoRTA.insert(RTA);
                                         }
                                     }
@@ -125,6 +130,7 @@ public class Sincronizacao {
                                 if (termoAbertura.getRestricoes() != null) {
                                     for (Restricoes restricoes : termoAbertura.getRestricoes()) {
                                         if (daoRestricoes.queryBuilder().where(RestricoesDao.Properties.Id.eq(restricoes.getId())).count() == 0) {
+                                            restricoes.setIdTermoAbertura(termoAbertura.get_id());
                                             daoRestricoes.insert(restricoes);
                                         }
                                     }
@@ -137,6 +143,7 @@ public class Sincronizacao {
                         if (pCompleto.getRequisitos() != null) {
                             for (Requisito requisito : pCompleto.getRequisitos()) {
                                 if (daoRequisito.queryBuilder().where(RequisitoDao.Properties.Id.eq(requisito.getId())).count() == 0) {
+                                    requisito.setIdProjeto(PRJ.get_id());
                                     daoRequisito.insert(requisito);
                                 }
                             }
@@ -145,6 +152,7 @@ public class Sincronizacao {
                         if (pCompleto.getStakeholders() != null) {
                             for (Stakeholder stakeholder : pCompleto.getStakeholders()) {
                                 if (daoStakeholder.queryBuilder().where(StakeholderDao.Properties.Id.eq(stakeholder.getId())).count() == 0) {
+                                    stakeholder.setIdProjeto(PRJ.get_id());
                                     daoStakeholder.insert(stakeholder);
                                 }
                             }

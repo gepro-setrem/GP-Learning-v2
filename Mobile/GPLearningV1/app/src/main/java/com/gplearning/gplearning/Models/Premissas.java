@@ -3,12 +3,12 @@ package com.gplearning.gplearning.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.ToOne;
-import org.greenrobot.greendao.DaoException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 
@@ -21,7 +21,7 @@ public class Premissas {
 
     private String descricao;
 
-    private int idTermoAbertura;
+    private Long idTermoAbertura;
     @ToOne(joinProperty = "idTermoAbertura")
     private TermoAbertura termoAbertura;
 
@@ -37,15 +37,15 @@ public class Premissas {
     @Generated(hash = 81685024)
     private transient PremissasDao myDao;
 
-    @Generated(hash = 1154405152)
-    private transient Integer termoAbertura__resolvedKey;
+    @Generated(hash = 1091460758)
+    private transient Long termoAbertura__resolvedKey;
 
 
     public Premissas() {
     }
 
     @Keep
-    public Premissas(Long _id, int id, String descricao, int idTermoAbertura) {
+    public Premissas(Long _id, int id, String descricao, Long idTermoAbertura) {
         this._id = _id;
         this.id = id;
         this.descricao = descricao;
@@ -76,11 +76,11 @@ public class Premissas {
         this.descricao = descricao;
     }
 
-    public int getIdTermoAbertura() {
+    public Long getIdTermoAbertura() {
         return idTermoAbertura;
     }
 
-    public void setIdTermoAbertura(int idTermoAbertura) {
+    public void setIdTermoAbertura(Long idTermoAbertura) {
         this.idTermoAbertura = idTermoAbertura;
     }
 
@@ -92,6 +92,11 @@ public class Premissas {
     @Keep
     public void setTermoAbertura(TermoAbertura termoAbertura) {
         this.termoAbertura = termoAbertura;
+    }
+
+    @Override
+    public String toString() {
+        return descricao;
     }
 
     /**

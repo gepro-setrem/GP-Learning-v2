@@ -2,6 +2,7 @@ package com.gplearning.gplearning.Controllers;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,7 @@ public class ComentarioActivity extends AppCompatActivity {
     private ComentarioDao dao;
     private RecyclerView recyclerView;
     private ComentarioAdapter comentarioAdapter; //ArrayAdapter<Comentario> comentario2Adapter;
+    private Long idEtapa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,14 @@ public class ComentarioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_comentario);
         setTitle(R.string.comments);
         DaoSession daoSession = ((App) getApplication()).getDaoSession();
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            if (intent.getExtras().containsKey(MetodosPublicos.key_idEtapa)) {
+                idEtapa = intent.getLongExtra(MetodosPublicos.key_idEtapa, Long.valueOf(0));
+            }
+        }
+
         //   ComentarioDao cDao
         dao = daoSession.getComentarioDao();
         recyclerView = (RecyclerView) findViewById(R.id.comentarioListView);
@@ -67,8 +77,7 @@ public class ComentarioActivity extends AppCompatActivity {
         }));
 
         PessoaDao pessoaDao = daoSession.getPessoaDao();
-
-        lsComentario.addAll(dao.queryBuilder().orderAsc(ComentarioDao.Properties.Criacao).list());
+        lsComentario.addAll(dao.queryBuilder().where(ComentarioDao.Properties.IdEtapa.eq(idEtapa), ComentarioDao.Properties.Deletado.eq(false)).orderAsc(ComentarioDao.Properties.Criacao).list());
         for (Comentario comentario : lsComentario) {
             Pessoa pessoa = pessoaDao.load(comentario.getIdRemetente());
             if (pessoa != null) {
@@ -102,7 +111,7 @@ public class ComentarioActivity extends AppCompatActivity {
         EditText coment = (EditText) findViewById(R.id.comentarioNovo);
         try {
             if (!coment.getText().toString().isEmpty()) {
-                final Comentario COM = new Comentario(null, 0, coment.getText().toString(), new Date(), MetodosPublicos.SelecionaSessaoId(this));
+                final Comentario COM = new Comentario(null, 0, coment.getText().toString(), new Date(), MetodosPublicos.SelecionaSessaoId(this), idEtapa);
                 final ComentarioDAO comentarioDAO = new ComentarioDAO();
                 long id = dao.insert(COM);
                 MetodosPublicos.Log("Event", "id:" + COM.get_id());

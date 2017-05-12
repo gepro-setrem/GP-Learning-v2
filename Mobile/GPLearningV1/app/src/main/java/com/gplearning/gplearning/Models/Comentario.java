@@ -68,17 +68,18 @@ public class Comentario {
 
     @Keep
     public Comentario(Long _id, int id, @NotNull String descricao, Date criacao,
-                      Long idRemetente) {
+                      Long idRemetente, Long idEtapa) {
         this._id = _id;
         this.id = id;
         this.descricao = descricao;
         this.criacao = criacao;
         this.idRemetente = idRemetente;
+        this.idEtapa = idEtapa;
     }
 
     @Generated(hash = 2114313461)
     public Comentario(Long _id, int id, @NotNull String descricao, Date criacao,
-            boolean deletado, Long idEtapa, Long idRemetente) {
+                      boolean deletado, Long idEtapa, Long idRemetente) {
         this._id = _id;
         this.id = id;
         this.descricao = descricao;
@@ -87,7 +88,6 @@ public class Comentario {
         this.idEtapa = idEtapa;
         this.idRemetente = idRemetente;
     }
-
 
 
     public Long get_id() {

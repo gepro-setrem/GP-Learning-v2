@@ -1,8 +1,8 @@
 package com.gplearning.gplearning.DAO;
 
 
-import com.gplearning.gplearning.Models.Etapa;
 import com.gplearning.gplearning.Models.Comentario;
+import com.gplearning.gplearning.Models.Etapa;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 
 import org.springframework.http.ResponseEntity;
@@ -33,7 +33,7 @@ public class ComentarioDAO extends DefaultDAO {
         String url = UrlDefault + "/comentario/salvar/";
         RestTemplate restTemplate = getResTemplateDefault();
         MetodosPublicos.Log("DAO", " vai salvar url:" + url);
-
+        comentario.setRemetente(null);
         ResponseEntity<Integer> responseEntity = restTemplate.postForEntity(url, comentario, Integer.class);
         MetodosPublicos.Log("DAO", " retornou com :" + responseEntity.getBody());
 

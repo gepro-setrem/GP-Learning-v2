@@ -28,7 +28,7 @@ public class TermoAbertura {
     private Date criacao;
     private Date alteracao;
 
-    private int idProjeto;
+    private Long idProjeto;
     @ToOne(joinProperty = "idProjeto")
     private Projeto projeto;
 
@@ -58,14 +58,14 @@ public class TermoAbertura {
     @Generated(hash = 1647359195)
     private transient TermoAberturaDao myDao;
 
-    @Generated(hash = 415564391)
-    private transient Integer projeto__resolvedKey;
+    @Generated(hash = 1369604525)
+    private transient Long projeto__resolvedKey;
 
     public TermoAbertura() {
     }
 
     @Keep
-    public TermoAbertura(Long _id, int id, String descricao, String justificativa, Date criacao, Date alteracao, int idProjeto) {
+    public TermoAbertura(Long _id, int id, String descricao, String justificativa, Date criacao, Date alteracao, Long idProjeto) {
         this._id = _id;
         this.id = id;
         this.descricao = descricao;
@@ -123,11 +123,11 @@ public class TermoAbertura {
         this.alteracao = alteracao;
     }
 
-    public int getIdProjeto() {
+    public Long getIdProjeto() {
         return idProjeto;
     }
 
-    public void setIdProjeto(int idProjeto) {
+    public void setIdProjeto(Long idProjeto) {
         this.idProjeto = idProjeto;
     }
 

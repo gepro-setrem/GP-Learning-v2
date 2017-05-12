@@ -3,12 +3,12 @@ package com.gplearning.gplearning.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.ToOne;
+import org.greenrobot.greendao.DaoException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(nameInDb = "stakeholder")
@@ -21,7 +21,7 @@ public class Stakeholder {
     private String contribuicao;
     private String papel;
 
-    private int idProjeto;
+    private Long idProjeto;
     @ToOne(joinProperty = "idProjeto")
     private Projeto projeto;
 
@@ -37,11 +37,11 @@ public class Stakeholder {
     @Generated(hash = 2085601650)
     private transient StakeholderDao myDao;
 
-    @Generated(hash = 415564391)
-    private transient Integer projeto__resolvedKey;
+    @Generated(hash = 1369604525)
+    private transient Long projeto__resolvedKey;
 
     @Keep
-    public Stakeholder(Long _id, int id, String nome, String contribuicao, String papel, int idProjeto) {
+    public Stakeholder(Long _id, int id, String nome, String contribuicao, String papel, Long idProjeto) {
         this._id = _id;
         this.id = id;
         this.nome = nome;
@@ -51,6 +51,14 @@ public class Stakeholder {
     }
 
     public Stakeholder() {
+    }
+
+    public Long get_id() {
+        return _id;
+    }
+
+    public void set_id(Long _id) {
+        this._id = _id;
     }
 
     public int getId() {
@@ -85,11 +93,11 @@ public class Stakeholder {
         this.papel = papel;
     }
 
-    public int getIdProjeto() {
+    public Long getIdProjeto() {
         return idProjeto;
     }
 
-    public void setIdProjeto(int idProjeto) {
+    public void setIdProjeto(Long idProjeto) {
         this.idProjeto = idProjeto;
     }
 
@@ -101,6 +109,11 @@ public class Stakeholder {
     @Keep
     public void setProjeto(Projeto projeto) {
         this.projeto = projeto;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
     }
 
     /**
@@ -139,18 +152,12 @@ public class Stakeholder {
         myDao.update(this);
     }
 
-    public Long get_id() {
-        return this._id;
-    }
-
-    public void set_id(Long _id) {
-        this._id = _id;
-    }
-
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1078832940)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getStakeholderDao() : null;
     }
+
+
 }

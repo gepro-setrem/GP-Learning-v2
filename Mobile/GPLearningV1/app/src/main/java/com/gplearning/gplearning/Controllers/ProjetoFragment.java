@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import com.gplearning.gplearning.Adapters.ProjetoAdapter;
 import com.gplearning.gplearning.DAO.App;
-import com.gplearning.gplearning.DAO.ProjetoDAO;
 import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.Models.Pessoa;
 import com.gplearning.gplearning.Models.PessoaDao;
@@ -211,20 +210,23 @@ public class ProjetoFragment extends Fragment {
 //            } catch (InterruptedException ex) {
 //                Thread.currentThread().interrupt();
 //            }
-         //   ProjetoDAO projetoDAO = new ProjetoDAO();
+            //   ProjetoDAO projetoDAO = new ProjetoDAO();
             DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
+            PessoaDao pessoaDao = daoSession.getPessoaDao();
+            ProjetoDao projetoDao = daoSession.getProjetoDao();
+            Pessoa user = pessoaDao.load(MetodosPublicos.SelecionaSessaoId(getActivity()));
             ///select no sqlite
             if (MetodosPublicos.ModoAcessoAluno(getActivity())) {
-                PessoaDao pessoaDao = daoSession.getPessoaDao();
-                ProjetoDao projetoDao = daoSession.getProjetoDao();
-                Pessoa user = pessoaDao.load(MetodosPublicos.SelecionaSessaoId(getActivity()));
                 MetodosPublicos.Log("projetos", " Turmar do user:" + user.getId() + " da turma:" + user.getIdTurma());
-
-                lsProjetos.addAll(projetoDao.loadAll()); //.queryBuilder().where(ProjetoDao.Properties.IdTurma.eq(user.getIdTurma())).list());
+                lsProjetos.addAll(projetoDao.queryBuilder().where(ProjetoDao.Properties.IdTurma.eq(user.getIdTurma())).list());
                 //  lsProjetos.addAll(projetoDAO.SelecionaProjetosAluno(MetodosPublicos.SelecionaSessaoidExterno(getActivity())));//getProjetos()); //dao.loadAll();
             } else {
                 //lsProjetos.addAll(projetoDAO.SelecionaProjetosProfessor(MetodosPublicos.SelecionaSessaoidExterno(getActivity())));
             }
+            for (Projeto prj : lsProjetos) {
+                prj.setGerente(pessoaDao.queryBuilder().where(PessoaDao.Properties._id.eq(prj.getIdGerente())).unique());
+            }
+
             MetodosPublicos.Log("projetos", " retorno com:" + lsProjetos.size());
             return true;
         }

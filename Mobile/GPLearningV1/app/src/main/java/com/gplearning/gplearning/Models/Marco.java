@@ -22,7 +22,7 @@ public class Marco {
 
     private Date previsao;
 
-    private int idTermoAbertura;
+    private Long idTermoAbertura;
     @ToOne(joinProperty = "idTermoAbertura")
     private TermoAbertura termoAbertura;
 
@@ -38,14 +38,14 @@ public class Marco {
     @Generated(hash = 1715484190)
     private transient MarcoDao myDao;
 
-    @Generated(hash = 1154405152)
-    private transient Integer termoAbertura__resolvedKey;
+    @Generated(hash = 1091460758)
+    private transient Long termoAbertura__resolvedKey;
 
     public Marco() {
     }
 
     @Keep
-    public Marco(Long _id, int id, String objetivo, Date previsao, int idTermoAbertura) {
+    public Marco(Long _id, int id, String objetivo, Date previsao, Long idTermoAbertura) {
         this._id = _id;
         this.id = id;
         this.objetivo = objetivo;
@@ -85,11 +85,11 @@ public class Marco {
         this.previsao = previsao;
     }
 
-    public int getIdTermoAbertura() {
+    public Long getIdTermoAbertura() {
         return idTermoAbertura;
     }
 
-    public void setIdTermoAbertura(int idTermoAbertura) {
+    public void setIdTermoAbertura(Long idTermoAbertura) {
         this.idTermoAbertura = idTermoAbertura;
     }
 
@@ -101,6 +101,11 @@ public class Marco {
     @Keep
     public void setTermoAbertura(TermoAbertura termoAbertura) {
         this.termoAbertura = termoAbertura;
+    }
+
+    @Override
+    public String toString() {
+        return objetivo;
     }
 
     /**

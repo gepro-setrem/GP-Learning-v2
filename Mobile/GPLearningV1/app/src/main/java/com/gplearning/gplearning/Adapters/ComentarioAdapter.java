@@ -51,7 +51,7 @@ public class ComentarioAdapter extends RecyclerView.Adapter {
         Comentario comentario = lsComentario.get(position);
         holder.texto.setText(comentario.getDescricao());
         holder.data.setText(dateFormat.format(comentario.getCriacao()));
-        MetodosPublicos.Log("Event", " idRemetente:" + comentario.getIdRemetente() + " remetente null:" + (comentario.getRemetente() == null));
+        //  MetodosPublicos.Log("Event", " idRemetente:" + comentario.getIdRemetente() + " remetente null:" + (comentario.getRemetente() == null));
         // Pessoa user =
         if (comentario.getRemetente() != null) {
             holder.usuario.setText(comentario.getRemetente().getNome());
