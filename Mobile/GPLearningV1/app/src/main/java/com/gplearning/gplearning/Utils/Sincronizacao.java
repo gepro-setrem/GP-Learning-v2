@@ -65,7 +65,7 @@ public class Sincronizacao {
 
         if (lsProjetos != null && lsProjetos.size() > 0) {
             for (Projeto projeto : lsProjetos) {
-                Projeto prj = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(projeto.getId())).unique(); //.load(projeto.getId());
+                Projeto prj = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(projeto.getId())).limit(1).unique(); //.load(projeto.getId());
                 if (prj == null) {
                     daoProjeto.insert(projeto);
                     Projeto pCompleto = projetoDAO.SelecionaProjetoCompleto(projeto.getId());
@@ -73,7 +73,7 @@ public class Sincronizacao {
                         Projeto PRJ = daoProjeto.load(projeto.get_id());
                         if (pCompleto.getGerente() != null && pCompleto.getGerente().getId() > 0) {
                             //MetodosPublicos.Log("Event", "antes de chegar ID GERENTE:" + projeto.getIdGerente());
-                            Pessoa gerente = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(pCompleto.getGerente().getId())).unique();
+                            Pessoa gerente = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(pCompleto.getGerente().getId())).limit(1).unique();
                             if (gerente == null) {
                                 long idGerente = daoPessoa.insert(pCompleto.getGerente());
                                 PRJ.setIdGerente(idGerente);
@@ -83,7 +83,7 @@ public class Sincronizacao {
                         }
 
                         if (pCompleto.getTurma() != null && pCompleto.getTurma().getId() > 0) {
-                            Turma turma = daoTurma.queryBuilder().where(TurmaDao.Properties.Id.eq(pCompleto.getTurma().getId())).unique();
+                            Turma turma = daoTurma.queryBuilder().where(TurmaDao.Properties.Id.eq(pCompleto.getTurma().getId())).limit(1).unique();
                             if (turma == null) {
                                 long idTurma = daoTurma.insert(pCompleto.getTurma());
                                 PRJ.setIdTurma(idTurma);
@@ -93,7 +93,7 @@ public class Sincronizacao {
                         }
 
                         if (pCompleto.getTermoabertura() != null && pCompleto.getTermoabertura().getId() > 0) {
-                            TermoAbertura termoAbertura = daoTermoAbertura.queryBuilder().where(TermoAberturaDao.Properties.Id.eq(pCompleto.getTermoabertura().getId())).unique();
+                            TermoAbertura termoAbertura = daoTermoAbertura.queryBuilder().where(TermoAberturaDao.Properties.Id.eq(pCompleto.getTermoabertura().getId())).limit(1).unique();
                             if (termoAbertura == null) {
                                 pCompleto.getTermoabertura().setIdProjeto(PRJ.get_id());
                                 long idTermoAbertura = daoTermoAbertura.insert(pCompleto.getTermoabertura());
@@ -161,7 +161,7 @@ public class Sincronizacao {
                         if (pCompleto.getComponentes() != null) {
                             for (Pessoa pessoa : pCompleto.getComponentes()) {
                                 Long idPessoa;
-                                Pessoa pesBD = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(pessoa.getId())).unique();
+                                Pessoa pesBD = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(pessoa.getId())).limit(1).unique();
                                 if (pesBD == null) {
                                     idPessoa = daoPessoa.insert(pessoa);
                                 } else {
