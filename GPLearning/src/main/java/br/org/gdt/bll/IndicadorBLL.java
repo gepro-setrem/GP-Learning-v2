@@ -27,6 +27,12 @@ public class IndicadorBLL extends BLL<Indicador> {
         List<Indicador> lsIndicador = new ArrayList<>();
         if (etapa != null && etapa.getId() > 0) {
             lsIndicador = dao.findbyEtapa(etapa);
+            if(lsIndicador!=null){
+                for(Indicador indicador:lsIndicador){
+                    indicador.setEtapas(null);
+                    indicador.setProfessor(null);
+                }
+            }
         }
         return lsIndicador;
     }

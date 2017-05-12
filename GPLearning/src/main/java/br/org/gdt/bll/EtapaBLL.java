@@ -26,6 +26,10 @@ public class EtapaBLL extends BLL<Etapa> {
                 List<Indicador> lsIndicador = indicadorBLL.findbyEtapa(etapa);
                 etapa.setIndicadores(lsIndicador);
                 etapa.setTurma(null);
+                etapa.setAtividadeParametros(null);
+                etapa.setAvaliacoes(null);
+                etapa.setComentarios(null);
+                etapa.setEtapaParametros(null);
             }
         }
         return lsEtapa;
