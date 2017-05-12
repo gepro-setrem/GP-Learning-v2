@@ -80,6 +80,9 @@ public class Projeto implements Serializable {
     @OneToMany(mappedBy = "projeto", cascade = CascadeType.REMOVE)
     private List<EAP> eaps;
 
+    @OneToMany(mappedBy = "projeto")
+    private List<Avaliacao> avaliacoes;
+
     public Projeto() {
     }
 

@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -30,7 +31,7 @@ public class Avaliacao implements Serializable {
     @Column(name = "ava_dcriacao")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date criacao;
-
+    
     @ManyToOne
     @JoinColumn(name = "tpp_id")
     private EtapaParametro etapaParametro;
