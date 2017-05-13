@@ -63,7 +63,8 @@ public class IndicadorBean {
             indicador = new Indicador();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Indicador excluído com sucesso!"));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Não foi possível exlcuir o indicador!"));
         }
         return viewList;
     }

@@ -1,9 +1,14 @@
 package br.org.gdt.model;
 
 import br.org.gdt.enumerated.Status;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +25,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 @Entity
 public class Pessoa implements Serializable {
@@ -232,5 +239,19 @@ public class Pessoa implements Serializable {
     @Override
     public String toString() {
         return nome;
+    }
+
+    public StreamedContent getStreamedImagem() throws IOException {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            return new DefaultStreamedContent();
+        } else {
+            StreamedContent img = null;
+            if (imagem != null && imagem.length > 0) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(imagem);
+                img = new DefaultStreamedContent(bais);
+            }
+            return img;
+        }
     }
 }

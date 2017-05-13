@@ -5,10 +5,8 @@ import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.model.Login;
 import br.org.gdt.model.LoginRole;
 import br.org.gdt.model.Pessoa;
-import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Level;
@@ -20,8 +18,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 @ManagedBean
@@ -38,7 +34,6 @@ public class PerfilBean implements Serializable {
     private LoginBLL loginBLL;
     private Login login = new Login();
     private boolean hasSession;
-    private StreamedContent imagem;
 
     public PerfilBean() {
     }
@@ -172,15 +167,6 @@ public class PerfilBean implements Serializable {
 
     public void setHasSession(boolean hasSession) {
         this.hasSession = hasSession;
-    }
-
-    public StreamedContent getImagem() throws IOException {
-        getUsuario();
-        if (usuario.getImagem() != null) {
-            InputStream is = new ByteArrayInputStream(usuario.getImagem());
-            imagem = new DefaultStreamedContent(is, "", "" + usuario.getId());
-        }
-        return imagem;
     }
 
 }

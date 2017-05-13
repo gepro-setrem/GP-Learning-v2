@@ -54,4 +54,12 @@ public class PessoaBLL extends BLL<Pessoa> {
         }
         return lsPessoa;
     }
+
+    public byte[] findbyImagem(int id) {
+        byte[] imagem = new byte[0];
+        if (id > 0) {
+            imagem = dao.findbyImagem(id);
+        }
+        return imagem;
+    }
 }

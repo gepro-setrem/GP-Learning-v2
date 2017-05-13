@@ -28,8 +28,8 @@ public class Comentario implements Serializable {
     private String descricao;
 
     @Column(name = "com_dcriacao")
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date criacao;
+//    @Temporal(javax.persistence.TemporalType.DATE)
+    public Date criacao;
 
     @ManyToOne
     @JoinColumn(name = "pes_idremetente")

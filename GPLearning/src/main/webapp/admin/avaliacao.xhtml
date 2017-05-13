@@ -154,7 +154,7 @@
                                                         <label class="col-xs-6 text-right">#{indicador.nome}:</label>
                                                         <div class="col-xs-6">
                                                             <c:set var="avaliacao" value="#{projetoProfessorBean.getAvaliacao(item, indicador)}"/>
-                                                            <p:rating value="#{avaliacao.valor}" stars="10">
+                                                            <p:rating value="#{avaliacao.valor}" stars="5">
                                                                 <p:ajax event="rate" listener="#{projetoProfessorBean.onrate(avaliacao)}" />
                                                                 <p:ajax event="cancel" listener="#{projetoProfessorBean.oncancel(avaliacao)}"/>
                                                             </p:rating>
@@ -165,49 +165,68 @@
                                         </div>
                                     </div>
                                 </h:panelGroup>
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="comments_panel">
-                                            <div class="new_comment">
-                                                <div class="comment_creator">
-                                                    <h:graphicImage rendered="#{perfilBean.usuario.imagem == null}" library="img/" name="usuario.png" class="avatar_image"/>
-                                                    <p:graphicImage rendered="#{perfilBean.usuario.imagem != null}" value="#{perfilBean.imagem}" class="avatar_image" cache="false"/>
-                                                </div>
-                                                <div class="comment_frame">
-                                                    <div class="comment_box">
-                                                        <textarea id="MES_TMESSAGE" placeholder="Escreva seu comentário aqui!" style="height: 88px;" class=""></textarea>
-                                                        <div class="comment_box_options">
-                                                            <a class="btn btn-success btn-sm"><i class="fa-reply fa-rotate-180"></i> Enviar</a>
+                                <p:fragment autoUpdate="true">
+                                    <div class="panel panel-default" id="coment#{item.etapa}">
+                                        <div class="panel-body">
+                                            <div class="comments_panel">
+                                                <p:commandLink ajax="true" class="btn btn-primary btn-xs" action="#{projetoProfessorBean.atualizarComentarios(item)}" style="right: 0; position: absolute; top: -13px;">
+                                                    <i class="fa-refresh"></i> Atualizar
+                                                    <p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>
+                                                </p:commandLink>
+                                                <div class="new_comment">
+                                                    <div class="comment_creator">
+                                                        <h:graphicImage rendered="#{perfilBean.usuario.imagem == null}" library="img/" name="usuario.png" class="avatar_image"/>
+                                                        <p:graphicImage rendered="#{perfilBean.usuario.imagem != null}" value="#{perfilBean.usuario.streamedImagem}" class="avatar_image" cache="true"/>
+                                                    </div>
+                                                    <div class="comment_frame">
+                                                        <div class="comment_box" >
+                                                            <h:inputTextarea value="#{projetoProfessorBean.addComentario(item).descricao}" pt:placeholder="Escreva seu comentário aqui!" class="comentario_descricao"/>
+                                                            <div class="comment_box_options">
+                                                                <p:commandLink ajax="true" class="btn btn-success btn-sm" action="#{projetoProfessorBean.salvarComentario(item)}">
+                                                                    <i class="fa-reply fa-rotate-180"></i> Enviar
+                                                                    <p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>
+                                                                </p:commandLink>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="panel_comments">
-                                                <div class="all_comments">
-                                                    <ui:repeat var="comentario" value="#{item.comentarios}">
-                                                        <div class="comment" data-idmsg="25" style="opacity: 1;">
-                                                            <div class="comment_creator">
-                                                                <h:graphicImage library="img/" name="usuario.png" class="avatar_image"/>
-                                                                <!--<h:graphicImage rendered="{comentario.remetente.imagem == null}" library="img/" name="usuario.png" class="avatar_image"/>
-                                                                    <p:graphicImage rendered="{comentario.remetente.imagem != null}" value="{projetoProfessorBean.getImagem(comentario.remetente.imagem)}" class="avatar_image" cache="false"/>-->
-                                                            </div>
-                                                            <div class="comment_desc">
-                                                                <a class="avatar_name">#{comentario.remetente.nome}</a>
-                                                                <span class="comment_time">Agora</span>
-                                                                <a class="btn btn-danger btn-xs comment_delete" title="" data-toggle="tooltip" data-original-title="Excluir Comentário"><i class="fa fa-trash"></i></a>
-                                                                <div class="comment_container">
-                                                                    <div class="action_comment">
-                                                                        <div class="comment_message">#{comentario.descricao}</div>
+                                                <div class="panel_comments">
+                                                    <div class="all_comments">
+                                                        <ui:repeat var="comentario" value="#{item.comentarios}">
+                                                            <div class="comment" data-idmsg="25" style="opacity: 1;">
+                                                                <div class="comment_creator">
+                                                                    <!--<h:graphicImage library="img/" name="usuario.png" class="avatar_image"/>-->
+                                                                    <h:graphicImage rendered="#{comentario.remetente.imagem == null}" library="img/" name="usuario.png" class="avatar_image"/>
+                                                                    <!--<p:graphicImage rendered="{comentario.remetente.imagem != null}" value="{comentario.remetente.streamedImagem}" class="avatar_image" cache="false"/>-->
+                                                                    <p:graphicImage rendered="#{comentario.remetente.imagem != null}" value="#{projetoProfessorBean.imagem}" class="avatar_image" cache="false">
+                                                                        <f:param name="id" value="#{comentario.remetente.id}" />
+                                                                    </p:graphicImage>
+                                                                </div>
+                                                                <div class="comment_desc">
+                                                                    <span class="avatar_name">#{comentario.remetente.nome}</span>
+                                                                    <span class="comment_time">       
+                                                                        <h:outputText value="${comentario.criacao}">
+                                                                            <f:convertDateTime pattern="dd/MM/yyyy (hh:mm)"/>
+                                                                        </h:outputText>
+                                                                    </span>
+                                                                    <p:commandLink ajax="true" rendered="#{comentario.remetente.equals(projetoProfessorBean.usuario)}" class="btn btn-danger btn-xs comment_delete" action="#{projetoProfessorBean.excluirComentario(comentario, item)}">
+                                                                        <i class="fa-trash"></i>
+                                                                        <p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>
+                                                                    </p:commandLink>
+                                                                    <div class="comment_container">
+                                                                        <div class="action_comment">
+                                                                            <div class="comment_message">#{comentario.descricao}</div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </ui:repeat>     
+                                                        </ui:repeat>     
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </p:fragment>
                             </div>
                         </ui:repeat>
                     </div>

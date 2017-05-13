@@ -21,8 +21,8 @@ import br.org.gdt.model.Recurso;
 import br.org.gdt.model.Tarefa;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -30,10 +30,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.servlet.http.HttpServletRequest;
-import org.primefaces.event.RateEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -69,6 +69,7 @@ public class ProjetoProfessorBean {
 
     @ManagedProperty("#{comentarioBLL}")
     private ComentarioBLL comentarioBLL;
+    private List<Comentario> comentarios;
 
     private String htmlEAP;
     private String htmlCronograma;
@@ -83,6 +84,7 @@ public class ProjetoProfessorBean {
         projeto = (Projeto) projetos.getRowData();
         projeto = projetoBLL.findProjetoCompleto(projeto.getId());
         termoabertura = termoAberturaBLL.findByProjetoCompleto(projeto);
+        comentarios = new ArrayList<>();
         return "avaliacao";
     }
 
@@ -180,7 +182,7 @@ public class ProjetoProfessorBean {
                 for (Etapa etapa : etapas) {
                     List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyEtapa(etapa);
                     etapa.setAvaliacoes(lsAvaliacao);
-                    List<Comentario> lsComentario = comentarioBLL.findbyEtapa(etapa);
+                    List<Comentario> lsComentario = comentarioBLL.findbyEtapa(etapa, true);
                     etapa.setComentarios(lsComentario);
                 }
             }
@@ -339,12 +341,15 @@ public class ProjetoProfessorBean {
     }
 
     public void onrate(Avaliacao avaliacao) {
-        if (avaliacao != null && avaliacao.getEtapa() != null) {
-            avaliacao.setProjeto(projeto);
-            if (avaliacao.getId() > 0) {
-                avaliacaoBLL.update(avaliacao);
+        if (avaliacao != null && avaliacao.getEtapa() != null && avaliacao.getIndicador() != null) {
+            Avaliacao ava = avaliacaoBLL.findbyEtapaIndicador(avaliacao.getEtapa(), avaliacao.getIndicador());
+            if (ava != null) {
+                ava.setValor(avaliacao.getValor());
+                avaliacaoBLL.update(ava);
             } else {
+                avaliacao.setProjeto(projeto);
                 avaliacao.setCriacao(new Date());
+                avaliacao.setId(0);
                 avaliacaoBLL.insert(avaliacao);
             }
         }
@@ -364,12 +369,79 @@ public class ProjetoProfessorBean {
         this.comentarioBLL = comentarioBLL;
     }
 
-    public StreamedContent getImagem(byte[] imagem) throws IOException {
-        StreamedContent img = null;
-        if (imagem != null && imagem.length > 0) {
-            InputStream is = new ByteArrayInputStream(imagem);
-            img = new DefaultStreamedContent(is, "", "" + imagem.length);
+    public void salvarComentario(Etapa etapa) {
+        if (comentarios != null) {
+            for (Comentario comentario : comentarios) {
+                if (comentario.getEtapa().equals(etapa)) {
+                    if (comentario.getDescricao() != null && !comentario.getDescricao().isEmpty()) {
+                        comentario.setRemetente(usuario);
+                        comentario.setCriacao(new Date());
+                        comentarioBLL.insert(comentario);
+                        List<Comentario> lsComentario = comentarioBLL.findbyEtapa(etapa, true);
+                        etapa.setComentarios(lsComentario);
+
+                        comentario.setDescricao("");
+                        comentario.setId(0);
+                    }
+                }
+            }
         }
-        return img;
+    }
+
+    public void excluirComentario(Comentario comentario, Etapa etapa) {
+        if (comentario.getId() > 0) {
+            comentarioBLL.delete(comentario.getId());
+        }
+        List<Comentario> lsComentario = comentarioBLL.findbyEtapa(etapa, true);
+        etapa.setComentarios(lsComentario);
+    }
+
+    public void atualizarComentarios(Etapa etapa) {
+        List<Comentario> lsComentario = comentarioBLL.findbyEtapa(etapa, true);
+        etapa.setComentarios(lsComentario);
+    }
+
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public Comentario addComentario(Etapa etapa) {
+        if (comentarios == null) {
+            comentarios = new ArrayList<>();
+        }
+        Comentario comentario = new Comentario();
+        boolean exist = false;
+        for (Comentario coment : comentarios) {
+            if (coment.getEtapa().equals(etapa)) {
+                comentario = coment;
+                exist = true;
+                break;
+            }
+        }
+        if (!exist) {
+            comentario.setEtapa(etapa);
+            comentarios.add(comentario);
+        }
+        return comentario;
+    }
+
+    public StreamedContent getImagem() throws IOException {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
+            return new DefaultStreamedContent();
+        } else {
+            // So, browser is requesting the image. Get ID value from actual request param.
+            String id = context.getExternalContext().getRequestParameterMap().get("id");
+            int id2 = Integer.valueOf(id);
+            byte[] imagem = pessoaBLL.findbyImagem(id2);
+            ByteArrayInputStream bais = new ByteArrayInputStream(imagem);
+            return new DefaultStreamedContent(bais);
+        }
     }
 }

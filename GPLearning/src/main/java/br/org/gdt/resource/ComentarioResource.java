@@ -43,7 +43,7 @@ public class ComentarioResource {
         if (eta_id > 0) {
             Etapa etapa = etapaBLL.findById(eta_id);
             if (etapa != null && etapa.getId() > 0) {
-                lsComentario = comentarioBLL.findbyEtapa(etapa);
+                lsComentario = comentarioBLL.findbyEtapa(etapa, false);
             }
         }
         return lsComentario;

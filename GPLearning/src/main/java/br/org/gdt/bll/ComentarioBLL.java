@@ -15,10 +15,10 @@ public class ComentarioBLL extends BLL<Comentario> {
     @Autowired
     private ComentarioDAO dao;
 
-    public List<Comentario> findbyEtapa(Etapa etapa) {
+    public List<Comentario> findbyEtapa(Etapa etapa, boolean orderDesc) {
         List<Comentario> lsComentario = new ArrayList<>();
         if (etapa != null && etapa.getId() > 0) {
-            lsComentario = dao.findbyEtapa(etapa);
+            lsComentario = dao.findbyEtapa(etapa, orderDesc);
             if (lsComentario != null && lsComentario.size() > 0) {
                 for (Comentario com : lsComentario) {
                     if (com.getDestinatario() != null) {

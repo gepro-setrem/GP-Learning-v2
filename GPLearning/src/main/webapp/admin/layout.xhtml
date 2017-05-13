@@ -37,7 +37,7 @@
             <div class="col-md-2 col-xs-5">
                 <h:link outcome="/user/perfil.xhtml">
                     <h:graphicImage rendered="#{perfilBean.usuario.imagem == null}" library="img/" name="usuario.png" style="max-height: 60px;"/>
-                    <p:graphicImage rendered="#{perfilBean.usuario.imagem != null}" value="#{perfilBean.imagem}" style="max-height: 60px" cache="false"/>
+                    <p:graphicImage rendered="#{perfilBean.usuario.imagem != null}" value="#{perfilBean.usuario.streamedImagem}" style="max-height: 60px" cache="false"/>
                 </h:link>
             </div>
         </div>
@@ -69,19 +69,16 @@
                 </div>
             </div>
         </nav>
-        <div class="row">
-            <div class="col-xs-12" style="margin-bottom: 20px;">
-                <div style="padding: 0 15px;">
-                    <ui:insert name="content"></ui:insert>
-                </div>
-            </div>
 
-            <div class="col-xs-12">
-                <div style="padding: 10px 30px 30px; background-color: #f5f5f5; border: 1px solid #e7e7e7;">
-                    <h:link class="btn btn-link" outcome="/about.xhtml" value="About" style="float: right;"/>
-                    <a style="text-decoration: none;">Sociedade Educacional Três de Maio - SETREM - Bacharelado em Sistemas de Informação</a>
-                </div>
+        <div style="margin-bottom: 20px;">
+            <div style="padding: 0 15px;">
+                <ui:insert name="content"></ui:insert>
             </div>
+        </div>
+
+        <div style="padding: 10px 30px 30px; background-color: #f5f5f5; border: 1px solid #e7e7e7;">
+            <h:link class="btn btn-link" outcome="/about.xhtml" value="About" style="float: right;"/>
+            <a style="text-decoration: none;">Sociedade Educacional Três de Maio - SETREM - Bacharelado em Sistemas de Informação</a>
         </div>
         <div id="AdmLoader">
             <div class="AdmLoaderBg"></div>

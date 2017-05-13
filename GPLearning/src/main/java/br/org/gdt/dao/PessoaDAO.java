@@ -49,4 +49,12 @@ public class PessoaDAO extends DAO<Pessoa> {
         return entityManager.createQuery("from Pessoa where turma.professor = :p")
                 .setParameter("p", pessoa).getResultList();
     }
+
+    public byte[] findbyImagem(int id) {
+        List<byte[]> lsImagem = entityManager.createQuery("select imagem from Pessoa where id = :id").setParameter("id", id).getResultList();
+        if (lsImagem.size() > 0) {
+            return lsImagem.get(0);
+        }
+        return new byte[0];
+    }
 }
