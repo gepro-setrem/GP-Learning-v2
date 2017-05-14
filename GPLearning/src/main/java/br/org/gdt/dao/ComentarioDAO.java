@@ -2,6 +2,7 @@ package br.org.gdt.dao;
 
 import br.org.gdt.model.Etapa;
 import br.org.gdt.model.Comentario;
+import br.org.gdt.model.Projeto;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.TemporalType;
@@ -30,4 +31,14 @@ public class ComentarioDAO extends DAO<Comentario> {
                 .setParameter("d", date, TemporalType.DATE).getResultList();
     }
 
+    public List<Comentario> findbyProjetoEtapa(Projeto projeto, Etapa etapa, boolean orderDesc) {
+        String order = " order by id";
+        if (orderDesc) {
+            order += " desc";
+        }
+        return entityManager.createQuery("from Comentario where projeto = :p and etapa = :e" + order)
+                .setParameter("p", projeto).setParameter("e", etapa).getResultList();
+//          return entityManager.createQuery("select c from Comentario as c left join c.atividade as atv where atv = :a")
+//                .setParameter("a", atividade).getResultList();
+    }
 }

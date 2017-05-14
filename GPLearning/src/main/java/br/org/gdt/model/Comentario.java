@@ -43,6 +43,10 @@ public class Comentario implements Serializable {
     @JoinColumn(name = "eta_id")
     private Etapa etapa;
 
+    @ManyToOne
+    @JoinColumn(name = "pro_id")
+    private Projeto projeto;
+
     public Comentario() {
     }
 
@@ -92,6 +96,14 @@ public class Comentario implements Serializable {
 
     public void setEtapa(Etapa etapa) {
         this.etapa = etapa;
+    }
+
+    public Projeto getProjeto() {
+        return projeto;
+    }
+
+    public void setProjeto(Projeto projeto) {
+        this.projeto = projeto;
     }
 
 }

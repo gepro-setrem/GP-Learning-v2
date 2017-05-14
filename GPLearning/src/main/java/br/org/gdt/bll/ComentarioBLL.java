@@ -3,6 +3,7 @@ package br.org.gdt.bll;
 import br.org.gdt.dao.ComentarioDAO;
 import br.org.gdt.model.Etapa;
 import br.org.gdt.model.Comentario;
+import br.org.gdt.model.Projeto;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,14 @@ public class ComentarioBLL extends BLL<Comentario> {
 
     @Autowired
     private ComentarioDAO dao;
+
+    public List<Comentario> findbyProjetoEtapa(Projeto projeto, Etapa etapa, boolean orderDesc) {
+        List<Comentario> lsComentario = new ArrayList<>();
+        if (projeto != null && projeto.getId() > 0 && etapa != null && etapa.getId() > 0) {
+            lsComentario = dao.findbyProjetoEtapa(projeto, etapa, orderDesc);
+        }
+        return lsComentario;
+    }
 
     public List<Comentario> findbyEtapa(Etapa etapa, boolean orderDesc) {
         List<Comentario> lsComentario = new ArrayList<>();

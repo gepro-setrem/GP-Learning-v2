@@ -83,6 +83,9 @@ public class Projeto implements Serializable {
     @OneToMany(mappedBy = "projeto")
     private List<Avaliacao> avaliacoes;
 
+    @OneToMany(mappedBy = "projeto")
+    private List<Comentario> comentarios;
+
     public Projeto() {
     }
 
@@ -220,6 +223,22 @@ public class Projeto implements Serializable {
 
     public void setEaps(List<EAP> eaps) {
         this.eaps = eaps;
+    }
+
+    public List<Avaliacao> getAvaliacoes() {
+        return avaliacoes;
+    }
+
+    public void setAvaliacoes(List<Avaliacao> avaliacoes) {
+        this.avaliacoes = avaliacoes;
+    }
+
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
     }
 
     @Override

@@ -53,6 +53,7 @@ public class ComentarioBean {
                 comentario.setRemetente(usuario);
                 comentario.setCriacao(new Date());
                 comentario.setEtapa(etapa);
+                comentario.setProjeto(projeto);
                 comentarioBLL.insert(comentario);
                 atualizar();
                 comentario.setDescricao("");
@@ -70,7 +71,7 @@ public class ComentarioBean {
 
     public void atualizar() {
         if (etapa != null) {
-            List<Comentario> lsComentario = comentarioBLL.findbyEtapa(etapa, true);
+            List<Comentario> lsComentario = comentarioBLL.findbyProjetoEtapa(projeto, etapa, true);
             etapa.setComentarios(lsComentario);
         }
     }

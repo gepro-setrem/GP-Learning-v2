@@ -175,9 +175,9 @@ public class ProjetoProfessorBean {
             if (projeto != null && projeto.getTurma() != null && projeto.getTurma().getId() > 0) {
                 etapas = etapaBLL.findbyTurma(projeto.getTurma());
                 for (Etapa etapa : etapas) {
-                    List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyEtapa(etapa);
+                    List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbProjetoEtapa(projeto, etapa);
                     etapa.setAvaliacoes(lsAvaliacao);
-                    List<Comentario> lsComentario = comentarioBLL.findbyEtapa(etapa, true);
+                    List<Comentario> lsComentario = comentarioBLL.findbyProjetoEtapa(projeto, etapa, true);
                     etapa.setComentarios(lsComentario);
                 }
             }
@@ -347,7 +347,7 @@ public class ProjetoProfessorBean {
 
     public void onrate(Avaliacao avaliacao) {
         if (avaliacao != null && avaliacao.getEtapa() != null && avaliacao.getIndicador() != null) {
-            Avaliacao ava = avaliacaoBLL.findbyEtapaIndicador(avaliacao.getEtapa(), avaliacao.getIndicador());
+            Avaliacao ava = avaliacaoBLL.findbyProjetoEtapaIndicador(projeto, avaliacao.getEtapa(), avaliacao.getIndicador());
             if (ava != null) {
                 ava.setValor(avaliacao.getValor());
                 avaliacaoBLL.update(ava);
@@ -380,10 +380,10 @@ public class ProjetoProfessorBean {
                 if (comentario.getEtapa().equals(etapa)) {
                     if (comentario.getDescricao() != null && !comentario.getDescricao().isEmpty()) {
                         comentario.setRemetente(usuario);
+                        comentario.setProjeto(projeto);
                         comentario.setCriacao(new Date());
                         comentarioBLL.insert(comentario);
-                        List<Comentario> lsComentario = comentarioBLL.findbyEtapa(etapa, true);
-                        etapa.setComentarios(lsComentario);
+                        atualizarComentarios(etapa);
 
                         comentario.setDescricao("");
                         comentario.setId(0);
@@ -397,13 +397,14 @@ public class ProjetoProfessorBean {
         if (comentario.getId() > 0) {
             comentarioBLL.delete(comentario.getId());
         }
-        List<Comentario> lsComentario = comentarioBLL.findbyEtapa(etapa, true);
-        etapa.setComentarios(lsComentario);
+        atualizarComentarios(etapa);
     }
 
     public void atualizarComentarios(Etapa etapa) {
-        List<Comentario> lsComentario = comentarioBLL.findbyEtapa(etapa, true);
-        etapa.setComentarios(lsComentario);
+        if (etapa != null) {
+            List<Comentario> lsComentario = comentarioBLL.findbyProjetoEtapa(projeto, etapa, true);
+            etapa.setComentarios(lsComentario);
+        }
     }
 
     public List<Comentario> getComentarios() {
@@ -429,6 +430,7 @@ public class ProjetoProfessorBean {
         }
         if (!exist) {
             comentario.setEtapa(etapa);
+            comentario.setProjeto(projeto);
             comentarios.add(comentario);
         }
         return comentario;
