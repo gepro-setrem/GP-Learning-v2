@@ -191,8 +191,8 @@
                                                         <div class="col-xs-6">
                                                             <c:set var="avaliacao" value="#{projetoProfessorBean.getAvaliacao(item, indicador)}"/>
                                                             <p:rating value="#{avaliacao.valor}" stars="5">
-                                                                <p:ajax event="rate" listener="#{projetoProfessorBean.onrate(avaliacao)}" />
-                                                                <p:ajax event="cancel" listener="#{projetoProfessorBean.oncancel(avaliacao)}"/>
+                                                                <p:ajax event="rate" listener="#{projetoProfessorBean.onrate(avaliacao)}" onstart="ShowLoader()" oncomplete="HideLoader()"/>
+                                                                <p:ajax event="cancel" listener="#{projetoProfessorBean.oncancel(avaliacao)}" onstart="ShowLoader()" oncomplete="HideLoader()"/>
                                                             </p:rating>
                                                         </div>
                                                     </div>
