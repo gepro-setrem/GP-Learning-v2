@@ -25,12 +25,12 @@
                         <div class="col-xs-12 form-group">
                             <h:inputTextarea class="form-control" rows="3" value="#{termoAberturaBean.termoabertura.justificativa}" pt:placeholder="Justificativa do Projeto"/>
                         </div>
-                        <div class="col-xs-12">
-                            <p:commandButton value="Comentário" class="btn btn-primary" type="button" onclick="PF('dlg1').show();" />
-                            <p:dialog header="Comentário sobre o Termo de Abertura Geral" widgetVar="dlg1" minHeight="40">
-                                <h:outputText value="{projetoBean.projeto.comentarioInfoBasicasTA}" />
-                            </p:dialog>
-                        </div>
+                        <!--                        <div class="col-xs-12">
+                                                    <p:commandButton value="Comentário" class="btn btn-primary" type="button" onclick="PF('dlg1').show();" />
+                                                    <p:dialog header="Comentário sobre o Termo de Abertura Geral" widgetVar="dlg1" minHeight="40">
+                                                        <h:outputText value="{projetoBean.projeto.comentarioInfoBasicasTA}" />
+                                                    </p:dialog>
+                                                </div>-->
                         <div class="col-md-9 col-xs-7">
                             <ul class="pagination">
                                 <li><h:link outcome="termoaberturadescricao">Descrição</h:link></li>
@@ -50,6 +50,7 @@
                     </div>
                 </div>
             </div>
+            <ui:include src="avaliacao.xhtml"><ui:param name="etapa" value="JustificativaProjeto" /></ui:include>
         </h:form>
     </ui:define>
 </ui:composition>

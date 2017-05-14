@@ -20,7 +20,7 @@
     </ui:define>
 
     <ui:define name="content">
-        <form>
+        <h:form>
             <div class="panel panel-default">
                 <div class="panel-heading"><h4>#{turmaBean.getEtapaProjeto('Eap')}</h4></div>
                 <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
@@ -28,7 +28,7 @@
                     <div class="row">
                         <div class="col-xs-12"><label class="etapa_desc">#{projetoBean.getDescricao('descricaoTelaCriarEAP')}</label></div>
                         <div class="col-xs-12 form-group">
-                            <h:inputHidden value="#{projetoBean.projeto.id}" id="pro_id"/>
+                            <input type="hidden" id="pro_id" value="#{projetoBean.projeto.id}"/>
                             <a class="btn btn-primary btn-xs" onclick="loadEAP();" style="float: right; cursor: pointer;"><i class="fa-refresh"></i> Atualizar</a>
                             <div class="eap_list">Nenhum registro encontrado!</div>
                         </div>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-
+            <ui:include src="avaliacao.xhtml"><ui:param name="etapa" value="Eap" /></ui:include>
             <div class="HtmlExample">
                 <ul class="eap_pai">
                     <li class="eap_item">
@@ -107,6 +107,6 @@
                     </div>
                 </div>
             </div>
-        </form>
+        </h:form>
     </ui:define>
 </ui:composition>

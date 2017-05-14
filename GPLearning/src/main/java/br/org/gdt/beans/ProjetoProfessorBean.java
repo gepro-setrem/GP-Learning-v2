@@ -19,8 +19,6 @@ import br.org.gdt.model.EAP;
 import br.org.gdt.model.Indicador;
 import br.org.gdt.model.Recurso;
 import br.org.gdt.model.Tarefa;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,12 +28,9 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseId;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.servlet.http.HttpServletRequest;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 
 @ManagedBean
 @SessionScoped
@@ -214,8 +209,18 @@ public class ProjetoProfessorBean {
         String html = "";
         if (eap != null) {
             html += "<li class=\"eap_item " + (vez == 2 ? "eap_column" : "") + "\"><div class=\"eap\">";
-            html += "<div class=\"eap_header\"><a class=\"btn btn-xs eapIcon eap_number\">" + number + "</a></div>";
+            html += "<div class=\"eap_header\"><a class=\"btn btn-xs eapIcon eap_number\">" + number + "</a><a class=\"btn btn-xs eapIcon eapDetail\"><i class=\"fa-list-ul\"></i></a></div>";
             html += "<div class=\"eap_nome\">" + eap.getNome() + "</div>";
+            html += "<div style=\"display: none;\">"
+                    + "<input type=\"hidden\" name=\"pai.id\" value=\"" + (eap.getPai() != null ? eap.getPai().getId() : 0) + "\"/>"
+                    + "<input type=\"hidden\" name=\"id\" value=\"" + eap.getId() + "\"/>"
+                    + "<input type=\"hidden\" name=\"ordem\" value=\"" + eap.getOrdem() + "\"/>"
+                    + "<input type=\"hidden\" name=\"nome\" value=\"" + eap.getNome() + "\"/>"
+                    + "<input type=\"hidden\" name=\"descricao\" value=\"" + eap.getDescricao() + "\"/>"
+                    + "<input type=\"hidden\" name=\"inicio\" value=\"" + FormatDate(eap.getInicio()) + "\"/>"
+                    + "<input type=\"hidden\" name=\"termino\" value=\"" + FormatDate(eap.getTermino()) + "\"/>"
+                    + "<input type=\"hidden\" name=\"valor\" value=\"" + eap.getValor() + "\"/>"
+                    + "</div>";
             html += "</div><ul class=\"eap_pai\">";
             vez++;
             if (eap.getEaps() != null) {
@@ -256,7 +261,7 @@ public class ProjetoProfessorBean {
     private String FormatDate(Date date) {
         String d = "";
         if (date != null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             d = sdf.format(date);
         }
         return d;
@@ -427,21 +432,5 @@ public class ProjetoProfessorBean {
             comentarios.add(comentario);
         }
         return comentario;
-    }
-
-    public StreamedContent getImagem() throws IOException {
-        FacesContext context = FacesContext.getCurrentInstance();
-
-        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
-            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
-            return new DefaultStreamedContent();
-        } else {
-            // So, browser is requesting the image. Get ID value from actual request param.
-            String id = context.getExternalContext().getRequestParameterMap().get("id");
-            int id2 = Integer.valueOf(id);
-            byte[] imagem = pessoaBLL.findbyImagem(id2);
-            ByteArrayInputStream bais = new ByteArrayInputStream(imagem);
-            return new DefaultStreamedContent(bais);
-        }
     }
 }

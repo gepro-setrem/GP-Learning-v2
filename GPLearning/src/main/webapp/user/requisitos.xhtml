@@ -55,18 +55,19 @@
                             </p:dataTable>
                         </div>
 
-                        <div class="col-xs-12">
-                            <p:commandButton value="Comentário" class="btn btn-primary" type="button" onclick="PF('dlg1').show();" />
-                            <p:dialog header="Comentários sobre as Partes Interessadas" widgetVar="dlg1" minHeight="40">
-                                <h:outputText value="{projetoBean.projeto.comentarioPartesInteressadas}" />
-                            </p:dialog>
-                        </div>
+                        <!--                        <div class="col-xs-12">
+                                                    <p:commandButton value="Comentário" class="btn btn-primary" type="button" onclick="PF('dlg1').show();" />
+                                                    <p:dialog header="Comentários sobre as Partes Interessadas" widgetVar="dlg1" minHeight="40">
+                                                        <h:outputText value="{projetoBean.projeto.comentarioPartesInteressadas}" />
+                                                    </p:dialog>
+                                                </div>-->
                         <div class="col-xs-12 text-center">
                             <h:link class="btn btn-success" outcome="planejamento"><i class="fa-check"></i> Concluir Coleta de Requisitos</h:link>
                         </div>
                     </div>
                 </div>
             </div>
+            <ui:include src="avaliacao.xhtml"><ui:param name="etapa" value="Requisitos" /></ui:include>
         </h:form>
     </ui:define>
 </ui:composition>

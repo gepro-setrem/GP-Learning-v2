@@ -10,6 +10,7 @@
         <h:outputStylesheet name="./css/eap_css.css"/>
         <h:outputStylesheet name="./css/cronograma_css.css"/>
         <h:outputStylesheet name="./css/comentario_css.css"/>
+        <h:outputScript name="./js/avaliacao_js.js"/>
     </ui:define>
     <ui:define name="content">
         <h:form>
@@ -123,6 +124,41 @@
                                                 <div class="eap_list">
                                                     <h:outputText value=" #{projetoProfessorBean.htmlEAP}" escape="false"/>
                                                 </div>
+                                                <div class="modal fade" id="eapDetailModal" role="dialog" aria-labelledby="eapDetailModal" aria-hidden="true" data-backdrop="static">
+                                                    <div class="modal-dialog modal-md">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                                <h4 class="modal-title">EAP</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <!--                                                                <div class="form-group row">
+                                                                                                                                    <label class="col-xs-4 text-right">Nome:</label>
+                                                                                                                                    <div class="nome col-xs-8"></div>
+                                                                                                                                </div>-->
+                                                                <div class="form-group row">
+                                                                    <label class="col-xs-4 text-right">Descrição:</label>
+                                                                    <div class="descricao col-xs-8"></div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label class="col-xs-4 text-right">Início:</label>
+                                                                    <div class="inicio col-xs-8"></div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label class="col-xs-4 text-right">Término:</label>
+                                                                    <div class="termino col-xs-8"></div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label class="col-xs-4 text-right">Custo:</label>
+                                                                    <div class="valor col-xs-8"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <a class="btn btn-default" data-dismiss="modal">Fechar</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </h:panelGroup>
 
                                             <h:panelGroup rendered="#{item.etapa == 'Cronograma'}">
@@ -131,8 +167,8 @@
                                                         <tr>
                                                             <th>Marco</th>
                                                             <th>Tarefa</th>
-                                                            <th class="text-center" style="width: 100px;">Início</th>
-                                                            <th class="text-center" style="width: 100px;">Término</th>
+                                                            <th class="text-center" style="width: 140px;">Início</th>
+                                                            <th class="text-center" style="width: 140px;">Término</th>
                                                             <th>Recursos</th>
                                                         </tr>
                                                     </thead>
@@ -198,7 +234,7 @@
                                                                     <!--<h:graphicImage library="img/" name="usuario.png" class="avatar_image"/>-->
                                                                     <h:graphicImage rendered="#{comentario.remetente.imagem == null}" library="img/" name="usuario.png" class="avatar_image"/>
                                                                     <!--<p:graphicImage rendered="{comentario.remetente.imagem != null}" value="{comentario.remetente.streamedImagem}" class="avatar_image" cache="false"/>-->
-                                                                    <p:graphicImage rendered="#{comentario.remetente.imagem != null}" value="#{projetoProfessorBean.imagem}" class="avatar_image" cache="false">
+                                                                    <p:graphicImage rendered="#{comentario.remetente.imagem != null}" value="#{comentarioBean.imagem}" class="avatar_image" cache="false">
                                                                         <f:param name="id" value="#{comentario.remetente.id}" />
                                                                     </p:graphicImage>
                                                                 </div>
@@ -220,7 +256,10 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </ui:repeat>     
+                                                        </ui:repeat>    
+                                                        <h:panelGroup rendered="#{item.comentarios == null or item.comentarios.size() == 0}">
+                                                            Nenhum comentário.
+                                                        </h:panelGroup>
                                                     </div>
                                                 </div>
                                             </div>

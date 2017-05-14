@@ -35,6 +35,14 @@ public class EtapaBLL extends BLL<Etapa> {
         return lsEtapa;
     }
 
+    public Etapa findbyTurmaEtapa(Turma turma, EtapaProjeto etapaProjeto) {
+        Etapa etapa = null;
+        if (turma != null && turma.getId() > 0 && etapaProjeto != null) {
+            etapa = dao.findbyTurmaEtapa(turma, etapaProjeto);
+        }
+        return etapa;
+    }
+
     public String getEtapaProjeto(EtapaProjeto type) {
         switch (type) {
             case DescricaoProjeto:

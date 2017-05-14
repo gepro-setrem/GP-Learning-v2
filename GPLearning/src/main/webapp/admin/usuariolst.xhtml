@@ -17,7 +17,7 @@
                         <h:messages />
                     </div>
                     <p:dataTable class="table" var="user" value="#{usuarioBean.usuarios}" widgetVar="userTable" 
-                                 emptyMessage="Não há alunos cadastrados nesta turma">
+                                 emptyMessage="Nenhum registro encontrado." paginator="true" rows="15" paginatorPosition="bottom">
 
                         <p:column filterBy="#{user.nome}" filterMatchMode="contains">
                             <f:facet name="header">Nome</f:facet>

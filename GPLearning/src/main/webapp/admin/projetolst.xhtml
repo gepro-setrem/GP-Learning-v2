@@ -13,7 +13,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="form-group" style="padding: 1%">
-                        <p:dataTable var="item" value="#{projetoProfessorBean.projetos}" widgetVar="projsTable" emptyMessage="Não há projetos criados por alunos desta turma">
+                        <p:dataTable var="item" value="#{projetoProfessorBean.projetos}" widgetVar="projsTable" emptyMessage="Nenhum registro encontrado." paginator="true" rows="15" paginatorPosition="bottom">
                             <p:column headerText="Projeto" filterMatchMode="contains">
                                 <h:outputText value="#{item.nome}"/>
                             </p:column>

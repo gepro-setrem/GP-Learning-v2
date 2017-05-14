@@ -7,7 +7,6 @@ import br.org.gdt.model.LoginRole;
 import br.org.gdt.model.Pessoa;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +21,7 @@ import org.primefaces.model.UploadedFile;
 
 @ManagedBean
 @SessionScoped
-public class PerfilBean implements Serializable {
+public class PerfilBean {
 
     private Pessoa usuario = new Pessoa();
 

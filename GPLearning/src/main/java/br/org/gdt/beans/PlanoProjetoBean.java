@@ -3,7 +3,6 @@ package br.org.gdt.beans;
 import br.org.gdt.bll.ProjetoBLL;
 import br.org.gdt.model.Projeto;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

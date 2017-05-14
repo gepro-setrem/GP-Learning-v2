@@ -54,12 +54,12 @@
                                 </p:column>
                             </p:dataTable>
                         </div>
-                        <div class="col-xs-12">
-                            <p:commandButton value="Comentário" class="btn btn-primary"  type="button" onclick="PF('dlg1').show();" />
-                            <p:dialog header="Comentários sobre as Restrições" widgetVar="dlg1" minHeight="40">
-                                <h:outputText value="{projetoBean.projeto.comentarioRestricoes}" />
-                            </p:dialog>
-                        </div>
+                        <!--                        <div class="col-xs-12">
+                                                    <p:commandButton value="Comentário" class="btn btn-primary"  type="button" onclick="PF('dlg1').show();" />
+                                                    <p:dialog header="Comentários sobre as Restrições" widgetVar="dlg1" minHeight="40">
+                                                        <h:outputText value="{projetoBean.projeto.comentarioRestricoes}" />
+                                                    </p:dialog>
+                                                </div>-->
                         <div class="col-md-9 col-xs-7">
                             <ul class="pagination">
                                 <li><h:link outcome="termoaberturadescricao">Descrição</h:link></li>
@@ -79,6 +79,7 @@
                     </div>
                 </div>
             </div>
+            <ui:include src="avaliacao.xhtml"><ui:param name="etapa" value="RequisitosTermoAbertura" /></ui:include>
         </h:form>
     </ui:define>
 </ui:composition>

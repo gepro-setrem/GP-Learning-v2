@@ -16,7 +16,7 @@
                     <div class="alert-warning">
                         <h:messages />
                     </div>
-                    <p:dataTable class="table table-hover" var="turma" value="#{turmaBean.turmas}" emptyMessage="Nenhum registro encontrado.">
+                    <p:dataTable class="table table-hover" var="turma" value="#{turmaBean.turmas}" emptyMessage="Nenhum registro encontrado." paginator="true" rows="15" paginatorPosition="bottom">
                         <p:column headerText="Nome da Turma">
                             <h:outputText value="#{turma.nome}"/>
                         </p:column>
