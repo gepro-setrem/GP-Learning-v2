@@ -1,6 +1,5 @@
 package com.gplearning.gplearning.Models;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.greenrobot.greendao.DaoException;
@@ -14,58 +13,54 @@ import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 
-@Entity(nameInDb = "requisito")
-public class Requisito {
+@Entity(nameInDb = "avaliacao")
+public class Avaliacao {
 
     @Id
     private Long _id;
 
     private int id;
 
-    private String nome;
-    private String descricao;
+    private int valor;
 
     private Date criacao;
+
+    private Long idEtapa;
+    @ToOne(joinProperty = "idEtapa")
+    private Etapa etapa;
 
     private Long idProjeto;
     @ToOne(joinProperty = "idProjeto")
     private Projeto projeto;
+
     /**
      * Used to resolve relations
      */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
+
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 1327084183)
-    private transient RequisitoDao myDao;
+    @Generated(hash = 1845775792)
+    private transient AvaliacaoDao myDao;
+
+    @Generated(hash = 298126781)
+    private transient Long etapa__resolvedKey;
+
     @Generated(hash = 1369604525)
     private transient Long projeto__resolvedKey;
 
+    public Avaliacao() {
+    }
+
     @Keep
-    public Requisito(Long _id, int id, String nome, String descricao, Long idProjeto) {
+    public Avaliacao(Long _id, int id, int valor, Date criacao, Long idEtapa, Long idProjeto) {
         this._id = _id;
         this.id = id;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.idProjeto = idProjeto;
-    }
-
-
-    @Generated(hash = 1369335710)
-    public Requisito() {
-    }
-
-
-    @Generated(hash = 1116704763)
-    public Requisito(Long _id, int id, String nome, String descricao, Date criacao,
-            Long idProjeto) {
-        this._id = _id;
-        this.id = id;
-        this.nome = nome;
-        this.descricao = descricao;
+        this.valor = valor;
         this.criacao = criacao;
+        this.idEtapa = idEtapa;
         this.idProjeto = idProjeto;
     }
 
@@ -85,20 +80,12 @@ public class Requisito {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public int getValor() {
+        return valor;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setValor(int valor) {
+        this.valor = valor;
     }
 
     public Date getCriacao() {
@@ -107,6 +94,24 @@ public class Requisito {
 
     public void setCriacao(Date criacao) {
         this.criacao = criacao;
+    }
+
+    public Long getIdEtapa() {
+        return idEtapa;
+    }
+
+    public void setIdEtapa(Long idEtapa) {
+        this.idEtapa = idEtapa;
+    }
+
+    @Keep
+    public Etapa getEtapa() {
+        return etapa;
+    }
+
+    @Keep
+    public void setEtapa(Etapa etapa) {
+        this.etapa = etapa;
     }
 
     public Long getIdProjeto() {
@@ -125,11 +130,6 @@ public class Requisito {
     @Keep
     public void setProjeto(Projeto projeto) {
         this.projeto = projeto;
-    }
-
-    @Override
-    public String toString() {
-        return nome;
     }
 
     /**
@@ -169,9 +169,10 @@ public class Requisito {
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 1162140170)
+    @Generated(hash = 1848823519)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getRequisitoDao() : null;
+        myDao = daoSession != null ? daoSession.getAvaliacaoDao() : null;
     }
+
 }

@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class ProjetoDAO extends DefaultDAO {
@@ -39,6 +40,16 @@ public class ProjetoDAO extends DefaultDAO {
         RestTemplate restTemplate = getResTemplateDefault();
         Projeto projeto = restTemplate.getForObject(url, Projeto.class);
         return projeto;
+    }
+
+    public List<Projeto> SelecionaProjetosData(Date date) {
+        String url = UrlDefault + "/projeto/index/date";
+        RestTemplate restTemplate = getResTemplateDefault();
+        Projeto projeto = new Projeto();
+        projeto.setCriacao(date);
+        ResponseEntity<Projeto[]> responseEntity = restTemplate.postForEntity(url, projeto, Projeto[].class);
+        Projeto[] projetos = responseEntity.getBody();
+        return Arrays.asList(projetos);
     }
 
 }

@@ -12,10 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.Enums.EtapaProjeto;
+import com.gplearning.gplearning.Models.Avaliacao;
+import com.gplearning.gplearning.Models.AvaliacaoDao;
 import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.Models.Etapa;
 import com.gplearning.gplearning.Models.EtapaDao;
@@ -42,6 +45,7 @@ public class EtapasFragment extends Fragment {
 
     private Long idProjeto;
     private EtapaDao etapaDao;
+    DaoSession session;
     private OnFragmentInteractionListener mListener;
 
     public EtapasFragment() {
@@ -80,7 +84,7 @@ public class EtapasFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_etapas, container, false);
 
         getActivity().setTitle(R.string.project_detail);
-        DaoSession session = ((App) getActivity().getApplication()).getDaoSession();
+        session = ((App) getActivity().getApplication()).getDaoSession();
         //  PessoaDao pessoaDao = session.getPessoaDao();
         //  List<Pessoa> lsPessoas = pessoaDao.loadAll();
         ProjetoDao projetoDao = session.getProjetoDao();
@@ -156,20 +160,15 @@ public class EtapasFragment extends Fragment {
 
         // descricao
         //justificativa
-
         // premissas
-
         //restrições
         //marcos
-
         //requisitos Termo de abertura
         //partes interessadas
         //
-
         //Planejamento de Escopo --http://www.flaticon.com/free-icon/brainstorm_201557#term=strategy&page=1&position=2
         // requisitos --  http://www.flaticon.com/free-icon/clipboard_235252
         // escopo  --  http://www.flaticon.com/free-icon/notebook_330705
-
 
 //        ((ImageButton) getActivity().findViewById(R.id.etapaProjetoDescricaoTAbtn)).setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -181,63 +180,73 @@ public class EtapasFragment extends Fragment {
 //        });
 
         // AtribuiEventoClick(((ImageButton) getActivity().findViewById(R.id.etapaProjetoDescricaoTAbtn)), Long.valueOf(0));
-
         // Etapa atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(idProjeto), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaDescricao)).unique();
+
+
         if (lsEtapas != null && lsEtapas.size() > 0) {
+/// inicio
+            for (final Etapa eta : lsEtapas) {
+                if (eta.getEtapa() == EtapaProjeto.DescricaoProjeto) {
+                    // ((RatingBar) getActivity().findViewById(R.id.etapaProjetoDescricaoTARatingBar)).setRating(eta.getPontuacaoMedia());
+                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoDescricaoTARatingBar)), eta.get_id());
+                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoDescricaoTAbtn)), eta.get_id());
+                } else if (eta.getEtapa() == EtapaProjeto.JustificativaProjeto) {
+                    //((RatingBar) getActivity().findViewById(R.id.etapaProjetoJustificativaTARatingBar)).setRating(eta.getPontuacaoMedia());
+                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoJustificativaTARatingBar)), eta.get_id());
+                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoJustificativaTAbtn)), eta.get_id());
+                } else if (eta.getEtapa() == EtapaProjeto.Premissas) {
+                    //   ((RatingBar) getActivity().findViewById(R.id.etapaProjetoPremissasTARatingBar)).setRating(eta.getPontuacaoMedia());
+                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoPremissasTARatingBar)), eta.get_id());
+                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoPremissasTAbtn)), eta.get_id());
 
-            for (final Etapa atv : lsEtapas) {
-                if (atv.getEtapa() == EtapaProjeto.DescricaoProjeto) {
-                    // ((RatingBar) getActivity().findViewById(R.id.etapaProjetoDescricaoTARatingBar)).setRating(atv.getPontuacaoMedia());
-                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoDescricaoTAbtn)), atv.get_id());
-                } else if (atv.getEtapa() == EtapaProjeto.JustificativaProjeto) {
-                    //((RatingBar) getActivity().findViewById(R.id.etapaProjetoJustificativaTARatingBar)).setRating(atv.getPontuacaoMedia());
-                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoJustificativaTAbtn)), atv.get_id());
+                } else if (eta.getEtapa() == EtapaProjeto.Restricoes) {
+                    // ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRestricoesTARatingBar)).setRating(eta.getPontuacaoMedia());
+                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoRestricoesTARatingBar)), eta.get_id());
+                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoRestricoesTAbtn)), eta.get_id());
 
-                } else if (atv.getEtapa() == EtapaProjeto.Premissas) {
-                    //   ((RatingBar) getActivity().findViewById(R.id.etapaProjetoPremissasTARatingBar)).setRating(atv.getPontuacaoMedia());
-                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoPremissasTAbtn)), atv.get_id());
+                } else if (eta.getEtapa() == EtapaProjeto.Marcos) {
+                    //  ((RatingBar) getActivity().findViewById(R.id.etapaProjetoMarcosTARatingBar)).setRating(eta.getPontuacaoMedia());
+                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoMarcosTARatingBar)), eta.get_id());
+                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoMarcosTAbtn)), eta.get_id());
 
-                } else if (atv.getEtapa() == EtapaProjeto.Restricoes) {
-                    // ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRestricoesTARatingBar)).setRating(atv.getPontuacaoMedia());
-                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoRestricoesTAbtn)), atv.get_id());
+                } else if (eta.getEtapa() == EtapaProjeto.RequisitosTermoAbertura) {
+                    //((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosTARatingBar)).setRating(eta.getPontuacaoMedia());
+                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosTARatingBar)), eta.get_id());
+                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoRequisitosTAbtn)), eta.get_id());
 
-                } else if (atv.getEtapa() == EtapaProjeto.Marcos) {
-                    //  ((RatingBar) getActivity().findViewById(R.id.etapaProjetoMarcosTARatingBar)).setRating(atv.getPontuacaoMedia());
-                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoMarcosTAbtn)), atv.get_id());
+                } else if (eta.getEtapa() == EtapaProjeto.Stakeholders) {
+                    //((RatingBar) getActivity().findViewById(R.id.etapaProjetoStakeholdersTARatingBar)).setRating(eta.getPontuacaoMedia());
+                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoStakeholdersTARatingBar)), eta.get_id());
+                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoStakeholdersTAbtn)), eta.get_id());
 
-                } else if (atv.getEtapa() == EtapaProjeto.RequisitosTermoAbertura) {
-                    //((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosTARatingBar)).setRating(atv.getPontuacaoMedia());
-                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoRequisitosTAbtn)), atv.get_id());
+                } else if (eta.getEtapa() == EtapaProjeto.PlanoGerenciamentoEscopo) {
+                    // ((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)).setRating(eta.getPontuacaoMedia());
+                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)), eta.get_id());
+                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoEscopobtn)), eta.get_id());
+                } else if (eta.getEtapa() == EtapaProjeto.Requisitos) {
+                    //    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosRatingBar)).setRating(eta.getPontuacaoMedia());
+                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosRatingBar)), eta.get_id());
+                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoRequisitosbtn)), eta.get_id());
+                } else if (eta.getEtapa() == EtapaProjeto.Escopo) {
+                    //   ((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)).setRating(eta.getPontuacaoMedia());
+                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)), eta.get_id());
+                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoEscopobtn)), eta.get_id());
 
-                } else if (atv.getEtapa() == EtapaProjeto.Stakeholders) {
-                    //((RatingBar) getActivity().findViewById(R.id.etapaProjetoStakeholdersTARatingBar)).setRating(atv.getPontuacaoMedia());
-                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoStakeholdersTAbtn)), atv.get_id());
-
-                } else if (atv.getEtapa() == EtapaProjeto.PlanoGerenciamentoEscopo) {
-                    // ((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)).setRating(atv.getPontuacaoMedia());
-                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoEscopobtn)), atv.get_id());
-                } else if (atv.getEtapa() == EtapaProjeto.Requisitos) {
-                    //    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosRatingBar)).setRating(atv.getPontuacaoMedia());
-                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoRequisitosbtn)), atv.get_id());
-                } else if (atv.getEtapa() == EtapaProjeto.Escopo) {
-                    //   ((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)).setRating(atv.getPontuacaoMedia());
-                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoEscopobtn)), atv.get_id());
-//                    ((ImageButton) getActivity().findViewById(R.id.etapaProjetoEscopobtn)).setOnClickListener(new View.OnClickListener() {
+                    //                    ((ImageButton) getActivity().findViewById(R.id.etapaProjetoEscopobtn)).setOnClickListener(new View.OnClickListener() {
 //                        @Override
 //                        public void onClick(View view) {
 //                            Intent intent = new Intent(getActivity(), EtapaActivity.class);
-//                            intent.putExtra("ID", atv.get_id());
+//                            intent.putExtra("ID", eta.get_id());
 //                            startActivity(intent);
 //                        }
 //                    });
                 }
             }
-            //        atv = atividadeDao.queryBuilder().where(AtividadeDao.Properties.Pro_id.eq(idProjeto), AtividadeDao.Properties.Etapa.eq(EtapaProjeto.TermoAberturaJustificativa)).unique();
-            //        if (atv != null)
-            //            ((RatingBar) getActivity().findViewById(R.id.etapaprojetoJu)).setRating(atv.getPontuacaoMedia());
-        }
-    }
+            //fim
 
+        }
+
+    }
 
     private void AtribuiEventoClick(ImageButton imageButton, final Long idEtapa) {
         MetodosPublicos.Log("Event", "Atribui evento image View");
@@ -248,10 +257,24 @@ public class EtapasFragment extends Fragment {
                 intent.putExtra(MetodosPublicos.key_idEtapa, idEtapa);
                 intent.putExtra(MetodosPublicos.key_idProjeto, idProjeto);
                 MetodosPublicos.Log("Event", "Clicou etapaID:" + idEtapa + " idProjeto:" + idProjeto);
-
                 startActivity(intent);
             }
         });
+    }
+
+    private void CalculaMediaEtapa(RatingBar ratingBar, Long idEtapa) {
+        AvaliacaoDao avaliacaoDao = session.getAvaliacaoDao();
+        if (ratingBar != null && idEtapa > 0) {
+            List<Avaliacao> lsAvaliacao = avaliacaoDao.queryBuilder().where(AvaliacaoDao.Properties.IdEtapa.eq(idEtapa), AvaliacaoDao.Properties.IdProjeto.eq(idProjeto)).list();
+            if (lsAvaliacao != null) {
+                float media = 0;
+                for (Avaliacao avaliacao : lsAvaliacao) {
+                    media += avaliacao.getValor();
+                }
+                media = media / lsAvaliacao.size();
+                ratingBar.setRating(media);
+            }
+        }
     }
 
 }

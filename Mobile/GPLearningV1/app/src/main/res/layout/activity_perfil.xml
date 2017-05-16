@@ -7,6 +7,17 @@
     android:fitsSystemWindows="true"
     tools:context="com.gplearning.gplearning.Controllers.PerfilActivity">
 
+    <include layout="@layout/content_perfil" />
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+    <!--android:id="@+id/perfilBtnFab"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="@dimen/fab_margin"-->
+    <!--app:layout_anchorGravity="bottom|end"-->
+    <!--app:srcCompat="@android:drawable/ic_dialog_email" />-->
+    <!--app:layout_anchor="@id/perfilApp_bar"-->
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/perfilApp_bar"
         android:layout_width="match_parent"
@@ -42,16 +53,5 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_perfil" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/perfilBtnFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/perfilApp_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </android.support.design.widget.CoordinatorLayout>

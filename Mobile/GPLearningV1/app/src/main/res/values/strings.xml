@@ -40,8 +40,8 @@
     <string name="title_activity_login">Login</string>
     <string name="login_loader_desc">Estamos preparando o aplicativo com os seus dados, por favor, aguarde um instante.</string>
 
-    <string name="prompt_email">E-mail</string>
-    <string name="prompt_password">Senha</string>
+    <string name="email">E-mail</string>
+    <string name="password">Senha</string>
     <string name="action_sign_in">Login</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">E-mail inválido</string>
@@ -51,6 +51,9 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="phone">Telefone</string>
+    <string name="classroom">Turma</string>
+    <string name="pontuation">Pontuação Atual</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -60,7 +63,7 @@
     <string name="choose_area">Escolher área</string>
     <string name="no_comments">Nenhum comentário realizado, seja o primeiro a comentar!</string>
     <string name="project_detail">Detalhes do Projeto</string>
-
+    <string name="year">Ano</string>
 
     <string name="last_sync">Última sincronização</string>
     <string name="title_activity_perfil">perfilActivity</string>

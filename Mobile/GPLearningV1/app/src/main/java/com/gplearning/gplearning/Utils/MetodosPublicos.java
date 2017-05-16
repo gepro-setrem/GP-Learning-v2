@@ -40,9 +40,10 @@ public class MetodosPublicos {
 
     private static String key_imagemUser = "imagem_user_";
 
-    private static String key_sync = "sync";
+    private static String key_sync = "last_sync";
     private static String key_sync_comentario = "last_sync_comentario";
     private static String key_sync_atividade = "last_sync_atividade";
+    private static String key_sync_projeto = "last_sync_projeto";
 
 
     public static final String key_idEtapa = "IdEtapa";
@@ -111,17 +112,10 @@ public class MetodosPublicos {
     }
 
     public static String SelecionaCaminhoImagem(Context context, Long idPessoa) {
-        //  return Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + key_imagemUser + idPessoa + ".jpg";
-        // File file = new File
         File path = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        // File file = new File(path, key_imagemUser + idPessoa + ".jpg");
-//        File sdCard = Environment.getExternalStorageDirectory();
-//        File directory = new File(sdCard.getAbsolutePath());
-
         File file = new File(path, key_imagemUser + idPessoa + ".jpg");
         if (file != null)
             return file.getAbsolutePath();
-
         return "notFound";
     }
 
@@ -146,18 +140,6 @@ public class MetodosPublicos {
         return false;
     }
 
-
-//    public static byte[] SelecionaSessaoImagemBytes(Context context) {
-//        try {
-//            SharedPreferences shared = context.getSharedPreferences(key_login, MODE_PRIVATE);
-//
-//            String image = shared.getString(key_image, "");
-//            return Base64.decode(image, Base64.DEFAULT);
-//        } catch (Exception e) {
-//            MetodosPublicos.Log("IMAGEM", e.toString());
-//        }
-//        return null;
-//    }
 
     public static boolean ExisteSessao(Context context) {
         SharedPreferences shared = context.getSharedPreferences(key_login, MODE_PRIVATE);
@@ -199,30 +181,41 @@ public class MetodosPublicos {
         java.text.DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         SharedPreferences pref = context.getSharedPreferences(key_sync, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        if (recurso == RecursosEnum.Comentario) {
-            editor.putString(key_sync_comentario, dateFormat.format(date));
-        } else if (recurso == RecursosEnum.atividades) {
-            editor.putString(key_sync_atividade, dateFormat.format(date));
-        }
+//        if (recurso == RecursosEnum.Comentario) {
+//            editor.putString(key_sync_comentario, dateFormat.format(date));
+//        } else if (recurso == RecursosEnum.atividades) {
+//            editor.putString(key_sync_atividade, dateFormat.format(date));
+//        }
+        editor.putString(key_sync, dateFormat.format(date));
         MetodosPublicos.Log("Data", " new Date:" + dateFormat.format(date));
 
         editor.commit();
     }
 
-    public static Date SelecionaUltimaSincronizacao(Context context, RecursosEnum recursos) throws ParseException {
+    public static Date SelecionaUltimaSincronizacao(Context context) throws ParseException {
         SharedPreferences shared = context.getSharedPreferences(key_sync, MODE_PRIVATE);
         DateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        if (recursos == RecursosEnum.Comentario) {
-            String data = shared.getString(key_sync_comentario, null);
-            if (data != null)
-                return formato.parse(data);
-        } else if (recursos == RecursosEnum.atividades) {
-            String data = shared.getString(key_sync_comentario, null);
-            if (data != null)
-                return formato.parse(data);
-        }
+//        if (recursos == RecursosEnum.Comentario) {
+//            String data = shared.getString(key_sync_comentario, null);
+//            if (data != null)
+//                return formato.parse(data);
+//        } else if (recursos == RecursosEnum.Atividades) {
+        String data = shared.getString(key_sync, null);
+        if (data != null)
+            return formato.parse(data);
         return null;
     }
+
+//    private String RetornaKeyRecurso(RecursosEnum recurso) {
+//        if (recurso == RecursosEnum.Comentario) {
+//            return key_sync_comentario;
+//        } else if (recurso == RecursosEnum.Atividades) {
+//            return key_sync_atividade;
+//        } else if (recurso == RecursosEnum.Projetos) {
+//            return key_sync_projeto;
+//        }
+//        return "";
+//    }
 
     public static final boolean IsConnected(Context context) {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

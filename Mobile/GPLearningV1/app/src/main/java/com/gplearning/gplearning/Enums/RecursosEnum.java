@@ -2,5 +2,5 @@ package com.gplearning.gplearning.Enums;
 
 
 public enum RecursosEnum {
-    Comentario,Projetos, atividades
+    Comentario,Projetos, Atividades
 }

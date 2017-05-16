@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity
 //                atv.setId(1);
 
                 Sincronizacao sc = new Sincronizacao();
-                sc.SincronizaComentarios(MainActivity.this);
+                sc.SincronizaAplicativoData(MainActivity.this);
 //                ComentarioDao daoCom = daoSession.getComentarioDao();
 //                //   ComentarioDao cDao
 //                daoCom = daoSession.getComentarioDao();
@@ -300,13 +300,6 @@ public class MainActivity extends AppCompatActivity
             MetodosPublicos.CarregaimagemPerfil(this, ((ImageView) hView.findViewById(R.id.headerImage)), pessoa.get_id());
             String path = MetodosPublicos.SelecionaCaminhoImagem(this, pessoa.get_id());
             MetodosPublicos.Log("Img", "caminho Imagem:" + path);
-//            BitmapFactory.Options options = new BitmapFactory.Options();
-//            options.inSampleSize = 8;
-//            final Bitmap bitmap = BitmapFactory.decodeFile(path, options);
-//            ((ImageView) hView.findViewById(R.id.headerImage)).setImageBitmap(bitmap);
-            // Picasso.with(this).setLoggingEnabled(true);
-            // ((ImageView) hView.findViewById(R.id.headerImage)).setVisibility(View.VISIBLE);
-            //  Picasso.with(this).load(new File(path)).into(((ImageView) hView.findViewById(R.id.headerImage)));
         }
     }
 
