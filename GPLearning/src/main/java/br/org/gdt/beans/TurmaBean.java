@@ -90,6 +90,7 @@ public class TurmaBean {
             turma.setProfessor(usuario);
             if (turma.getEtapas() != null) {
                 for (Etapa etapa : turma.getEtapas()) {
+                    etapa.setTurma(turma);
                     if (etapa.getId() == 0 || etapa.getCriacao() == null) {
                         etapa.setCriacao(new Date());
                     }

@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
@@ -36,6 +37,9 @@ public class Indicador implements Serializable {
 
     @ManyToMany(mappedBy = "indicadores", cascade = CascadeType.REMOVE)
     private List<Etapa> etapas;
+
+    @OneToMany(mappedBy = "indicador")
+    private List<Avaliacao> avaliacoes;
 
     public Indicador() {
     }
@@ -70,6 +74,14 @@ public class Indicador implements Serializable {
 
     public void setEtapas(List<Etapa> etapas) {
         this.etapas = etapas;
+    }
+
+    public List<Avaliacao> getAvaliacoes() {
+        return avaliacoes;
+    }
+
+    public void setAvaliacoes(List<Avaliacao> avaliacoes) {
+        this.avaliacoes = avaliacoes;
     }
 
     @Override

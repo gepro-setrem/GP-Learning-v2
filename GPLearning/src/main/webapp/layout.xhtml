@@ -11,16 +11,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet name="./css/bootstrap.min.css"/>
         <h:outputStylesheet name="./css/cssDefault.css"/>
+        <link href="../resources/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+        <link href="./resources/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
         <!--<h:outputStylesheet name="./font-awesome-4.7.0/css/font-awesome.css"/>-->
         <!--<h:outputStylesheet name="./data-tables/dataTables.min.css" />-->
         <h:outputScript name="./js/jquery-3.2.0.min.js"/>
         <h:outputScript name="./js/bootstrap.min.js"/>
         <h:outputScript name="./js/jsLayout.js"/>
         <!--<h:outputScript name="./data-tables/dataTables.min.js"/>-->
-        <link href="./resources/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-        <!--        <script src="../js/jquery-3.2.0.min.js" type="text/javascript"></script>-->
-        <!--        <script src="../js/bootstrap.min.js" type="text/javascript"></script>
-                <link href="../css/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>-->
+        <!--<script src="../js/jquery-3.2.0.min.js" type="text/javascript"></script>-->
+        <!--<script src="../js/bootstrap.min.js" type="text/javascript"></script>-->
         <ui:insert name="head"></ui:insert>
     </h:head>
 
@@ -57,7 +57,7 @@
                     <ul class="nav navbar-nav navbar-right" style="display: #{perfilBean.hasSession ? 'block' : 'none'}; margin: 0;">
                         <li><h:link outcome="/user/projetolst.xhtml">Meus Projetos</h:link></li>
                         <li><p class="navbar-text">Olá, #{perfilBean.usuario.nome}</p></li>
-                        <li><h:outputLink value="../logout">Sair <i class="fa-sign-out"></i></h:outputLink></li>
+                        <li><h:outputLink value="./logout">Sair <i class="fa-sign-out"></i></h:outputLink></li>
                     </ul>
                 </div>
             </div>

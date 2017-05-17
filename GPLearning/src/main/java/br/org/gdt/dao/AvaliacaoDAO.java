@@ -38,4 +38,9 @@ public class AvaliacaoDAO extends DAO<Avaliacao> {
         return entityManager.createQuery("from Avaliacao where projeto = :p and etapa = :e")
                 .setParameter("p", projeto).setParameter("e", etapa).getResultList();
     }
+
+    public List<Avaliacao> findbyProjetoIndicador(Projeto projeto, Indicador indicador) {
+        return entityManager.createQuery("from Avaliacao where projeto = :p and indicador = :i")
+                .setParameter("p", projeto).setParameter("i", indicador).getResultList();
+    }
 }

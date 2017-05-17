@@ -175,7 +175,7 @@ public class ProjetoProfessorBean {
             if (projeto != null && projeto.getTurma() != null && projeto.getTurma().getId() > 0) {
                 etapas = etapaBLL.findbyTurma(projeto.getTurma());
                 for (Etapa etapa : etapas) {
-                    List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbProjetoEtapa(projeto, etapa);
+                    List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyProjetoEtapa(projeto, etapa);
                     etapa.setAvaliacoes(lsAvaliacao);
                     List<Comentario> lsComentario = comentarioBLL.findbyProjetoEtapa(projeto, etapa, true);
                     etapa.setComentarios(lsComentario);

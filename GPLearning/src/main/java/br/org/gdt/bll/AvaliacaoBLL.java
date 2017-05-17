@@ -24,10 +24,18 @@ public class AvaliacaoBLL extends BLL<Avaliacao> {
         return lsAvaliacao;
     }
 
-    public List<Avaliacao> findbProjetoEtapa(Projeto projeto, Etapa etapa) {
+    public List<Avaliacao> findbyProjetoEtapa(Projeto projeto, Etapa etapa) {
         List<Avaliacao> lsAvaliacao = new ArrayList<>();
         if (etapa != null && etapa.getId() > 0 && projeto != null && projeto.getId() > 0) {
             lsAvaliacao = dao.findbyProjetoEtapa(projeto, etapa);
+        }
+        return lsAvaliacao;
+    }
+
+    public List<Avaliacao> findbyProjetoIndicador(Projeto projeto, Indicador indicador) {
+        List<Avaliacao> lsAvaliacao = new ArrayList<>();
+        if (indicador != null && indicador.getId() > 0 && projeto != null && projeto.getId() > 0) {
+            lsAvaliacao = dao.findbyProjetoIndicador(projeto, indicador);
         }
         return lsAvaliacao;
     }

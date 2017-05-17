@@ -1,17 +1,18 @@
 package br.org.gdt.beans;
 
+import br.org.gdt.bll.AvaliacaoBLL;
 import br.org.gdt.bll.ComentarioBLL;
 import br.org.gdt.bll.EtapaBLL;
 import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.bll.ProjetoBLL;
 import br.org.gdt.enumerated.EtapaProjeto;
+import br.org.gdt.model.Avaliacao;
 import br.org.gdt.model.Comentario;
 import br.org.gdt.model.Etapa;
 import br.org.gdt.model.Pessoa;
 import br.org.gdt.model.Projeto;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -43,6 +44,9 @@ public class ComentarioBean {
     @ManagedProperty("#{projetoBLL}")
     private ProjetoBLL projetoBLL;
     private Projeto projeto = new Projeto();
+
+    @ManagedProperty("#{avaliacaoBLL}")
+    private AvaliacaoBLL avaliacaoBLL;
 
     public ComentarioBean() {
     }
@@ -150,6 +154,8 @@ public class ComentarioBean {
         if (projeto != null && etapaProjeto != null) {
             etapa = etapaBLL.findbyTurmaEtapa(projeto.getTurma(), etapaProjeto);
             atualizar();
+            List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyProjetoEtapa(projeto, etapa);
+            etapa.setAvaliacoes(lsAvaliacao);
         }
     }
 
@@ -167,5 +173,13 @@ public class ComentarioBean {
             ByteArrayInputStream bais = new ByteArrayInputStream(imagem);
             return new DefaultStreamedContent(bais);
         }
+    }
+
+    public AvaliacaoBLL getAvaliacaoBLL() {
+        return avaliacaoBLL;
+    }
+
+    public void setAvaliacaoBLL(AvaliacaoBLL avaliacaoBLL) {
+        this.avaliacaoBLL = avaliacaoBLL;
     }
 }
