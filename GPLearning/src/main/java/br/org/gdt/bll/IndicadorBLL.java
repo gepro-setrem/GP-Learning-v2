@@ -31,6 +31,7 @@ public class IndicadorBLL extends BLL<Indicador> {
                 for(Indicador indicador:lsIndicador){
                     indicador.setEtapas(null);
                     indicador.setProfessor(null);
+                    indicador.setAvaliacoes(null);
                 }
             }
         }
