@@ -115,7 +115,15 @@ public class ProjetoBLL extends BLL<Projeto> {
                     projeto.getTurma().setAcademicos(null);
                     projeto.getTurma().setProjetos(null);
                     projeto.getTurma().setTurmaParametros(null);
-                    projeto.getTurma().setEtapas(etapaBLL.findbyTurma(projeto.getTurma()));
+                    projeto.getTurma().setEtapas(null);//etapaBLL.findbyTurma(projeto.getTurma()));
+                    if (projeto.getTurma().getProfessor() != null) {
+                        projeto.getTurma().getProfessor().setIndicadoresprofessor(null);
+                        projeto.getTurma().getProfessor().setLogin(null);
+                        projeto.getTurma().getProfessor().setProjetos(null);
+                        projeto.getTurma().getProfessor().setProjetosgerente(null);
+                        projeto.getTurma().getProfessor().setTurma(null);
+                        projeto.getTurma().getProfessor().setTurmasprofessor(null);
+                    }
                 }
 
                 List<EAP> eaps = new ArrayList<>();
@@ -169,5 +177,27 @@ public class ProjetoBLL extends BLL<Projeto> {
         projeto.setStakeholders(null);
         projeto.setTermoabertura(null);
         return projeto;
+    }
+
+    public List<Projeto> findProjetoDate(Projeto prj) {
+        if (prj != null) {
+            List<Projeto> lsProjeto = dao.findbyDate(prj.getAlteracao());
+            if (lsProjeto != null) {
+                for (Projeto projeto : lsProjeto) {
+                    if (projeto != null) {
+                        projeto.setAvaliacoes(null);
+                        projeto.setComentarios(null);
+                        projeto.setComponentes(null);
+                        projeto.setEaps(null);
+                        projeto.setRequisitos(null);
+                        projeto.setStakeholders(null);
+                        projeto.setTermoabertura(null);
+                        projeto.setTurma(null);
+                    }
+                }
+                return lsProjeto;
+            }
+        }
+        return null;
     }
 }

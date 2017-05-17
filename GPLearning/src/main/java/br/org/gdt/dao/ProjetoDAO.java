@@ -7,7 +7,9 @@ import br.org.gdt.model.Stakeholder;
 import br.org.gdt.model.Turma;
 import br.org.gdt.model.Pessoa;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.persistence.TemporalType;
 import org.springframework.stereotype.Repository;
 
 @Repository("projetoDAO")
@@ -45,6 +47,11 @@ public class ProjetoDAO extends DAO<Projeto> {
             projeto = lsProjeto.get(0);
         }
         return projeto;
+    }
+    
+     public List<Projeto> findbyDate(Date date) {
+         return entityManager.createQuery("from Projeto where pro_dalteracao >= :d")
+                .setParameter("d", date, TemporalType.DATE).getResultList();
     }
 
 //    public Projeto findByIdRelatorio(int id) {
