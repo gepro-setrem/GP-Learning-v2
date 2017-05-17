@@ -176,6 +176,7 @@ public class ProjetoBLL extends BLL<Projeto> {
         projeto.setRequisitos(null);
         projeto.setStakeholders(null);
         projeto.setTermoabertura(null);
+        projeto.setComentarios(null);
         return projeto;
     }
 
