@@ -36,6 +36,7 @@ public class ComentarioActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ComentarioAdapter comentarioAdapter; //ArrayAdapter<Comentario> comentario2Adapter;
     private Long idEtapa;
+    private Long idProjeto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,9 @@ public class ComentarioActivity extends AppCompatActivity {
         if (intent != null) {
             if (intent.getExtras().containsKey(MetodosPublicos.key_idEtapa)) {
                 idEtapa = intent.getLongExtra(MetodosPublicos.key_idEtapa, Long.valueOf(0));
+            }
+            if (intent.getExtras().containsKey(MetodosPublicos.key_idProjeto)) {
+                idProjeto = intent.getLongExtra(MetodosPublicos.key_idProjeto, Long.valueOf(0));
             }
         }
 
@@ -68,7 +72,6 @@ public class ComentarioActivity extends AppCompatActivity {
             public void onItemClick(View view, int position) {
                 Log.i("Event", "Clicou");
             }
-
             @Override
             public void onLongItemClick(View view, int position) {
                 Log.i("Event", "Long Click");
@@ -111,7 +114,7 @@ public class ComentarioActivity extends AppCompatActivity {
         EditText coment = (EditText) findViewById(R.id.comentarioNovo);
         try {
             if (!coment.getText().toString().isEmpty()) {
-                final Comentario COM = new Comentario(null, 0, coment.getText().toString(), new Date(), MetodosPublicos.SelecionaSessaoId(this), idEtapa);
+                final Comentario COM = new Comentario(null, 0, coment.getText().toString(), new Date(), MetodosPublicos.SelecionaSessaoId(this), idEtapa, idProjeto);
                 final ComentarioDAO comentarioDAO = new ComentarioDAO();
                 long id = dao.insert(COM);
                 MetodosPublicos.Log("Event", "id:" + COM.get_id());
@@ -166,7 +169,6 @@ public class ComentarioActivity extends AppCompatActivity {
         }
     }
 
-
     private class SalvaComentario extends AsyncTask<Comentario, String, Comentario> {
 
         @Override
@@ -199,9 +201,7 @@ public class ComentarioActivity extends AppCompatActivity {
     private class DeletaComentario extends AsyncTask<Comentario, String, Boolean> {
         Comentario comentario;
 
-        public DeletaComentario() {
-
-        }
+        public DeletaComentario() {}
 
         @Override
         protected Boolean doInBackground(Comentario... comentarios) {

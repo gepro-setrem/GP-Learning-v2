@@ -37,13 +37,14 @@ public class ProjetoDAO extends DefaultDAO {
 
     public Projeto SelecionaProjetoCompleto(int pro_id) {
         String url = UrlDefault + "/projeto/index/projeto/" + pro_id;
+        MetodosPublicos.Log("projetoCompleto", " vai selecionar projetoCompleto" + url);
         RestTemplate restTemplate = getResTemplateDefault();
         Projeto projeto = restTemplate.getForObject(url, Projeto.class);
         return projeto;
     }
 
     public List<Projeto> SelecionaProjetosData(Date date) {
-        String url = UrlDefault + "/projeto/index/date";
+        String url = UrlDefault + "/projeto/date";
         RestTemplate restTemplate = getResTemplateDefault();
         Projeto projeto = new Projeto();
         projeto.setCriacao(date);

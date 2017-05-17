@@ -27,6 +27,8 @@ import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 import com.gplearning.gplearning.Utils.Sincronizacao;
 
+import java.text.ParseException;
+
 //import android.support.v4.app.Fragment;
 
 public class MainActivity extends AppCompatActivity
@@ -60,7 +62,11 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        AtualizaHeaderMain();
+        try {
+            AtualizaHeaderMain();
+        } catch (ParseException e) {
+            MetodosPublicos.Log("ERRO","erro atualiza perfil:"+e.toString());
+        }
 
         if (!MetodosPublicos.ExisteSessao(this)) {
             Log.i("Event", "string null, vai para login");
@@ -288,19 +294,24 @@ public class MainActivity extends AppCompatActivity
 //        }
 //        // END_INCLUDE(connect)
 //    }
-    public void AtualizaHeaderMain() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View hView = navigationView.getHeaderView(0);
-        ((TextView) hView.findViewById(R.id.headerName)).setText(MetodosPublicos.SelecionaSessaoNome(this));
-        ((TextView) hView.findViewById(R.id.headerEmail)).setText(MetodosPublicos.SelecionaSessaoEmail(this));
-        DaoSession daoSession = ((App) getApplicationContext()).getDaoSession();
-        PessoaDao pessoaDao = daoSession.getPessoaDao();
-        Pessoa pessoa = pessoaDao.load(MetodosPublicos.SelecionaSessaoId(this));
-        if (pessoa != null) {
-            MetodosPublicos.CarregaimagemPerfil(this, ((ImageView) hView.findViewById(R.id.headerImage)), pessoa.get_id());
-            String path = MetodosPublicos.SelecionaCaminhoImagem(this, pessoa.get_id());
-            MetodosPublicos.Log("Img", "caminho Imagem:" + path);
+
+    public void AtualizaHeaderMain() throws ParseException {
+        if(MetodosPublicos.ExisteSessao(this)) {
+            MetodosPublicos.Log("Img", "ATUALIZA CAMINHO IMAGEM PERFIL E ATUALZIA APP DATA");
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            View hView = navigationView.getHeaderView(0);
+            ((TextView) hView.findViewById(R.id.headerName)).setText(MetodosPublicos.SelecionaSessaoNome(this));
+            ((TextView) hView.findViewById(R.id.headerEmail)).setText(MetodosPublicos.SelecionaSessaoEmail(this));
+            DaoSession daoSession = ((App) getApplicationContext()).getDaoSession();
+            PessoaDao pessoaDao = daoSession.getPessoaDao();
+            Pessoa pessoa = pessoaDao.load(MetodosPublicos.SelecionaSessaoId(this));
+            if (pessoa != null) {
+                MetodosPublicos.CarregaimagemPerfil(this, ((ImageView) hView.findViewById(R.id.headerImage)), pessoa.get_id());
+                // String path = MetodosPublicos.SelecionaCaminhoImagem(this, pessoa.get_id());
+            }
+            Sincronizacao.SincronizaAplicativoData(MainActivity.this);
         }
+
     }
 
 }

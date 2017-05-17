@@ -292,15 +292,28 @@ public class Sincronizacao {
      * @param context
      * @throws ParseException
      */
-    public static void SincronizaAplicativoData(Context context) throws ParseException {
-        DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
-        Date ultimaAtualizacao = MetodosPublicos.SelecionaUltimaSincronizacao(context);
-        AtualizaProjeto(daoSession, ultimaAtualizacao);
-        AtualizaTermoAbertura(daoSession, ultimaAtualizacao);
-        AtualizaRequisitos(daoSession, ultimaAtualizacao);
-        AtualizaStakeholders(daoSession, ultimaAtualizacao);
-        AtualizaComentarios(context);
-        AtualizaAvaliacoes(daoSession, context);
+
+    public static void SincronizaAplicativoData(final Context context) throws ParseException {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
+                Date ultimaAtualizacao = null;
+                try {
+                    ultimaAtualizacao = MetodosPublicos.SelecionaUltimaSincronizacao(context);
+                    AtualizaProjeto(daoSession, context);
+                    AtualizaTermoAbertura(daoSession, ultimaAtualizacao);
+                    AtualizaRequisitos(daoSession, ultimaAtualizacao);
+                    AtualizaStakeholders(daoSession, ultimaAtualizacao);
+                    AtualizaComentarios(context);
+                    AtualizaAvaliacoes(daoSession, context);
+                } catch (ParseException e) {
+                    MetodosPublicos.Log("ERRO ", "SINCRONIZACAO :" + e.toString());
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
     }
 
     // metodos
@@ -406,10 +419,10 @@ public class Sincronizacao {
 
     }
 
-    private static void AtualizaProjeto(DaoSession daoSession, Date data) {
+    private static void AtualizaProjeto(DaoSession daoSession, Context context) {
         ProjetoDAO projetoDAO = new ProjetoDAO();
         ProjetoDao daoProjeto = daoSession.getProjetoDao();
-        List<Projeto> lsProjetos = projetoDAO.SelecionaProjetosData(data);
+        List<Projeto> lsProjetos = projetoDAO.SelecionaProjetosAluno(MetodosPublicos.SelecionaSessaoidExterno(context)); //Data(data);
         if (lsProjetos != null) {
             for (Projeto projeto : lsProjetos) {
                 Projeto projetoLite = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(projeto.get_id())).limit(1).unique();
@@ -577,7 +590,7 @@ public class Sincronizacao {
     private static Long InsereSeNaoEncontraPessoa(DaoSession daoSession, Pessoa pessoa) {
         PessoaDao daoPessoa = daoSession.getPessoaDao();
         Pessoa gerenteLite = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(pessoa.getId())).limit(1).unique();
-        if (gerenteLite != null) {
+        if (gerenteLite == null) {
             return daoPessoa.insert(pessoa);
         } else {
             return gerenteLite.get_id();

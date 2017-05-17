@@ -76,6 +76,7 @@ public class EtapaActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(EtapaActivity.this, ComentarioActivity.class);
                 intent.putExtra(MetodosPublicos.key_idEtapa, idEtapa);
+                intent.putExtra(MetodosPublicos.key_idProjeto, idProjeto);
                 startActivity(intent);
             }
         });

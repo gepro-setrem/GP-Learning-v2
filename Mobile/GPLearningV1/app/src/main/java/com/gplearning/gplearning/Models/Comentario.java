@@ -40,6 +40,10 @@ public class Comentario {
     @ToOne(joinProperty = "idRemetente")
     private Pessoa remetente;
 
+    private Long idProjeto;
+    @ToOne(joinProperty = "idProjeto")
+    private Projeto projeto;
+
     /**
      * Used to resolve relations
      */
@@ -58,6 +62,9 @@ public class Comentario {
     @Generated(hash = 298126781)
     private transient Long etapa__resolvedKey;
 
+    @Generated(hash = 1369604525)
+    private transient Long projeto__resolvedKey;
+
 
     public Comentario() {
     }
@@ -68,18 +75,19 @@ public class Comentario {
 
     @Keep
     public Comentario(Long _id, int id, @NotNull String descricao, Date criacao,
-                      Long idRemetente, Long idEtapa) {
+                      Long idRemetente, Long idEtapa, Long idProjeto) {
         this._id = _id;
         this.id = id;
         this.descricao = descricao;
         this.criacao = criacao;
         this.idRemetente = idRemetente;
         this.idEtapa = idEtapa;
+        this.idProjeto = idProjeto;
     }
 
-    @Generated(hash = 2114313461)
+    @Generated(hash = 7894149)
     public Comentario(Long _id, int id, @NotNull String descricao, Date criacao,
-                      boolean deletado, Long idEtapa, Long idRemetente) {
+            boolean deletado, Long idEtapa, Long idRemetente, Long idProjeto) {
         this._id = _id;
         this.id = id;
         this.descricao = descricao;
@@ -87,8 +95,8 @@ public class Comentario {
         this.deletado = deletado;
         this.idEtapa = idEtapa;
         this.idRemetente = idRemetente;
+        this.idProjeto = idProjeto;
     }
-
 
     public Long get_id() {
         return _id;
@@ -164,6 +172,24 @@ public class Comentario {
 
     public void setDeletado(boolean deletado) {
         this.deletado = deletado;
+    }
+
+    public Long getIdProjeto() {
+        return idProjeto;
+    }
+
+    public void setIdProjeto(Long idProjeto) {
+        this.idProjeto = idProjeto;
+    }
+
+    @Keep
+    public Projeto getProjeto() {
+        return projeto;
+    }
+
+    @Keep
+    public void setProjeto(Projeto projeto) {
+        this.projeto = projeto;
     }
 
     @Override
