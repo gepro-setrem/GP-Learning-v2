@@ -25,8 +25,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 @Entity
 public class Pessoa implements Serializable {

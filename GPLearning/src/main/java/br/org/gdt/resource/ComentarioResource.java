@@ -76,8 +76,13 @@ public class ComentarioResource {
         Pessoa aluno = pessoaBLL.findById(pes_id);
         if (aluno != null) {
             List<Etapa> lsEtapas = etapaBLL.findbyTurma(aluno.getTurma());
-            for (Etapa etapa : lsEtapas) {
-                lsComentarios.addAll(comentarioBLL.findbyEtapa(etapa, true));
+            List<Projeto> lsProjetos = projetoBLL.findbyAluno(aluno);
+            if (lsProjetos != null) {
+                for (Projeto projeto : lsProjetos) {
+                    for (Etapa etapa : lsEtapas) {
+                        lsComentarios.addAll(comentarioBLL.findbyProjetoEtapa(projeto, etapa, true));
+                    }
+                }
             }
             return lsComentarios;
         }
