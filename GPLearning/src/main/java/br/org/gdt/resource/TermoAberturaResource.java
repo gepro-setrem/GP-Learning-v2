@@ -27,7 +27,7 @@ public class TermoAberturaResource {
     private PessoaBLL pessoaBLL;
     @Autowired
     private ProjetoBLL projetoBLL;
-     @Autowired
+    @Autowired
     private TermoAberturaBLL termoAberturaBLL;
 
     @GET
@@ -38,8 +38,8 @@ public class TermoAberturaResource {
         Pessoa pessoa = pessoaBLL.findById(pes_id);
         if (pessoa != null) {
             List<Projeto> lsProjeto = projetoBLL.findbyAluno(pessoa);
-            if(lsProjeto!=null){
-                for(Projeto prj:lsProjeto){
+            if (lsProjeto != null) {
+                for (Projeto prj : lsProjeto) {
                     TermoAbertura ta = termoAberturaBLL.findByProjetoCompleto(prj);
                     lsTermoAbertura.add(ta);
                 }

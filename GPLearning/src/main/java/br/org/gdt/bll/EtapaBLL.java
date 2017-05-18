@@ -5,6 +5,7 @@ import br.org.gdt.enumerated.EtapaProjeto;
 import br.org.gdt.model.Etapa;
 import br.org.gdt.model.Turma;
 import br.org.gdt.model.Indicador;
+import br.org.gdt.model.Projeto;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,7 @@ public class EtapaBLL extends BLL<Etapa> {
         }
         return etapa;
     }
+    
 
     public String getEtapaProjeto(EtapaProjeto type) {
         switch (type) {

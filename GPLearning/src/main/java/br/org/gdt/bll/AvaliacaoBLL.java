@@ -70,6 +70,7 @@ public class AvaliacaoBLL extends BLL<Avaliacao> {
                     if (avaliacao.getIndicador() != null) {
                         avaliacao.getIndicador().setEtapas(null);
                         avaliacao.getIndicador().setProfessor(null);
+                        avaliacao.getIndicador().setAvaliacoes(null);
                     }
                     if (avaliacao.getEtapa() != null) {
                         avaliacao.getEtapa().setAtividadeParametros(null);
@@ -87,6 +88,8 @@ public class AvaliacaoBLL extends BLL<Avaliacao> {
                         avaliacao.getProjeto().setStakeholders(null);
                         avaliacao.getProjeto().setTermoabertura(null);
                         avaliacao.getProjeto().setTurma(null);
+                        avaliacao.getProjeto().setAvaliacoes(null);
+                        avaliacao.getProjeto().setComentarios(null);
                     }
                 }
             }

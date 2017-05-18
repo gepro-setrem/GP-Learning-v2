@@ -11,6 +11,7 @@ import br.org.gdt.model.Pessoa;
 import br.org.gdt.model.Requisito;
 import br.org.gdt.model.Stakeholder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedProperty;
 import org.hibernate.Hibernate;
@@ -38,6 +39,8 @@ public class ProjetoBLL extends BLL<Projeto> {
     private TarefaBLL tarefaBLL;
     @Autowired
     private EtapaBLL etapaBLL;
+    @Autowired
+    private AvaliacaoBLL avaliacaoBLL;
 
     public List<Projeto> findbyAluno(Pessoa aluno) {
         List<Projeto> lsProjeto = new ArrayList<>();
@@ -132,6 +135,8 @@ public class ProjetoBLL extends BLL<Projeto> {
                 projeto.setRequisitos(requisitoBLL.findbyProjeto(projeto));
                 projeto.setStakeholders(stakeholderBLL.findbyProjeto(projeto));
                 projeto.setTermoabertura(termoAberturaBLL.findByProjetoCompleto(projeto));
+                projeto.setAvaliacoes(avaliacaoBLL.findbyProjeto(projeto));
+                projeto.setComentarios(null);
 
                 List<Pessoa> compenentes = pessoaBLL.findbyProjeto(projeto);
                 if (compenentes != null) {
@@ -177,12 +182,13 @@ public class ProjetoBLL extends BLL<Projeto> {
         projeto.setStakeholders(null);
         projeto.setTermoabertura(null);
         projeto.setComentarios(null);
+        projeto.setAvaliacoes(null);
         return projeto;
     }
 
-    public List<Projeto> findProjetoDate(Projeto prj) {
-        if (prj != null) {
-            List<Projeto> lsProjeto = dao.findbyDate(prj.getAlteracao());
+    public List<Projeto> findProjetoDate(Date data, Pessoa aluno) {
+        if (data != null) {
+            List<Projeto> lsProjeto = dao.findbyDate(data, aluno);
             if (lsProjeto != null) {
                 for (Projeto projeto : lsProjeto) {
                     if (projeto != null) {

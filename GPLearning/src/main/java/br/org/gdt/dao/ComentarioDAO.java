@@ -41,4 +41,13 @@ public class ComentarioDAO extends DAO<Comentario> {
 //          return entityManager.createQuery("select c from Comentario as c left join c.atividade as atv where atv = :a")
 //                .setParameter("a", atividade).getResultList();
     }
+    
+     public List<Comentario> findbyProjeto(Projeto projeto, boolean orderDesc) {
+        String order = " order by id";
+        if (orderDesc) {
+            order += " desc";
+        }
+        return entityManager.createQuery("from Comentario where projeto = :p" + order)
+                .setParameter("p", projeto).getResultList();
+    }
 }

@@ -43,11 +43,27 @@ public class ComentarioBLL extends BLL<Comentario> {
                         com.getRemetente().setTurmasprofessor(null);
                         com.getRemetente().setProjetosgerente(null);
                         com.getRemetente().setIndicadoresprofessor(null);
+                        com.getRemetente().setImagem(null);
+                        com.getRemetente().setTurma(null);
                     }
                     if (com.getEtapa() != null) {
                         com.getEtapa().setTurma(null);
                         com.getEtapa().setComentarios(null);
                         com.getEtapa().setAtividadeParametros(null);
+                        com.getEtapa().setAvaliacoes(null);
+                        com.getEtapa().setIndicadores(null);
+                    }
+                    if (com.getProjeto() != null) {
+                        com.getProjeto().setComponentes(null);
+                        com.getProjeto().setEaps(null);
+                        com.getProjeto().setGerente(null);
+                        com.getProjeto().setTermoabertura(null);
+                        com.getProjeto().setTurma(null);
+                        com.getProjeto().setRequisitos(null);
+                        com.getProjeto().setStakeholders(null);
+                        com.getProjeto().setTermoabertura(null);
+                        com.getProjeto().setComentarios(null);
+                        com.getProjeto().setAvaliacoes(null);
                     }
                 }
             }

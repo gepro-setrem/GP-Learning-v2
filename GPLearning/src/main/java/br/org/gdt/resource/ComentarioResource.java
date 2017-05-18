@@ -8,7 +8,11 @@ package br.org.gdt.resource;
 import br.org.gdt.bll.EtapaBLL;
 import br.org.gdt.model.Comentario;
 import br.org.gdt.bll.ComentarioBLL;
+import br.org.gdt.bll.PessoaBLL;
+import br.org.gdt.bll.ProjetoBLL;
 import br.org.gdt.model.Etapa;
+import br.org.gdt.model.Pessoa;
+import br.org.gdt.model.Projeto;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +38,11 @@ public class ComentarioResource {
     @Autowired
     private EtapaBLL etapaBLL;
 
+    @Autowired
+    private ProjetoBLL projetoBLL;
+    @Autowired
+    private PessoaBLL pessoaBLL;
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/index/{eta_id}")
@@ -48,7 +57,7 @@ public class ComentarioResource {
         }
         return lsComentario;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/comentario/{com_id}")
@@ -57,12 +66,29 @@ public class ComentarioResource {
         //  List<Comentario> lsComentario = new ArrayList<Comentario>();
         return comentarioBLL.findById(com_id);
     }
-    
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/pessoa/{pes_id}")
+    public List<Comentario> getbyPessoa(@PathParam("pes_id") int pes_id) {
+        System.out.println("chegou no metodo id:" + pes_id);
+        List<Comentario> lsComentarios = new ArrayList<>();
+        Pessoa aluno = pessoaBLL.findById(pes_id);
+        if (aluno != null) {
+            List<Etapa> lsEtapas = etapaBLL.findbyTurma(aluno.getTurma());
+            for (Etapa etapa : lsEtapas) {
+                lsComentarios.addAll(comentarioBLL.findbyEtapa(etapa, true));
+            }
+            return lsComentarios;
+        }
+        return null;
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/date")
     public List<Comentario> getAllFromDate(Comentario comentario) {
-      //  System.out.println("chegou no metodo date:" + date.toString());
+        //  System.out.println("chegou no metodo date:" + date.toString());
         List<Comentario> lsComentario = new ArrayList<>();
         if (null != comentario && comentario.getCriacao() != null) {
             lsComentario = comentarioBLL.findbyDate(comentario.getCriacao());

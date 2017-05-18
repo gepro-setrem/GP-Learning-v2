@@ -241,17 +241,21 @@ public class Pessoa implements Serializable {
         return nome;
     }
 
-    public StreamedContent getStreamedImagem() throws IOException {
-        FacesContext context = FacesContext.getCurrentInstance();
-        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
-            return new DefaultStreamedContent();
-        } else {
-            StreamedContent img = null;
-            if (imagem != null && imagem.length > 0) {
-                ByteArrayInputStream bais = new ByteArrayInputStream(imagem);
-                img = new DefaultStreamedContent(bais);
+    public StreamedContent getStreamedImagem() {
+        try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+                return new DefaultStreamedContent();
+            } else {
+                StreamedContent img = null;
+                if (imagem != null && imagem.length > 0) {
+                    ByteArrayInputStream bais = new ByteArrayInputStream(imagem);
+                    img = new DefaultStreamedContent(bais);
+                }
+                return img;
             }
-            return img;
+        } catch (Exception e) {
+            return null;
         }
     }
 }

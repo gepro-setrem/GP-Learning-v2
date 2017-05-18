@@ -33,12 +33,12 @@ public class ProjetoDAO extends DAO<Projeto> {
         return entityManager.createQuery("from Projeto where turma = :t")
                 .setParameter("t", turma).getResultList();
     }
-    
+
     public List<Projeto> findbyProfessor(Pessoa professor) {
         return entityManager.createQuery("from Projeto where turma.professor = :p")
                 .setParameter("p", professor).getResultList();
     }
-    
+
     public Projeto findbyTermoAbertura(TermoAbertura termoabertura) {
         List<Projeto> lsProjeto = entityManager.createQuery("from Projeto where termoabertura = :p")
                 .setParameter("p", termoabertura).getResultList();
@@ -48,10 +48,13 @@ public class ProjetoDAO extends DAO<Projeto> {
         }
         return projeto;
     }
-    
-     public List<Projeto> findbyDate(Date date) {
-         return entityManager.createQuery("from Projeto where pro_dalteracao >= :d")
-                .setParameter("d", date, TemporalType.DATE).getResultList();
+
+    public List<Projeto> findbyDate(Date date, Pessoa aluno) {
+        return entityManager.createQuery("select p from Projeto as p left join p.componentes as c where c = :a and pro_dalteracao >= :d")
+                .setParameter("d", date, TemporalType.DATE)
+                .setParameter("a", aluno).getResultList();
+//                  return entityManager.createQuery("from Projeto where pro_dalteracao >= :d")
+
     }
 
 //    public Projeto findByIdRelatorio(int id) {

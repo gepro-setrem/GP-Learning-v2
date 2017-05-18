@@ -33,7 +33,7 @@ public class AvaliacaoResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/index/{pes_id}")
+    @Path("/pessoa/{pes_id}")
     public List<Avaliacao> getAvaliacoesPessoa(@PathParam("pes_id") int pes_id) {
         List<Avaliacao> lsAvaliacao = new ArrayList<>();
         if (pes_id > 0) {
