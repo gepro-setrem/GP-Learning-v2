@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class ComentarioDAO extends DefaultDAO {
@@ -30,15 +29,17 @@ public class ComentarioDAO extends DefaultDAO {
 
 
     public int SalvarComentario(Comentario comentario) {
-        String url = UrlDefault + "/comentario/salvar/";
-        RestTemplate restTemplate = getResTemplateDefault();
-        MetodosPublicos.Log("DAO", " vai salvar url:" + url);
-        comentario.setRemetente(null);
-        ResponseEntity<Integer> responseEntity = restTemplate.postForEntity(url, comentario, Integer.class);
-        MetodosPublicos.Log("DAO", " retornou com :" + responseEntity.getBody());
-
-        int valor = responseEntity.getBody();
-        return valor;
+        try {
+            String url = UrlDefault + "/comentario/salvar/";
+            RestTemplate restTemplate = getResTemplateDefault();
+            MetodosPublicos.Log("DAO", " vai salvar url:" + url);
+            ResponseEntity<Integer> responseEntity = restTemplate.postForEntity(url, comentario, Integer.class);
+            MetodosPublicos.Log("DAO", " retornou com :" + responseEntity.getBody());
+            return responseEntity.getBody();
+        } catch (Exception e) {
+            MetodosPublicos.Log("ERROR", e.toString());
+        }
+        return 0;
     }
 
 
@@ -117,12 +118,12 @@ public class ComentarioDAO extends DefaultDAO {
 
 
     public List<Comentario> SelecionaComentarioPorData(int id) {
-        String url = UrlDefault + "/comentario/pessoa/"+id;
-       // Comentario comentario = new Comentario();
-       // comentario.setCriacao(date);
+        String url = UrlDefault + "/comentario/pessoa/" + id;
+        // Comentario comentario = new Comentario();
+        // comentario.setCriacao(date);
         RestTemplate restTemplate = getResTemplateDefault();
-      //  MetodosPublicos.Log("DAO", " vai seleecioanr url:" + url + " com a data:" + date);
-        ResponseEntity<Comentario[]> responseEntity = restTemplate.getForEntity(url,Comentario[].class); //.postForEntity(url, comentario, Comentario[].class);
+        //  MetodosPublicos.Log("DAO", " vai seleecioanr url:" + url + " com a data:" + date);
+        ResponseEntity<Comentario[]> responseEntity = restTemplate.getForEntity(url, Comentario[].class); //.postForEntity(url, comentario, Comentario[].class);
         Comentario[] comentarioArray = responseEntity.getBody();
         if (comentarioArray != null && comentarioArray.length > 0)
             return Arrays.asList(comentarioArray);

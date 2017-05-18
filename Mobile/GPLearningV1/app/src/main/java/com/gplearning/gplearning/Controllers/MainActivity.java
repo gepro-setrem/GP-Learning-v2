@@ -27,7 +27,10 @@ import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 import com.gplearning.gplearning.Utils.Sincronizacao;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 //import android.support.v4.app.Fragment;
 
@@ -62,10 +65,23 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Menu menu = navigationView.getMenu();
+        MenuItem nav_sync = menu.findItem(R.id.nav_last_sync);
+        try {
+            Date data = MetodosPublicos.SelecionaUltimaSincronizacao(this);
+            if (data != null) {
+                DateFormat df = new SimpleDateFormat("dd/MM HH:mm");
+                nav_sync.setTitle(getString(R.string.last_sync) + " " + df.format(data));
+                // nav_sync.getTitle()
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         try {
             AtualizaHeaderMain();
         } catch (ParseException e) {
-            MetodosPublicos.Log("ERRO","erro atualiza perfil:"+e.toString());
+            MetodosPublicos.Log("ERRO", "erro atualiza perfil:" + e.toString());
         }
 
         if (!MetodosPublicos.ExisteSessao(this)) {
@@ -107,7 +123,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        // changefragment("");
     }
 
     @Override
@@ -142,9 +157,9 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
-           // MetodosPublicos.SalvaSessao(this, null, null, null, 0);
+            // MetodosPublicos.SalvaSessao(this, null, null, null, 0);
 
-              new getAssync().execute();
+            new getAssync().execute();
 
             return true;
         }
@@ -218,50 +233,11 @@ public class MainActivity extends AppCompatActivity
                 //  restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 //  Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
                 //   Log.i("WB", quote.toString());
-
-                //   DaoSession daoSession = ((App) getApplicationContext()).getDaoSession();
-                //   ComentarioDao comentarioDao = daoSession.getComentarioDao();
-
-                //  List<Comentario> lsComentariosLite = comentarioDao.queryBuilder().whereOr(ComentarioDao.Properties._id.lt(20), (ComentarioDao.Properties.Deletado.eq(true))).where(ComentarioDao.Properties.Id.gt(0)).list();
-
-
-                //   ComentarioDAO comentarioDAO = new ComentarioDAO();
-                //   List<Comentario> lsComentarios = comentarioDAO.SelecionaComentarioPorData(dataAtual.getTime());
-                //   MetodosPublicos.Log("retorno", " Retornou com:" + lsComentariosLite.size());
-//                Etapa atv = new Etapa();
-//                atv.setId(1);
-
                 Sincronizacao sc = new Sincronizacao();
                 sc.SincronizaAplicativoData(MainActivity.this);
-//                ComentarioDao daoCom = daoSession.getComentarioDao();
-//                //   ComentarioDao cDao
-//                daoCom = daoSession.getComentarioDao();
-//                //  List<Comentario> lsComentario = ComentarioDAO.SelecionaComentarioPorAtividade(atv);
-                //    Comentario COM = new Comentario(null, 0, "comentario de teste da Apllicação".toString(), new Date(), MetodosPublicos.SelecionaSessaoId(MainActivity.this));
-//                daoCom.save(COM);
-
-                //    MetodosPublicos.Log("Salve", " salvou com id:" + COM.get_id());
-
-//                int id = 0;
-//                try {
-//                    if (COM.get_id() > 0) {
-//                        id = ComentarioDAO.SalvarComentario(COM);
-//                    }
-//                } catch (Exception e) {
-//                    MetodosPublicos.Log("ERROR", e.toString());
-//                }
-
-//                if (COM.get_id() == 0 || id == 0) {
-//                    daoCom.deleteByKey(COM.get_id());
-//                    MetodosPublicos.Log("Salve", " vai deletar  id:" + COM.get_id());
-//                }
-                //   SalvarComentario
-                //  MetodosPublicos.Log("com", "total: " + lsComentario.size());
-
             } catch (Exception e) {
                 MetodosPublicos.Log("ERROR", e.toString());
             }
-
             return null;
         }
 
@@ -294,14 +270,14 @@ public class MainActivity extends AppCompatActivity
 //        }
 //        // END_INCLUDE(connect)
 //    }
-
     public void AtualizaHeaderMain() throws ParseException {
-        if(MetodosPublicos.ExisteSessao(this)) {
+        if (MetodosPublicos.ExisteSessao(this)) {
             MetodosPublicos.Log("Img", "ATUALIZA CAMINHO IMAGEM PERFIL E ATUALZIA APP DATA");
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             View hView = navigationView.getHeaderView(0);
             ((TextView) hView.findViewById(R.id.headerName)).setText(MetodosPublicos.SelecionaSessaoNome(this));
             ((TextView) hView.findViewById(R.id.headerEmail)).setText(MetodosPublicos.SelecionaSessaoEmail(this));
+
             DaoSession daoSession = ((App) getApplicationContext()).getDaoSession();
             PessoaDao pessoaDao = daoSession.getPessoaDao();
             Pessoa pessoa = pessoaDao.load(MetodosPublicos.SelecionaSessaoId(this));

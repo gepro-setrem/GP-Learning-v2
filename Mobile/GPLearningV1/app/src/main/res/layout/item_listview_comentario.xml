@@ -5,7 +5,8 @@
     android:layout_marginTop="8dp"
     android:maxHeight="100dp"
     android:minHeight="50dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:id="@+id/itemListViewComentario">
 
     <ImageView
         android:id="@+id/itemListviewComentImagem"

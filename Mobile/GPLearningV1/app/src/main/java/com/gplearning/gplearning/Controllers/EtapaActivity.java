@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -67,7 +68,7 @@ public class EtapaActivity extends AppCompatActivity {
             if (atv != null && atv.get_id() > 0) {
                 AtualizaValores(atv);
                 GetTitle(atv.getEtapa());
-                AtualizaUltimoComentario();
+                //   AtualizaUltimoComentario();
             }
         }
 
@@ -89,21 +90,28 @@ public class EtapaActivity extends AppCompatActivity {
     }
 
     private void AtualizaUltimoComentario() {
+        MetodosPublicos.Log("Event", "AtualizaUltimoComentario!!");
         ComentarioDao comentarioDao = daoSession.getComentarioDao();
-        List<Comentario> comentarios = comentarioDao.queryBuilder().where(ComentarioDao.Properties.IdEtapa.eq(idEtapa), ComentarioDao.Properties.Deletado.eq(false)).orderAsc(ComentarioDao.Properties._id).limit(1).list();
+        List<Comentario> comentarios = comentarioDao.queryBuilder().where(ComentarioDao.Properties.IdEtapa.eq(idEtapa), ComentarioDao.Properties.IdProjeto.eq(idProjeto), ComentarioDao.Properties.Deletado.eq(false)).orderAsc(ComentarioDao.Properties._id).limit(1).list();
         if (comentarios != null && comentarios.size() > 0) {
             //etapaIncludeComentario
-            //   ((TextView) findViewById(R.id.EtapaNenhumComentario)).setVisibility(View.GONE);
-            //  ((LinearLayout) findViewById(R.id.etapaIncludeComentario)).setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.EtapaNenhumComentario)).setVisibility(View.GONE);
+            ((LinearLayout) findViewById(R.id.etapaIncludeComentario)).setVisibility(View.VISIBLE);
 
             PessoaDao pessoaDao = daoSession.getPessoaDao();
             java.text.DateFormat dateFormatnew = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             ((TextView) findViewById(R.id.itemListviewComentTexto)).setText(comentarios.get(0).getDescricao());
             ((TextView) findViewById(R.id.itemListviewComentData)).setText(dateFormatnew.format(comentarios.get(0).getCriacao()));
-            Pessoa pessoa = pessoaDao.queryBuilder().where(PessoaDao.Properties._id.eq(comentarios.get(0).getIdRemetente())).unique();
-            if (pessoa != null)
-                ((TextView) findViewById(R.id.itemListviewComentNome)).setText(pessoa.getNome());
-
+            try {
+                List<Pessoa> lsPessoa = pessoaDao.queryBuilder().where(PessoaDao.Properties._id.eq(comentarios.get(0).getIdRemetente())).list();
+                if (lsPessoa != null && lsPessoa.size() >= 0) {
+                    ((TextView) findViewById(R.id.itemListviewComentNome)).setText(lsPessoa.get(0).getNome());
+                }
+            } catch (Exception e) {
+            }
+        } else {
+            ((LinearLayout) findViewById(R.id.etapaIncludeComentario)).setVisibility(View.GONE);
+            ((TextView) findViewById(R.id.EtapaNenhumComentario)).setVisibility(View.VISIBLE);
         }
     }
 
@@ -191,53 +199,56 @@ public class EtapaActivity extends AppCompatActivity {
 
                 TermoAberturaDao termoAberturaDao = daoSession.getTermoAberturaDao();
                 TermoAbertura termoAbertura = termoAberturaDao.queryBuilder().where(TermoAberturaDao.Properties.IdProjeto.eq(idProjeto)).unique();
+                if (termoAbertura != null) {
+                    MetodosPublicos.Log("event", "Termoabertura:id" + termoAbertura.get_id());
 
-                if (atv.getEtapa() == EtapaProjeto.Premissas) {
-                    PremissasDao premissasDao = daoSession.getPremissasDao();
-                    final List<Premissas> lsPremissas = premissasDao.queryBuilder().where(PremissasDao.Properties.IdTermoAbertura.eq(termoAbertura.get_id())).list();
-                    ArrayAdapter<Premissas> adapter = new ArrayAdapter<Premissas>(this, android.R.layout.simple_list_item_1, lsPremissas);
-                    listview.setAdapter(adapter);
-                    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            ShowDescription("Premissa", lsPremissas.get(position).getDescricao());
-                        }
-                    });
+                    if (atv.getEtapa() == EtapaProjeto.Premissas) {
+                        PremissasDao premissasDao = daoSession.getPremissasDao();
+                        final List<Premissas> lsPremissas = premissasDao.queryBuilder().where(PremissasDao.Properties.IdTermoAbertura.eq(termoAbertura.get_id())).list();
+                        ArrayAdapter<Premissas> adapter = new ArrayAdapter<Premissas>(this, android.R.layout.simple_list_item_1, lsPremissas);
+                        listview.setAdapter(adapter);
+                        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                ShowDescription("Premissa", lsPremissas.get(position).getDescricao());
+                            }
+                        });
 
-                } else if (atv.getEtapa() == EtapaProjeto.RequisitosTermoAbertura) {
-                    RequisitoTermoAberturaDao RTAdao = daoSession.getRequisitoTermoAberturaDao();
-                    final List<RequisitoTermoAbertura> lsRTA = RTAdao.queryBuilder().where(RequisitoTermoAberturaDao.Properties.IdTermoAbertura.eq(termoAbertura.get_id())).list();
-                    ArrayAdapter<RequisitoTermoAbertura> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lsRTA);
-                    listview.setAdapter(adapter);
-                    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            ShowDescription(lsRTA.get(position).getNome(), lsRTA.get(position).getDescricao());
-                        }
-                    });
+                    } else if (atv.getEtapa() == EtapaProjeto.RequisitosTermoAbertura) {
+                        RequisitoTermoAberturaDao RTAdao = daoSession.getRequisitoTermoAberturaDao();
+                        final List<RequisitoTermoAbertura> lsRTA = RTAdao.queryBuilder().where(RequisitoTermoAberturaDao.Properties.IdTermoAbertura.eq(termoAbertura.get_id())).list();
+                        ArrayAdapter<RequisitoTermoAbertura> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lsRTA);
+                        listview.setAdapter(adapter);
+                        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                ShowDescription(lsRTA.get(position).getNome(), lsRTA.get(position).getDescricao());
+                            }
+                        });
 
-                } else if (atv.getEtapa() == EtapaProjeto.Marcos) {
-                    MarcoDao marcoDao = daoSession.getMarcoDao();
-                    final List<Marco> lsMarco = marcoDao.queryBuilder().where(MarcoDao.Properties.IdTermoAbertura.eq(termoAbertura.get_id())).list();
-                    ArrayAdapter<Marco> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lsMarco);
-                    listview.setAdapter(adapter);
-                    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            ShowDescription("Marco", lsMarco.get(position).getObjetivo());
-                        }
-                    });
-                } else if (atv.getEtapa() == EtapaProjeto.Restricoes) {
-                    RestricoesDao restricoesDao = daoSession.getRestricoesDao();
-                    final List<Restricoes> lsRestricoes = restricoesDao.queryBuilder().where(RestricoesDao.Properties.IdTermoAbertura.eq(termoAbertura.get_id())).list();
-                    ArrayAdapter<Restricoes> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lsRestricoes);
-                    listview.setAdapter(adapter);
-                    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            ShowDescription("Restrições", lsRestricoes.get(position).getDescricao());
-                        }
-                    });
+                    } else if (atv.getEtapa() == EtapaProjeto.Marcos) {
+                        MarcoDao marcoDao = daoSession.getMarcoDao();
+                        final List<Marco> lsMarco = marcoDao.queryBuilder().where(MarcoDao.Properties.IdTermoAbertura.eq(termoAbertura.get_id())).list();
+                        ArrayAdapter<Marco> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lsMarco);
+                        listview.setAdapter(adapter);
+                        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                ShowDescription("Marco", lsMarco.get(position).getObjetivo());
+                            }
+                        });
+                    } else if (atv.getEtapa() == EtapaProjeto.Restricoes) {
+                        RestricoesDao restricoesDao = daoSession.getRestricoesDao();
+                        final List<Restricoes> lsRestricoes = restricoesDao.queryBuilder().where(RestricoesDao.Properties.IdTermoAbertura.eq(termoAbertura.get_id())).list();
+                        ArrayAdapter<Restricoes> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lsRestricoes);
+                        listview.setAdapter(adapter);
+                        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                ShowDescription("Restrições", lsRestricoes.get(position).getDescricao());
+                            }
+                        });
+                    }
                 }
             }
         }

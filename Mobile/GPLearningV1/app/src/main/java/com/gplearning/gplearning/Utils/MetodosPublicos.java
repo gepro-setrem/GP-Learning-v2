@@ -12,7 +12,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.gplearning.gplearning.Enums.RecursosEnum;
 import com.gplearning.gplearning.R;
 import com.squareup.picasso.Picasso;
 
@@ -180,7 +179,7 @@ public class MetodosPublicos {
     }
 
 
-    public static void SalvaUltimaSincronizacao(Context context, RecursosEnum recurso, Date date) {
+    public static void SalvaUltimaSincronizacao(Context context, Date date) {
         java.text.DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         SharedPreferences pref = context.getSharedPreferences(key_sync, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
@@ -293,8 +292,11 @@ public class MetodosPublicos {
     }
 
     public static String DateToString(Date data) {
-        DateFormat format = GetDateFormatDefault();
-        return format.format(data);
+        if (data != null) {
+            DateFormat format = GetDateFormatDefault();
+            return format.format(data);
+        }
+        return "";
     }
 
 

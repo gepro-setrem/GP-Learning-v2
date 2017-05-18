@@ -36,9 +36,10 @@
     <string name="no_project">Você ainda não tem nenhum projeto criado. Não perca tempo, acesse a ferramenta GP Learning 2.0 e crie os seus projetos!</string>
 
     <!-- Strings relacionadas ao login -->
-    <string name="action_settings">Settings</string>
     <string name="title_activity_login">Login</string>
     <string name="login_loader_desc">Estamos preparando o aplicativo com os seus dados, por favor, aguarde um instante.</string>
+
+    <string name="action_sync">Sincronizar App</string>
 
     <string name="email">E-mail</string>
     <string name="password">Senha</string>

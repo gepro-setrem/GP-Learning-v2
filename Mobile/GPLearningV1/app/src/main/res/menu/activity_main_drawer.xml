@@ -31,9 +31,10 @@
     <item android:title="Conexão">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_last_sync"
                 android:icon="@drawable/ic_autorenew_black_24px"
-                android:title="@string/last_sync" />
+                android:title="@string/last_sync"
+                />
             <!--<item-->
                 <!--android:id="@+id/nav_send"-->
                 <!--android:icon="@drawable/ic_menu_send"-->

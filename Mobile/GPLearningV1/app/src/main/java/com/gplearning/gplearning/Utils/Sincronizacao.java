@@ -218,9 +218,9 @@ public class Sincronizacao {
                 final ComentarioDAO comentarioDAO = new ComentarioDAO();
                 DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
                 final ComentarioDao daoLite = daoSession.getComentarioDao();
-                ProjetoDao daoProjeto = daoSession.getProjetoDao();
-                EtapaDao daoEtapa = daoSession.getEtapaDao();
-                PessoaDao daoPessoa = daoSession.getPessoaDao();
+                final ProjetoDao daoProjeto = daoSession.getProjetoDao();
+                final EtapaDao daoEtapa = daoSession.getEtapaDao();
+                final PessoaDao daoPessoa = daoSession.getPessoaDao();
 
                 List<Comentario> lsComentariosAPI = comentarioDAO.SelecionaComentarioPorData(idPessoa); //SelecionaComentarioPorData(ultimaSincronizacao);
                 List<Comentario> lsComentariosLite = daoLite.queryBuilder().list();// .whereOr(ComentarioDao.Properties.Id.eq(0), (ComentarioDao.Properties.Deletado.eq(true))).list();
@@ -228,6 +228,7 @@ public class Sincronizacao {
                     for (Comentario com : lsComentariosAPI) {
                         if (!EstaNaListaComentario(com, lsComentariosLite)) {
                             if (com.getProjeto() != null) {
+                                List<Projeto> lsProjetos = daoProjeto.loadAll();
                                 Projeto projeto = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(com.getProjeto().getId())).limit(1).unique();
                                 if (projeto != null) {
                                     com.setIdProjeto(projeto.get_id());
@@ -240,12 +241,9 @@ public class Sincronizacao {
                                 }
                             }
                             if (com.getRemetente() != null) {
-                                List<Pessoa> lsPessoa = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(com.getRemetente().getId())).limit(1).list();
+                                List<Pessoa> lsPessoa = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(com.getRemetente().getId())).list();
                                 if (lsPessoa != null && lsPessoa.size() > 0) {
                                     com.setIdRemetente(lsPessoa.get(0).get_id());
-                                } else {
-                                    long idpessoa = daoPessoa.insert(lsPessoa.get(0));
-                                    com.setIdRemetente(idpessoa);
                                 }
                             }
                             daoLite.insert(com);
@@ -262,10 +260,10 @@ public class Sincronizacao {
                                 MetodosPublicos.Log("log", "deletou lite o id:" + com.getId());
                                 daoLite.deleteByKey(com.get_id());
                             } else {// não tem ID= é um novo comentário
-//                        new Thread(new Runnable() {
-//                            @Override
-//                            public void run() {
-                                if (com.getIdRemetente() > 0) {
+//                                new Thread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+                                if (com.getRemetente() == null && com.getIdRemetente() > 0) {
                                     Pessoa remetente = daoPessoa.load(com.getIdRemetente());
                                     com.setRemetente(remetente);
                                 }
@@ -285,23 +283,21 @@ public class Sincronizacao {
                                 } else {
                                     MetodosPublicos.Log("log", "errou ao cadastrar o id:" + com.get_id());
                                 }
-//                            }
-//                        }).start();
+//                                    }
+//                                }).start();
                             }
                         } else {
                             if (com.getDeletado()) {
                                 boolean deletado = comentarioDAO.DeletaComentario(com);
                                 if (deletado)
                                     daoLite.deleteByKey(com.get_id());
-//                            }
-//                        }).start();
                             }
                         }
                     }
                 }
-                lsComentariosLite = daoLite.queryBuilder().whereOr(ComentarioDao.Properties.Id.eq(0), (ComentarioDao.Properties.Deletado.eq(true))).list();
-                MetodosPublicos.Log("Retono", " agora com os registros desatualizados:" + lsComentariosLite.size());
-                // MetodosPublicos.SalvaUltimaSincronizacao(context, RecursosEnum.Comentario, new Date());
+//                lsComentariosLite = daoLite.queryBuilder().whereOr(ComentarioDao.Properties.Id.eq(0), (ComentarioDao.Properties.Deletado.eq(true))).list();
+//                MetodosPublicos.Log("Retono", " agora com os registros desatualizados:" + lsComentariosLite.size());
+//                MetodosPublicos.SalvaUltimaSincronizacao(context, new Date());
             }
         } catch (Exception e) {
             MetodosPublicos.Log("ERRO ATUALIZAÇÃO", e.toString());
@@ -355,6 +351,7 @@ public class Sincronizacao {
                         AtualizaComentarios(context, id);
                         MetodosPublicos.Log("Event", "VAI AVALIAÇÕES");
                         AtualizaAvaliacoes(daoSession, id);
+                        MetodosPublicos.SalvaUltimaSincronizacao(context, new Date());
                     } catch (ParseException e) {
                         MetodosPublicos.Log("ERRO ", "SINCRONIZACAO :" + e.toString());
                         e.printStackTrace();

@@ -139,7 +139,7 @@ public class ComentarioActivity extends AppCompatActivity {
                 COM.setRemetente(pessoa);
 
                 long id = dao.insert(COM);
-                MetodosPublicos.Log("Event", "id:" + COM.get_id());
+                MetodosPublicos.Log("Event", "id:" + COM.get_id()+" idRemetente:"+COM.getIdRemetente());
                 if (id > 0) {
                     new SalvaComentario().execute(COM);
                 }
@@ -249,9 +249,7 @@ public class ComentarioActivity extends AppCompatActivity {
                 comentario.setDeletado(true);
                 dao.update(comentario);
             }
-
         }
-
     }
 
     private class SincronizaComentarios extends AsyncTask<String, String, String> {
@@ -259,7 +257,7 @@ public class ComentarioActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             //  List<Comentario> lsComentariosDeletados= dao.
-            MetodosPublicos.SalvaUltimaSincronizacao(ComentarioActivity.this, RecursosEnum.Comentario, new Date());
+          //  MetodosPublicos.SalvaUltimaSincronizacao(ComentarioActivity.this, new Date());
             return null;
         }
 
