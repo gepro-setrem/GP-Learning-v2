@@ -152,10 +152,15 @@ public class ComentarioBean {
     public void setEtapa(EtapaProjeto etapaProjeto) {
         //EtapaProjeto etType = EtapaProjeto.valueOf(type);
         if (projeto != null && etapaProjeto != null) {
+            comentario = new Comentario();
             etapa = etapaBLL.findbyTurmaEtapa(projeto.getTurma(), etapaProjeto);
-            atualizar();
-            List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyProjetoEtapa(projeto, etapa);
-            etapa.setAvaliacoes(lsAvaliacao);
+            if (etapa != null) {
+                atualizar();
+                List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyProjetoEtapa(projeto, etapa);
+                etapa.setAvaliacoes(lsAvaliacao);
+            } else {
+                etapa = new Etapa();
+            }
         }
     }
 

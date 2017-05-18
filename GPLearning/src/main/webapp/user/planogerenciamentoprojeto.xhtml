@@ -14,26 +14,28 @@
         <h:form enctype="multipart/form-data">
             #{planoProjetoBean.setProjeto(projetoBean.projeto)}
             <div class="panel panel-default">
-                <div class="panel-heading"><h4>Criar o Plano de Gerenciamento de Projeto</h4></div>
+                <div class="panel-heading"><h4>#{turmaBean.getEtapaProjeto('PlanoGerenciamentoProjeto')}</h4></div>
                 <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12"><label sclass="etapa_desc">#{projetoBean.getDescricao('descricaoTelaCriarPlanoGerenciamentoProjeto')}</label></div>
                         <div class="col-xs-12 form-group">
-                            <h:commandLink class="btn btn-danger" action="#{planoProjetoBean.criarPlanoGerenciamentoProjeto()}" target ="_blank"><i class="fa-check"></i> Criar Plano</h:commandLink>
+                            <!--<h:commandLink class="btn btn-danger" action="{planoProjetoBean.criarPlanoGerenciamentoProjeto()}" target ="_blank"><i class="fa-check"></i> Criar Plano</h:commandLink>-->
+                            <h:link class="btn btn-danger" outcome="plano" target ="_blank"><i class="fa-check"></i> Criar Plano</h:link>
                         </div>
-                        <div class="col-xs-12">
-                            <p:commandButton value="Comentário" class="btn btn-primary" type="button" onclick="PF('dlg1').show();" />
-                            <p:dialog header="Comentários sobre a EAP" widgetVar="dlg1" minHeight="40">
-                                <h:outputText value="{projetoBean.projeto.comentarioPlanoGereProjeto}" />
-                            </p:dialog>
-                        </div>
+                        <!--                        <div class="col-xs-12">
+                                                    <p:commandButton value="Comentário" class="btn btn-primary" type="button" onclick="PF('dlg1').show();" />
+                                                    <p:dialog header="Comentários sobre a EAP" widgetVar="dlg1" minHeight="40">
+                                                        <h:outputText value="{projetoBean.projeto.comentarioPlanoGereProjeto}" />
+                                                    </p:dialog>
+                                                </div>-->
                         <div class="col-xs-12 text-center">
                             <h:link class="btn btn-success" outcome="planejamento"><i class="fa-check"></i> Concluir Plano de Gerenciamento de Projeto</h:link>
                         </div>
                     </div>
                 </div>
             </div>
+            <ui:include src="avaliacao.xhtml"><ui:param name="etapa" value="PlanoGerenciamentoProjeto" /></ui:include>
         </h:form>
     </ui:define>
 </ui:composition>

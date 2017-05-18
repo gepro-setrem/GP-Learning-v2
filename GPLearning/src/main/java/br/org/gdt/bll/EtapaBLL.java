@@ -69,6 +69,8 @@ public class EtapaBLL extends BLL<Etapa> {
                 return "Criar a EAP";
             case Cronograma:
                 return "Criar o Cronograma";
+            case PlanoGerenciamentoProjeto:
+                return "Criar o Plano de Gerenciamento de Projeto";
             default:
                 return "";
         }

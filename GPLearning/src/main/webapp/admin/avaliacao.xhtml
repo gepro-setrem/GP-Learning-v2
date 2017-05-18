@@ -30,7 +30,7 @@
                     </ul>
                     <div class="tab-content">
                         <ui:repeat var="item" value="#{projetoProfessorBean.etapas}" varStatus="status">
-                            <c:set var="label" value="#{turmaBean.getEtapaProjeto(item.etapa)}"/>
+                            <!--<c:set var="label" value="{turmaBean.getEtapaProjeto(item.etapa)}"/>-->
                             <div class="tab-pane #{status.index == 0 ? 'active' : ''}" id="#{item.etapa}" style="padding-top: 15px;">
                                 <div class="panel panel-default">
                                     <div class="panel-body">

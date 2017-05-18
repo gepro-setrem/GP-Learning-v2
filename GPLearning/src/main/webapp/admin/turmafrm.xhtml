@@ -69,12 +69,14 @@
                                         <h:inputHidden value="#{turmaBean.turma.etapas[status.index].etapa}"/>
                                         <h:inputHidden value="#{turmaBean.turma.etapas[status.index].id}"/>
                                         <!--<h:inputText class="form-control" value="{turmaBean.turma.etapas[status.index].nome}" pt:placeholder="{label}"/>-->
-                                        <div class="form-group autocomplete">
-                                            <label>Indicadores:</label>
-                                            <p:selectCheckboxMenu class="form-control" label="Indicadores" converter="#{indicadorConverter}" value="#{turmaBean.turma.etapas[status.index].indicadores}" style="width: 100%">
-                                                <f:selectItems var="item"  value="#{turmaBean.indicadores}" itemLabel="#{item}" itemValue="#{item}"/>
-                                            </p:selectCheckboxMenu>
-                                        </div>
+                                        <h:panelGroup rendered="#{item.etapa != 'PlanoGerenciamentoProjeto'}">
+                                            <div class="form-group autocomplete">
+                                                <label>Indicadores:</label>
+                                                <p:selectCheckboxMenu class="form-control" label="Indicadores" converter="#{indicadorConverter}" value="#{turmaBean.turma.etapas[status.index].indicadores}" style="width: 100%">
+                                                    <f:selectItems var="item"  value="#{turmaBean.indicadores}" itemLabel="#{item}" itemValue="#{item}"/>
+                                                </p:selectCheckboxMenu>
+                                            </div>
+                                        </h:panelGroup>
                                     </div>
                                 </div>
                             </ui:repeat>

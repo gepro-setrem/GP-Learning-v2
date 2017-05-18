@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title><ui:insert name="title">GPLearning</ui:insert></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet name="./css/bootstrap.min.css"/>
+        <h:outputStylesheet name="./css/cssDefault.css"/>
+        <link href="../resources/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+        <link href="./resources/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+        <!--<h:outputScript name="./js/jsLayout.js"/>-->
+        <h:outputStylesheet name="./css/eap_css.css"/>
+        <h:outputStylesheet name="./css/cronograma_css.css"/>
+        <script>$(function () {
+                window.print();
+            });</script>
+    </h:head>
+    <h:body>
+        #{planoProjetoBean.setProjeto(projetoBean.projeto)}
+        <ui:repeat var="item" value="#{planoProjetoBean.etapas}" varStatus="status">
+            <c:set var="label" value="#{turmaBean.getEtapaProjeto(item.etapa)}"/>
+            <h:panelGroup rendered="#{item.etapa != 'PlanoGerenciamentoProjeto'}">
+                <div class="panel panel-default">
+                    <div class="panel-heading">#{label}</div>
+                    <div class="panel-body">
+                        <h:panelGroup rendered="#{planoProjetoBean.termoabertura != null}">
+                            <h:panelGroup rendered="#{item.etapa == 'DescricaoProjeto'}">
+                                #{planoProjetoBean.termoabertura.descricao}
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{item.etapa == 'JustificativaProjeto'}">
+                                #{planoProjetoBean.termoabertura.justificativa}
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{item.etapa == 'Premissas' and planoProjetoBean.termoabertura.premissas != null}">
+                                <p:dataTable class="table table-hover" var="premissa" value="#{planoProjetoBean.termoabertura.premissas}" emptyMessage="Nenhum registro encontrado.">
+                                    <p:column headerText="Descrição da Premissa">
+                                        <h:outputText value="#{premissa.descricao}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{item.etapa == 'Restricoes' and planoProjetoBean.termoabertura.restricoes != null}">
+                                <p:dataTable class="table table-hover" var="restricao" value="#{planoProjetoBean.termoabertura.restricoes}" emptyMessage="Nenhum registro encontrado.">
+                                    <p:column headerText="Descrição da Restrição">
+                                        <h:outputText value="#{restricao.descricao}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{item.etapa == 'Marcos' and planoProjetoBean.termoabertura.marcos != null}">
+                                <p:dataTable class="table table-hover" var="marco" value="#{planoProjetoBean.termoabertura.marcos}" emptyMessage="Nenhum registro encontrado.">
+                                    <p:column headerText="Objetivo">
+                                        <h:outputText value="#{marco.objetivo}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Previsão" style="width: 150px;">
+                                        <h:outputText value="#{marco.previsao}"> <f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{item.etapa == 'RequisitosTermoAbertura' and planoProjetoBean.termoabertura.requisitosTermoAberturas != null}">
+                                <p:dataTable class="table table-hover" var="requisito" value="#{planoProjetoBean.termoabertura.requisitosTermoAberturas}" emptyMessage="Nenhum registro encontrado.">
+                                    <p:column headerText="Requisito">
+                                        <h:outputText value="#{requisito.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="Descrição">
+                                        <h:outputText value="#{requisito.descricao}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGroup>
+
+                        </h:panelGroup>
+
+                        <h:panelGroup rendered="#{planoProjetoBean.projeto != null}">
+                            <h:panelGroup rendered="#{item.etapa == 'Stakeholders' and planoProjetoBean.projeto.stakeholders != null}">
+                                <p:dataTable class="table table-hover" var="stakeholder" value="#{planoProjetoBean.projeto.stakeholders}" emptyMessage="Nenhum registro encontrado.">
+                                    <p:column headerText="Nome">
+                                        <h:outputText value="#{stakeholder.nome}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Papel">
+                                        <h:outputText value="#{stakeholder.papel}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Contribuição">
+                                        <h:outputText value="#{stakeholder.contribuicao}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{item.etapa == 'PlanoGerenciamentoEscopo'}">
+                                #{planoProjetoBean.projeto.planoEscopo}
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{item.etapa == 'Requisitos' and planoProjetoBean.projeto.requisitos != null}">
+                                <p:dataTable class="table table-hover" var="requisito" value="#{planoProjetoBean.projeto.requisitos}" emptyMessage="Nenhum registro encontrado.">
+                                    <p:column headerText="Requisito">
+                                        <h:outputText value="#{requisito.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="Descrição">
+                                        <h:outputText value="#{requisito.descricao}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{item.etapa == 'Escopo'}">
+                                #{planoProjetoBean.projeto.escopo}
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{item.etapa == 'Eap' and planoProjetoBean.projeto.eaps != null}">
+                                <div class="eap_list">
+                                    <h:outputText value=" #{planoProjetoBean.htmlEAP}" escape="false"/>
+                                </div>
+                                <div class="modal fade" id="eapDetailModal" role="dialog" aria-labelledby="eapDetailModal" aria-hidden="true" data-backdrop="static">
+                                    <div class="modal-dialog modal-md">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                <h4 class="modal-title">EAP</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group row">
+                                                    <label class="col-xs-4 text-right">Descrição:</label>
+                                                    <div class="descricao col-xs-8"></div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-xs-4 text-right">Início:</label>
+                                                    <div class="inicio col-xs-8"></div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-xs-4 text-right">Término:</label>
+                                                    <div class="termino col-xs-8"></div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-xs-4 text-right">Custo:</label>
+                                                    <div class="valor col-xs-8"></div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a class="btn btn-default" data-dismiss="modal">Fechar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{item.etapa == 'Cronograma'}">
+                                <table class="tarefas">
+                                    <thead>
+                                        <tr>
+                                            <th>Marco</th>
+                                            <th>Tarefa</th>
+                                            <th class="text-center" style="width: 140px;">Início</th>
+                                            <th class="text-center" style="width: 140px;">Término</th>
+                                            <th>Recursos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <h:outputText value=" #{planoProjetoBean.htmlCronograma}" escape="false"/>
+                                    </tbody>
+                                </table>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </ui:repeat>
+    </h:body>
+</html>

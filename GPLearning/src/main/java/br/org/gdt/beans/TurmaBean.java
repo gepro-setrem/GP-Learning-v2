@@ -28,28 +28,28 @@ import javax.servlet.http.HttpServletRequest;
 @ManagedBean
 @SessionScoped
 public class TurmaBean {
-    
+
     private Turma turma = new Turma();
     @ManagedProperty("#{turmaBLL}")
     private TurmaBLL turmaBLL;
     private DataModel turmas;
     @ManagedProperty("#{turmaParametroBLL}")
     private TurmaParametroBLL turmaParametroBLL;
-    
+
     private Pessoa usuario = new Pessoa();
     @ManagedProperty("#{pessoaBLL}")
     private PessoaBLL pessoaBLL;
-    
+
     @ManagedProperty("#{etapaBLL}")
     private EtapaBLL etapaBLL;
-    
+
     @ManagedProperty("#{indicadorBLL}")
     private IndicadorBLL indicadorBLL;
     private List<Indicador> indicadores;
-    
+
     public TurmaBean() {
     }
-    
+
     public Pessoa getUsuario() {
         if (usuario == null || usuario.getId() == 0) {
             ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
@@ -59,19 +59,19 @@ public class TurmaBean {
         }
         return usuario;
     }
-    
+
     public void setUsuario(Pessoa usuario) {
         this.usuario = usuario;
     }
-    
+
     public Turma getTurma() {
         return turma;
     }
-    
+
     public void setTurma(Turma turma) {
         this.turma = turma;
     }
-    
+
     public DataModel getTurmas() {
         getUsuario();
         if (turmas == null) {
@@ -79,11 +79,11 @@ public class TurmaBean {
         }
         return turmas;
     }
-    
+
     public void setTurmas(DataModel turmas) {
         this.turmas = turmas;
     }
-    
+
     public String salvar() {
         usuario = getUsuario();
         if (!turma.getNome().isEmpty() && turma.getAno() > 0) {
@@ -108,7 +108,7 @@ public class TurmaBean {
             return "turmafrm";
         }
     }
-    
+
     public String editar() {
         turma = (Turma) turmas.getRowData();
         turma = turmaBLL.findById(turma.getId());
@@ -116,7 +116,7 @@ public class TurmaBean {
         initEtapas();
         return "turmafrm";
     }
-    
+
     public String duplicar() {
         turma = (Turma) turmas.getRowData();
         Turma copia = new Turma();
@@ -127,9 +127,9 @@ public class TurmaBean {
         copia.setCriacao(new Date());
         copia.setAlteracao(new Date());
         copia.setProfessor(turma.getProfessor());
-        
+
         List<TurmaParametro> TurmaParametros = new ArrayList<>();
-        
+
         if (lsTurmaParametro != null) {
             for (TurmaParametro turmaParametro : lsTurmaParametro) {
                 TurmaParametro tp = new TurmaParametro();
@@ -140,9 +140,9 @@ public class TurmaBean {
             }
         }
         copia.setTurmaParametros(TurmaParametros);
-        
+
         List<Etapa> Etapas = new ArrayList<>();
-        
+
         if (lsEtapa != null) {
             for (Etapa etapa : lsEtapa) {
                 Etapa et = new Etapa();
@@ -162,7 +162,7 @@ public class TurmaBean {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Turma copiada com sucesso!"));
         return "turmalst";
     }
-    
+
     public String excluir() throws Exception {
         try {
             turma = (Turma) turmas.getRowData();
@@ -174,38 +174,38 @@ public class TurmaBean {
         }
         return "turmalst";
     }
-    
+
     public String novo() {
         turma = new Turma();
         initParametros();
         initEtapas();
         return "turmafrm";
     }
-    
+
     public TurmaBLL getTurmaBLL() {
         return turmaBLL;
     }
-    
+
     public void setTurmaBLL(TurmaBLL turmaBLL) {
         this.turmaBLL = turmaBLL;
     }
-    
+
     public PessoaBLL getPessoaBLL() {
         return pessoaBLL;
     }
-    
+
     public void setPessoaBLL(PessoaBLL pessoaBLL) {
         this.pessoaBLL = pessoaBLL;
     }
-    
+
     public TurmaParametroBLL getTurmaParametroBLL() {
         return turmaParametroBLL;
     }
-    
+
     public void setTurmaParametroBLL(TurmaParametroBLL turmaParametroBLL) {
         this.turmaParametroBLL = turmaParametroBLL;
     }
-    
+
     public String getParameter(TurmaParametro parametro) {
         String chave = parametro.toString();
         Pessoa user = getUsuario();
@@ -216,17 +216,17 @@ public class TurmaBean {
             return "";
         }
     }
-    
+
     public String getTurmaParametroType(String type) {
         TurmaParametroType trType = TurmaParametroType.valueOf(type);
         return turmaParametroBLL.getTurmaParametroType(trType);
     }
-    
+
     public String getEtapaProjeto(String type) {
         EtapaProjeto etType = EtapaProjeto.valueOf(type);
         return etapaBLL.getEtapaProjeto(etType);
     }
-    
+
     private void initParametros() {
         List<TurmaParametro> lsTurmaParametro = turmaParametroBLL.findbyTurma(turma);
         TurmaParametroType[] lsTurmaParametroType = TurmaParametroType.values();
@@ -248,7 +248,7 @@ public class TurmaBean {
         }
         turma.setTurmaParametros(lsTurmaParametro);
     }
-    
+
     private void initEtapas() {
         List<Etapa> lsEtapa = etapaBLL.findbyTurma(turma);
         EtapaProjeto[] lsEtapaProjeto = EtapaProjeto.values();
@@ -269,29 +269,29 @@ public class TurmaBean {
         }
         turma.setEtapas(lsEtapa);
     }
-    
+
     public EtapaBLL getEtapaBLL() {
         return etapaBLL;
     }
-    
+
     public void setEtapaBLL(EtapaBLL etapaBLL) {
         this.etapaBLL = etapaBLL;
     }
-    
+
     public IndicadorBLL getIndicadorBLL() {
         return indicadorBLL;
     }
-    
+
     public void setIndicadorBLL(IndicadorBLL indicadorBLL) {
         this.indicadorBLL = indicadorBLL;
     }
-    
+
     public List<Indicador> getIndicadores() {
         getUsuario();
         indicadores = indicadorBLL.findbyProfessor(usuario);
         return indicadores;
     }
-    
+
     public void setIndicadores(List<Indicador> indicadores) {
         this.indicadores = indicadores;
     }
