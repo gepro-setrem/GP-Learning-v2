@@ -11,12 +11,12 @@ import java.util.List;
 
 public class RequisitoDAO extends DefaultDAO {
 
-    public List<Requisito> SelecionaRequisitosData(Date date) {
-        String url = UrlDefault + "/requisito/index/date";
+    public List<Requisito> SelecionaRequisitosData(int id) {
+        String url = UrlDefault + "/requisito/pessoa/"+id;
         RestTemplate restTemplate = getResTemplateDefault();
-        Requisito requisito = new Requisito();
-        requisito.setCriacao(date);
-        ResponseEntity<Requisito[]> responseEntity = restTemplate.postForEntity(url, requisito, Requisito[].class);
+//        Requisito requisito = new Requisito();
+//        requisito.setCriacao(date);
+        ResponseEntity<Requisito[]> responseEntity = restTemplate.getForEntity(url, Requisito[].class); //.postForEntity(url, requisito, Requisito[].class);
         Requisito[] requisitos = responseEntity.getBody();
         return Arrays.asList(requisitos);
     }

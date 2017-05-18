@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.gplearning.gplearning.Enums.RecursosEnum;
+import com.gplearning.gplearning.R;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -105,18 +106,20 @@ public class MetodosPublicos {
     public static void CarregaimagemPerfil(Context context, ImageView imageView, Long idPessoa) {
         File path = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File file = new File(path, key_imagemUser + idPessoa + ".jpg");
-        if (file != null) {
-            //     return file.getAbsolutePath();
-            Picasso.with(context).load(file).into(imageView);
+        if (file != null && file.exists()) {
+            MetodosPublicos.Log("IMage", "image :" + file.getAbsolutePath());
+            Picasso.with(context).load(file).transform(new CircleTransform()).into(imageView);
+        } else {
+            Picasso.with(context).load(R.drawable.user_default).transform(new CircleTransform()).into(imageView);
         }
     }
 
     public static String SelecionaCaminhoImagem(Context context, Long idPessoa) {
         File path = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File file = new File(path, key_imagemUser + idPessoa + ".jpg");
-        if (file != null)
+        if (file != null && file.exists())
             return file.getAbsolutePath();
-        return "notFound";
+        return null; // Uri.parse("android.resource://com.gplearning.gplearning/" + R.drawable.user_default).getPath();
     }
 
     private static void saveArrayToSDCard(Context context, String fileName, byte[] imagem) {
@@ -283,6 +286,17 @@ public class MetodosPublicos {
 //    public DaoSession NovaInstanciaBanco(Context context){
 //       return  ((App)context.getApplication()).getDaoSession();
 //    }
+
+    public static DateFormat GetDateFormatDefault() {
+        return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+    }
+
+    public static String DateToString(Date data) {
+        DateFormat format = GetDateFormatDefault();
+        return format.format(data);
+    }
+
 
     public static void Log(String lg, String valor) {
         Log.i(lg + " gpla ", valor);

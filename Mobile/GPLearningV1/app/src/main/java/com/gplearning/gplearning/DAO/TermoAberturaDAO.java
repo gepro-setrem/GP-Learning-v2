@@ -12,13 +12,11 @@ import java.util.List;
 
 public class TermoAberturaDAO extends DefaultDAO {
 
-    public List<TermoAbertura> SelecionaTermoAberturaData(Date date) {
-        String url = UrlDefault + "/termoAbertura/index/date";
+    public List<TermoAbertura> SelecionaTermoAberturaData(int idExterno) {
+        String url = UrlDefault + "/termoabertura/pessoa/"+idExterno;
         RestTemplate restTemplate = getResTemplateDefault();
-        TermoAbertura termoAbertura = new TermoAbertura();
-        termoAbertura.setCriacao(date);
-        ResponseEntity<TermoAbertura[]> responseEntity = restTemplate.postForEntity(url, termoAbertura, TermoAbertura[].class);
+        ResponseEntity<TermoAbertura[]> responseEntity = restTemplate.getForEntity(url, TermoAbertura[].class);
         TermoAbertura[] termoAberturas = responseEntity.getBody();
-        return Arrays.asList(termoAbertura);
+        return Arrays.asList(termoAberturas);
     }
 }

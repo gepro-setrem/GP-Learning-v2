@@ -116,7 +116,6 @@
             android:id="@+id/etapaProjetoDescricaoTARatingBar"
             style="@style/ratingBarEtapaProjeto"
             android:numStars="5"
-            android:rating="3"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/etapaProjetoJustificativaTARatingBar"
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoDescricaoTAtxt" />
@@ -147,7 +146,6 @@
             android:id="@+id/etapaProjetoJustificativaTARatingBar"
             style="@style/ratingBarEtapaProjeto"
             android:numStars="5"
-            android:rating="4"
             app:layout_constraintLeft_toRightOf="@+id/etapaProjetoDescricaoTARatingBar"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoJustificativaTAtxt" />
@@ -185,7 +183,6 @@
             android:id="@+id/etapaProjetoPremissasTARatingBar"
             style="@style/ratingBarEtapaProjeto"
             android:numStars="5"
-            android:rating="4"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoPremissasTAtxt" />
@@ -214,7 +211,6 @@
             android:id="@+id/etapaProjetoRestricoesTARatingBar"
             style="@style/ratingBarEtapaProjeto"
             android:numStars="5"
-            android:rating="4"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/etapaProjetoMarcosTARatingBar"
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRestricoesTAtxt" />
@@ -243,7 +239,6 @@
             android:id="@+id/etapaProjetoMarcosTARatingBar"
             style="@style/ratingBarEtapaProjeto"
             android:numStars="5"
-            android:rating="4"
             app:layout_constraintLeft_toRightOf="@+id/etapaProjetoRestricoesTARatingBar"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoMarcosTAtxt" />
@@ -273,7 +268,6 @@
             android:id="@+id/etapaProjetoRequisitosTARatingBar"
             style="@style/ratingBarEtapaProjeto"
             android:numStars="5"
-            android:rating="4"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/etapaProjetoStakeholdersTARatingBar"
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRequisitosTAtxt" />
@@ -303,7 +297,6 @@
             android:id="@+id/etapaProjetoStakeholdersTARatingBar"
             style="@style/ratingBarEtapaProjeto"
             android:numStars="5"
-            android:rating="4"
             app:layout_constraintLeft_toRightOf="@+id/etapaProjetoRequisitosTARatingBar"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoStakeholdersTAtxt" />
@@ -343,7 +336,6 @@
             android:id="@+id/etapaProjetoPlanejamentoRatingBar"
             style="@style/ratingBarEtapaProjeto"
             android:numStars="5"
-            android:rating="4"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoPlanejamentotxt" />
@@ -372,7 +364,6 @@
             android:id="@+id/etapaProjetoRequisitosRatingBar"
             style="@style/ratingBarEtapaProjeto"
             android:numStars="5"
-            android:rating="4"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/etapaProjetoEscopoRatingBar"
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRequisitostxt" />
@@ -401,14 +392,11 @@
             android:id="@+id/etapaProjetoEscopoRatingBar"
             style="@style/ratingBarEtapaProjeto"
             android:numStars="5"
-            android:rating="4"
             app:layout_constraintLeft_toRightOf="@+id/etapaProjetoRequisitosRatingBar"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etapaProjetoEscopotxt" />
 
         <!--Fim Escopo Termo Abertura-->
-
-
 
 
 

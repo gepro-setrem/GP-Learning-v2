@@ -20,8 +20,12 @@ import com.gplearning.gplearning.Enums.RecursosEnum;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.Etapa;
+import com.gplearning.gplearning.Models.EtapaDao;
 import com.gplearning.gplearning.Models.Pessoa;
 import com.gplearning.gplearning.Models.PessoaDao;
+import com.gplearning.gplearning.Models.Projeto;
+import com.gplearning.gplearning.Models.ProjetoDao;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 
@@ -37,6 +41,8 @@ public class ComentarioActivity extends AppCompatActivity {
     private ComentarioAdapter comentarioAdapter; //ArrayAdapter<Comentario> comentario2Adapter;
     private Long idEtapa;
     private Long idProjeto;
+    private int idProjetoExterno;
+    private int idEtapaExterno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,19 +50,23 @@ public class ComentarioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_comentario);
         setTitle(R.string.comments);
         DaoSession daoSession = ((App) getApplication()).getDaoSession();
+        dao = daoSession.getComentarioDao();
 
         Intent intent = getIntent();
         if (intent != null) {
             if (intent.getExtras().containsKey(MetodosPublicos.key_idEtapa)) {
                 idEtapa = intent.getLongExtra(MetodosPublicos.key_idEtapa, Long.valueOf(0));
+                EtapaDao daoEtapa = daoSession.getEtapaDao();
+                idEtapaExterno = daoEtapa.load(idEtapa).getId();
             }
             if (intent.getExtras().containsKey(MetodosPublicos.key_idProjeto)) {
                 idProjeto = intent.getLongExtra(MetodosPublicos.key_idProjeto, Long.valueOf(0));
+                ProjetoDao daoProjeto = daoSession.getProjetoDao();
+                idProjetoExterno = daoProjeto.load(idProjeto).getId();
             }
         }
 
         //   ComentarioDao cDao
-        dao = daoSession.getComentarioDao();
         recyclerView = (RecyclerView) findViewById(R.id.comentarioListView);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -72,6 +82,7 @@ public class ComentarioActivity extends AppCompatActivity {
             public void onItemClick(View view, int position) {
                 Log.i("Event", "Clicou");
             }
+
             @Override
             public void onLongItemClick(View view, int position) {
                 Log.i("Event", "Long Click");
@@ -80,7 +91,7 @@ public class ComentarioActivity extends AppCompatActivity {
         }));
 
         PessoaDao pessoaDao = daoSession.getPessoaDao();
-        lsComentario.addAll(dao.queryBuilder().where(ComentarioDao.Properties.IdEtapa.eq(idEtapa), ComentarioDao.Properties.Deletado.eq(false)).orderAsc(ComentarioDao.Properties.Criacao).list());
+        lsComentario.addAll(dao.queryBuilder().where(ComentarioDao.Properties.IdEtapa.eq(idEtapa), ComentarioDao.Properties.IdProjeto.eq(idProjeto), ComentarioDao.Properties.Deletado.eq(false)).orderAsc(ComentarioDao.Properties.Criacao).list());
         for (Comentario comentario : lsComentario) {
             Pessoa pessoa = pessoaDao.load(comentario.getIdRemetente());
             if (pessoa != null) {
@@ -115,10 +126,20 @@ public class ComentarioActivity extends AppCompatActivity {
         try {
             if (!coment.getText().toString().isEmpty()) {
                 final Comentario COM = new Comentario(null, 0, coment.getText().toString(), new Date(), MetodosPublicos.SelecionaSessaoId(this), idEtapa, idProjeto);
-                final ComentarioDAO comentarioDAO = new ComentarioDAO();
+                Projeto prj = new Projeto();
+                prj.setId(idProjetoExterno);
+                COM.setProjeto(prj);
+
+                Etapa etapa = new Etapa();
+                etapa.setId(idEtapaExterno);
+                COM.setEtapa(etapa);
+
+                Pessoa pessoa = new Pessoa();
+                pessoa.setId(MetodosPublicos.SelecionaSessaoidExterno(this));
+                COM.setRemetente(pessoa);
+
                 long id = dao.insert(COM);
                 MetodosPublicos.Log("Event", "id:" + COM.get_id());
-
                 if (id > 0) {
                     new SalvaComentario().execute(COM);
                 }
@@ -201,7 +222,8 @@ public class ComentarioActivity extends AppCompatActivity {
     private class DeletaComentario extends AsyncTask<Comentario, String, Boolean> {
         Comentario comentario;
 
-        public DeletaComentario() {}
+        public DeletaComentario() {
+        }
 
         @Override
         protected Boolean doInBackground(Comentario... comentarios) {

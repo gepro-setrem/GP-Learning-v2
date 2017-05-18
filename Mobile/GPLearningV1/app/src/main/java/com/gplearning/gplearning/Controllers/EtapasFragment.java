@@ -184,55 +184,55 @@ public class EtapasFragment extends Fragment {
 
 
         if (lsEtapas != null && lsEtapas.size() > 0) {
-/// inicio
+            /// inicio
             for (final Etapa eta : lsEtapas) {
                 if (eta.getEtapa() == EtapaProjeto.DescricaoProjeto) {
                     // ((RatingBar) getActivity().findViewById(R.id.etapaProjetoDescricaoTARatingBar)).setRating(eta.getPontuacaoMedia());
-                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoDescricaoTARatingBar)), eta.get_id());
+                    CalculaMediaEtapa(((RatingBar) view.findViewById(R.id.etapaProjetoDescricaoTARatingBar)), eta.get_id());
                     AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoDescricaoTAbtn)), eta.get_id());
                 } else if (eta.getEtapa() == EtapaProjeto.JustificativaProjeto) {
                     //((RatingBar) getActivity().findViewById(R.id.etapaProjetoJustificativaTARatingBar)).setRating(eta.getPontuacaoMedia());
-                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoJustificativaTARatingBar)), eta.get_id());
+                    CalculaMediaEtapa(((RatingBar) view.findViewById(R.id.etapaProjetoJustificativaTARatingBar)), eta.get_id());
                     AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoJustificativaTAbtn)), eta.get_id());
                 } else if (eta.getEtapa() == EtapaProjeto.Premissas) {
                     //   ((RatingBar) getActivity().findViewById(R.id.etapaProjetoPremissasTARatingBar)).setRating(eta.getPontuacaoMedia());
-                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoPremissasTARatingBar)), eta.get_id());
+                    CalculaMediaEtapa(((RatingBar) view.findViewById(R.id.etapaProjetoPremissasTARatingBar)), eta.get_id());
                     AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoPremissasTAbtn)), eta.get_id());
 
                 } else if (eta.getEtapa() == EtapaProjeto.Restricoes) {
                     // ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRestricoesTARatingBar)).setRating(eta.getPontuacaoMedia());
-                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoRestricoesTARatingBar)), eta.get_id());
+                    CalculaMediaEtapa(((RatingBar) view.findViewById(R.id.etapaProjetoRestricoesTARatingBar)), eta.get_id());
                     AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoRestricoesTAbtn)), eta.get_id());
 
                 } else if (eta.getEtapa() == EtapaProjeto.Marcos) {
                     //  ((RatingBar) getActivity().findViewById(R.id.etapaProjetoMarcosTARatingBar)).setRating(eta.getPontuacaoMedia());
-                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoMarcosTARatingBar)), eta.get_id());
+                    CalculaMediaEtapa(((RatingBar) view.findViewById(R.id.etapaProjetoMarcosTARatingBar)), eta.get_id());
                     AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoMarcosTAbtn)), eta.get_id());
 
                 } else if (eta.getEtapa() == EtapaProjeto.RequisitosTermoAbertura) {
                     //((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosTARatingBar)).setRating(eta.getPontuacaoMedia());
-                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosTARatingBar)), eta.get_id());
+                    CalculaMediaEtapa(((RatingBar) view.findViewById(R.id.etapaProjetoRequisitosTARatingBar)), eta.get_id());
                     AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoRequisitosTAbtn)), eta.get_id());
 
                 } else if (eta.getEtapa() == EtapaProjeto.Stakeholders) {
                     //((RatingBar) getActivity().findViewById(R.id.etapaProjetoStakeholdersTARatingBar)).setRating(eta.getPontuacaoMedia());
-                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoStakeholdersTARatingBar)), eta.get_id());
+                    CalculaMediaEtapa(((RatingBar) view.findViewById(R.id.etapaProjetoStakeholdersTARatingBar)), eta.get_id());
                     AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoStakeholdersTAbtn)), eta.get_id());
 
                 } else if (eta.getEtapa() == EtapaProjeto.PlanoGerenciamentoEscopo) {
                     // ((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)).setRating(eta.getPontuacaoMedia());
-                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)), eta.get_id());
+                    CalculaMediaEtapa(((RatingBar) view.findViewById(R.id.etapaProjetoEscopoRatingBar)), eta.get_id());
                     AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoEscopobtn)), eta.get_id());
                 } else if (eta.getEtapa() == EtapaProjeto.Requisitos) {
                     //    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosRatingBar)).setRating(eta.getPontuacaoMedia());
-                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosRatingBar)), eta.get_id());
+                    CalculaMediaEtapa(((RatingBar) view.findViewById(R.id.etapaProjetoRequisitosRatingBar)), eta.get_id());
                     AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoRequisitosbtn)), eta.get_id());
                 } else if (eta.getEtapa() == EtapaProjeto.Escopo) {
                     //   ((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)).setRating(eta.getPontuacaoMedia());
-                    CalculaMediaEtapa(((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)), eta.get_id());
+                    CalculaMediaEtapa(((RatingBar) view.findViewById(R.id.etapaProjetoEscopoRatingBar)), eta.get_id());
                     AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoEscopobtn)), eta.get_id());
 
-                    //                    ((ImageButton) getActivity().findViewById(R.id.etapaProjetoEscopobtn)).setOnClickListener(new View.OnClickListener() {
+                    // ((ImageButton) getActivity().findViewById(R.id.etapaProjetoEscopobtn)).setOnClickListener(new View.OnClickListener() {
 //                        @Override
 //                        public void onClick(View view) {
 //                            Intent intent = new Intent(getActivity(), EtapaActivity.class);
@@ -249,7 +249,6 @@ public class EtapasFragment extends Fragment {
     }
 
     private void AtribuiEventoClick(ImageButton imageButton, final Long idEtapa) {
-        MetodosPublicos.Log("Event", "Atribui evento image View");
         (imageButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -273,6 +272,8 @@ public class EtapasFragment extends Fragment {
                 }
                 media = media / lsAvaliacao.size();
                 ratingBar.setRating(media);
+                MetodosPublicos.Log("Event", "Atribui Avaliação Media:" + media);
+
             }
         }
     }

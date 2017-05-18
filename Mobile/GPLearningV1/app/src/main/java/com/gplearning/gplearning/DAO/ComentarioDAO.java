@@ -116,13 +116,13 @@ public class ComentarioDAO extends DefaultDAO {
     }
 
 
-    public List<Comentario> SelecionaComentarioPorData(Date date) {
-        String url = UrlDefault + "/comentario/date/";
-        Comentario comentario = new Comentario();
-        comentario.setCriacao(date);
+    public List<Comentario> SelecionaComentarioPorData(int id) {
+        String url = UrlDefault + "/comentario/pessoa/"+id;
+       // Comentario comentario = new Comentario();
+       // comentario.setCriacao(date);
         RestTemplate restTemplate = getResTemplateDefault();
-        MetodosPublicos.Log("DAO", " vai seleecioanr url:" + url + " com a data:" + date);
-        ResponseEntity<Comentario[]> responseEntity = restTemplate.postForEntity(url, comentario, Comentario[].class);
+      //  MetodosPublicos.Log("DAO", " vai seleecioanr url:" + url + " com a data:" + date);
+        ResponseEntity<Comentario[]> responseEntity = restTemplate.getForEntity(url,Comentario[].class); //.postForEntity(url, comentario, Comentario[].class);
         Comentario[] comentarioArray = responseEntity.getBody();
         if (comentarioArray != null && comentarioArray.length > 0)
             return Arrays.asList(comentarioArray);

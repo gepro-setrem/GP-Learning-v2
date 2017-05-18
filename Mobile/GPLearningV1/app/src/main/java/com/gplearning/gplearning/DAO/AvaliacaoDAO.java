@@ -11,8 +11,8 @@ import java.util.List;
 
 public class AvaliacaoDAO extends DefaultDAO {
 
-    public List<Avaliacao> SelecionaAvaliacoesPessoa(Long idPessoa) {
-        String url = UrlDefault + "/avaliacao/index/" + idPessoa;
+    public List<Avaliacao> SelecionaAvaliacoesPessoa(int idPessoa) {
+        String url = UrlDefault + "/avaliacao/pessoa/" + idPessoa;
         RestTemplate restTemplate = getResTemplateDefault();
         ResponseEntity<Avaliacao[]> responseEntity = restTemplate.getForEntity(url, Avaliacao[].class);
         return Arrays.asList(responseEntity.getBody());

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.R;
+import com.gplearning.gplearning.Utils.CircleTransform;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 import com.squareup.picasso.Picasso;
 
@@ -51,17 +52,14 @@ public class ComentarioAdapter extends RecyclerView.Adapter {
         Comentario comentario = lsComentario.get(position);
         holder.texto.setText(comentario.getDescricao());
         holder.data.setText(dateFormat.format(comentario.getCriacao()));
-        //  MetodosPublicos.Log("Event", " idRemetente:" + comentario.getIdRemetente() + " remetente null:" + (comentario.getRemetente() == null));
-        // Pessoa user =
         if (comentario.getRemetente() != null) {
             holder.usuario.setText(comentario.getRemetente().getNome());
             String path = MetodosPublicos.SelecionaCaminhoImagem(context, comentario.getRemetente().get_id());
-            Picasso.with(context).load(new File(path)).into(holder.imagem);
-//            byte[] image = comentario.getRemetente().getImagem();
-//            if (image != null && image.length > 0) {
-//                Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-//                holder.imagem.setImageBitmap(bitmap);
-//            }
+            if (path != null) {
+                Picasso.with(context).load(new File(path)).transform(new CircleTransform()).into(holder.imagem);
+            } else {
+                Picasso.with(context).load(R.drawable.user_default).transform(new CircleTransform()).into(holder.imagem);
+            }
         }
     }
 
