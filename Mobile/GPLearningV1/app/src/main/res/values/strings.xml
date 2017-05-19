@@ -56,6 +56,12 @@
     <string name="classroom">Turma</string>
     <string name="pontuation">Pontuação Atual</string>
 
+    <string name="synchronization">Sincronização Realizada</string>
+    <string name="synchronization_error_connect">Não foi possível conectar ao servidor</string>
+    <string name="synchronization_error">Falha ao sincronizar</string>
+    <string name="app_offline">Você não esta conectado a internet</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="profile">Perfi</string>

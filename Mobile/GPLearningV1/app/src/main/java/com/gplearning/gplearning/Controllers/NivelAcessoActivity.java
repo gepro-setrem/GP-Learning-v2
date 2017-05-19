@@ -22,14 +22,6 @@ public class NivelAcessoActivity extends AppCompatActivity {
     public void AcessoAluno(View view) {
         SetAcessoAluno();
         ChangeView(view);
-//        Intent intent = new Intent(this, MainActivity.class);
-//        intent.putExtra("PAGE", Fragments.projetos.toString());
-//        if (atualizaHeader)
-//            intent.putExtra("LOGIN", "");
-//
-//        startActivity(intent);
-//        finish();
-//        overridePendingTransition(R.animator.push_left_in, R.animator.push_left_out);
     }
 
     public void AcessoProfessor(View view) {

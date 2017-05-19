@@ -1,8 +1,5 @@
 package com.gplearning.gplearning.Controllers;
 
-//import android.app.Fragment;
-//import android.app.FragmentTransaction;
-
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,21 +32,10 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
 public class ProjetoFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
-    private int mColumnCount = 1;
     private ProjetoAdapter projetoAdapter;
-    // private OnListFragmentInteractionListener listenerClick;
-    //  private OnListFragmentInteractionListener listenerLongClick;
     private View view;
     private RecyclerView recyclerView;
     public List<Projeto> lsProjetos = new ArrayList<>();
@@ -70,15 +56,6 @@ public class ProjetoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_projeto_list, container, false);
-//        listenerclick = new onlistfragmentinteractionlistener() {
-//            @override
-//            public void onlistfragmentinteraction(projeto item) {
-//                log.i("event", "clicou no projeto:" + item.getnome());
-//                fragment fragment = etapasfragment.newinstance(item.get_id());
-//                fragmentmanager manager = getactivity().getsupportfragmentmanager();
-//                manager.begintransaction().replace(r.id.content_frame, fragment).commit();
-//            }
-//        };
 
         // set the adapter
         if (view instanceof RecyclerView) {
@@ -137,60 +114,6 @@ public class ProjetoFragment extends Fragment {
         }
     }
 
-    private List<Projeto> getProjetos() {
-        List<Projeto> lsProjetos = new ArrayList<>();
-//        for (int i = 0; i < 20; i++) {
-//            Projeto pj = new Projeto();
-//            pj.set_id(Long.valueOf(i+1));
-//            pj.setNome("Projeto "+i);
-//            pj.setGerente("Gerente "+i);
-//            pj.setEmpresa("Empresa Oficial "+i);
-//            lsProjetos.add(pj);
-//        }
-        //   PessoaDao
-
-//        Projeto pj = new Projeto();
-//        pj.setId(Long.valueOf(1));
-//        pj.setNome("Projeto de melhoria de rede de computadores de uma fábrica de móveis");
-//        Pessoa pessoa = new Pessoa();
-//        pessoa.setNome("Tiago Luis cesa Seibel");
-//        pj.setGerente(pessoa);
-//        pj.setEmpresa("Jaeli Móveis");
-//        lsProjetos.add(pj);
-//
-//        pj = new Projeto();
-//        pj.setId(Long.valueOf(2));
-//        pj.setNome("Instalação e Configuração da Rede de computadores");
-//        pj.setGerente(pessoa);
-//        pj.setEmpresa("Empresa CTT");
-//        lsProjetos.add(pj);
-//
-//
-//        pj = new Projeto();
-//        pj.setId(Long.valueOf(3));
-//        pj.setNome("Projeto CTT Logística");
-//        pj.setGerente(pessoa);
-//        pj.setEmpresa("CTT Logística");
-//        lsProjetos.add(pj);
-//
-//
-//        pj = new Projeto();
-//        pj.setId(Long.valueOf(4));
-//        pj.setNome("Projeto de software para empresa ABC");
-//        pj.setGerente(pessoa);
-//        pj.setEmpresa("Empresa ABC");
-//        lsProjetos.add(pj);
-//
-//
-//        pj = new Projeto();
-//        pj.setId(Long.valueOf(1));
-//        pj.setNome("VesteFin");
-//        pj.setGerente(pessoa);
-//        pj.setEmpresa("VesteBem");
-//        lsProjetos.add(pj);
-
-        return lsProjetos;
-    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -226,13 +149,7 @@ public class ProjetoFragment extends Fragment {
                         lsProjetos.add(projetoDao.load(c.getIdProjeto()));
                     }
                 }
-               // lsProjetos.addAll(projetoDao.queryBuilder().where(ProjetoDao.Properties.IdTurma.eq(user.getIdTurma())).list());
             } else {
-//                TurmaDao turmaDao = daoSession.getTurmaDao();
-//                List<Turma> lsTurmas = turmaDao.queryBuilder().where(TurmaDao.Properties.Pro_id.eq(MetodosPublicos.SelecionaSessaoId(getActivity()))).list();
-//                for (Turma turma : lsTurmas) {
-//                    lsProjetos.addAll(projetoDao.queryBuilder().where(ProjetoDao.Properties.IdTurma.eq(turma.get_id())).list());
-//                }
                 lsProjetos.addAll(projetoDao.queryBuilder().where(ProjetoDao.Properties.IdTurma.eq(user.getIdTurma())).list());
             }
             for (Projeto prj : lsProjetos) {

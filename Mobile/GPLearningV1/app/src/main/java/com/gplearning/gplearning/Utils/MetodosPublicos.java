@@ -39,7 +39,7 @@ public class MetodosPublicos {
     private static String key_acessoProfessor = "user_acesso_professor";
     private static String key_Admin = "user_admin";
 
-    private static String key_imagemUser = "imagem_user_";
+    public static String key_imagemUser = "imagem_user_";
 
     private static String key_sync = "last_sync";
     private static String key_sync_comentario = "last_sync_comentario";
@@ -110,7 +110,7 @@ public class MetodosPublicos {
             MetodosPublicos.Log("IMage", "image :" + file.getAbsolutePath());
             Picasso.with(context).load(file).transform(new CircleTransform()).into(imageView);
         } else {
-            Picasso.with(context).load(R.drawable.user_default).transform(new CircleTransform()).into(imageView);
+            Picasso.with(context).load(R.drawable.avatar_default).transform(new CircleTransform()).into(imageView);
         }
     }
 

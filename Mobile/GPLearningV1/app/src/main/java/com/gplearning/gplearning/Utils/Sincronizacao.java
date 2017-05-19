@@ -2,8 +2,6 @@ package com.gplearning.gplearning.Utils;
 
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.DAO.AvaliacaoDAO;
@@ -223,96 +221,96 @@ public class Sincronizacao {
 //    }
 
 
-    private static void AtualizaComentarios(Context context, int idPessoa) throws ParseException {
-        try {
-            if (MetodosPublicos.IsConnected(context)) {
-                final ComentarioDAO comentarioDAO = new ComentarioDAO();
-                DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
-                final ComentarioDao daoLite = daoSession.getComentarioDao();
-                final ProjetoDao daoProjeto = daoSession.getProjetoDao();
-                final EtapaDao daoEtapa = daoSession.getEtapaDao();
-                final PessoaDao daoPessoa = daoSession.getPessoaDao();
+    private static void AtualizaComentarios(Context context, int idPessoa) {
+        // try {
+        if (MetodosPublicos.IsConnected(context)) {
+            final ComentarioDAO comentarioDAO = new ComentarioDAO();
+            DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
+            final ComentarioDao daoLite = daoSession.getComentarioDao();
+            final ProjetoDao daoProjeto = daoSession.getProjetoDao();
+            final EtapaDao daoEtapa = daoSession.getEtapaDao();
+            final PessoaDao daoPessoa = daoSession.getPessoaDao();
 
-                List<Comentario> lsComentariosAPI = comentarioDAO.SelecionaComentarioPorData(idPessoa); //SelecionaComentarioPorData(ultimaSincronizacao);
-                List<Comentario> lsComentariosLite = daoLite.queryBuilder().list();// .whereOr(ComentarioDao.Properties.Id.eq(0), (ComentarioDao.Properties.Deletado.eq(true))).list();
-                if (lsComentariosAPI != null) {
-                    for (Comentario com : lsComentariosAPI) {
-                        if (!EstaNaListaComentario(com, lsComentariosLite)) {
-                            if (com.getProjeto() != null) {
-                                List<Projeto> lsProjetos = daoProjeto.loadAll();
-                                Projeto projeto = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(com.getProjeto().getId())).limit(1).unique();
-                                if (projeto != null) {
-                                    com.setIdProjeto(projeto.get_id());
-                                }
+            List<Comentario> lsComentariosAPI = comentarioDAO.SelecionaComentarioPorData(idPessoa); //SelecionaComentarioPorData(ultimaSincronizacao);
+            List<Comentario> lsComentariosLite = daoLite.queryBuilder().list();// .whereOr(ComentarioDao.Properties.Id.eq(0), (ComentarioDao.Properties.Deletado.eq(true))).list();
+            if (lsComentariosAPI != null) {
+                for (Comentario com : lsComentariosAPI) {
+                    if (!EstaNaListaComentario(com, lsComentariosLite)) {
+                        if (com.getProjeto() != null) {
+                            List<Projeto> lsProjetos = daoProjeto.loadAll();
+                            Projeto projeto = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(com.getProjeto().getId())).limit(1).unique();
+                            if (projeto != null) {
+                                com.setIdProjeto(projeto.get_id());
                             }
-                            if (com.getEtapa() != null) {
-                                Etapa etapa = daoEtapa.queryBuilder().where(EtapaDao.Properties.Id.eq(com.getEtapa().getId())).limit(1).unique();
-                                if (etapa != null) {
-                                    com.setIdEtapa(etapa.get_id());
-                                }
-                            }
-                            if (com.getRemetente() != null) {
-                                List<Pessoa> lsPessoa = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(com.getRemetente().getId())).list();
-                                if (lsPessoa != null && lsPessoa.size() > 0) {
-                                    com.setIdRemetente(lsPessoa.get(0).get_id());
-                                }
-                            }
-                            daoLite.insert(com);
-                            MetodosPublicos.Log("log", "Inserrir lite o id:" + com.getId() + "projetoId:" + com.getIdProjeto() + " etapaId:" + com.getIdEtapa());
                         }
+                        if (com.getEtapa() != null) {
+                            Etapa etapa = daoEtapa.queryBuilder().where(EtapaDao.Properties.Id.eq(com.getEtapa().getId())).limit(1).unique();
+                            if (etapa != null) {
+                                com.setIdEtapa(etapa.get_id());
+                            }
+                        }
+                        if (com.getRemetente() != null) {
+                            List<Pessoa> lsPessoa = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(com.getRemetente().getId())).list();
+                            if (lsPessoa != null && lsPessoa.size() > 0) {
+                                com.setIdRemetente(lsPessoa.get(0).get_id());
+                            }
+                        }
+                        daoLite.insert(com);
+                        MetodosPublicos.Log("log", "Inserrir lite o id:" + com.getId() + "projetoId:" + com.getIdProjeto() + " etapaId:" + com.getIdEtapa());
                     }
                 }
+            }
 
-                lsComentariosLite = daoLite.queryBuilder().whereOr(ComentarioDao.Properties.Id.eq(0), (ComentarioDao.Properties.Deletado.eq(true))).list();
-                if (lsComentariosLite != null) {
-                    for (final Comentario com : lsComentariosLite) {
-                        if (!EstaNaListaComentario(com, lsComentariosAPI)) {// esta apenas no SQLite
-                            if (com.getId() > 0) { // tem id= foi deletado no servidor
-                                MetodosPublicos.Log("log", "deletou lite o id:" + com.getId());
-                                daoLite.deleteByKey(com.get_id());
-                            } else {// não tem ID= é um novo comentário
+            lsComentariosLite = daoLite.queryBuilder().whereOr(ComentarioDao.Properties.Id.eq(0), (ComentarioDao.Properties.Deletado.eq(true))).list();
+            if (lsComentariosLite != null) {
+                for (final Comentario com : lsComentariosLite) {
+                    if (!EstaNaListaComentario(com, lsComentariosAPI)) {// esta apenas no SQLite
+                        if (com.getId() > 0) { // tem id= foi deletado no servidor
+                            MetodosPublicos.Log("log", "deletou lite o id:" + com.getId());
+                            daoLite.deleteByKey(com.get_id());
+                        } else {// não tem ID= é um novo comentário
 //                                new Thread(new Runnable() {
 //                                    @Override
 //                                    public void run() {
-                                if (com.getRemetente() == null && com.getIdRemetente() > 0) {
-                                    Pessoa remetente = daoPessoa.load(com.getIdRemetente());
-                                    com.setRemetente(remetente);
-                                }
-                                if (com.getIdProjeto() > 0) {
-                                    Projeto projeto = daoProjeto.load(com.getIdProjeto());
-                                    com.setProjeto(projeto);
-                                }
-                                if (com.getIdEtapa() > 0) {
-                                    Etapa etapa = daoEtapa.load(com.getIdEtapa());
-                                    com.setEtapa(etapa);
-                                }
-                                int idC = comentarioDAO.SalvarComentario(com);
-                                if (idC > 0) {
-                                    MetodosPublicos.Log("log", "cadastrou o id:" + idC);
-                                    com.setId(idC);
-                                    daoLite.update(com);
-                                } else {
-                                    MetodosPublicos.Log("log", "errou ao cadastrar o id:" + com.get_id());
-                                }
+                            if (com.getRemetente() == null && com.getIdRemetente() > 0) {
+                                Pessoa remetente = daoPessoa.load(com.getIdRemetente());
+                                com.setRemetente(remetente);
+                            }
+                            if (com.getIdProjeto() > 0) {
+                                Projeto projeto = daoProjeto.load(com.getIdProjeto());
+                                com.setProjeto(projeto);
+                            }
+                            if (com.getIdEtapa() > 0) {
+                                Etapa etapa = daoEtapa.load(com.getIdEtapa());
+                                com.setEtapa(etapa);
+                            }
+                            int idC = comentarioDAO.SalvarComentario(com);
+                            if (idC > 0) {
+                                MetodosPublicos.Log("log", "cadastrou o id:" + idC);
+                                com.setId(idC);
+                                daoLite.update(com);
+                            } else {
+                                MetodosPublicos.Log("log", "errou ao cadastrar o id:" + com.get_id());
+                            }
 //                                    }
 //                                }).start();
-                            }
-                        } else {
-                            if (com.getDeletado()) {
-                                boolean deletado = comentarioDAO.DeletaComentario(com);
-                                if (deletado)
-                                    daoLite.deleteByKey(com.get_id());
-                            }
+                        }
+                    } else {
+                        if (com.getDeletado()) {
+                            boolean deletado = comentarioDAO.DeletaComentario(com);
+                            if (deletado)
+                                daoLite.deleteByKey(com.get_id());
                         }
                     }
                 }
+            }
 //                lsComentariosLite = daoLite.queryBuilder().whereOr(ComentarioDao.Properties.Id.eq(0), (ComentarioDao.Properties.Deletado.eq(true))).list();
 //                MetodosPublicos.Log("Retono", " agora com os registros desatualizados:" + lsComentariosLite.size());
 //                MetodosPublicos.SalvaUltimaSincronizacao(context, new Date());
-            }
-        } catch (Exception e) {
-            MetodosPublicos.Log("ERRO ATUALIZAÇÃO", e.toString());
         }
+//        } catch (Exception e) {
+//            MetodosPublicos.Log("ERRO ATUALIZAÇÃO", e.toString());
+//        }
     }
 
 
@@ -326,7 +324,6 @@ public class Sincronizacao {
         return false;
     }
 
-    // sincronização por data ()
 
     /**
      * Atuliza o aplicativo toda vez que ele é aberto
@@ -334,270 +331,209 @@ public class Sincronizacao {
      * @param context
      * @throws ParseException
      */
-    public static void SincronizaAplicativoData(final Context context) throws ParseException {
+    public static void SincronizaAplicativoData(final Context context) {
         if (MetodosPublicos.IsConnected(context)) {
-            new SincronizaAppData().execute(context);
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
-//                    Date ultimaAtualizacao = null;
-//                    try {
-//                        ultimaAtualizacao = MetodosPublicos.SelecionaUltimaSincronizacao(context);
-//
-//                        if (ultimaAtualizacao == null) {
-//                            Calendar dataAtual = Calendar.getInstance();
-//                            dataAtual.add(Calendar.DAY_OF_MONTH, -1);
-//                            ultimaAtualizacao = dataAtual.getTime();
-//                        }
-//                        int id = MetodosPublicos.SelecionaSessaoidExterno(context);
-//                        AtualizaProjeto(daoSession, id);
-//                        MetodosPublicos.Log("Event", "VAI TERMO_ABERTURA");
-//                        AtualizaTermoAbertura(daoSession, id);
-//                        MetodosPublicos.Log("Event", "VAI REQUISITOS");
-//                        AtualizaRequisitos(daoSession, id);
-//                        MetodosPublicos.Log("Event", "VAI STAKEHOLDERS");
-//                        AtualizaStakeholders(daoSession, id);
-//                        MetodosPublicos.Log("Event", "VAI COMENTARIOS");
-//                        AtualizaComentarios(context, id);
-//                        MetodosPublicos.Log("Event", "VAI AVALIAÇÕES");
-//                        AtualizaAvaliacoes(daoSession, id);
-//                        MetodosPublicos.SalvaUltimaSincronizacao(context, new Date());
-//
-//                    } catch (ParseException e) {
-//                        MetodosPublicos.Log("ERRO ", "SINCRONIZACAO :" + e.toString());
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }).start();
-        } else {
-            Toast toast = Toast.makeText(context, "Sem conexão", Toast.LENGTH_SHORT);
-            toast.show();
+
+            DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
+            int id = MetodosPublicos.SelecionaSessaoidExterno(context);
+            AtualizaProjeto(daoSession, id);
+            MetodosPublicos.Log("Event", "VAI TERMO_ABERTURA");
+            AtualizaTermoAbertura(daoSession, id);
+            MetodosPublicos.Log("Event", "VAI REQUISITOS");
+            AtualizaRequisitos(daoSession, id);
+            MetodosPublicos.Log("Event", "VAI STAKEHOLDERS");
+            AtualizaStakeholders(daoSession, id);
+            MetodosPublicos.Log("Event", "VAI COMENTARIOS");
+            AtualizaComentarios(context, id);
+            MetodosPublicos.Log("Event", "VAI AVALIAÇÕES");
+            AtualizaAvaliacoes(daoSession, id);
+            MetodosPublicos.SalvaUltimaSincronizacao(context, new Date());
         }
     }
 
-    private static class SincronizaAppData extends AsyncTask<Context, String, Boolean> {
-        Context context;
-
-        @Override
-        protected Boolean doInBackground(Context... params) {
-            try {
-                context = params[0];
-                DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
-                int id = MetodosPublicos.SelecionaSessaoidExterno(context);
-                AtualizaProjeto(daoSession, id);
-                MetodosPublicos.Log("Event", "VAI TERMO_ABERTURA");
-                AtualizaTermoAbertura(daoSession, id);
-                MetodosPublicos.Log("Event", "VAI REQUISITOS");
-                AtualizaRequisitos(daoSession, id);
-                MetodosPublicos.Log("Event", "VAI STAKEHOLDERS");
-                AtualizaStakeholders(daoSession, id);
-                MetodosPublicos.Log("Event", "VAI COMENTARIOS");
-                AtualizaComentarios(context, id);
-                MetodosPublicos.Log("Event", "VAI AVALIAÇÕES");
-                AtualizaAvaliacoes(daoSession, id);
-                MetodosPublicos.SalvaUltimaSincronizacao(context, new Date());
-                return true;
-            } catch (Exception e) {
-            }
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
-            Toast toast;
-            if (aBoolean) {
-                toast = Toast.makeText(context, "Sincronização realizada", Toast.LENGTH_SHORT);
-            } else {
-                toast = Toast.makeText(context, "Sem conexão", Toast.LENGTH_SHORT);
-            }
-            toast.show();
-        }
-    }
 
     // metodos
     private static void AtualizaTermoAbertura(DaoSession daoSession, int id) {
-        try {
-            TermoAberturaDAO termoAberturaDAO = new TermoAberturaDAO();
-            ProjetoDao daoProjeto = daoSession.getProjetoDao();
+        //try {
+        TermoAberturaDAO termoAberturaDAO = new TermoAberturaDAO();
+        ProjetoDao daoProjeto = daoSession.getProjetoDao();
 
-            List<TermoAbertura> lsTermoAbertura = termoAberturaDAO.SelecionaTermoAberturaData(id);
-            if (lsTermoAbertura != null) {
-                for (TermoAbertura abertura : lsTermoAbertura) {
-                    if (abertura != null) {
-                        if (abertura.getProjeto() != null) {
-                            Projeto projeto = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(abertura.getProjeto().getId())).limit(1).unique();
-                            if (projeto != null)
-                                abertura.setIdProjeto(projeto.get_id());
-                            InsereTermoAbertura(daoSession, abertura);
-                        }
+        List<TermoAbertura> lsTermoAbertura = termoAberturaDAO.SelecionaTermoAberturaData(id);
+        if (lsTermoAbertura != null) {
+            for (TermoAbertura abertura : lsTermoAbertura) {
+                if (abertura != null) {
+                    if (abertura.getProjeto() != null) {
+                        Projeto projeto = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(abertura.getProjeto().getId())).limit(1).unique();
+                        if (projeto != null)
+                            abertura.setIdProjeto(projeto.get_id());
+                        InsereTermoAbertura(daoSession, abertura);
                     }
                 }
             }
-        } catch (Exception e) {
-            MetodosPublicos.Log("ERRO ATUALIZAÇÃO", e.toString());
         }
+//        } catch (Exception e) {
+//            MetodosPublicos.Log("ERRO ATUALIZAÇÃO", e.toString());
+//        }
     }
 
     private static void AtualizaRequisitos(DaoSession daoSession, int id) {
-        try {
-            RequisitoDAO requisitoDAO = new RequisitoDAO();
-            RequisitoDao daoRequisito = daoSession.getRequisitoDao();
-            ProjetoDao daoProjeto = daoSession.getProjetoDao();
+        //  try {
+        RequisitoDAO requisitoDAO = new RequisitoDAO();
+        RequisitoDao daoRequisito = daoSession.getRequisitoDao();
+        ProjetoDao daoProjeto = daoSession.getProjetoDao();
 
-            List<Requisito> lsRequisitos = requisitoDAO.SelecionaRequisitosData(id);
-            List<Requisito> lsRequisitoLite = daoRequisito.loadAll();
+        List<Requisito> lsRequisitos = requisitoDAO.SelecionaRequisitosData(id);
+        List<Requisito> lsRequisitoLite = daoRequisito.loadAll();
 
-            if (lsRequisitos != null) {
-                for (Requisito requisito : lsRequisitos) {
-                    if (requisito != null) {
-                        if (!EstaNaListaRequisito(requisito, lsRequisitoLite)) {
-                            if (requisito.getProjeto() != null) {
-                                Projeto projeto = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(requisito.getProjeto().getId())).limit(1).unique();
-                                if (projeto != null) {
-                                    requisito.setIdProjeto(projeto.get_id());
-                                }
+        if (lsRequisitos != null) {
+            for (Requisito requisito : lsRequisitos) {
+                if (requisito != null) {
+                    if (!EstaNaListaRequisito(requisito, lsRequisitoLite)) {
+                        if (requisito.getProjeto() != null) {
+                            Projeto projeto = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(requisito.getProjeto().getId())).limit(1).unique();
+                            if (projeto != null) {
+                                requisito.setIdProjeto(projeto.get_id());
                             }
-                            daoRequisito.insert(requisito);
-                        } else {
-                            Requisito requisitoLite = daoRequisito.queryBuilder().where(RequisitoDao.Properties.Id.eq(requisito.getId())).limit(1).unique();
-                            if (requisitoLite != null) {
-                                requisitoLite.setNome(requisito.getNome());
-                                requisitoLite.setDescricao(requisito.getDescricao());
-                                daoRequisito.update(requisitoLite);
-                            }
+                        }
+                        daoRequisito.insert(requisito);
+                    } else {
+                        Requisito requisitoLite = daoRequisito.queryBuilder().where(RequisitoDao.Properties.Id.eq(requisito.getId())).limit(1).unique();
+                        if (requisitoLite != null) {
+                            requisitoLite.setNome(requisito.getNome());
+                            requisitoLite.setDescricao(requisito.getDescricao());
+                            daoRequisito.update(requisitoLite);
                         }
                     }
                 }
             }
+        }
 
-            if (lsRequisitoLite != null) {
-                for (Requisito req : lsRequisitoLite) {
-                    if (!EstaNaListaRequisito(req, lsRequisitos)) {
-                        daoRequisito.deleteByKey(req.get_id());
-                    }
+        if (lsRequisitoLite != null) {
+            for (Requisito req : lsRequisitoLite) {
+                if (!EstaNaListaRequisito(req, lsRequisitos)) {
+                    daoRequisito.deleteByKey(req.get_id());
                 }
             }
-        } catch (Exception e) {
-            MetodosPublicos.Log("ERRO ATUALIZAÇÃO", e.toString());
         }
+//        } catch (Exception e) {
+//            MetodosPublicos.Log("ERRO ATUALIZAÇÃO", e.toString());
+//        }
     }
 
     private static void AtualizaStakeholders(DaoSession daoSession, int id) {
-        try {
-            StakeholderDAO stakeholderDAO = new StakeholderDAO();
-            StakeholderDao daoStakeholder = daoSession.getStakeholderDao();
-            ProjetoDao daoProjeto = daoSession.getProjetoDao();
+        //  try {
+        StakeholderDAO stakeholderDAO = new StakeholderDAO();
+        StakeholderDao daoStakeholder = daoSession.getStakeholderDao();
+        ProjetoDao daoProjeto = daoSession.getProjetoDao();
 
-            List<Stakeholder> lsStakeholder = stakeholderDAO.SelecionaStakeholderData(id);
-            List<Stakeholder> lsStakeholderLite = daoStakeholder.queryBuilder().list();
-            if (lsStakeholder != null) {
-                for (Stakeholder stakeholder : lsStakeholder) {
-                    if (stakeholder != null) {
-                        if (!EstaNaListaStakeholder(stakeholder, lsStakeholderLite)) {
-                            if (stakeholder.getProjeto() != null) {
-                                Projeto projeto = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(stakeholder.getProjeto().getId())).limit(1).unique();
-                                if (projeto != null) {
-                                    stakeholder.setIdProjeto(projeto.get_id());
-                                }
+        List<Stakeholder> lsStakeholder = stakeholderDAO.SelecionaStakeholderData(id);
+        List<Stakeholder> lsStakeholderLite = daoStakeholder.queryBuilder().list();
+        if (lsStakeholder != null) {
+            for (Stakeholder stakeholder : lsStakeholder) {
+                if (stakeholder != null) {
+                    if (!EstaNaListaStakeholder(stakeholder, lsStakeholderLite)) {
+                        if (stakeholder.getProjeto() != null) {
+                            Projeto projeto = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(stakeholder.getProjeto().getId())).limit(1).unique();
+                            if (projeto != null) {
+                                stakeholder.setIdProjeto(projeto.get_id());
                             }
-                            daoStakeholder.insert(stakeholder);
-                        } else {
-                            Stakeholder stakeholderLite = daoStakeholder.queryBuilder().where(StakeholderDao.Properties.Id.eq(stakeholder.getId())).limit(1).unique();
-                            if (stakeholderLite != null) {
-                                stakeholderLite.setNome(stakeholder.getNome());
-                                stakeholderLite.setContribuicao(stakeholder.getContribuicao());
-                                stakeholderLite.setPapel(stakeholder.getPapel());
-                                daoStakeholder.update(stakeholderLite);
-                            }
+                        }
+                        daoStakeholder.insert(stakeholder);
+                    } else {
+                        Stakeholder stakeholderLite = daoStakeholder.queryBuilder().where(StakeholderDao.Properties.Id.eq(stakeholder.getId())).limit(1).unique();
+                        if (stakeholderLite != null) {
+                            stakeholderLite.setNome(stakeholder.getNome());
+                            stakeholderLite.setContribuicao(stakeholder.getContribuicao());
+                            stakeholderLite.setPapel(stakeholder.getPapel());
+                            daoStakeholder.update(stakeholderLite);
                         }
                     }
                 }
             }
+        }
 
-            if (lsStakeholderLite != null) {
-                for (Stakeholder stakeholderLite : lsStakeholderLite) {
-                    if (!EstaNaListaStakeholder(stakeholderLite, lsStakeholder)) {
-                        daoStakeholder.deleteByKey(stakeholderLite.get_id());
-                    }
+        if (lsStakeholderLite != null) {
+            for (Stakeholder stakeholderLite : lsStakeholderLite) {
+                if (!EstaNaListaStakeholder(stakeholderLite, lsStakeholder)) {
+                    daoStakeholder.deleteByKey(stakeholderLite.get_id());
                 }
             }
-        } catch (Exception e) {
-            MetodosPublicos.Log("ERRO ATUALIZAÇÃO", e.toString());
         }
+//        } catch (Exception e) {
+//            MetodosPublicos.Log("ERRO ATUALIZAÇÃO", e.toString());
+//        }
     }
 
     private static void AtualizaProjeto(DaoSession daoSession, int id) { //, Context context) {
-        try {
-            ProjetoDAO projetoDAO = new ProjetoDAO();
-            ProjetoDao daoProjeto = daoSession.getProjetoDao();
-            List<Projeto> lsProjetos = projetoDAO.SelecionaProjetosAluno(id); //SelecionaProjetosData(data, id); //ProjetosAluno(MetodosPublicos.SelecionaSessaoidExterno(context)); //Data(data);
-            if (lsProjetos != null) {
-                for (Projeto projeto : lsProjetos) {
-                    List<Projeto> lsProjetoLite = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(projeto.getId())).list();
-                    MetodosPublicos.Log("EVENT", "retornou ProjetoLite:" + lsProjetoLite.size());
-                    if (lsProjetoLite != null && lsProjetoLite.size() > 0) {
-                        lsProjetoLite.get(0).setNome(projeto.getNome());
-                        lsProjetoLite.get(0).setEmpresa(projeto.getEmpresa());
-                        lsProjetoLite.get(0).setAlteracao(projeto.getAlteracao());
-                        lsProjetoLite.get(0).setDescricao(projeto.getDescricao());
-                        lsProjetoLite.get(0).setEscopo(projeto.getEscopo());
-                        lsProjetoLite.get(0).setPlanoProjeto(projeto.getPlanoProjeto());
-                        if (projeto.getGerente() != null) {
-                            Long idGerente = InsereSeNaoEncontraPessoa(daoSession, projeto.getGerente());
-                            if (idGerente > 0) {
-                                lsProjetoLite.get(0).setIdGerente(idGerente);
-                            }
+        //   try {
+        ProjetoDAO projetoDAO = new ProjetoDAO();
+        ProjetoDao daoProjeto = daoSession.getProjetoDao();
+        List<Projeto> lsProjetos = projetoDAO.SelecionaProjetosAluno(id); //SelecionaProjetosData(data, id); //ProjetosAluno(MetodosPublicos.SelecionaSessaoidExterno(context)); //Data(data);
+        if (lsProjetos != null) {
+            for (Projeto projeto : lsProjetos) {
+                List<Projeto> lsProjetoLite = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(projeto.getId())).list();
+                MetodosPublicos.Log("EVENT", "retornou ProjetoLite:" + lsProjetoLite.size());
+                if (lsProjetoLite != null && lsProjetoLite.size() > 0) {
+                    lsProjetoLite.get(0).setNome(projeto.getNome());
+                    lsProjetoLite.get(0).setEmpresa(projeto.getEmpresa());
+                    lsProjetoLite.get(0).setAlteracao(projeto.getAlteracao());
+                    lsProjetoLite.get(0).setDescricao(projeto.getDescricao());
+                    lsProjetoLite.get(0).setEscopo(projeto.getEscopo());
+                    lsProjetoLite.get(0).setPlanoProjeto(projeto.getPlanoProjeto());
+                    if (projeto.getGerente() != null) {
+                        Long idGerente = InsereSeNaoEncontraPessoa(daoSession, projeto.getGerente());
+                        if (idGerente > 0) {
+                            lsProjetoLite.get(0).setIdGerente(idGerente);
                         }
-                        daoProjeto.update(lsProjetoLite.get(0));
                     }
+                    daoProjeto.update(lsProjetoLite.get(0));
                 }
             }
-        } catch (Exception e) {
-            MetodosPublicos.Log("ERRO ATUALIZAÇÃO", e.toString());
         }
+//        } catch (Exception e) {
+//            MetodosPublicos.Log("ERRO ATUALIZAÇÃO", e.toString());
+//        }
     }
 
     private static void AtualizaAvaliacoes(DaoSession daoSession, int id) {
-        try {
-            AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO();
-            AvaliacaoDao daoAvaliacao = daoSession.getAvaliacaoDao();
-            ProjetoDao daoProjeto = daoSession.getProjetoDao();
-            EtapaDao daoEtapa = daoSession.getEtapaDao();
+        //   try {
+        AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO();
+        AvaliacaoDao daoAvaliacao = daoSession.getAvaliacaoDao();
+        ProjetoDao daoProjeto = daoSession.getProjetoDao();
+        EtapaDao daoEtapa = daoSession.getEtapaDao();
 
-            List<Avaliacao> lsAvaliacao = avaliacaoDAO.SelecionaAvaliacoesPessoa(id);
-            List<Avaliacao> lsAvaliacaoLite = daoAvaliacao.queryBuilder().list();
-            if (lsAvaliacao != null) {
-                for (Avaliacao avaliacao : lsAvaliacao) {
-                    // Avaliacao avaliacaoLite = daoAvaliacao.queryBuilder().where(AvaliacaoDao.Properties.Id.eq(avaliacao.getId())).limit(1).unique();
-                    if (!EstaNaListaAvaliacao(avaliacao, lsAvaliacaoLite)) {
-                        if (avaliacao.getProjeto() != null) {
-                            Projeto projeto = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(avaliacao.getProjeto().getId())).limit(1).unique();
-                            if (projeto != null) {
-                                avaliacao.setIdProjeto(projeto.get_id());
-                            }
+        List<Avaliacao> lsAvaliacao = avaliacaoDAO.SelecionaAvaliacoesPessoa(id);
+        List<Avaliacao> lsAvaliacaoLite = daoAvaliacao.queryBuilder().list();
+        if (lsAvaliacao != null) {
+            for (Avaliacao avaliacao : lsAvaliacao) {
+                // Avaliacao avaliacaoLite = daoAvaliacao.queryBuilder().where(AvaliacaoDao.Properties.Id.eq(avaliacao.getId())).limit(1).unique();
+                if (!EstaNaListaAvaliacao(avaliacao, lsAvaliacaoLite)) {
+                    if (avaliacao.getProjeto() != null) {
+                        Projeto projeto = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(avaliacao.getProjeto().getId())).limit(1).unique();
+                        if (projeto != null) {
+                            avaliacao.setIdProjeto(projeto.get_id());
                         }
-                        if (avaliacao.getEtapa() != null) {
-                            Etapa etapa = daoEtapa.queryBuilder().where(EtapaDao.Properties.Id.eq(avaliacao.getEtapa().getId())).limit(1).unique();
-                            if (etapa != null) {
-                                avaliacao.setIdEtapa(etapa.get_id());
-                            }
-                        }
-                        daoAvaliacao.insert(avaliacao);
                     }
+                    if (avaliacao.getEtapa() != null) {
+                        Etapa etapa = daoEtapa.queryBuilder().where(EtapaDao.Properties.Id.eq(avaliacao.getEtapa().getId())).limit(1).unique();
+                        if (etapa != null) {
+                            avaliacao.setIdEtapa(etapa.get_id());
+                        }
+                    }
+                    daoAvaliacao.insert(avaliacao);
                 }
             }
-            if (lsAvaliacaoLite != null) {
-                for (Avaliacao avaliacao : lsAvaliacaoLite) {
-                    if (!EstaNaListaAvaliacao(avaliacao, lsAvaliacao)) {
-                        daoAvaliacao.deleteByKey(avaliacao.get_id());
-                    }
-                }
-            }
-        } catch (Exception e) {
-            MetodosPublicos.Log("ERRO ATUALIZAÇÃO", e.toString());
         }
+        if (lsAvaliacaoLite != null) {
+            for (Avaliacao avaliacao : lsAvaliacaoLite) {
+                if (!EstaNaListaAvaliacao(avaliacao, lsAvaliacao)) {
+                    daoAvaliacao.deleteByKey(avaliacao.get_id());
+                }
+            }
+        }
+//        } catch (Exception e) {
+//            MetodosPublicos.Log("ERRO ATUALIZAÇÃO", e.toString());
+//        }
     }
 
     private static boolean EstaNaListaAvaliacao(Avaliacao avaliacao, List<Avaliacao> lsAvaliacao) {

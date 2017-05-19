@@ -13,10 +13,10 @@
             android:icon="@drawable/ic_collections_bookmark_black_24px"
             android:title="@string/project" />
 
-        <item
-            android:id="@+id/nav_comments"
-            android:icon="@drawable/ic_menu_chat_black_24px"
-            android:title="@string/last_comments" />
+        <!--<item-->
+            <!--android:id="@+id/nav_comments"-->
+            <!--android:icon="@drawable/ic_menu_chat_black_24px"-->
+            <!--android:title="@string/last_comments" />-->
 
         <item
             android:id="@+id/nav_area"

@@ -2,6 +2,7 @@ package com.gplearning.gplearning.Controllers;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
@@ -15,6 +16,9 @@ import com.gplearning.gplearning.Models.Turma;
 import com.gplearning.gplearning.Models.TurmaDao;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 public class PerfilActivity extends AppCompatActivity {
 
@@ -32,7 +36,15 @@ public class PerfilActivity extends AppCompatActivity {
         if (intent != null) {
             if (intent.getExtras().containsKey("ID")) {
                 idPessoa = intent.getExtras().getLong("ID");
-                MetodosPublicos.CarregaimagemPerfil(this, ((ImageView) findViewById(R.id.perfilImagem)), idPessoa);
+                //   MetodosPublicos.CarregaimagemPerfil(this, ((ImageView) findViewById(R.id.perfilImagem)), idPessoa);
+
+                File path = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                // File file = new File(path, MetodosPublicos.SelecionaCaminhoImagem(this,idPessoa));
+                File file = new File(path, MetodosPublicos.key_imagemUser + idPessoa + ".jpg");
+                if (file != null && file.exists()) {
+                    Picasso.with(this).load(file).into(((ImageView) findViewById(R.id.perfilImagem)));
+                }
+
                 DaoSession daoSession = ((App) getApplication()).getDaoSession();
                 PessoaDao pessoaDao = daoSession.getPessoaDao();
                 Pessoa pessoa = pessoaDao.load(idPessoa);
@@ -46,7 +58,7 @@ public class PerfilActivity extends AppCompatActivity {
                         TurmaDao turmaDao = daoSession.getTurmaDao();
                         Turma turma = turmaDao.load(pessoa.get_id());
                         if (turma != null)
-                            ((TextView) findViewById(R.id.perfilTurma)).setText(turma.getNome() + " - " + turma.getAno() + " " +getString(R.string.year));
+                            ((TextView) findViewById(R.id.perfilTurma)).setText(turma.getNome() + " - " + turma.getAno() + " " + getString(R.string.year));
                     }
                 }
             }

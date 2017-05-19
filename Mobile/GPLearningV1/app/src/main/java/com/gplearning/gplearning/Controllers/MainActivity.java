@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -26,6 +27,8 @@ import com.gplearning.gplearning.Models.PessoaDao;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 import com.gplearning.gplearning.Utils.Sincronizacao;
+
+import org.springframework.web.client.ResourceAccessException;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -153,12 +156,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        //  return super.onPrepareOptionsMenu(menu);
-
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -188,8 +185,8 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.nav_project) {
             changefragment(Fragments.projetos.toString());
-        } else if (item.getItemId() == R.id.nav_comments) {
-            changefragment(Fragments.comentarios.toString());
+//        } else if (item.getItemId() == R.id.nav_comments) {
+//            changefragment(Fragments.comentarios.toString());
         } else if (item.getItemId() == R.id.nav_area) {
             changefragment(Fragments.nivelAcesso.toString());
         } else if (item.getItemId() == R.id.nav_profile) {
@@ -237,52 +234,49 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public class getAssync extends AsyncTask<String, Integer, String> {
+    public class getAssync extends AsyncTask<String, Integer, Boolean> {
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected Boolean doInBackground(String... strings) {
             try {
-                //  RestTemplate restTemplate = new RestTemplate();
-                //  restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                //  Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
-                //   Log.i("WB", quote.toString());
-                Sincronizacao sc = new Sincronizacao();
-                sc.SincronizaAplicativoData(MainActivity.this);
+                if (MetodosPublicos.IsConnected(MainActivity.this)) {
+                    //  RestTemplate restTemplate = new RestTemplate();
+                    //  restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                    //  Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
+                    //   Log.i("WB", quote.toString());
+                    Sincronizacao sc = new Sincronizacao();
+                    sc.SincronizaAplicativoData(MainActivity.this);
+                    return true;
+                }else{
+                    Snackbar snackbar = Snackbar
+                            .make(findViewById(R.id.ConstraintLayoutMAIN), getString(R.string.app_offline), Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+                }
+            } catch (ResourceAccessException e) {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.ConstraintLayoutMAIN), getString(R.string.synchronization_error_connect), Snackbar.LENGTH_SHORT); //(context, "Welcome to AndroidHive", Snackbar.LENGTH_LONG);
+                snackbar.show();
             } catch (Exception e) {
                 MetodosPublicos.Log("ERROR", e.toString());
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.ConstraintLayoutMAIN), getString(R.string.synchronization_error), Snackbar.LENGTH_SHORT);
+                snackbar.show();
             }
-            return null;
+            return false;
         }
 
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if (aBoolean) {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.ConstraintLayoutMAIN), getString(R.string.synchronization), Snackbar.LENGTH_SHORT); //(context, "Welcome to AndroidHive", Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+        }
     }
 
-    public void MostraEtapa(View view) {
-        Intent intent = new Intent(this, EtapaActivity.class);
-        startActivity(intent);
-    }
 
-    /**
-     * Check whether the device is connected, and if so, whether the connection
-     * is wifi or mobile (it could be something else).
-     */
-//    private void checkNetworkConnection() {
-//        // BEGIN_INCLUDE(connect)
-//        ConnectivityManager connMgr =
-//                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo activeInfo = connMgr.getActiveNetworkInfo();
-//        if (activeInfo != null && activeInfo.isConnected()) {
-//            wifiConnected = activeInfo.getType() == ConnectivityManager.TYPE_WIFI;
-//            mobileConnected = activeInfo.getType() == ConnectivityManager.TYPE_MOBILE;
-//            if(wifiConnected) {
-//                Log.i(TAG, getString(R.string.wifi_connection));
-//            } else if (mobileConnected){
-//                Log.i(TAG, getString(R.string.mobile_connection));
-//            }
-//        } else {
-//            Log.i(TAG, getString(R.string.no_wifi_or_mobile));
-//        }
-//        // END_INCLUDE(connect)
-//    }
     public void AtualizaHeaderMain() throws ParseException {
         if (MetodosPublicos.ExisteSessao(this)) {
             MetodosPublicos.Log("Img", "ATUALIZA CAMINHO IMAGEM PERFIL E ATUALZIA APP DATA");
@@ -298,7 +292,8 @@ public class MainActivity extends AppCompatActivity
                 MetodosPublicos.CarregaimagemPerfil(this, ((ImageView) hView.findViewById(R.id.headerImage)), pessoa.get_id());
                 // String path = MetodosPublicos.SelecionaCaminhoImagem(this, pessoa.get_id());
             }
-            Sincronizacao.SincronizaAplicativoData(MainActivity.this);
+            new getAssync().execute();
+            //  Sincronizacao.SincronizaAplicativoData(MainActivity.this);
         }
 
     }
