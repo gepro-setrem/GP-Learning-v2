@@ -67,6 +67,7 @@
     <string name="year">Ano</string>
 
     <string name="last_sync">Última sincronização</string>
+    <string name="synchronized_in">Sincronizado em:</string>
     <string name="title_activity_perfil">perfilActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"

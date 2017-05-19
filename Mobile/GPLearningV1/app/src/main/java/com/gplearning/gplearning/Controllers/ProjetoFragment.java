@@ -23,7 +23,11 @@ import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.Models.Pessoa;
 import com.gplearning.gplearning.Models.PessoaDao;
 import com.gplearning.gplearning.Models.Projeto;
+import com.gplearning.gplearning.Models.ProjetoComponentes;
+import com.gplearning.gplearning.Models.ProjetoComponentesDao;
 import com.gplearning.gplearning.Models.ProjetoDao;
+import com.gplearning.gplearning.Models.Turma;
+import com.gplearning.gplearning.Models.TurmaDao;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 
@@ -83,6 +87,11 @@ public class ProjetoFragment extends Fragment {
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
             //((LinearLayoutManager) layoutManager).setStackFromEnd(true);
             recyclerView.setLayoutManager(layoutManager);
+
+            DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
+            dao = daoSession.getProjetoDao();
+            new CarregaProjetos().execute();
+
             projetoAdapter = new ProjetoAdapter(lsProjetos, getActivity()); //new ProjetoRecyclerViewAdapter(lsProjetos, listenerClick, listenerLongClick);
             recyclerView.setAdapter(projetoAdapter);
             recyclerView.addOnItemTouchListener(new MetodosPublicos.RecyclerItemClickListener(getActivity(), recyclerView, new MetodosPublicos.RecyclerItemClickListener.OnItemClickListener() {
@@ -101,9 +110,7 @@ public class ProjetoFragment extends Fragment {
             }));
         }
 
-        DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
-        dao = daoSession.getProjetoDao();
-        new CarregaProjetos().execute();
+
         return view;
     }
 
@@ -205,23 +212,28 @@ public class ProjetoFragment extends Fragment {
         @Override
         protected Boolean doInBackground(String... strings) {
 
-//            try {
-//                Thread.sleep(3000);
-//            } catch (InterruptedException ex) {
-//                Thread.currentThread().interrupt();
-//            }
-            //   ProjetoDAO projetoDAO = new ProjetoDAO();
             DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
             PessoaDao pessoaDao = daoSession.getPessoaDao();
             ProjetoDao projetoDao = daoSession.getProjetoDao();
             Pessoa user = pessoaDao.load(MetodosPublicos.SelecionaSessaoId(getActivity()));
-            ///select no sqlite
+
             if (MetodosPublicos.ModoAcessoAluno(getActivity())) {
                 MetodosPublicos.Log("projetos", " Turmar do user:" + user.getId() + " da turma:" + user.getIdTurma());
-                lsProjetos.addAll(projetoDao.queryBuilder().where(ProjetoDao.Properties.IdTurma.eq(user.getIdTurma())).list());
-                //  lsProjetos.addAll(projetoDAO.SelecionaProjetosAluno(MetodosPublicos.SelecionaSessaoidExterno(getActivity())));//getProjetos()); //dao.loadAll();
+                ProjetoComponentesDao componentesDao = daoSession.getProjetoComponentesDao();
+                List<ProjetoComponentes> lsComponentes = componentesDao.queryBuilder().where(ProjetoComponentesDao.Properties.IdPessoa.eq(user.get_id())).list();
+                if (lsComponentes != null) {
+                    for (ProjetoComponentes c : lsComponentes) {
+                        lsProjetos.add(projetoDao.load(c.getIdProjeto()));
+                    }
+                }
+               // lsProjetos.addAll(projetoDao.queryBuilder().where(ProjetoDao.Properties.IdTurma.eq(user.getIdTurma())).list());
             } else {
-                //lsProjetos.addAll(projetoDAO.SelecionaProjetosProfessor(MetodosPublicos.SelecionaSessaoidExterno(getActivity())));
+//                TurmaDao turmaDao = daoSession.getTurmaDao();
+//                List<Turma> lsTurmas = turmaDao.queryBuilder().where(TurmaDao.Properties.Pro_id.eq(MetodosPublicos.SelecionaSessaoId(getActivity()))).list();
+//                for (Turma turma : lsTurmas) {
+//                    lsProjetos.addAll(projetoDao.queryBuilder().where(ProjetoDao.Properties.IdTurma.eq(turma.get_id())).list());
+//                }
+                lsProjetos.addAll(projetoDao.queryBuilder().where(ProjetoDao.Properties.IdTurma.eq(user.getIdTurma())).list());
             }
             for (Projeto prj : lsProjetos) {
                 prj.setGerente(pessoaDao.queryBuilder().where(PessoaDao.Properties._id.eq(prj.getIdGerente())).unique());

@@ -46,7 +46,7 @@ public class PerfilActivity extends AppCompatActivity {
                         TurmaDao turmaDao = daoSession.getTurmaDao();
                         Turma turma = turmaDao.load(pessoa.get_id());
                         if (turma != null)
-                            ((TextView) findViewById(R.id.perfilTurma)).setText(turma.getNome() + " - " + turma.getAno() + " " + R.string.year);
+                            ((TextView) findViewById(R.id.perfilTurma)).setText(turma.getNome() + " - " + turma.getAno() + " " +getString(R.string.year));
                     }
                 }
             }

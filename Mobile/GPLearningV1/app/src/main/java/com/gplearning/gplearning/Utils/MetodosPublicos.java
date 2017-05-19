@@ -37,6 +37,7 @@ public class MetodosPublicos {
     private static String key_modoAcesso = "user_modo_acesso";
     private static String key_acessoAluno = "user_acesso_aluno";
     private static String key_acessoProfessor = "user_acesso_professor";
+    private static String key_Admin = "user_admin";
 
     private static String key_imagemUser = "imagem_user_";
 
@@ -176,6 +177,18 @@ public class MetodosPublicos {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(key_modoAcesso, key_acessoProfessor);
         editor.commit();
+    }
+
+    public static void SalvaModoAdmin(Context context, boolean admin) {
+        SharedPreferences pref = context.getSharedPreferences(key_modoAcesso, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(key_Admin, admin);
+        editor.commit();
+    }
+
+    public static boolean UsuarioAdmin(Context context) {
+        SharedPreferences shared = context.getSharedPreferences(key_modoAcesso, MODE_PRIVATE);
+        return shared.getBoolean(key_Admin, false);
     }
 
 

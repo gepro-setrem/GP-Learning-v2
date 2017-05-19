@@ -71,12 +71,18 @@ public class MainActivity extends AppCompatActivity
             Date data = MetodosPublicos.SelecionaUltimaSincronizacao(this);
             if (data != null) {
                 DateFormat df = new SimpleDateFormat("dd/MM HH:mm");
-                nav_sync.setTitle(getString(R.string.last_sync) + " " + df.format(data));
+                nav_sync.setTitle(getString(R.string.synchronized_in) + " " + df.format(data));
                 // nav_sync.getTitle()
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        if (!MetodosPublicos.UsuarioAdmin(this)) {
+            MenuItem nav_area = menu.findItem(R.id.nav_area);
+            nav_area.setVisible(false);
+        }
+
 
         try {
             AtualizaHeaderMain();
@@ -144,6 +150,13 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        //  return super.onPrepareOptionsMenu(menu);
+
         return true;
     }
 

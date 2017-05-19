@@ -16,6 +16,7 @@
         android:background="@drawable/ic_developer_board_black_48px"
         android:cropToPadding="false"
         android:elevation="0dp"
+        android:onClick="AcessoProfessor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintLeft_toLeftOf="parent"

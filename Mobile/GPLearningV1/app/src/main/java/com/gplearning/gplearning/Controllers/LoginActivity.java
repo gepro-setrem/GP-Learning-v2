@@ -265,7 +265,7 @@ public class LoginActivity extends AppCompatActivity {
 
         private final String email;
         private final String password;
-        private boolean admim;
+        private boolean admim = false;
 
         UserLoginTask(String email, String password) {
             this.email = email;
@@ -325,8 +325,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 Intent intent;
                 if (admim) {
+                    MetodosPublicos.SalvaModoAdmin(LoginActivity.this, true);
                     intent = new Intent(LoginActivity.this, NivelAcessoActivity.class);
                 } else {
+                    MetodosPublicos.SalvaModoAcessoAluno(LoginActivity.this);
                     intent = new Intent(LoginActivity.this, MainActivity.class);
                 }
                 startActivityForResult(intent, RESULT_OK);

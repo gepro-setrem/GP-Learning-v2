@@ -2,6 +2,8 @@ package com.gplearning.gplearning.Utils;
 
 
 import android.content.Context;
+import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.DAO.AvaliacaoDAO;
@@ -42,7 +44,6 @@ import com.gplearning.gplearning.Models.Turma;
 import com.gplearning.gplearning.Models.TurmaDao;
 
 import java.text.ParseException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -101,6 +102,16 @@ public class Sincronizacao {
                         if (pCompleto.getTurma() != null && pCompleto.getTurma().getId() > 0) {
                             Turma turma = daoTurma.queryBuilder().where(TurmaDao.Properties.Id.eq(pCompleto.getTurma().getId())).limit(1).unique();
                             if (turma == null) {
+                                Long idProfessor;
+                                if (turma.getProfessor() != null && turma.getProfessor().getId() > 0) {
+                                    Pessoa professor = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(turma.getProfessor().getId())).limit(1).unique();
+                                    if (professor == null) {
+                                        idProfessor = daoPessoa.insert(turma.getProfessor());
+                                    } else {
+                                        idProfessor = professor.get_id();
+                                    }
+                                    turma.setPro_id(idProfessor);
+                                }
                                 long idTurma = daoTurma.insert(pCompleto.getTurma());
                                 PRJ.setIdTurma(idTurma);
                             } else {
@@ -323,41 +334,85 @@ public class Sincronizacao {
      * @param context
      * @throws ParseException
      */
-
     public static void SincronizaAplicativoData(final Context context) throws ParseException {
         if (MetodosPublicos.IsConnected(context)) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
-                    Date ultimaAtualizacao = null;
-                    try {
-                        ultimaAtualizacao = MetodosPublicos.SelecionaUltimaSincronizacao(context);
+            new SincronizaAppData().execute(context);
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
+//                    Date ultimaAtualizacao = null;
+//                    try {
+//                        ultimaAtualizacao = MetodosPublicos.SelecionaUltimaSincronizacao(context);
+//
+//                        if (ultimaAtualizacao == null) {
+//                            Calendar dataAtual = Calendar.getInstance();
+//                            dataAtual.add(Calendar.DAY_OF_MONTH, -1);
+//                            ultimaAtualizacao = dataAtual.getTime();
+//                        }
+//                        int id = MetodosPublicos.SelecionaSessaoidExterno(context);
+//                        AtualizaProjeto(daoSession, id);
+//                        MetodosPublicos.Log("Event", "VAI TERMO_ABERTURA");
+//                        AtualizaTermoAbertura(daoSession, id);
+//                        MetodosPublicos.Log("Event", "VAI REQUISITOS");
+//                        AtualizaRequisitos(daoSession, id);
+//                        MetodosPublicos.Log("Event", "VAI STAKEHOLDERS");
+//                        AtualizaStakeholders(daoSession, id);
+//                        MetodosPublicos.Log("Event", "VAI COMENTARIOS");
+//                        AtualizaComentarios(context, id);
+//                        MetodosPublicos.Log("Event", "VAI AVALIAÇÕES");
+//                        AtualizaAvaliacoes(daoSession, id);
+//                        MetodosPublicos.SalvaUltimaSincronizacao(context, new Date());
+//
+//                    } catch (ParseException e) {
+//                        MetodosPublicos.Log("ERRO ", "SINCRONIZACAO :" + e.toString());
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }).start();
+        } else {
+            Toast toast = Toast.makeText(context, "Sem conexão", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
 
-                        if (ultimaAtualizacao == null) {
-                            Calendar dataAtual = Calendar.getInstance();
-                            dataAtual.add(Calendar.DAY_OF_MONTH, -1);
-                            ultimaAtualizacao = dataAtual.getTime();
-                        }
-                        int id = MetodosPublicos.SelecionaSessaoidExterno(context);
-                        AtualizaProjeto(daoSession, id);
-                        MetodosPublicos.Log("Event", "VAI TERMO_ABERTURA");
-                        AtualizaTermoAbertura(daoSession, id);
-                        MetodosPublicos.Log("Event", "VAI REQUISITOS");
-                        AtualizaRequisitos(daoSession, id);
-                        MetodosPublicos.Log("Event", "VAI STAKEHOLDERS");
-                        AtualizaStakeholders(daoSession, id);
-                        MetodosPublicos.Log("Event", "VAI COMENTARIOS");
-                        AtualizaComentarios(context, id);
-                        MetodosPublicos.Log("Event", "VAI AVALIAÇÕES");
-                        AtualizaAvaliacoes(daoSession, id);
-                        MetodosPublicos.SalvaUltimaSincronizacao(context, new Date());
-                    } catch (ParseException e) {
-                        MetodosPublicos.Log("ERRO ", "SINCRONIZACAO :" + e.toString());
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
+    private static class SincronizaAppData extends AsyncTask<Context, String, Boolean> {
+        Context context;
+
+        @Override
+        protected Boolean doInBackground(Context... params) {
+            try {
+                context = params[0];
+                DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
+                int id = MetodosPublicos.SelecionaSessaoidExterno(context);
+                AtualizaProjeto(daoSession, id);
+                MetodosPublicos.Log("Event", "VAI TERMO_ABERTURA");
+                AtualizaTermoAbertura(daoSession, id);
+                MetodosPublicos.Log("Event", "VAI REQUISITOS");
+                AtualizaRequisitos(daoSession, id);
+                MetodosPublicos.Log("Event", "VAI STAKEHOLDERS");
+                AtualizaStakeholders(daoSession, id);
+                MetodosPublicos.Log("Event", "VAI COMENTARIOS");
+                AtualizaComentarios(context, id);
+                MetodosPublicos.Log("Event", "VAI AVALIAÇÕES");
+                AtualizaAvaliacoes(daoSession, id);
+                MetodosPublicos.SalvaUltimaSincronizacao(context, new Date());
+                return true;
+            } catch (Exception e) {
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            Toast toast;
+            if (aBoolean) {
+                toast = Toast.makeText(context, "Sincronização realizada", Toast.LENGTH_SHORT);
+            } else {
+                toast = Toast.makeText(context, "Sem conexão", Toast.LENGTH_SHORT);
+            }
+            toast.show();
         }
     }
 
