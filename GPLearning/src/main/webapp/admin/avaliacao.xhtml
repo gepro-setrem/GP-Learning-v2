@@ -205,9 +205,9 @@
                                     <div class="panel panel-default" id="coment#{item.etapa}">
                                         <div class="panel-body">
                                             <div class="comments_panel">
-                                                <p:commandLink ajax="true" class="btn btn-primary btn-xs" action="#{projetoProfessorBean.atualizarComentarios(item)}" style="right: 0; position: absolute; top: -13px;">
+                                                <p:commandLink ajax="true" onstart="ShowLoader()" oncomplete="HideLoader()" class="btn btn-primary btn-xs" action="#{projetoProfessorBean.atualizarComentarios(item)}" style="right: 0; position: absolute; top: -13px;">
                                                     <i class="fa-refresh"></i> Atualizar
-                                                    <p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>
+                                                    <!--<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>-->
                                                 </p:commandLink>
                                                 <div class="new_comment">
                                                     <div class="comment_creator">
@@ -218,9 +218,9 @@
                                                         <div class="comment_box" >
                                                             <h:inputTextarea value="#{projetoProfessorBean.addComentario(item).descricao}" pt:placeholder="Escreva seu comentário aqui!" class="comentario_descricao"/>
                                                             <div class="comment_box_options">
-                                                                <p:commandLink ajax="true" class="btn btn-success btn-sm" action="#{projetoProfessorBean.salvarComentario(item)}">
+                                                                <p:commandLink ajax="true" onstart="ShowLoader()" oncomplete="HideLoader()" class="btn btn-success btn-sm" action="#{projetoProfessorBean.salvarComentario(item)}">
                                                                     <i class="fa-reply fa-rotate-180"></i> Enviar
-                                                                    <p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>
+                                                                    <!--<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>-->
                                                                 </p:commandLink>
                                                             </div>
                                                         </div>
@@ -245,9 +245,9 @@
                                                                             <f:convertDateTime pattern="dd/MM/yyyy (hh:mm)"/>
                                                                         </h:outputText>
                                                                     </span>
-                                                                    <p:commandLink ajax="true" rendered="#{comentario.remetente.equals(projetoProfessorBean.usuario)}" class="btn btn-danger btn-xs comment_delete" action="#{projetoProfessorBean.excluirComentario(comentario, item)}">
+                                                                    <p:commandLink ajax="true" onstart="ShowLoader()" oncomplete="HideLoader()" rendered="#{comentario.remetente.equals(projetoProfessorBean.usuario)}" class="btn btn-danger btn-xs comment_delete" action="#{projetoProfessorBean.excluirComentario(comentario, item)}">
                                                                         <i class="fa-trash"></i>
-                                                                        <p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>
+                                                                        <!--<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>-->
                                                                     </p:commandLink>
                                                                     <div class="comment_container">
                                                                         <div class="action_comment">

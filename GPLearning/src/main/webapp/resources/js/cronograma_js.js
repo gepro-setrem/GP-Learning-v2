@@ -1,4 +1,8 @@
+var token = 0;
+var pro_id = 0;
 $(function () {
+    token = $('#token').val();
+    pro_id = parseInt($('#pro_id').val()) || 0;
     loadTarefa();
     ApplyDateTime('#tarefaModal [name=inicio]');
     ApplyDateTime('#tarefaModal [name=termino]');
@@ -22,6 +26,9 @@ $(document).on('click', '.marco [type=checkbox]', function () {
             type: 'POST',
             url: '/GPLearning/api/tarefa/marcar',
             data: {id: id, marco: isCheck},
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', token);
+            },
             success: function (responser) {
                 HideLoader();
                 if (responser) {
@@ -112,6 +119,9 @@ $(document).on('click', '#tarefaModal .salvaTarefa', function () {
             data: JSON.stringify(obj),
             dataType: 'json',
             contentType: "application/json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', token);
+            },
             success: function (responser) {
                 HideLoader();
                 if (responser && responser > 0) {
@@ -162,6 +172,9 @@ $(document).on('click', '#tarefaModal .deletaTarefa', function () {
             type: 'POST',
             url: '/GPLearning/api/tarefa/excluir',
             data: {id: id},
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', token);
+            },
             success: function (responser) {
                 HideLoader();
                 if (responser) {
@@ -255,12 +268,14 @@ function LoadIndex(idPai, idEap, v_i) {
 }
 
 function loadTarefa() {
-    var pro_id = parseInt($('#pro_id').val()) || 0;
     if (pro_id > 0) {
         ShowLoader();
         $.ajax({
             type: 'GET',
             url: '/GPLearning/api/tarefa/index/' + pro_id,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', token);
+            },
             success: function (responser) {
                 HideLoader();
                 $('.tarefas tbody').html('');

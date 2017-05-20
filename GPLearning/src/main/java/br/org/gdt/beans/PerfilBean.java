@@ -8,7 +8,6 @@ import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.bll.ProjetoBLL;
 import br.org.gdt.bll.TurmaBLL;
 import br.org.gdt.model.Avaliacao;
-import br.org.gdt.model.Etapa;
 import br.org.gdt.model.Indicador;
 import br.org.gdt.model.Login;
 import br.org.gdt.model.LoginRole;
@@ -44,6 +43,8 @@ public class PerfilBean {
     private LoginBLL loginBLL;
     private Login login = new Login();
     private boolean hasSession;
+
+    private String token;
 
     private double media;
 
@@ -292,6 +293,23 @@ public class PerfilBean {
 
     public void setMedia(double media) {
         this.media = media;
+    }
+
+    public String getToken() {
+        if (usuario != null) {
+            Login log = usuario.getLogin();
+            token = log.getToken();
+            if (token == null || token.isEmpty()) {
+                token = loginBLL.newToken();
+                log.setToken(token);
+                loginBLL.update(log);
+            }
+        }
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
 }

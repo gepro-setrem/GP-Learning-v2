@@ -31,9 +31,9 @@
                 <div class="panel-heading"><h4>Comentários</h4></div>
                 <div class="panel-body">
                     <div class="comments_panel">
-                        <p:commandLink ajax="true" class="btn btn-primary btn-xs" action="#{comentarioBean.atualizar}" style="right: 0; position: absolute; top: -13px;">
+                        <p:commandLink ajax="true" onstart="ShowLoader()" oncomplete="HideLoader()" class="btn btn-primary btn-xs" action="#{comentarioBean.atualizar}" style="right: 0; position: absolute; top: -13px;">
                             <i class="fa-refresh"></i> Atualizar
-                            <p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>
+                            <!--<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>-->
                         </p:commandLink>
                         <div class="new_comment">
                             <div class="comment_creator">
@@ -44,9 +44,9 @@
                                 <div class="comment_box" >
                                     <h:inputTextarea value="#{comentarioBean.comentario.descricao}" pt:placeholder="Escreva seu comentário aqui!" class="comentario_descricao"/>
                                     <div class="comment_box_options">
-                                        <p:commandLink ajax="true" class="btn btn-success btn-sm" action="#{comentarioBean.salvar}">
+                                        <p:commandLink ajax="true" onstart="ShowLoader()" oncomplete="HideLoader()" class="btn btn-success btn-sm" action="#{comentarioBean.salvar}">
                                             <i class="fa-reply fa-rotate-180"></i> Enviar
-                                            <p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>
+                                            <!--<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>-->
                                         </p:commandLink>
                                     </div>
                                 </div>
@@ -57,9 +57,7 @@
                                 <ui:repeat var="comentario" value="#{comentarioBean.etapa.comentarios}">
                                     <div class="comment" data-idmsg="25" style="opacity: 1;">
                                         <div class="comment_creator">
-                                            <!--<h:graphicImage library="img/" name="usuario.png" class="avatar_image"/>-->
                                             <h:graphicImage rendered="#{comentario.remetente.imagem == null}" library="img/" name="usuario.png" class="avatar_image"/>
-                                            <!--<p:graphicImage rendered="{comentario.remetente.imagem != null}" value="{comentario.remetente.streamedImagem}" class="avatar_image" cache="false"/>-->
                                             <p:graphicImage rendered="#{comentario.remetente.imagem != null}" value="#{comentarioBean.imagem}" class="avatar_image" cache="false">
                                                 <f:param name="id" value="#{comentario.remetente.id}" />
                                             </p:graphicImage>
@@ -71,9 +69,9 @@
                                                     <f:convertDateTime pattern="dd/MM/yyyy (hh:mm)"/>
                                                 </h:outputText>
                                             </span>
-                                            <p:commandLink ajax="true" rendered="#{comentario.remetente.equals(comentarioBean.usuario)}" class="btn btn-danger btn-xs comment_delete" action="#{comentarioBean.excluir(comentario)}">
+                                            <p:commandLink ajax="true" onstart="ShowLoader()" oncomplete="HideLoader()" rendered="#{comentario.remetente.equals(comentarioBean.usuario)}" class="btn btn-danger btn-xs comment_delete" action="#{comentarioBean.excluir(comentario)}">
                                                 <i class="fa-trash"></i>
-                                                <p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>
+                                                <!--<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>-->
                                             </p:commandLink>
                                             <div class="comment_container">
                                                 <div class="action_comment">

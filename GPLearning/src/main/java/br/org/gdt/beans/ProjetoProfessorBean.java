@@ -379,7 +379,7 @@ public class ProjetoProfessorBean {
             for (Comentario comentario : comentarios) {
                 if (comentario.getEtapa().equals(etapa)) {
                     if (comentario.getDescricao() != null && !comentario.getDescricao().isEmpty()) {
-                        comentario.setRemetente(usuario);
+                        comentario.setRemetente(getUsuario());
                         comentario.setProjeto(projeto);
                         comentario.setCriacao(new Date());
                         comentarioBLL.insert(comentario);

@@ -4,6 +4,8 @@ import br.org.gdt.dao.LoginDAO;
 import br.org.gdt.model.Login;
 import br.org.gdt.model.LoginRole;
 import br.org.gdt.model.Pessoa;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,5 +50,19 @@ public class LoginBLL extends BLL<Login> {
             }
         }
         return user;
+    }
+
+    public Login findToken(String token) {
+        Login login = null;
+        if (token != null && !token.isEmpty()) {
+            login = dao.findToken(token);
+        }
+        return login;
+    }
+
+    public String newToken() {
+        SecureRandom random = new SecureRandom();
+        String token = new BigInteger(130, random).toString(32);
+        return token;
     }
 }

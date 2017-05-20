@@ -1,4 +1,8 @@
+var token = 0;
+var pro_id = 0;
 $(function () {
+    token = $('#token').val();
+    pro_id = parseInt($('#pro_id').val()) || 0;
     loadEAP();
     ApplyDateTime('#eapModal [name=inicio]');
     ApplyDateTime('#eapModal [name=termino]');
@@ -42,7 +46,7 @@ $(document).on('click', '.eapEdit', function () {
 $(document).on('click', '#eapModal .salvaEAP', function () {
     //var form = $('#eapModal [name]');
     var obj = Object();
-    obj.projeto = {id: (parseInt($('#pro_id').val()) || 0)};
+    obj.projeto = {id: pro_id};
     var pai_id = parseInt($('#eapModal [name="pai.id"]').val()) || 0;
     if (pai_id > 0)
         obj.pai = {id: pai_id};
@@ -75,6 +79,9 @@ $(document).on('click', '#eapModal .salvaEAP', function () {
             data: JSON.stringify(obj),
             dataType: 'json',
             contentType: "application/json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', token);
+            },
             success: function (responser) {
                 HideLoader();
                 if (responser && responser > 0) {
@@ -112,6 +119,9 @@ $(document).on('click', '#eapModal .deletaEAP', function () {
             type: 'POST',
             url: '/GPLearning/api/eap/excluir',
             data: {eap_id: id},
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', token);
+            },
             success: function (responser) {
                 HideLoader();
                 if (responser) {
@@ -165,12 +175,14 @@ function LoadIndex(pai, v_i) {
 }
 
 function loadEAP() {
-    var pro_id = parseInt($('#pro_id').val()) || 0;
     if (pro_id > 0) {
         ShowLoader();
         $.ajax({
             type: 'GET',
             url: '/GPLearning/api/eap/index/' + pro_id,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', token);
+            },
             success: function (responser) {
                 HideLoader();
                 $('.eap_list').html('');

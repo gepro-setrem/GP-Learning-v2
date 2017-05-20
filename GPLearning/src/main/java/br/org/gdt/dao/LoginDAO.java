@@ -35,4 +35,14 @@ public class LoginDAO extends DAO<Login> {
         }
         return user;
     }
+
+    public Login findToken(String token) {
+        List<Login> lsLogin = entityManager.createQuery("from Login where token = :token")
+                .setParameter("token", token).getResultList();
+        Login login = null;
+        if (lsLogin != null && lsLogin.size() > 0) {
+            login = lsLogin.get(0);
+        }
+        return login;
+    }
 }

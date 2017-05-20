@@ -54,7 +54,7 @@ public class ComentarioBean {
     public void salvar() {
         if (comentario != null && etapa != null) {
             if (comentario.getDescricao() != null && !comentario.getDescricao().isEmpty()) {
-                comentario.setRemetente(usuario);
+                comentario.setRemetente(getUsuario());
                 comentario.setCriacao(new Date());
                 comentario.setEtapa(etapa);
                 comentario.setProjeto(projeto);

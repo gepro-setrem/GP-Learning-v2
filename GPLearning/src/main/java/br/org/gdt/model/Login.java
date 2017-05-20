@@ -24,11 +24,14 @@ public class Login implements Serializable {
     @Column(name = "log_vsenha", length = 200)
     private String senha;
 
+    @Column(name = "log_vtoken", length = 200)
+    private String token;
+
     @OneToOne
     @JoinColumn(name = "pes_id")
     private Pessoa pessoa;
 
-    @OneToMany(mappedBy = "login", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "login", cascade = CascadeType.REMOVE)
     private List<LoginRole> loginRoles;
 
     public Login() {
@@ -61,6 +64,14 @@ public class Login implements Serializable {
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public List<LoginRole> getLoginRoles() {
