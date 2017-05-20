@@ -19,32 +19,26 @@
                     <p:dataTable class="table" var="user" value="#{usuarioBean.usuarios}" widgetVar="userTable" 
                                  emptyMessage="Nenhum registro encontrado." paginator="true" rows="15" paginatorPosition="bottom">
 
-                        <p:column filterBy="#{user.nome}" filterMatchMode="contains">
-                            <f:facet name="header">Nome</f:facet>
+                        <p:column headerText="Nome" filterBy="#{user.nome}" filterMatchMode="contains" class="text-center">
                             <h:outputText value="#{user.nome}"/>
                         </p:column>
-                        <p:column headerText="Email">
-                            <f:facet name="header">Email</f:facet>
+                        <p:column headerText="Email" class="text-center">
                             <h:outputText value="#{user.email}"/>
                         </p:column>
 
-                        <p:column headerText="Status" style="width: 100px">
-                            <f:facet name="header">Status</f:facet>
+                        <p:column headerText="Status" style="width: 100px" class="text-center">
                             <h:outputText value="#{user.status}"/>
                         </p:column>
 
-                        <p:column>
-                            <f:facet name="header">Turma</f:facet>
+                        <p:column headerText="Turma" class="text-center">
                             <h:outputText value="#{user.turma}"/>
                         </p:column>
 
-                        <!--                        <p:column style="width: 150px">
-                                                    <f:facet name="header">Nível de Acesso</f:facet>
-                                                    <h:outputText value="#user.login}"/>
-                                                </p:column>-->
+                        <p:column headerText="Nível de Acesso" style="width: 150px" class="text-center">
+                            <h:outputText value="#{user.login.getAcesso()}"/>
+                        </p:column>
 
-                        <p:column headerText="Opções" style="width: 200px; text-align: center;">
-                            <f:facet name="header">Opções</f:facet>
+                        <p:column headerText="Opções" style="width: 200px;" class="text-center">
                             <h:commandLink action="#{usuarioBean.editar()}" class="btn btn-success btn-xs" style="color: #fff; margin-right: 5px;"><i class="fa-pencil"></i> Editar</h:commandLink>
                             <h:commandLink action="#{usuarioBean.inativar()}" class="btn btn-warning btn-xs" style="color: #fff" onclick="return confirm('Ao torná-lo inativo, este usuário não poderá incluir novos projetos!')"><i class="fa-ban"></i> Inativar</h:commandLink>
                         </p:column>

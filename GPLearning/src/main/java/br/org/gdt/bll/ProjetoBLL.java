@@ -1,8 +1,6 @@
 package br.org.gdt.bll;
 
 import br.org.gdt.dao.ProjetoDAO;
-import br.org.gdt.dao.PessoaDAO;
-import static br.org.gdt.enumerated.EtapaProjeto.Eap;
 import br.org.gdt.model.Projeto;
 import br.org.gdt.model.TermoAbertura;
 import br.org.gdt.model.Turma;
@@ -13,8 +11,6 @@ import br.org.gdt.model.Stakeholder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.faces.bean.ManagedProperty;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,19 +22,13 @@ public class ProjetoBLL extends BLL<Projeto> {
     @Autowired
     private PessoaBLL pessoaBLL;
     @Autowired
-    private TurmaBLL turmaBLL;
-    @Autowired
     private RequisitoBLL requisitoBLL;
     @Autowired
     private StakeholderBLL stakeholderBLL;
     @Autowired
-    private EAPBLL eapbll;
-    @Autowired
     private TermoAberturaBLL termoAberturaBLL;
     @Autowired
     private TarefaBLL tarefaBLL;
-    @Autowired
-    private EtapaBLL etapaBLL;
     @Autowired
     private AvaliacaoBLL avaliacaoBLL;
 

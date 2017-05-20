@@ -1,5 +1,6 @@
 package br.org.gdt.model;
 
+import br.org.gdt.enumerated.Role;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -118,4 +119,18 @@ public class Login implements Serializable {
 //        }
 //        return "";
 //    }
+    public String getAcesso() {
+        try {
+            if (this.loginRoles != null && !this.loginRoles.isEmpty()) {
+                Role role = this.loginRoles.get(0).getRole();
+                if (role == Role.admin) {
+                    return "Professor";
+                } else {
+                    return "Aluno";
+                }
+            }
+        } catch (Exception e) {
+        }
+        return "";
+    }
 }
