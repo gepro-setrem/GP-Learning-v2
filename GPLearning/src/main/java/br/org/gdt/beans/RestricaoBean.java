@@ -31,6 +31,11 @@ public class RestricaoBean {
     public RestricaoBean() {
     }
 
+    public String novo() {
+        restricao = new Restricao();
+        return viewList;
+    }
+
     public String salvar() {
         if (projeto != null && projeto.getTermoabertura() != null) {
             if (!restricao.getDescricao().isEmpty()) {

@@ -31,6 +31,11 @@ public class StakeholderBean {
     public StakeholderBean() {
     }
 
+    public String novo() {
+        stakeholder = new Stakeholder();
+        return viewList;
+    }
+
     public String salvar() {
         if (projeto != null) {
             if (!stakeholder.getNome().isEmpty() && !stakeholder.getContribuicao().isEmpty() && !stakeholder.getPapel().isEmpty()) {

@@ -34,6 +34,11 @@ public class MarcoBean {
     public MarcoBean() {
     }
 
+    public String novo() {
+        marco = new Marco();
+        return viewList;
+    }
+
     public String salvar() {
         if (projeto != null && projeto.getTermoabertura() != null) {
             if (!marco.getObjetivo().isEmpty()) {

@@ -31,6 +31,11 @@ public class PremissaBean {
     public PremissaBean() {
     }
 
+    public String novo() {
+        premissa = new Premissa();
+        return viewList;
+    }
+
     public String salvar() {
         if (projeto != null && projeto.getTermoabertura() != null) {
             if (!premissa.getDescricao().isEmpty()) {

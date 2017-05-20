@@ -15,7 +15,9 @@
         <h:form>
             #{premissaBean.setProjeto(projetoBean.projeto)}
             <div class="panel panel-default">
-                <div class="panel-heading"><h4>#{turmaBean.getEtapaProjeto('Premissas')}</h4></div>
+                <div class="panel-heading">
+                     <h:commandLink action="#{premissaBean.novo()}" class="btn btn-success"><i class="fa-plus"></i> Novo</h:commandLink>
+                    <h4>#{turmaBean.getEtapaProjeto('Premissas')}</h4></div>
                 <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
                 <div class="panel-body">
                     <div class="row">

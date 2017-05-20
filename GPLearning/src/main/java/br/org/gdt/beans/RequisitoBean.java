@@ -31,6 +31,11 @@ public class RequisitoBean {
     public RequisitoBean() {
     }
 
+    public String novo() {
+        requisito = new Requisito();
+        return viewList;
+    }
+
     public String salvar() {
         if (projeto != null) {
             if (!requisito.getNome().isEmpty() && !requisito.getDescricao().isEmpty()) {

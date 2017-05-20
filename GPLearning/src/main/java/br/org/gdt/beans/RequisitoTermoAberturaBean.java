@@ -31,6 +31,11 @@ public class RequisitoTermoAberturaBean {
     public RequisitoTermoAberturaBean() {
     }
 
+    public String novo() {
+        requisito = new RequisitoTermoAbertura();
+        return viewList;
+    }
+
     public String salvar() {
         if (projeto != null && projeto.getTermoabertura() != null) {
             if (!requisito.getDescricao().isEmpty() && !requisito.getNome().isEmpty()) {
