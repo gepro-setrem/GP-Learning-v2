@@ -72,6 +72,11 @@ public class ProjetoProfessorBean {
     public ProjetoProfessorBean() {
     }
 
+    public String atualizar() {
+        projetos = null;
+        return "projetolst";
+    }
+
     public String avaliar() {
         etapas = null;
         htmlEAP = null;
