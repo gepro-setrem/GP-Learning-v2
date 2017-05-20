@@ -4,6 +4,7 @@ import br.org.gdt.model.Login;
 import br.org.gdt.model.Turma;
 import br.org.gdt.model.Pessoa;
 import br.org.gdt.bll.LoginBLL;
+import br.org.gdt.bll.LoginRoleBLL;
 import br.org.gdt.bll.TurmaBLL;
 import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.enumerated.Role;
@@ -11,8 +12,6 @@ import br.org.gdt.enumerated.Status;
 import br.org.gdt.model.LoginRole;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,6 +46,9 @@ public class UsuarioBean {
     private Login login = new Login();
     @ManagedProperty("#{loginBLL}")
     private LoginBLL loginBLL;
+    
+    @ManagedProperty("#{loginRoleBLL}")
+    private LoginRoleBLL loginRoleBLL;
     
     private Status[] status;
     private Role[] roles;
@@ -126,6 +128,7 @@ public class UsuarioBean {
                 login.setPessoa(pessoa);
                 login.setToken(loginBLL.newToken());
                 loginBLL.insert(login);
+                loginRoleBLL.insert(loginRole);
             }
             usuarios = null;
             return "usuariolst";
@@ -237,5 +240,13 @@ public class UsuarioBean {
     
     public void setUserImage(UploadedFile userImage) {
         this.userImage = userImage;
+    }
+    
+    public LoginRoleBLL getLoginRoleBLL() {
+        return loginRoleBLL;
+    }
+    
+    public void setLoginRoleBLL(LoginRoleBLL loginRoleBLL) {
+        this.loginRoleBLL = loginRoleBLL;
     }
 }

@@ -39,38 +39,35 @@ public class TermoAberturaBean {
     }
 
     public String salvarDescricao() {
-        if (!termoabertura.getDescricao().isEmpty()) {
-            termoabertura.setAlteracao(new Date());
-            termoabertura.setProjeto(projeto);
-            if (termoabertura.getId() > 0) {
+        if (projeto != null && termoabertura != null && termoabertura.getId() > 0) {
+            if (!termoabertura.getDescricao().isEmpty()) {
+                termoabertura.setAlteracao(new Date());
+                termoabertura.setProjeto(projeto);
                 termoAberturaBLL.update(termoabertura);
+                return viewJustificativa;
             } else {
-                termoabertura.setCriacao(new Date());
-                termoAberturaBLL.insert(termoabertura);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para Seguir, você deve preencher a descrição do projeto!"));
             }
-            return viewJustificativa;
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para Seguir, você deve preencher a descrição do projeto!"));
-            return viewDescricao;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Não existe nenhum Projeto selecionado ou Termo de Abertura criado!"));
         }
+        return viewDescricao;
     }
 
     public String salvarJustificativa() {
-        if (!termoabertura.getJustificativa().isEmpty()) {
-            termoabertura.setAlteracao(new Date());
-            termoabertura.setProjeto(projeto);
-            if (termoabertura.getId() > 0) {
+        if (projeto != null && termoabertura != null && termoabertura.getId() > 0) {
+            if (!termoabertura.getJustificativa().isEmpty()) {
+                termoabertura.setAlteracao(new Date());
+                termoabertura.setProjeto(projeto);
                 termoAberturaBLL.update(termoabertura);
+                return viewPremissas;
             } else {
-                termoabertura.setCriacao(new Date());
-                termoAberturaBLL.insert(termoabertura);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para Seguir, você deve preencher a justificativa do projeto!"));
             }
-
-            return viewPremissas;
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para Seguir, você deve preencher a justificativa do projeto!"));
-            return viewJustificativa;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Não existe nenhum Projeto selecionado ou Termo de Abertura criado!"));
         }
+        return viewJustificativa;
     }
 
     public Projeto getProjeto() {
@@ -78,6 +75,9 @@ public class TermoAberturaBean {
     }
 
     public void setProjeto(Projeto projeto) {
+        if (projeto != null && projeto.getId() > 0) {
+            projeto = projetoBLL.findById(projeto.getId());
+        }
         int ta_id = 0;
         if (projeto != null && projeto.getTermoabertura() != null) {
             ta_id = projeto.getTermoabertura().getId();

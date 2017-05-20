@@ -101,6 +101,9 @@ public class MarcoBean {
     }
 
     public void setProjeto(Projeto projeto) {
+        if (projeto != null && projeto.getId() > 0) {
+            projeto = projetoBLL.findById(projeto.getId());
+        }
         this.projeto = projeto;
     }
 

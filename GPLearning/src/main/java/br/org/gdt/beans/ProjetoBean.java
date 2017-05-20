@@ -2,11 +2,13 @@ package br.org.gdt.beans;
 
 import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.bll.ProjetoBLL;
+import br.org.gdt.bll.TermoAberturaBLL;
 import br.org.gdt.bll.TurmaParametroBLL;
 import br.org.gdt.enumerated.Role;
 import br.org.gdt.enumerated.Status;
 import br.org.gdt.model.Pessoa;
 import br.org.gdt.model.Projeto;
+import br.org.gdt.model.TermoAbertura;
 import br.org.gdt.model.Turma;
 import br.org.gdt.model.TurmaParametro;
 import java.util.ArrayList;
@@ -39,6 +41,9 @@ public class ProjetoBean {
     @ManagedProperty("#{turmaParametroBLL}")
     private TurmaParametroBLL turmaParametroBLL;
 
+    @ManagedProperty("#{termoAberturaBLL}")
+    private TermoAberturaBLL termoAberturaBLL;
+
     public ProjetoBean() {
     }
 
@@ -65,7 +70,8 @@ public class ProjetoBean {
         } else {
             projeto = (Projeto) projetos.getRowData();
             projeto = projetoBLL.findById(projeto.getId());
-            projeto.setComponentes(pessoaBLL.findbyProjeto(projeto));
+            List<Pessoa> lsPessoa = pessoaBLL.findbyProjeto(projeto);
+            projeto.setComponentes(lsPessoa);
             if (projeto.getGerente() == null) {
                 projeto.setGerente(usuario);
             }
@@ -81,12 +87,26 @@ public class ProjetoBean {
         } else {
             projeto = (Projeto) projetos.getRowData();
             projeto = projetoBLL.findById(projeto.getId());
+            List<Pessoa> lsPessoa = pessoaBLL.findbyProjeto(projeto);
+            projeto.setComponentes(lsPessoa);
             if (projeto.getTermoabertura() == null) {
                 return "inicioprojeto";
             } else {
                 return "iniciacao";
             }
         }
+    }
+
+    public String iniciarprojeto() {
+        if (projeto.getTermoabertura() == null) {
+            TermoAbertura termoAbertura = new TermoAbertura();
+            termoAbertura.setProjeto(projeto);
+            termoAbertura.setCriacao(new Date());
+            termoAbertura.setAlteracao(new Date());
+            termoAberturaBLL.insert(termoAbertura);
+            projeto.setTermoabertura(termoAbertura);
+        }
+        return "iniciacao";
     }
 
     public String salvar() {
@@ -173,9 +193,11 @@ public class ProjetoBean {
     }
 
     public Projeto getProjeto() {
-        if (projeto != null && projeto.getId() > 0) {
-            projeto = projetoBLL.findById(projeto.getId());
-        }
+//        if (projeto != null && projeto.getId() > 0) {
+//            projeto = projetoBLL.findById(projeto.getId());
+//            List<Pessoa> lsPessoa = pessoaBLL.findbyProjeto(projeto);
+//            projeto.setComponentes(lsPessoa);
+//        }
         return projeto;
     }
 
@@ -227,6 +249,14 @@ public class ProjetoBean {
             return tp.getValor();
         }
         return "";
+    }
+
+    public TermoAberturaBLL getTermoAberturaBLL() {
+        return termoAberturaBLL;
+    }
+
+    public void setTermoAberturaBLL(TermoAberturaBLL termoAberturaBLL) {
+        this.termoAberturaBLL = termoAberturaBLL;
     }
 
 }

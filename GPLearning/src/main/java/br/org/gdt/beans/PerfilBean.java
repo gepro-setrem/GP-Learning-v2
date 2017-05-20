@@ -4,6 +4,7 @@ import br.org.gdt.bll.AvaliacaoBLL;
 import br.org.gdt.bll.EtapaBLL;
 import br.org.gdt.bll.IndicadorBLL;
 import br.org.gdt.bll.LoginBLL;
+import br.org.gdt.bll.LoginRoleBLL;
 import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.bll.ProjetoBLL;
 import br.org.gdt.bll.TurmaBLL;
@@ -43,7 +44,8 @@ public class PerfilBean {
     private LoginBLL loginBLL;
     private Login login = new Login();
     private boolean hasSession;
-
+    @ManagedProperty("#{loginRoleBLL}")
+    private LoginRoleBLL loginRoleBLL;
     private String token;
 
     private double media;
@@ -107,17 +109,21 @@ public class PerfilBean {
             pessoaBLL.update(user);
             if (!login.getSenha().isEmpty() || changeEmail) {
                 Login oldLogin = loginBLL.findbyPessoa(oldUser);
-                if (changeEmail) {
-                    loginBLL.delete(oldLogin);
-                    oldLogin.setEmail(login.getEmail());
-                }
+
                 if (!login.getSenha().isEmpty()) {
                     oldLogin.setSenha(login.getSenha());
                 }
-                for (LoginRole lr : oldLogin.getLoginRoles()) {
-                    lr.setLogin(oldLogin);
+                if (changeEmail) {
+                    loginBLL.delete(oldLogin);
+                    oldLogin.setEmail(login.getEmail());
+                    loginBLL.insert(oldLogin);
+                    for (LoginRole lr : oldLogin.getLoginRoles()) {
+                        lr.setLogin(oldLogin);
+                        loginRoleBLL.insert(lr);
+                    }
+                } else {
+                    loginBLL.update(oldLogin);
                 }
-                loginBLL.update(oldLogin);
             }
             if (changeEmail) {
                 ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
@@ -207,7 +213,7 @@ public class PerfilBean {
     }
 
     public List<Projeto> getProjetos() {
-        projetos = projetoBLL.findbyAluno(usuario);
+        projetos = projetoBLL.findbyAluno(getUsuario());
         List<Projeto> lsProjeto = new ArrayList<>();
         Turma turma = turmaBLL.findById(usuario.getTurma().getId());
         List<Indicador> lsIndicador = indicadorBLL.findbyProfessor(turma.getProfessor());
@@ -273,7 +279,7 @@ public class PerfilBean {
     }
 
     public double getMedia() {
-        projetos = projetoBLL.findbyAluno(usuario);
+        projetos = projetoBLL.findbyAluno(getUsuario());
         media = 0;
         int count = 0;
         for (Projeto projeto : projetos) {
@@ -296,6 +302,7 @@ public class PerfilBean {
     }
 
     public String getToken() {
+        getUsuario();
         if (usuario != null) {
             Login log = usuario.getLogin();
             token = log.getToken();
@@ -310,6 +317,14 @@ public class PerfilBean {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public LoginRoleBLL getLoginRoleBLL() {
+        return loginRoleBLL;
+    }
+
+    public void setLoginRoleBLL(LoginRoleBLL loginRoleBLL) {
+        this.loginRoleBLL = loginRoleBLL;
     }
 
 }
