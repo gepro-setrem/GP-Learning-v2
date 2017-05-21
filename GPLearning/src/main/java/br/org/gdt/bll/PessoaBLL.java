@@ -29,7 +29,7 @@ public class PessoaBLL extends BLL<Pessoa> {
     
     public List<Pessoa> findbyTurmaUsers(Turma turma, Role role, String search) {
         List<Pessoa> lsPessoa = new ArrayList<>();
-        if (turma != null && turma.getId() > 0 && role != null) {
+        if (turma != null && turma.getId() > 0) {
             lsPessoa = dao.findbyTurmaUsers(turma, role, search);
         }
         return lsPessoa;

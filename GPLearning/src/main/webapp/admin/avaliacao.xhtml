@@ -19,9 +19,31 @@
                 <div class="panel-heading">
                     <h4>Avaliação do Projeto</h4>
                 </div>
-                <label class="breadcrumb">#{projetoProfessorBean.projeto.nome}</label>
+                <!--<label class="breadcrumb">{projetoProfessorBean.projeto.nome}</label>-->
                 <div class="panel-body">
                     <div class="alert-warning"><h:messages /></div>
+                    <div class="row form-group">
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <label class="col-xs-5 text-right">Projeto:</label>
+                            <div class="col-xs-7">#{projetoProfessorBean.projeto.nome}</div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <label class="col-xs-5 text-right">Empresa:</label>
+                            <div class="col-xs-7">#{projetoProfessorBean.projeto.empresa}</div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <label class="col-xs-5 text-right">Gerente:</label>
+                            <div class="col-xs-7">#{projetoProfessorBean.projeto.gerente.nome}</div>
+                        </div>
+                        <div class="col-xs-12">
+                            <label class="col-sm-2 col-xs-3 text-right">Componentes:</label>
+                            <div class="col-sm-10 col-xs-9">#{projetoProfessorBean.projeto.componentes}</div>
+                        </div>
+                        <div class="col-xs-12">
+                            <label class="col-sm-2 col-xs-3 text-right">Descrição Geral:</label>
+                            <div class="col-sm-10 col-xs-9">#{projetoProfessorBean.projeto.descricao}</div>
+                        </div>
+                    </div>
                     <ul class="nav nav-tabs">
                         <ui:repeat var="item" value="#{projetoProfessorBean.etapas}" varStatus="status">
                             <c:set var="label" value="#{turmaBean.getEtapaProjeto(item.etapa)}"/>

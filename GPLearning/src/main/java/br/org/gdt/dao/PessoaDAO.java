@@ -21,13 +21,15 @@ public class PessoaDAO extends DAO<Pessoa> {
 
     public List<Pessoa> findbyTurmaUsers(Turma turma, Role role, String search) {
         String sqlPessoa = "";
+        if (role != null) {
+            sqlPessoa += " and r.role = " + role.toString();
+        }
         if (search != null && !search.isEmpty()) {
             sqlPessoa = " and upper (translate(p.nome, 'ÁÇÉÍÓÚÀÈÌÒÙÂÊÎÔÛÃÕËÜáçéíóúàèìòùâêîôûãõëü', 'ACEIOUAEIOUAEIOUAOEUaceiouaeiouaeiouaoeu'))"
                     + " LIKE upper(translate('%" + search + "%', 'ÁÇÉÍÓÚÀÈÌÒÙÂÊÎÔÛÃÕËÜáçéíóúàèìòùâêîôûãõëü', 'ACEIOUAEIOUAEIOUAOEUaceiouaeiouaeiouaoeu'))";
         }
-        return entityManager.createQuery("select p from Pessoa as p left join p.login.loginRoles as r where p.turma = :t and r.role = :r" + sqlPessoa)
-                .setParameter("t", turma)
-                .setParameter("r", role).getResultList();
+        return entityManager.createQuery("select p from Pessoa as p left join p.login.loginRoles as r where p.turma = :t " + sqlPessoa)
+                .setParameter("t", turma).getResultList();
     }
 
     public List<Pessoa> findbyTurma(Turma turma) {
