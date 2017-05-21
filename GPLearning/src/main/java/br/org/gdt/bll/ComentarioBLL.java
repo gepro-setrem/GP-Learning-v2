@@ -16,11 +16,11 @@ public class ComentarioBLL extends BLL<Comentario> {
     @Autowired
     private ComentarioDAO dao;
 
-    public List<Comentario> findbyProjetoEtapa(Projeto projeto, Etapa etapa, boolean orderDesc) {
+    public List<Comentario> findbyProjetoEtapa(Projeto projeto, Etapa etapa, boolean orderDesc, boolean clear) {
         List<Comentario> lsComentario = new ArrayList<>();
         if (projeto != null && projeto.getId() > 0 && etapa != null && etapa.getId() > 0) {
             lsComentario = dao.findbyProjetoEtapa(projeto, etapa, orderDesc);
-            if (lsComentario != null) {
+            if (clear && lsComentario != null) {
                 for (Comentario comentario : lsComentario) {
                     comentario = CleanComentario(comentario);
                 }
@@ -29,11 +29,11 @@ public class ComentarioBLL extends BLL<Comentario> {
         return lsComentario;
     }
 
-    public List<Comentario> findbyEtapa(Etapa etapa, boolean orderDesc) {
+    public List<Comentario> findbyEtapa(Etapa etapa, boolean orderDesc, boolean clear) {
         List<Comentario> lsComentario = new ArrayList<>();
         if (etapa != null && etapa.getId() > 0) {
             lsComentario = dao.findbyEtapa(etapa, orderDesc);
-            if (lsComentario != null && lsComentario.size() > 0) {
+            if (clear && lsComentario != null) {
                 for (Comentario com : lsComentario) {
                     com = CleanComentario(com);
                 }

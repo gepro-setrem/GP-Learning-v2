@@ -13,6 +13,12 @@
         <h:outputScript name="./js/avaliacao_js.js"/>
     </ui:define>
     <ui:define name="content">
+        <style>
+            .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
+                background-color: #337ab7;
+                color: #fff;
+            }
+        </style>
         <h:form>
             <p:inputText type="hidden" value="#{projetoProfessorBean.projeto.id}"/><!--Não apagar esta tag, pq senão não carrega o primefaces, e nem o jquery, gambia do java-->
             <div class="panel panel-default">
@@ -196,7 +202,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <h:outputText value=" #{projetoProfessorBean.htmlCronograma}" escape="false"/>
-                                                        <!--                                                    <tr><td colspan="5">Nenhum registro encontrado!</td></tr>-->
+                                                        <!--<tr><td colspan="5">Nenhum registro encontrado!</td></tr>-->
                                                     </tbody>
                                                 </table>
                                             </h:panelGroup>

@@ -75,7 +75,7 @@ public class ComentarioBean {
 
     public void atualizar() {
         if (etapa != null) {
-            List<Comentario> lsComentario = comentarioBLL.findbyProjetoEtapa(projeto, etapa, true);
+            List<Comentario> lsComentario = comentarioBLL.findbyProjetoEtapa(projeto, etapa, true, false);
             etapa.setComentarios(lsComentario);
         }
     }

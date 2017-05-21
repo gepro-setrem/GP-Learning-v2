@@ -52,7 +52,7 @@ public class ComentarioResource {
         if (eta_id > 0) {
             Etapa etapa = etapaBLL.findById(eta_id);
             if (etapa != null && etapa.getId() > 0) {
-                lsComentario = comentarioBLL.findbyEtapa(etapa, false);
+                lsComentario = comentarioBLL.findbyEtapa(etapa, false, true);
             }
         }
         return lsComentario;
@@ -80,7 +80,7 @@ public class ComentarioResource {
             if (lsProjetos != null) {
                 for (Projeto projeto : lsProjetos) {
                     for (Etapa etapa : lsEtapas) {
-                        lsComentarios.addAll(comentarioBLL.findbyProjetoEtapa(projeto, etapa, true));
+                        lsComentarios.addAll(comentarioBLL.findbyProjetoEtapa(projeto, etapa, true, true));
                     }
                 }
             }

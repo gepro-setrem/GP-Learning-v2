@@ -182,7 +182,7 @@ public class ProjetoProfessorBean {
                 for (Etapa etapa : etapas) {
                     List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyProjetoEtapa(projeto, etapa);
                     etapa.setAvaliacoes(lsAvaliacao);
-                    List<Comentario> lsComentario = comentarioBLL.findbyProjetoEtapa(projeto, etapa, true);
+                    List<Comentario> lsComentario = comentarioBLL.findbyProjetoEtapa(projeto, etapa, true, false);
                     etapa.setComentarios(lsComentario);
                 }
             }
@@ -245,6 +245,9 @@ public class ProjetoProfessorBean {
             if (projeto != null && projeto.getEaps() != null && projeto.getEaps().size() > 0) {
                 EAP eap = projeto.getEaps().get(0);
                 String html = getEAPNode(eap, "1", 1);
+                if (html == null || html.isEmpty()) {
+                    html = "Nenhum registro encontrado!";
+                }
                 html = "<ul class=\"eap_pai\">" + html + "</ul>";
                 htmlEAP = html;
             }
@@ -257,6 +260,9 @@ public class ProjetoProfessorBean {
             if (projeto != null && projeto.getEaps() != null && projeto.getEaps().size() > 0) {
                 EAP eap = projeto.getEaps().get(0);
                 String html = getTarefaNode(eap, null, "1", "");
+                if (html == null || html.isEmpty()) {
+                    html = "<tr><td colspan=\"5\">Nenhum registro encontrado!</td></tr>";
+                }
                 htmlCronograma = html;
             }
         }
@@ -407,7 +413,7 @@ public class ProjetoProfessorBean {
 
     public void atualizarComentarios(Etapa etapa) {
         if (etapa != null) {
-            List<Comentario> lsComentario = comentarioBLL.findbyProjetoEtapa(projeto, etapa, true);
+            List<Comentario> lsComentario = comentarioBLL.findbyProjetoEtapa(projeto, etapa, true, false);
             etapa.setComentarios(lsComentario);
         }
     }
