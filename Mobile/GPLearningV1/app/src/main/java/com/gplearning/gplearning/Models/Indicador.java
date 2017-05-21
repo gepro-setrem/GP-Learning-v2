@@ -14,20 +14,18 @@ import java.util.List;
 import org.greenrobot.greendao.DaoException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Entity(nameInDb = "indicadores")
-public class Indicadores {
+@Entity(nameInDb = "indicador")
+public class Indicador {
 
     @Id
-    private long _id;
+    private Long _id;
+
+    private int id;
+
     private String nome;
     private int valor;
     private int tipo;
 
-//    @ToMany
-//    @JoinEntity(entity = IndicadoresAtividades.class,
-//            sourceProperty = "idIndicador",
-//            targetProperty = "idAtividade")
-//    private List<IndicadoresAtividades> lsIndicadores;
 
     @ToMany(referencedJoinProperty = "idIndicador")
     @OrderBy("_id ASC")
@@ -40,30 +38,39 @@ public class Indicadores {
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 2078571539)
-    private transient IndicadoresDao myDao;
+    @Generated(hash = 818989729)
+    private transient IndicadorDao myDao;
 
-    public Indicadores(String nome) {
+    public Indicador(String nome) {
         this.nome = nome;
     }
 
     @Keep
-    public Indicadores(long _id, String nome, int valor, int tipo) {
+    public Indicador(Long _id, int id, String nome, int valor, int tipo) {
         this._id = _id;
+        this.id = id;
         this.nome = nome;
         this.valor = valor;
         this.tipo = tipo;
     }
 
-    public Indicadores() {
+    public Indicador() {
     }
 
-    public long get_id() {
+    public Long get_id() {
         return _id;
     }
 
-    public void set_id(long _id) {
+    public void set_id(Long _id) {
         this._id = _id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -143,9 +150,10 @@ public class Indicadores {
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 2117275616)
+    @Generated(hash = 1650979189)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getIndicadoresDao() : null;
+        myDao = daoSession != null ? daoSession.getIndicadorDao() : null;
     }
+
 }

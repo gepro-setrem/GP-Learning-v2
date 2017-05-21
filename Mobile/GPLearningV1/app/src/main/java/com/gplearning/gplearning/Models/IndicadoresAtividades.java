@@ -20,7 +20,7 @@ public class IndicadoresAtividades {
 
     private Long idIndicador;
     @ToOne(joinProperty = "idIndicador")
-    private Indicadores indicador;
+    private Indicador indicador;
 
     private Long idAtividade;
     @ToOne(joinProperty = "idAtividade")
@@ -84,12 +84,12 @@ public class IndicadoresAtividades {
     }
 
     @Keep
-    public Indicadores getIndicador() {
+    public Indicador getIndicador() {
         return indicador;
     }
 
     @Keep
-    public void setIndicador(Indicadores indicador) {
+    public void setIndicador(Indicador indicador) {
         this.indicador = indicador;
     }
 

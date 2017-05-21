@@ -48,6 +48,7 @@
     <string name="error_invalid_email">E-mail inválido</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">Senha incorreta</string>
+    <string name="user_not_found">Usuário não encontrado</string>
     <string name="error_field_required">Campo obrigatório</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
@@ -55,6 +56,9 @@
     <string name="phone">Telefone</string>
     <string name="classroom">Turma</string>
     <string name="pontuation">Pontuação Atual</string>
+
+    <string name="averageScoreIndicator">Pontuação média por Indicador</string>
+
 
     <string name="synchronization">Sincronização Realizada</string>
     <string name="synchronization_error_connect">Não foi possível conectar ao servidor</string>

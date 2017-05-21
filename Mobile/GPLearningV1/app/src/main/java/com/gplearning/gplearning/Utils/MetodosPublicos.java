@@ -31,6 +31,7 @@ public class MetodosPublicos {
     private static String key_nome = "user_nome";
     private static String key_email = "user_email";
     private static String key_image = "user_imagem";
+    private static String key_token = "user_token";
     private static String key_login = "login";
     private static String key_id = "user_id";
     private static String key_idExterno = "user_id_externo";
@@ -51,7 +52,7 @@ public class MetodosPublicos {
     public static final String key_idProjeto = "IdProjeto";
 
     /// metodos de Dados do usuário/Sessão
-    public static void SalvaSessao(Context context, Long id, String nome, String email, int idExterno) {
+    public static void SalvaSessao(Context context, Long id, String nome, String email, int idExterno, String token) {
         SharedPreferences pref = context.getSharedPreferences(key_login, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         Log("sessao", "idI:" + id + " idEx:" + idExterno + " nome:" + nome + " email:" + email);
@@ -61,8 +62,8 @@ public class MetodosPublicos {
             editor.putLong(key_id, 0);
 
         editor.putString(key_nome, nome);
+        editor.putString(key_token, token);
         editor.putString(key_email, email);
-        // editor.putString(key_image, imageBytes.toString());
 
         if (idExterno > 0)
             editor.putInt(key_idExterno, idExterno);
@@ -90,6 +91,11 @@ public class MetodosPublicos {
     public static Long SelecionaSessaoId(Context context) {
         SharedPreferences shared = context.getSharedPreferences(key_login, MODE_PRIVATE);
         return shared.getLong(key_id, 0);
+    }
+
+    public static String SelecionaSessaoToken(Context context) {
+        SharedPreferences shared = context.getSharedPreferences(key_login, MODE_PRIVATE);
+        return shared.getString(key_token, null);
     }
 
     public static int SelecionaSessaoidExterno(Context context) {

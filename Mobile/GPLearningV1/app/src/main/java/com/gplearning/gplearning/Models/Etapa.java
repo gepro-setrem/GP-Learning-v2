@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gplearning.gplearning.Converters.EtapaProjetoConverter;
 import com.gplearning.gplearning.Enums.EtapaProjeto;
 
-import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -14,9 +13,11 @@ import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.OrderBy;
 import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.ToOne;
+import org.greenrobot.greendao.annotation.Transient;
 
 import java.util.Date;
 import java.util.List;
+import org.greenrobot.greendao.DaoException;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -34,10 +35,8 @@ public class Etapa {
     @Convert(converter = EtapaProjetoConverter.class, columnType = String.class)
     private EtapaProjeto etapa;
 
-
-    @ToMany(referencedJoinProperty = "idAtividade")
-    @OrderBy("_id ASC")
-    private List<IndicadoresAtividades> lsIndicadoresAtividades;
+    @Transient
+    private List<Indicador> indicadores;
 
     private Long idTurma;
     @ToOne(joinProperty = "idTurma")
@@ -168,13 +167,13 @@ public class Etapa {
     }
 
     @Keep
-    public List<IndicadoresAtividades> getLsIndicadoresAtividades() {
-        return lsIndicadoresAtividades;
+    public List<Indicador> getIndicadores() {
+        return indicadores;
     }
 
     @Keep
-    public void setLsIndicadoresAtividades(List<IndicadoresAtividades> lsIndicadoresAtividades) {
-        this.lsIndicadoresAtividades = lsIndicadoresAtividades;
+    public void setIndicadores(List<Indicador> indicadores) {
+        this.indicadores = indicadores;
     }
 
     @Keep
@@ -197,20 +196,16 @@ public class Etapa {
         this.comentarios = comentarios;
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
-    @Generated(hash = 129847840)
-    public synchronized void resetLsIndicadoresAtividades() {
-        lsIndicadoresAtividades = null;
-    }
-
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
     @Generated(hash = 1746642629)
     public synchronized void resetEtapaParametros() {
         etapaParametros = null;
+    }
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 1940070317)
+    public synchronized void resetComentarios() {
+        comentarios = null;
     }
 
     /**
@@ -247,12 +242,6 @@ public class Etapa {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
-    }
-
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    @Generated(hash = 1940070317)
-    public synchronized void resetComentarios() {
-        comentarios = null;
     }
 
     /** called by internal mechanisms, do not call yourself. */

@@ -16,7 +16,6 @@ import android.widget.EditText;
 import com.gplearning.gplearning.Adapters.ComentarioAdapter;
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.DAO.ComentarioDAO;
-import com.gplearning.gplearning.Enums.RecursosEnum;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.DaoSession;
@@ -139,7 +138,7 @@ public class ComentarioActivity extends AppCompatActivity {
                 COM.setRemetente(pessoa);
 
                 long id = dao.insert(COM);
-                MetodosPublicos.Log("Event", "id:" + COM.get_id()+" idRemetente:"+COM.getIdRemetente());
+                MetodosPublicos.Log("Event", "id:" + COM.get_id() + " idRemetente:" + COM.getIdRemetente());
                 if (id > 0) {
                     new SalvaComentario().execute(COM);
                 }
@@ -198,7 +197,7 @@ public class ComentarioActivity extends AppCompatActivity {
             try {
                 if (MetodosPublicos.IsConnected(ComentarioActivity.this)) { //se estiver conectado na internet envia
                     comentarios[0].setRemetente(null);
-                    int id = comentarioDAO.SalvarComentario(comentarios[0]);
+                    int id = comentarioDAO.SalvarComentario(comentarios[0], ComentarioActivity.this);
                     if (id > 0) {
                         comentarios[0].setId(id);
                         return comentarios[0];
@@ -257,7 +256,7 @@ public class ComentarioActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             //  List<Comentario> lsComentariosDeletados= dao.
-          //  MetodosPublicos.SalvaUltimaSincronizacao(ComentarioActivity.this, new Date());
+            //  MetodosPublicos.SalvaUltimaSincronizacao(ComentarioActivity.this, new Date());
             return null;
         }
 

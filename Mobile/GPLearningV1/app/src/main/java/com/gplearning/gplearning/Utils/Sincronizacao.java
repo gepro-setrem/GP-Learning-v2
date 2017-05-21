@@ -18,6 +18,8 @@ import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.DaoSession;
 import com.gplearning.gplearning.Models.Etapa;
 import com.gplearning.gplearning.Models.EtapaDao;
+import com.gplearning.gplearning.Models.Indicador;
+import com.gplearning.gplearning.Models.IndicadorDao;
 import com.gplearning.gplearning.Models.Marco;
 import com.gplearning.gplearning.Models.MarcoDao;
 import com.gplearning.gplearning.Models.Pessoa;
@@ -284,7 +286,7 @@ public class Sincronizacao {
                                 Etapa etapa = daoEtapa.load(com.getIdEtapa());
                                 com.setEtapa(etapa);
                             }
-                            int idC = comentarioDAO.SalvarComentario(com);
+                            int idC = comentarioDAO.SalvarComentario(com, context);
                             if (idC > 0) {
                                 MetodosPublicos.Log("log", "cadastrou o id:" + idC);
                                 com.setId(idC);
@@ -501,6 +503,7 @@ public class Sincronizacao {
         AvaliacaoDao daoAvaliacao = daoSession.getAvaliacaoDao();
         ProjetoDao daoProjeto = daoSession.getProjetoDao();
         EtapaDao daoEtapa = daoSession.getEtapaDao();
+        IndicadorDao daoIndicador = daoSession.getIndicadorDao();
 
         List<Avaliacao> lsAvaliacao = avaliacaoDAO.SelecionaAvaliacoesPessoa(id);
         List<Avaliacao> lsAvaliacaoLite = daoAvaliacao.queryBuilder().list();
@@ -520,6 +523,14 @@ public class Sincronizacao {
                             avaliacao.setIdEtapa(etapa.get_id());
                         }
                     }
+
+                    if (avaliacao.getIndicador() != null) {
+                        Indicador indicador = daoIndicador.queryBuilder().where(IndicadorDao.Properties.Id.eq(avaliacao.getIndicador().getId())).limit(1).unique();
+                        if (indicador != null) {
+                            avaliacao.setIdIndicador(indicador.get_id());
+                        }
+                    }
+
                     daoAvaliacao.insert(avaliacao);
                 }
             }

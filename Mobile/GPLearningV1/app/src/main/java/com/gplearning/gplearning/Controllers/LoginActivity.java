@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -198,6 +199,13 @@ public class LoginActivity extends AppCompatActivity {
             cancel = true;
         }
 
+        if (!MetodosPublicos.IsConnected(this)) {
+            cancel = true;
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(R.id.email_login_form), getString(R.string.synchronization_error_connect), Snackbar.LENGTH_SHORT);
+            snackbar.show();
+        }
+
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -281,39 +289,35 @@ public class LoginActivity extends AppCompatActivity {
             // Simulate network access.
             // Thread.sleep(2000);
             DaoSession session = ((App) LoginActivity.this.getApplication()).getDaoSession();
-
             userDAO = new UsuarioDAO();
+            try {
+                Pessoa pessoa = userDAO.Login(session, email, password);
+                if (pessoa != null) {
+                    String token = pessoa.getLogin() != null ? pessoa.getLogin().getToken() : "";
+                    MetodosPublicos.SalvaSessao(LoginActivity.this, pessoa.get_id(), pessoa.getNome(), email, pessoa.getId(), token);
+                    if (pessoa.getImagem() != null && pessoa.getImagem().length > 0) {
+                        MetodosPublicos.SaveImageUser(LoginActivity.this, pessoa.get_id(), pessoa.getImagem());
+                    }
 
-            Pessoa pessoa = userDAO.Login(session, email, password);
-            if (pessoa != null) {
-                MetodosPublicos.SalvaSessao(LoginActivity.this, pessoa.get_id(), pessoa.getNome(), email, pessoa.getId());
-                if (pessoa.getImagem() != null && pessoa.getImagem().length > 0) {
-                    MetodosPublicos.SaveImageUser(LoginActivity.this, pessoa.get_id(), pessoa.getImagem());
-                }
-
-
-                //sincroniza APP
-                Sincronizacao.SincronizaApp(LoginActivity.this, PapelUsuario.user);
-                List<LoginRole> lsLoginRoles = pessoa.getLogin() != null ? pessoa.getLogin().getLoginRoles() : null;
-                if (lsLoginRoles != null) {
-                    for (LoginRole lg : lsLoginRoles) {
-                        if (lg.getRole() == PapelUsuario.admin) {
-                            admim = true;
-                            Sincronizacao.SincronizaApp(LoginActivity.this, PapelUsuario.admin);
-                            break;
+                    //sincroniza APP
+                    Sincronizacao.SincronizaApp(LoginActivity.this, PapelUsuario.user);
+                    List<LoginRole> lsLoginRoles = pessoa.getLogin() != null ? pessoa.getLogin().getLoginRoles() : null;
+                    if (lsLoginRoles != null) {
+                        for (LoginRole lg : lsLoginRoles) {
+                            if (lg.getRole() == PapelUsuario.admin) {
+                                admim = true;
+                                Sincronizacao.SincronizaApp(LoginActivity.this, PapelUsuario.admin);
+                                break;
+                            }
                         }
                     }
+                    return pessoa;
                 }
+                //  return new Pessoa();
+            } catch (Exception e) {
+                MetodosPublicos.Log("ERROR LOGIN", e.toString());
             }
-            // Log.i("gpl LG", "ID:" + idExterno);
-            return pessoa;
-//            } catch (Exception e) {
-//                MetodosPublicos.Log("", e.toString());
-//                return null;
-//            }
-
-
-            // TODO: register the new account here.
+            return null;
         }
 
         @Override
@@ -323,20 +327,28 @@ public class LoginActivity extends AppCompatActivity {
 
             if (user != null) {
 
-                Intent intent;
-                if (admim) {
-                    MetodosPublicos.SalvaModoAdmin(LoginActivity.this, true);
-                    intent = new Intent(LoginActivity.this, NivelAcessoActivity.class);
+                if (user.getId() > 0) {
+
+                    Intent intent;
+                    if (admim) {
+                        MetodosPublicos.SalvaModoAdmin(LoginActivity.this, true);
+                        intent = new Intent(LoginActivity.this, NivelAcessoActivity.class);
+                    } else {
+                        MetodosPublicos.SalvaModoAcessoAluno(LoginActivity.this);
+                        intent = new Intent(LoginActivity.this, MainActivity.class);
+                    }
+                    startActivityForResult(intent, RESULT_OK);
+                    finish();
+                    overridePendingTransition(R.animator.push_left_in, R.animator.push_left_out);
                 } else {
-                    MetodosPublicos.SalvaModoAcessoAluno(LoginActivity.this);
-                    intent = new Intent(LoginActivity.this, MainActivity.class);
+                    mPasswordView.setError(getString(R.string.user_not_found));
+                    mPasswordView.requestFocus();
                 }
-                startActivityForResult(intent, RESULT_OK);
-                finish();
-                overridePendingTransition(R.animator.push_left_in, R.animator.push_left_out);
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.email_login_form), getString(R.string.synchronization_error_connect), Snackbar.LENGTH_SHORT);
+                snackbar.setDuration(10000);
+                snackbar.show();
             }
         }
 

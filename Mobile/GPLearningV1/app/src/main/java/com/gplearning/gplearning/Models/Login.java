@@ -10,6 +10,7 @@ public class Login {
 
     private String email;
     private String senha;
+    private String token;
     private List<LoginRole> loginRoles;
 
     public Login() {
@@ -29,6 +30,14 @@ public class Login {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public List<LoginRole> getLoginRoles() {

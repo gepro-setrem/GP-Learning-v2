@@ -33,6 +33,10 @@ public class Avaliacao {
     @ToOne(joinProperty = "idProjeto")
     private Projeto projeto;
 
+    private Long idIndicador;
+    @ToOne(joinProperty = "idIndicador")
+    private Indicador indicador;
+
     /**
      * Used to resolve relations
      */
@@ -51,17 +55,21 @@ public class Avaliacao {
     @Generated(hash = 1369604525)
     private transient Long projeto__resolvedKey;
 
+    @Generated(hash = 806692465)
+    private transient Long indicador__resolvedKey;
+
     public Avaliacao() {
     }
 
     @Keep
-    public Avaliacao(Long _id, int id, int valor, Date criacao, Long idEtapa, Long idProjeto) {
+    public Avaliacao(Long _id, int id, int valor, Date criacao, Long idEtapa, Long idProjeto, Long idIndicador) {
         this._id = _id;
         this.id = id;
         this.valor = valor;
         this.criacao = criacao;
         this.idEtapa = idEtapa;
         this.idProjeto = idProjeto;
+        this.idIndicador = idIndicador;
     }
 
     public Long get_id() {
@@ -130,6 +138,24 @@ public class Avaliacao {
     @Keep
     public void setProjeto(Projeto projeto) {
         this.projeto = projeto;
+    }
+
+    public Long getIdIndicador() {
+        return idIndicador;
+    }
+
+    public void setIdIndicador(Long idIndicador) {
+        this.idIndicador = idIndicador;
+    }
+
+    @Keep
+    public Indicador getIndicador() {
+        return indicador;
+    }
+
+    @Keep
+    public void setIndicador(Indicador indicador) {
+        this.indicador = indicador;
     }
 
     /**

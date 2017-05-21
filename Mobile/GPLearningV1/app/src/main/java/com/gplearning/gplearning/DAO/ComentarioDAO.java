@@ -1,10 +1,14 @@
 package com.gplearning.gplearning.DAO;
 
 
+import android.content.Context;
+
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Models.Etapa;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -28,12 +32,15 @@ public class ComentarioDAO extends DefaultDAO {
     }
 
 
-    public int SalvarComentario(Comentario comentario) {
+    public int SalvarComentario(Comentario comentario, Context context) {
         try {
             String url = UrlDefault + "/comentario/salvar/";
             RestTemplate restTemplate = getResTemplateDefault();
-            MetodosPublicos.Log("DAO", " vai salvar url:" + url);
-            ResponseEntity<Integer> responseEntity = restTemplate.postForEntity(url, comentario, Integer.class);
+            HttpEntity<String> entity = getHttpHeaderDefault(context);
+
+            MetodosPublicos.Log("DAO", " vai salvar url:" + url + " token:" + MetodosPublicos.SelecionaSessaoToken(context));
+            ResponseEntity<Integer> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, Integer.class, comentario); //restTemplate.postForEntity(url, comentario, Integer.class);
+
             MetodosPublicos.Log("DAO", " retornou com :" + responseEntity.getBody());
             return responseEntity.getBody();
         } catch (Exception e) {

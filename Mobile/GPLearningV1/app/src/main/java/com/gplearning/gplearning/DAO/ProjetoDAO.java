@@ -39,7 +39,7 @@ public class ProjetoDAO extends DefaultDAO {
 
     public Projeto SelecionaProjetoCompleto(int pro_id) {
         String url = UrlDefault + "/projeto/index/projeto/" + pro_id;
-        MetodosPublicos.Log("projetoCompleto", " vai selecionar projetoCompleto" + url);
+        MetodosPublicos.Log("projetoCompleto", " vai selecionar projetoCompleto :" + url);
         RestTemplate restTemplate = getResTemplateDefault();
         Projeto projeto = restTemplate.getForObject(url, Projeto.class);
         return projeto;
