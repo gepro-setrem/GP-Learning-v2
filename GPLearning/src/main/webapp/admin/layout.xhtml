@@ -37,8 +37,8 @@
             </div>
             <div class="col-md-2 col-xs-5">
                 <h:link outcome="/user/perfil.xhtml">
-                    <h:graphicImage rendered="#{perfilBean.usuario.imagem == null}" library="img/" name="usuario.png" style="max-height: 60px;"/>
-                    <p:graphicImage rendered="#{perfilBean.usuario.imagem != null}" value="#{perfilBean.usuario.streamedImagem}" style="max-height: 60px" cache="false"/>
+                    <h:graphicImage rendered="#{perfilBean.usuario.imagem == null}" library="img/" name="usuario.png" style="max-height: 60px; border-radius: 50%;"/>
+                    <p:graphicImage rendered="#{perfilBean.usuario.imagem != null}" value="#{perfilBean.usuario.streamedImagem}" style="max-height: 60px; border-radius: 50%;" cache="false"/>
                 </h:link>
             </div>
         </div>

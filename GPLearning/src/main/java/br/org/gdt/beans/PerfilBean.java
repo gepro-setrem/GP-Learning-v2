@@ -129,6 +129,7 @@ public class PerfilBean {
                 ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
                 HttpServletRequest request = (HttpServletRequest) external.getRequest();
                 request.getSession().invalidate();
+                return "login";
             }
             usuario = null;
             return "perfil";

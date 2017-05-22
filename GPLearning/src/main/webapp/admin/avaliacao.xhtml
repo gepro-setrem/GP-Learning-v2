@@ -240,14 +240,14 @@
                                                 <div class="new_comment">
                                                     <div class="comment_creator">
                                                         <h:graphicImage rendered="#{perfilBean.usuario.imagem == null}" library="img/" name="usuario.png" class="avatar_image"/>
-                                                        <p:graphicImage rendered="#{perfilBean.usuario.imagem != null}" value="#{perfilBean.usuario.streamedImagem}" class="avatar_image" cache="true"/>
+                                                        <p:graphicImage rendered="#{perfilBean.usuario.imagem != null}" value="#{perfilBean.usuario.streamedImagem}" class="avatar_image" cache="false"/>
                                                     </div>
                                                     <div class="comment_frame">
                                                         <div class="comment_box" >
                                                             <h:inputTextarea value="#{projetoProfessorBean.addComentario(item).descricao}" pt:placeholder="Escreva seu comentário aqui!" class="comentario_descricao"/>
                                                             <div class="comment_box_options">
                                                                 <p:commandLink ajax="true" onstart="ShowLoader()" oncomplete="HideLoader()" class="btn btn-success btn-sm" action="#{projetoProfessorBean.salvarComentario(item)}">
-                                                                    <i class="fa-reply fa-rotate-180"></i> Enviar
+                                                                    <i class="fa-commenting-o"></i> Comentar
                                                                     <!--<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>-->
                                                                 </p:commandLink>
                                                             </div>
@@ -257,11 +257,9 @@
                                                 <div class="panel_comments">
                                                     <div class="all_comments">
                                                         <ui:repeat var="comentario" value="#{item.comentarios}">
-                                                            <div class="comment" data-idmsg="25" style="opacity: 1;">
+                                                            <div class="comment" style="opacity: 1;">
                                                                 <div class="comment_creator">
-                                                                    <!--<h:graphicImage library="img/" name="usuario.png" class="avatar_image"/>-->
                                                                     <h:graphicImage rendered="#{comentario.remetente.imagem == null}" library="img/" name="usuario.png" class="avatar_image"/>
-                                                                    <!--<p:graphicImage rendered="{comentario.remetente.imagem != null}" value="{comentario.remetente.streamedImagem}" class="avatar_image" cache="false"/>-->
                                                                     <p:graphicImage rendered="#{comentario.remetente.imagem != null}" value="#{comentarioBean.imagem}" class="avatar_image" cache="false">
                                                                         <f:param name="id" value="#{comentario.remetente.id}" />
                                                                     </p:graphicImage>
