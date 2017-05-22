@@ -47,6 +47,11 @@ public class ProjetoBean {
     public ProjetoBean() {
     }
 
+    public String atualizar() {
+        projetos = null;
+        return "projetolst";
+    }
+
     public String novo() {
         getUsuario();
         if (usuario.getStatus().equals(Status.Inativo)) {
