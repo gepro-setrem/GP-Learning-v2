@@ -38,7 +38,7 @@ public class Indicador implements Serializable {
     @ManyToMany(mappedBy = "indicadores", cascade = CascadeType.REMOVE)
     private List<Etapa> etapas;
 
-    @OneToMany(mappedBy = "indicador")
+    @OneToMany(mappedBy = "indicador", cascade = CascadeType.REMOVE)
     private List<Avaliacao> avaliacoes;
 
     public Indicador() {
