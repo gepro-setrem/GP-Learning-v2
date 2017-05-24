@@ -163,6 +163,8 @@ public class EtapaActivity extends AppCompatActivity {
                             NenhumItem();
                         }
                     }
+                } else {
+                    NenhumItem();
                 }
             } else {
                 ProjetoDao projetoDao = daoSession.getProjetoDao();
@@ -288,6 +290,8 @@ public class EtapaActivity extends AppCompatActivity {
                             NenhumItem();
                         }
                     }
+                } else {
+                    NenhumItem();
                 }
             }
         }
@@ -355,7 +359,7 @@ public class EtapaActivity extends AppCompatActivity {
         TextView txt = ((TextView) findViewById(R.id.EtapaTxtTexto));
         txt.setVisibility(View.VISIBLE);
         txt.setGravity(View.TEXT_ALIGNMENT_CENTER);
-        txt.setText("Este item ainda não foi desenvolvido.");
+        txt.setText(R.string.item_not_developed);
     }
 
     private void ShowDescription(String nome, String descricao) {

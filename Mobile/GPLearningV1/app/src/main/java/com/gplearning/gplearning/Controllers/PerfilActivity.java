@@ -2,6 +2,9 @@ package com.gplearning.gplearning.Controllers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -54,7 +57,6 @@ public class PerfilActivity extends AppCompatActivity {
                 new CarregaIndicadores().execute();
 
                 File path = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-                // File file = new File(path, MetodosPublicos.SelecionaCaminhoImagem(this,idPessoa));
                 File file = new File(path, MetodosPublicos.key_imagemUser + idPessoa + ".jpg");
                 if (file != null && file.exists()) {
                     Picasso.with(this).load(file).into(((ImageView) findViewById(R.id.perfilImagem)));
@@ -75,27 +77,10 @@ public class PerfilActivity extends AppCompatActivity {
                             ((TextView) findViewById(R.id.perfilTurma)).setText(turma.getNome() + " - " + turma.getAno() + " " + getString(R.string.year));
                     }
 
-
-//                    ratingBar.setLayoutParams(new LayoutParams(
-//                            RatingBar.LayoutParam .FILL_PARENT,
-//                            LayoutParams.WRAP_CONTENT));
-
-                    //  LinearLayout com = (LinearLayout)findViewById(R.id.itemListViewComentario);
-                    // com.fin
-
-
                 }
             }
         }
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
 
     }
@@ -140,8 +125,11 @@ public class PerfilActivity extends AppCompatActivity {
                     ((TextView) com.findViewById(R.id.itemIndicadorPerfilNome)).setText(indicador.getNome());
                     RatingBar ratingBar = ((RatingBar) com.findViewById(R.id.itemIndicadorPerfilRattingbar));
                     ratingBar.setRating(indicador.getValor());
-                    ratingBar.setNumStars(indicador.getValor());
+                   // ratingBar.setNumStars(indicador.getValor());
                     ratingBar.setStepSize((float)0.5);
+                    LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+                   stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+
                     MetodosPublicos.Log("event", "ratting nome:"+indicador.getNome() +" valor:" + indicador.getValor());
                 }
             }

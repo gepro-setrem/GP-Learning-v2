@@ -233,7 +233,7 @@ public class Sincronizacao {
             final EtapaDao daoEtapa = daoSession.getEtapaDao();
             final PessoaDao daoPessoa = daoSession.getPessoaDao();
 
-            List<Comentario> lsComentariosAPI = comentarioDAO.SelecionaComentarioPorData(idPessoa); //SelecionaComentarioPorData(ultimaSincronizacao);
+            List<Comentario> lsComentariosAPI = comentarioDAO.SelecionaComentarioPorData(context, idPessoa); //SelecionaComentarioPorData(ultimaSincronizacao);
             List<Comentario> lsComentariosLite = daoLite.queryBuilder().list();// .whereOr(ComentarioDao.Properties.Id.eq(0), (ComentarioDao.Properties.Deletado.eq(true))).list();
             if (lsComentariosAPI != null) {
                 for (Comentario com : lsComentariosAPI) {
@@ -258,7 +258,7 @@ public class Sincronizacao {
                             }
                         }
                         daoLite.insert(com);
-                        MetodosPublicos.Log("log", "Inserrir lite o id:" + com.getId() + "projetoId:" + com.getIdProjeto() + " etapaId:" + com.getIdEtapa());
+                        // MetodosPublicos.Log("log", "Inserrir lite o id:" + com.getId() + "projetoId:" + com.getIdProjeto() + " etapaId:" + com.getIdEtapa());
                     }
                 }
             }
@@ -268,7 +268,7 @@ public class Sincronizacao {
                 for (final Comentario com : lsComentariosLite) {
                     if (!EstaNaListaComentario(com, lsComentariosAPI)) {// esta apenas no SQLite
                         if (com.getId() > 0) { // tem id= foi deletado no servidor
-                            MetodosPublicos.Log("log", "deletou lite o id:" + com.getId());
+                            //   MetodosPublicos.Log("log", "deletou lite o id:" + com.getId());
                             daoLite.deleteByKey(com.get_id());
                         } else {// não tem ID= é um novo comentário
 //                                new Thread(new Runnable() {
@@ -286,6 +286,7 @@ public class Sincronizacao {
                                 Etapa etapa = daoEtapa.load(com.getIdEtapa());
                                 com.setEtapa(etapa);
                             }
+                            MetodosPublicos.Log("log", "Vai salvar o idRemetente:" + com.getRemetente().getId());
                             int idC = comentarioDAO.SalvarComentario(com, context);
                             if (idC > 0) {
                                 MetodosPublicos.Log("log", "cadastrou o id:" + idC);
@@ -299,7 +300,7 @@ public class Sincronizacao {
                         }
                     } else {
                         if (com.getDeletado()) {
-                            boolean deletado = comentarioDAO.DeletaComentario(com);
+                            boolean deletado = comentarioDAO.DeletaComentario(com, context);
                             if (deletado)
                                 daoLite.deleteByKey(com.get_id());
                         }
@@ -481,6 +482,7 @@ public class Sincronizacao {
                     lsProjetoLite.get(0).setAlteracao(projeto.getAlteracao());
                     lsProjetoLite.get(0).setDescricao(projeto.getDescricao());
                     lsProjetoLite.get(0).setEscopo(projeto.getEscopo());
+                    lsProjetoLite.get(0).setEstado(projeto.getEscopo());
                     lsProjetoLite.get(0).setPlanoProjeto(projeto.getPlanoProjeto());
                     if (projeto.getGerente() != null) {
                         Long idGerente = InsereSeNaoEncontraPessoa(daoSession, projeto.getGerente());
@@ -489,6 +491,14 @@ public class Sincronizacao {
                         }
                     }
                     daoProjeto.update(lsProjetoLite.get(0));
+                } else {
+                    if (projeto.getGerente() != null) {
+                        Long idGerente = InsereSeNaoEncontraPessoa(daoSession, projeto.getGerente());
+                        if (idGerente > 0) {
+                            projeto.setIdGerente(idGerente);
+                        }
+                    }
+                    daoProjeto.insert(projeto);
                 }
             }
         }

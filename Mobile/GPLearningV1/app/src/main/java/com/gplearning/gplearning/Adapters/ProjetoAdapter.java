@@ -27,7 +27,7 @@ public class ProjetoAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_listview1, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_listview_projeto, parent, false);
         ViewHolderAdapter holder = new ViewHolderAdapter(view);
 
         return holder;
@@ -38,6 +38,7 @@ public class ProjetoAdapter extends RecyclerView.Adapter {
         ViewHolderAdapter holder = (ViewHolderAdapter) viewHolder;
         Projeto prj = lsProjeto.get(position);
         holder.texto.setText(prj.getNome());
+        holder.texto3.setText(prj.getEstado());
         if (prj.getGerente() != null) {
             holder.texto2.setText(prj.getGerente().getNome());
         }
@@ -57,11 +58,13 @@ public class ProjetoAdapter extends RecyclerView.Adapter {
 
         final TextView texto;
         final TextView texto2;
+        final TextView texto3;
 
         public ViewHolderAdapter(View view) {
             super(view);
-            texto = (TextView) view.findViewById(R.id.itemListviewText1);
-            texto2 = (TextView) view.findViewById(R.id.itemListviewText2);
+            texto = (TextView) view.findViewById(R.id.itemListviewProjetoTexto1);
+            texto2 = (TextView) view.findViewById(R.id.itemListviewProjetoTexto2);
+            texto3 = (TextView) view.findViewById(R.id.itemListviewProjetoTexto3);
         }
 
     }

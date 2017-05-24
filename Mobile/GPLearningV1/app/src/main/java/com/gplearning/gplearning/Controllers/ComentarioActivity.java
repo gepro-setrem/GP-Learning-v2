@@ -133,9 +133,11 @@ public class ComentarioActivity extends AppCompatActivity {
                 etapa.setId(idEtapaExterno);
                 COM.setEtapa(etapa);
 
-                Pessoa pessoa = new Pessoa();
+                Pessoa pessoa = new Pessoa(MetodosPublicos.SelecionaSessaoId(this));
                 pessoa.setId(MetodosPublicos.SelecionaSessaoidExterno(this));
                 COM.setRemetente(pessoa);
+                // Pessoa remetente = new Pessoa(MetodosPublicos.SelecionaSessaoId(this), MetodosPublicos.SelecionaSessaoNome(this));
+                // COM.setRemetente(remetente);
 
                 long id = dao.insert(COM);
                 MetodosPublicos.Log("Event", "id:" + COM.get_id() + " idRemetente:" + COM.getIdRemetente());
@@ -143,8 +145,7 @@ public class ComentarioActivity extends AppCompatActivity {
                     new SalvaComentario().execute(COM);
                 }
                 coment.setText("");
-                Pessoa remetente = new Pessoa(MetodosPublicos.SelecionaSessaoId(this), MetodosPublicos.SelecionaSessaoNome(this));
-                COM.setRemetente(remetente);
+
                 lsComentario.add(COM);
                 comentarioAdapter.notifyItemInserted(lsComentario.size() - 1);
                 recyclerView.smoothScrollToPosition(lsComentario.size() - 1);
@@ -196,7 +197,7 @@ public class ComentarioActivity extends AppCompatActivity {
             ComentarioDAO comentarioDAO = new ComentarioDAO();
             try {
                 if (MetodosPublicos.IsConnected(ComentarioActivity.this)) { //se estiver conectado na internet envia
-                    comentarios[0].setRemetente(null);
+                    //comentarios[0].setRemetente(null);
                     int id = comentarioDAO.SalvarComentario(comentarios[0], ComentarioActivity.this);
                     if (id > 0) {
                         comentarios[0].setId(id);
@@ -230,7 +231,7 @@ public class ComentarioActivity extends AppCompatActivity {
                 if (MetodosPublicos.IsConnected(ComentarioActivity.this)) {
                     ComentarioDAO comentarioDAO = new ComentarioDAO();
                     this.comentario = comentarios[0];
-                    return comentarioDAO.DeletaComentario(comentarios[0]);
+                    return comentarioDAO.DeletaComentario(comentarios[0], ComentarioActivity.this);
                 }
             } catch (Exception e) {
                 MetodosPublicos.Log("ERROR", e.toString());

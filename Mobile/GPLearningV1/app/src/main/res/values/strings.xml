@@ -58,6 +58,7 @@
     <string name="pontuation">Pontuação Atual</string>
 
     <string name="averageScoreIndicator">Pontuação média por Indicador</string>
+    <string name="item_not_developed">Este item ainda não foi desenvolvido.</string>
 
 
     <string name="synchronization">Sincronização Realizada</string>

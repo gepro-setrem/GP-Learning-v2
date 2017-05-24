@@ -23,8 +23,6 @@ import com.gplearning.gplearning.Models.Projeto;
 import com.gplearning.gplearning.Models.ProjetoComponentes;
 import com.gplearning.gplearning.Models.ProjetoComponentesDao;
 import com.gplearning.gplearning.Models.ProjetoDao;
-import com.gplearning.gplearning.Models.Turma;
-import com.gplearning.gplearning.Models.TurmaDao;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 
@@ -67,7 +65,7 @@ public class ProjetoFragment extends Fragment {
 
             DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
             dao = daoSession.getProjetoDao();
-            new CarregaProjetos().execute();
+            new CarregaProjetos().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null);
 
             projetoAdapter = new ProjetoAdapter(lsProjetos, getActivity()); //new ProjetoRecyclerViewAdapter(lsProjetos, listenerClick, listenerLongClick);
             recyclerView.setAdapter(projetoAdapter);
@@ -134,11 +132,12 @@ public class ProjetoFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(String... strings) {
-
+            MetodosPublicos.Log("projetos", "VAI PROJETOSSS");
             DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
             PessoaDao pessoaDao = daoSession.getPessoaDao();
             ProjetoDao projetoDao = daoSession.getProjetoDao();
             Pessoa user = pessoaDao.load(MetodosPublicos.SelecionaSessaoId(getActivity()));
+            Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 
             if (MetodosPublicos.ModoAcessoAluno(getActivity())) {
                 MetodosPublicos.Log("projetos", " Turmar do user:" + user.getId() + " da turma:" + user.getIdTurma());
@@ -163,9 +162,12 @@ public class ProjetoFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
-            ProgressBar pg = ((ProgressBar) getActivity().findViewById(R.id.projetoProgressbar));
-            if (pg != null)
-                pg.setVisibility(View.GONE);
+            try {
+                ProgressBar pg = ((ProgressBar) getActivity().findViewById(R.id.projetoProgressbar));
+                if (pg != null)
+                    pg.setVisibility(View.GONE);
+            } catch (Exception e) {
+            }
             MetodosPublicos.Log("projetos", " PostExecuted");
 
             if (lsProjetos.size() == 0)
@@ -175,6 +177,8 @@ public class ProjetoFragment extends Fragment {
                 projetoAdapter.notifyDataSetChanged();
                 projetoAdapter.notifyItemInserted(1);
             }
+
+
         }
     }
 

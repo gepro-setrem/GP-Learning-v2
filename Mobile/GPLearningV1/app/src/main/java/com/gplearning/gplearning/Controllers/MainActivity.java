@@ -240,6 +240,9 @@ public class MainActivity extends AppCompatActivity
         protected Boolean doInBackground(String... strings) {
             try {
                 if (MetodosPublicos.IsConnected(MainActivity.this)) {
+                  //  Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                    MetodosPublicos.Log("projetos","VAI atualizar!!!");
+
                     //  RestTemplate restTemplate = new RestTemplate();
                     //  restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                     //  Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
@@ -253,6 +256,7 @@ public class MainActivity extends AppCompatActivity
                     snackbar.show();
                 }
             } catch (ResourceAccessException e) {
+                MetodosPublicos.Log("ERROR", "ResourceAccessException:"+ e.toString());
                 Snackbar snackbar = Snackbar
                         .make(findViewById(R.id.ConstraintLayoutMAIN), getString(R.string.synchronization_error_connect), Snackbar.LENGTH_SHORT); //(context, "Welcome to AndroidHive", Snackbar.LENGTH_LONG);
                 snackbar.show();

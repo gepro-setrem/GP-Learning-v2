@@ -8,19 +8,21 @@
     android:paddingLeft="15dp">
 
     <TextView
-        style="@style/perfilTextValor"
         android:id="@+id/itemIndicadorPerfilNome"
+        style="@style/perfilTextValor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="0dp"
-        android:text="Indicador" />
+        android:text="Indicador"
+        android:textColor="@color/secondary_text" />
 
     <RatingBar
         android:id="@+id/itemIndicadorPerfilRattingbar"
         style="@style/Widget.AppCompat.RatingBar.Small"
+        android:progressTint="@color/yellow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numStars="10"
-        android:rating="2" />
+        android:rating="3"
+        android:numStars="5"/>
 
 </LinearLayout>
