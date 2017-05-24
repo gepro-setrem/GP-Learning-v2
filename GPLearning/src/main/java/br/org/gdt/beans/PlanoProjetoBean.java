@@ -183,6 +183,9 @@ public class PlanoProjetoBean {
             if (projeto != null && projeto.getEaps() != null && projeto.getEaps().size() > 0) {
                 EAP eap = projeto.getEaps().get(0);
                 String html = getEAPNode(eap, "1", 1);
+                if (html == null || html.isEmpty()) {
+                    html = "Nenhum registro encontrado!";
+                }
                 html = "<ul class=\"eap_pai\">" + html + "</ul>";
                 htmlEAP = html;
             }
@@ -195,6 +198,9 @@ public class PlanoProjetoBean {
             if (projeto != null && projeto.getEaps() != null && projeto.getEaps().size() > 0) {
                 EAP eap = projeto.getEaps().get(0);
                 String html = getTarefaNode(eap, null, "1", "");
+                if (html == null || html.isEmpty()) {
+                    html = "<tr><td colspan=\"5\">Nenhum registro encontrado!</td></tr>";
+                }
                 htmlCronograma = html;
             }
         }

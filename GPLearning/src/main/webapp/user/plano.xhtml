@@ -23,8 +23,8 @@
     <h:body>
         #{planoProjetoBean.setProjeto(projetoBean.projeto)}
         <ui:repeat var="item" value="#{planoProjetoBean.etapas}" varStatus="status">
-            <c:set var="label" value="#{turmaBean.getEtapaProjeto(item.etapa)}"/>
             <h:panelGroup rendered="#{item.etapa != 'PlanoGerenciamentoProjeto'}">
+                <c:set var="label" value="#{turmaBean.getEtapaProjeto(item.etapa)}"/>
                 <div class="panel panel-default">
                     <div class="panel-heading">#{label}</div>
                     <div class="panel-body">
