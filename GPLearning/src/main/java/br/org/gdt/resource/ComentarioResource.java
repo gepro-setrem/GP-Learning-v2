@@ -13,15 +13,21 @@ import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.bll.ProjetoBLL;
 import br.org.gdt.model.Etapa;
 import br.org.gdt.model.Pessoa;
+import br.org.gdt.model.Login;
 import br.org.gdt.model.Projeto;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -38,10 +44,10 @@ public class ComentarioResource {
     private ProjetoBLL projetoBLL;
     @Autowired
     private PessoaBLL pessoaBLL;
-//    @Context
-//    private HttpServletRequest servletRequest;
-//    @Context
-//    private HttpServletResponse servletResponse;
+    @Context
+    private HttpServletRequest servletRequest;
+    @Context
+    private HttpServletResponse servletResponse;
 //    @Autowired
 //    private FilterApi filter;
 
@@ -99,49 +105,53 @@ public class ComentarioResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/salvar")
-    public int Salvar(Comentario comentario) {
-        if (comentario != null && comentario.getDescricao() != null) {
-            if (comentario.getId() > 0) {
-                comentarioBLL.update(comentario);
-            } else {
-                comentarioBLL.insert(comentario);
+    public int Salvar(Comentario comentario) throws IOException {
+        if (Access()) {
+            if (comentario != null && comentario.getDescricao() != null) {
+                if (comentario.getId() > 0) {
+                    comentarioBLL.update(comentario);
+                } else {
+                    comentarioBLL.insert(comentario);
+                }
+                return comentario.getId();
             }
-            return comentario.getId();
         }
         return 0;
     }
 
     @POST
     @Path("/excluir")
-    public Boolean Excluir(Comentario com) {
+    public Boolean Excluir(Comentario com) throws IOException {
         System.out.println("Vai deletar o Comentario!");
-        if (com != null && com.getId() > 0) {
-            Comentario comentario = comentarioBLL.findById(com.getId());
-            comentarioBLL.delete(comentario);
-            return true;
+        if (Access()) {
+            if (com != null && com.getId() > 0) {
+                Comentario comentario = comentarioBLL.findById(com.getId());
+                comentarioBLL.delete(comentario);
+                return true;
+            }
         }
         return false;
     }
 
-//    public boolean Access() throws IOException {
-//        try {
-//            String authorization = servletRequest.getHeader("Authorization");
-//            if (authorization != null && authorization.startsWith("Basic")) {
-//                String base64Credentials = authorization.substring("Basic".length()).trim();
-//                String credentials = new String(Base64.getDecoder().decode(base64Credentials), Charset.forName("UTF-8"));
-//                String token = credentials.substring("Authorization:".length()).trim();
-//                Login login = loginBLL.findToken(token);
-//                System.out.println(" Authorization:" + authorization + " token:" + credentials);
-//                if (login != null) {
-//                    System.out.println("autorizado");
-//                    return true;
-//                }
-//            }
-//        } catch (Exception e) {
-//        }
-//        servletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//        servletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Acesso não Autorizado");
-//        System.out.println("Acesso não Autorizado");
-//        return false;
-//    }
+    public boolean Access() throws IOException {
+        try {
+            String authorization = servletRequest.getHeader("Authorization");
+            if (authorization != null && authorization.startsWith("Basic")) {
+                String base64Credentials = authorization.substring("Basic".length()).trim();
+                String credentials = new String(Base64.getDecoder().decode(base64Credentials), Charset.forName("UTF-8"));
+                String token = credentials.substring("Authorization:".length()).trim();
+                Login login = loginBLL.findToken(token);
+                System.out.println(" Authorization:" + authorization + " token:" + credentials);
+                if (login != null) {
+                    System.out.println("autorizado");
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+        }
+        servletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        servletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Acesso não Autorizado");
+        System.out.println("Acesso não Autorizado");
+        return false;
+    }
 }
