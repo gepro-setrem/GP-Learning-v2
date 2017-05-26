@@ -107,7 +107,7 @@ public class ProjetoProfessorBean {
     public DataModel getProjetos() {
         getUsuario();
         if (projetos == null) {
-            projetos = new ListDataModel(projetoBLL.findbyProfessor(usuario));
+            projetos = new ListDataModel(projetoBLL.findbyProfessor(usuario, false));
         }
         return projetos;
     }

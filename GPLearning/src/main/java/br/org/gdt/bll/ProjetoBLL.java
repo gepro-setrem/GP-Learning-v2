@@ -69,11 +69,24 @@ public class ProjetoBLL extends BLL<Projeto> {
         return projeto;
     }
 
-    public List<Projeto> findbyProfessor(Pessoa professor) {
+    public List<Projeto> findbyProfessor(Pessoa professor, boolean api) {
         List<Projeto> projetos = dao.findbyProfessor(professor);
         for (Projeto projeto : projetos) {
             projeto = CleanProjeto(projeto);
             List<Pessoa> componentes = pessoaBLL.findbyProjeto(projeto);
+            if (api) {
+                if (componentes != null) {
+                    for (Pessoa com : componentes) {
+                        com.setImagem(null);
+                        com.setIndicadoresprofessor(null);
+                        com.setLogin(null);
+                        com.setProjetos(null);
+                        com.setProjetosgerente(null);
+                        com.setTurma(null);
+                        com.setTurmasprofessor(null);
+                    }
+                }
+            }
             projeto.setComponentes(componentes);
         }
         return projetos;

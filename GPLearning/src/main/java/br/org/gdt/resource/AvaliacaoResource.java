@@ -5,13 +5,13 @@
  */
 package br.org.gdt.resource;
 
-import br.org.gdt.bll.EtapaBLL;
 import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.bll.AvaliacaoBLL;
 import br.org.gdt.bll.ProjetoBLL;
 import br.org.gdt.model.Avaliacao;
 import br.org.gdt.model.Pessoa;
 import br.org.gdt.model.Projeto;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.GET;
@@ -34,19 +34,19 @@ public class AvaliacaoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/pessoa/{pes_id}")
-    public List<Avaliacao> getAvaliacoesPessoa(@PathParam("pes_id") int pes_id) {
+    public List<Avaliacao> getAvaliacoesPessoa(@PathParam("pes_id") int pes_id) throws IOException {
         List<Avaliacao> lsAvaliacao = new ArrayList<>();
-        if (pes_id > 0) {
-            Pessoa aluno = pessoaBLL.findById(pes_id);
-            if (aluno != null) {
-                List<Projeto> lsProjetos = projetoBLL.findbyAluno(aluno);
-                if (lsProjetos != null) {
-                    for (Projeto prj : lsProjetos) {
-                        lsAvaliacao.addAll(avaliacaoBLL.findbyProjeto(prj));
+            if (pes_id > 0) {
+                Pessoa aluno = pessoaBLL.findById(pes_id);
+                if (aluno != null) {
+                    List<Projeto> lsProjetos = projetoBLL.findbyAluno(aluno);
+                    if (lsProjetos != null) {
+                        for (Projeto prj : lsProjetos) {
+                            lsAvaliacao.addAll(avaliacaoBLL.findbyProjeto(prj));
+                        }
                     }
                 }
             }
-        }
         return lsAvaliacao;
     }
 }

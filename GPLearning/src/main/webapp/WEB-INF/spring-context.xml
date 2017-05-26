@@ -22,7 +22,7 @@
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close" p:driverClassName="org.postgresql.Driver"
           p:url="jdbc:postgresql://localhost:5432/GPLearning1" p:username="postgres"
-          p:password="postgres" />
+          p:password="123123" />
     
     <!-- Declara a fabrica de conexoes do Hibernate JPA -->
     <!-- As configuracoes da Persistence Unit sao declaradas em persistence.xml -->
@@ -50,11 +50,16 @@
         class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer" />
     <jaxrs:server id="services" address="/">
         <jaxrs:serviceBeans>
+            <bean class="br.org.gdt.resource.AvaliacaoResource" /> 
             <bean class="br.org.gdt.resource.LoginResource" /> 
             <bean class="br.org.gdt.resource.ComentarioResource" />
             <bean class="br.org.gdt.resource.ProjetoResource" />
             <bean class="br.org.gdt.resource.EAPResource" />
             <bean class="br.org.gdt.resource.TarefaResource" />
+            <bean class="br.org.gdt.resource.PessoaResource" />
+            <bean class="br.org.gdt.resource.RequisitoResource" />
+            <bean class="br.org.gdt.resource.StakeholderResource" />
+            <bean class="br.org.gdt.resource.TermoAberturaResource" />
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />

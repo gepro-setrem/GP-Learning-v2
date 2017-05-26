@@ -11,6 +11,7 @@ import br.org.gdt.bll.TermoAberturaBLL;
 import br.org.gdt.model.Pessoa;
 import br.org.gdt.model.Projeto;
 import br.org.gdt.model.TermoAbertura;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.GET;
@@ -29,22 +30,23 @@ public class TermoAberturaResource {
     private ProjetoBLL projetoBLL;
     @Autowired
     private TermoAberturaBLL termoAberturaBLL;
+   
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/pessoa/{pes_id}")
-    public List<TermoAbertura> getAllPessoa(@PathParam("pes_id") int pes_id) {
+    public List<TermoAbertura> getAllPessoa(@PathParam("pes_id") int pes_id) throws IOException {
         List<TermoAbertura> lsTermoAbertura = new ArrayList<>();
-        Pessoa pessoa = pessoaBLL.findById(pes_id);
-        if (pessoa != null) {
-            List<Projeto> lsProjeto = projetoBLL.findbyAluno(pessoa);
-            if (lsProjeto != null) {
-                for (Projeto prj : lsProjeto) {
-                    TermoAbertura ta = termoAberturaBLL.findByProjetoCompleto(prj);
-                    lsTermoAbertura.add(ta);
+            Pessoa pessoa = pessoaBLL.findById(pes_id);
+            if (pessoa != null) {
+                List<Projeto> lsProjeto = projetoBLL.findbyAluno(pessoa);
+                if (lsProjeto != null) {
+                    for (Projeto prj : lsProjeto) {
+                        TermoAbertura ta = termoAberturaBLL.findByProjetoCompleto(prj);
+                        lsTermoAbertura.add(ta);
+                    }
                 }
             }
-        }
         return lsTermoAbertura;
     }
 

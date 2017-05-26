@@ -11,6 +11,7 @@ import br.org.gdt.bll.RequisitoBLL;
 import br.org.gdt.model.Pessoa;
 import br.org.gdt.model.Projeto;
 import br.org.gdt.model.Requisito;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.GET;
@@ -29,22 +30,22 @@ public class RequisitoResource {
     private ProjetoBLL projetoBLL;
     @Autowired
     private RequisitoBLL requisitoBLL;
+   
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/pessoa/{pes_id}")
-    public List<Requisito> getAllPessoa(@PathParam("pes_id") int pes_id) {
+    public List<Requisito> getAllPessoa(@PathParam("pes_id") int pes_id) throws IOException {
         List<Requisito> lsRequisito = new ArrayList<>();
-
-        Pessoa pessoa = pessoaBLL.findById(pes_id);
-        if (pessoa != null) {
-            List<Projeto> lsProjeto = projetoBLL.findbyAluno(pessoa);
-            if (lsProjeto != null) {
-                for (Projeto prj : lsProjeto) {
-                    lsRequisito.addAll(requisitoBLL.findbyProjeto(prj));
+            Pessoa pessoa = pessoaBLL.findById(pes_id);
+            if (pessoa != null) {
+                List<Projeto> lsProjeto = projetoBLL.findbyAluno(pessoa);
+                if (lsProjeto != null) {
+                    for (Projeto prj : lsProjeto) {
+                        lsRequisito.addAll(requisitoBLL.findbyProjeto(prj));
+                    }
                 }
             }
-        }
         return lsRequisito;
     }
 
