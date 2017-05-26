@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -92,7 +93,7 @@ public class EtapaActivity extends AppCompatActivity {
     private void AtualizaUltimoComentario() {
         MetodosPublicos.Log("Event", "AtualizaUltimoComentario!!");
         ComentarioDao comentarioDao = daoSession.getComentarioDao();
-        List<Comentario> comentarios = comentarioDao.queryBuilder().where(ComentarioDao.Properties.IdEtapa.eq(idEtapa), ComentarioDao.Properties.IdProjeto.eq(idProjeto), ComentarioDao.Properties.Deletado.eq(false)).orderAsc(ComentarioDao.Properties._id).limit(1).list();
+        List<Comentario> comentarios = comentarioDao.queryBuilder().where(ComentarioDao.Properties.IdEtapa.eq(idEtapa), ComentarioDao.Properties.IdProjeto.eq(idProjeto), ComentarioDao.Properties.Deletado.eq(false)).orderDesc(ComentarioDao.Properties.Criacao).limit(1).list();
         if (comentarios != null && comentarios.size() > 0) {
             //etapaIncludeComentario
             ((TextView) findViewById(R.id.EtapaNenhumComentario)).setVisibility(View.GONE);
@@ -106,6 +107,7 @@ public class EtapaActivity extends AppCompatActivity {
                 List<Pessoa> lsPessoa = pessoaDao.queryBuilder().where(PessoaDao.Properties._id.eq(comentarios.get(0).getIdRemetente())).list();
                 if (lsPessoa != null && lsPessoa.size() >= 0) {
                     ((TextView) findViewById(R.id.itemListviewComentNome)).setText(lsPessoa.get(0).getNome());
+                    MetodosPublicos.CarregaimagemPerfil(this, ((ImageView) findViewById(R.id.itemListviewComentImagem)), lsPessoa.get(0).get_id());
                 }
             } catch (Exception e) {
             }

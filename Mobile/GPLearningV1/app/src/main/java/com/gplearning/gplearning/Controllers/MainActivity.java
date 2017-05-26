@@ -1,5 +1,6 @@
 package com.gplearning.gplearning.Controllers;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 import com.gplearning.gplearning.Utils.Sincronizacao;
 
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 
 import java.text.DateFormat;
@@ -240,23 +242,41 @@ public class MainActivity extends AppCompatActivity
         protected Boolean doInBackground(String... strings) {
             try {
                 if (MetodosPublicos.IsConnected(MainActivity.this)) {
-                  //  Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-                    MetodosPublicos.Log("projetos","VAI atualizar!!!");
+                    //  Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                    MetodosPublicos.Log("projetos", "VAI atualizar!!!");
 
-                    //  RestTemplate restTemplate = new RestTemplate();
-                    //  restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                    //  Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
-                    //   Log.i("WB", quote.toString());
+//                    ComentarioDAO comentarioDAO = new ComentarioDAO();
+//                    List<Comentario> lsComentario = comentarioDAO.SelecionaComentarioPorData(MainActivity.this, MetodosPublicos.SelecionaSessaoidExterno(MainActivity.this));
+//                    MetodosPublicos.Log("Event", "Retornou com :" + lsComentario.size());
                     Sincronizacao sc = new Sincronizacao();
-                    sc.SincronizaAplicativoData(MainActivity.this);
+                    Context context = MainActivity.this;
+                    DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
+                    int id = MetodosPublicos.SelecionaSessaoidExterno(context);
+                    sc.AtualizaProjeto(daoSession, context, id);
+                    MetodosPublicos.Log("Event", "VAI TERMO_ABERTURA MAIN");
+                    sc.AtualizaTermoAbertura(daoSession, context, id);
+                    MetodosPublicos.Log("Event", "VAI REQUISITOS MAIN");
+                    sc.AtualizaRequisitos(daoSession, context, id);
+                    MetodosPublicos.Log("Event", "VAI STAKEHOLDERS MAIN");
+                    sc.AtualizaStakeholders(daoSession, context, id);
+                    try {
+                        MetodosPublicos.Log("Event", "VAI COMENTARIOS MAIN");
+                        sc.AtualizaComentarios(daoSession, MainActivity.this, id);
+                    }catch (HttpClientErrorException e){
+                        sc.AtualizaComentarios(daoSession, MainActivity.this, id);
+                    }
+                    MetodosPublicos.Log("Event", "VAI AVALIAÇÕES MAIN");
+                    sc.AtualizaAvaliacoes(daoSession, context, id);
+                    MetodosPublicos.SalvaUltimaSincronizacao(context, new Date());
+
                     return true;
-                }else{
+                } else {
                     Snackbar snackbar = Snackbar
                             .make(findViewById(R.id.ConstraintLayoutMAIN), getString(R.string.app_offline), Snackbar.LENGTH_SHORT);
                     snackbar.show();
                 }
             } catch (ResourceAccessException e) {
-                MetodosPublicos.Log("ERROR", "ResourceAccessException:"+ e.toString());
+                MetodosPublicos.Log("ERROR", "ResourceAccessException:" + e.toString());
                 Snackbar snackbar = Snackbar
                         .make(findViewById(R.id.ConstraintLayoutMAIN), getString(R.string.synchronization_error_connect), Snackbar.LENGTH_SHORT); //(context, "Welcome to AndroidHive", Snackbar.LENGTH_LONG);
                 snackbar.show();

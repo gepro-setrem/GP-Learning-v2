@@ -20,13 +20,13 @@ public class ComentarioDAO extends DefaultDAO {
 
 
     public List<Comentario> SelecionaComentarioPorEtapa(Etapa etapa, Context context) {
-        String url = UrlDefault + "/comentario/index/" + etapa.getId();
+        String url = UrlDefault + "/comentario/etapa/" + etapa.getId();
 
         RestTemplate restTemplate = getResTemplateDefault();
         HttpEntity<String> entity = new HttpEntity<>("", getHttpHeaderDefault(context));
         MetodosPublicos.Log("DAO", " vai seleecioanr url:" + url);
-        ResponseEntity<Comentario[]> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, Comentario[].class);
-        // ResponseEntity<Comentario[]> responseEntity = restTemplate.getForEntity(url, Comentario[].class);
+        // ResponseEntity<Comentario[]> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, Comentario[].class);
+        ResponseEntity<Comentario[]> responseEntity = restTemplate.getForEntity(url, Comentario[].class);
         Comentario[] comentarioArray = responseEntity.getBody();
         if (comentarioArray != null && comentarioArray.length > 0)
             return Arrays.asList(comentarioArray);
@@ -69,11 +69,19 @@ public class ComentarioDAO extends DefaultDAO {
         String url = UrlDefault + "/comentario/pessoa/" + id;
         RestTemplate restTemplate = getResTemplateDefault();
         HttpEntity<String> entity = new HttpEntity<String>("", getHttpHeaderDefault(context));
-        ResponseEntity<Comentario[]> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, Comentario[].class);
-        // ResponseEntity<Comentario[]> responseEntity = restTemplate.getForEntity(url, Comentario[].class); //.postForEntity(url, comentario, Comentario[].class);
+        MetodosPublicos.Log("SeleP", "Vai selecionar pela URL: " + url);
+
+        ///ResponseEntity<Comentario[]> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, Comentario[].class);
+        ResponseEntity<Comentario[]> responseEntity = restTemplate.getForEntity(url, Comentario[].class); //.postForEntity(url, comentario, Comentario[].class);
+
         Comentario[] comentarioArray = responseEntity.getBody();
         if (comentarioArray != null && comentarioArray.length > 0)
             return Arrays.asList(comentarioArray);
+
+//        Comentario[] response = restTemplate.getForObject(url, Comentario[].class);
+//        if (response != null)
+//            return Arrays.asList(response);
+
         return null;
 
     }

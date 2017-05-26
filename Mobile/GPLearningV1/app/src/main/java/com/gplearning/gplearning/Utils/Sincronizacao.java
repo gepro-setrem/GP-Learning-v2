@@ -56,7 +56,7 @@ public class Sincronizacao {
      * @param papel
      */
     public static void SincronizaApp(Context context, PapelUsuario papel) {
-        ProjetoDAO projetoDAO = new ProjetoDAO();
+        ProjetoDAO projetoDAO = new ProjetoDAO(context);
         DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
         ProjetoDao daoProjeto = daoSession.getProjetoDao();
         PessoaDao daoPessoa = daoSession.getPessoaDao();
@@ -223,11 +223,10 @@ public class Sincronizacao {
 //    }
 
 
-    private static void AtualizaComentarios(Context context, int idPessoa) {
+    public static void AtualizaComentarios(DaoSession daoSession, Context context, int idPessoa) {
         // try {
         if (MetodosPublicos.IsConnected(context)) {
             final ComentarioDAO comentarioDAO = new ComentarioDAO();
-            DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
             final ComentarioDao daoLite = daoSession.getComentarioDao();
             final ProjetoDao daoProjeto = daoSession.getProjetoDao();
             final EtapaDao daoEtapa = daoSession.getEtapaDao();
@@ -239,7 +238,6 @@ public class Sincronizacao {
                 for (Comentario com : lsComentariosAPI) {
                     if (!EstaNaListaComentario(com, lsComentariosLite)) {
                         if (com.getProjeto() != null) {
-                            List<Projeto> lsProjetos = daoProjeto.loadAll();
                             Projeto projeto = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(com.getProjeto().getId())).limit(1).unique();
                             if (projeto != null) {
                                 com.setIdProjeto(projeto.get_id());
@@ -316,7 +314,6 @@ public class Sincronizacao {
 //        }
     }
 
-
     private static boolean EstaNaListaComentario(Comentario com, List<Comentario> lsComentarios) {
         if (lsComentarios != null && lsComentarios.size() > 0) {
             for (Comentario CM : lsComentarios) {
@@ -326,7 +323,6 @@ public class Sincronizacao {
         }
         return false;
     }
-
 
     /**
      * Atuliza o aplicativo toda vez que ele é aberto
@@ -339,29 +335,28 @@ public class Sincronizacao {
 
             DaoSession daoSession = ((App) context.getApplicationContext()).getDaoSession();
             int id = MetodosPublicos.SelecionaSessaoidExterno(context);
-            AtualizaProjeto(daoSession, id);
+            AtualizaProjeto(daoSession, context, id);
             MetodosPublicos.Log("Event", "VAI TERMO_ABERTURA");
-            AtualizaTermoAbertura(daoSession, id);
+            AtualizaTermoAbertura(daoSession, context, id);
             MetodosPublicos.Log("Event", "VAI REQUISITOS");
-            AtualizaRequisitos(daoSession, id);
+            AtualizaRequisitos(daoSession, context, id);
             MetodosPublicos.Log("Event", "VAI STAKEHOLDERS");
-            AtualizaStakeholders(daoSession, id);
+            AtualizaStakeholders(daoSession, context, id);
             MetodosPublicos.Log("Event", "VAI COMENTARIOS");
-            AtualizaComentarios(context, id);
+            AtualizaComentarios(daoSession, context, id);
             MetodosPublicos.Log("Event", "VAI AVALIAÇÕES");
-            AtualizaAvaliacoes(daoSession, id);
+            AtualizaAvaliacoes(daoSession, context, id);
             MetodosPublicos.SalvaUltimaSincronizacao(context, new Date());
         }
     }
 
-
     // metodos
-    private static void AtualizaTermoAbertura(DaoSession daoSession, int id) {
+    public static void AtualizaTermoAbertura(DaoSession daoSession, Context context, int id) {
         //try {
         TermoAberturaDAO termoAberturaDAO = new TermoAberturaDAO();
         ProjetoDao daoProjeto = daoSession.getProjetoDao();
 
-        List<TermoAbertura> lsTermoAbertura = termoAberturaDAO.SelecionaTermoAberturaData(id);
+        List<TermoAbertura> lsTermoAbertura = termoAberturaDAO.SelecionaTermoAberturaData(context, id);
         if (lsTermoAbertura != null) {
             for (TermoAbertura abertura : lsTermoAbertura) {
                 if (abertura != null) {
@@ -379,9 +374,9 @@ public class Sincronizacao {
 //        }
     }
 
-    private static void AtualizaRequisitos(DaoSession daoSession, int id) {
+    public static void AtualizaRequisitos(DaoSession daoSession, Context context, int id) {
         //  try {
-        RequisitoDAO requisitoDAO = new RequisitoDAO();
+        RequisitoDAO requisitoDAO = new RequisitoDAO(context);
         RequisitoDao daoRequisito = daoSession.getRequisitoDao();
         ProjetoDao daoProjeto = daoSession.getProjetoDao();
 
@@ -423,9 +418,9 @@ public class Sincronizacao {
 //        }
     }
 
-    private static void AtualizaStakeholders(DaoSession daoSession, int id) {
+    public static void AtualizaStakeholders(DaoSession daoSession, Context context, int id) {
         //  try {
-        StakeholderDAO stakeholderDAO = new StakeholderDAO();
+        StakeholderDAO stakeholderDAO = new StakeholderDAO(context);
         StakeholderDao daoStakeholder = daoSession.getStakeholderDao();
         ProjetoDao daoProjeto = daoSession.getProjetoDao();
 
@@ -467,9 +462,9 @@ public class Sincronizacao {
 //        }
     }
 
-    private static void AtualizaProjeto(DaoSession daoSession, int id) { //, Context context) {
-        //   try {
-        ProjetoDAO projetoDAO = new ProjetoDAO();
+    public static void AtualizaProjeto(DaoSession daoSession, Context context, int id) {
+
+        ProjetoDAO projetoDAO = new ProjetoDAO(context);
         ProjetoDao daoProjeto = daoSession.getProjetoDao();
         List<Projeto> lsProjetos = projetoDAO.SelecionaProjetosAluno(id); //SelecionaProjetosData(data, id); //ProjetosAluno(MetodosPublicos.SelecionaSessaoidExterno(context)); //Data(data);
         if (lsProjetos != null) {
@@ -507,9 +502,9 @@ public class Sincronizacao {
 //        }
     }
 
-    private static void AtualizaAvaliacoes(DaoSession daoSession, int id) {
+    public static void AtualizaAvaliacoes(DaoSession daoSession, Context context, int id) {
         //   try {
-        AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO();
+        AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO(context);
         AvaliacaoDao daoAvaliacao = daoSession.getAvaliacaoDao();
         ProjetoDao daoProjeto = daoSession.getProjetoDao();
         EtapaDao daoEtapa = daoSession.getEtapaDao();
@@ -589,7 +584,6 @@ public class Sincronizacao {
         }
         return false;
     }
-
 
     private static Long InsereTermoAbertura(DaoSession daoSession, TermoAbertura termoAbertura) {
         Long idTermoAbertura = Long.valueOf(0);

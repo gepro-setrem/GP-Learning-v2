@@ -39,8 +39,9 @@ class DefaultDAO extends UrlDomain {
         //   headers.set("Authorization", MetodosPublicos.SelecionaSessaoToken(context));
         HttpAuthentication httpAuthentication = new HttpBasicAuthentication("Authorization", MetodosPublicos.SelecionaSessaoToken(context));
         headers.setAuthorization(httpAuthentication);
-        headers.setContentType(MediaType.APPLICATION_JSON);
+
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        // headers.setAccept(Arrays.asList(new MediaType[]{MediaType.APPLICATION_JSON}));
         headers.add("Content-Type", "application/json");
         headers.add("Accept", "application/json");
         MetodosPublicos.Log("Event", " TOKEN:" + MetodosPublicos.SelecionaSessaoToken(context));

@@ -27,7 +27,7 @@ public class UsuarioDAO extends DefaultDAO {
             RestTemplate restTemplate = getResTemplateDefault();
 
             MetodosPublicos.Log("login", "Url: " + url);
-            Pessoa user = restTemplate.getForObject(url, Pessoa.class); //("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
+            Pessoa user = restTemplate.getForObject(url, Pessoa.class);
 
             //  Pessoa user = null;// = response.
             if (user != null && user.getId() > 0) {

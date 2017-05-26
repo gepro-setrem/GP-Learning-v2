@@ -198,11 +198,14 @@ public class ComentarioActivity extends AppCompatActivity {
             try {
                 if (MetodosPublicos.IsConnected(ComentarioActivity.this)) { //se estiver conectado na internet envia
                     //comentarios[0].setRemetente(null);
+                    MetodosPublicos.Log("Event","Vai salvar o COMent");
                     int id = comentarioDAO.SalvarComentario(comentarios[0], ComentarioActivity.this);
                     if (id > 0) {
                         comentarios[0].setId(id);
                         return comentarios[0];
                     }
+                }else{
+                    MetodosPublicos.Log("Event","Vai salvar o COMent");
                 }
             } catch (Exception e) {
                 MetodosPublicos.Log("Error", " error :" + e.toString());
