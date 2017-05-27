@@ -119,7 +119,6 @@ public class ComentarioActivity extends AppCompatActivity {
         return true;
     }
 
-
     public void SalvaComentario(View view) {
         EditText coment = (EditText) findViewById(R.id.comentarioNovo);
         try {
@@ -139,7 +138,7 @@ public class ComentarioActivity extends AppCompatActivity {
                 long id = dao.insert(COM);
                 MetodosPublicos.Log("Event", "id:" + COM.get_id() + " idRemetente:" + COM.getIdRemetente());
                 if (id > 0) {
-                    new SalvaComentario().execute(COM);
+                    new SalvaComentario().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, COM);
                 }
                 coment.setText("");
 
@@ -168,7 +167,7 @@ public class ComentarioActivity extends AppCompatActivity {
                         comentarioAdapter.notifyItemRemoved(position);
 
                         if (MetodosPublicos.IsConnected(ComentarioActivity.this) && comentario != null && comentario.getId() > 0)
-                            new DeletaComentario().execute(comentario);
+                            new DeletaComentario().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, comentario);
                         else {
                             if (comentario.getId() > 0) {
                                 comentario.setDeletado(true);

@@ -101,6 +101,8 @@ public class EtapasFragment extends Fragment {
 
         MetodosPublicos.Log("Etapa", " idTurma:" + idTurma + " com etapas total:" + lsEtapas.size());
         PassaValoresEtapas(view, lsEtapas);
+
+
         return view;
     }
 
@@ -114,7 +116,9 @@ public class EtapasFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
+        if (MainActivity.atualizaApp == null && MainActivity.refreshItem != null) {
+            MainActivity.refreshItem.setVisible(false);
+        }
     }
 
     @Override
@@ -220,10 +224,10 @@ public class EtapasFragment extends Fragment {
                     AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoStakeholdersTAbtn)), eta.get_id());
 
                 } else if (eta.getEtapa() == EtapaProjeto.PlanoGerenciamentoEscopo) {
-                    MetodosPublicos.Log("Event","PlanoGerenciamentoEscopo - clickou");
+                    MetodosPublicos.Log("Event", "PlanoGerenciamentoEscopo - clickou");
                     // ((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)).setRating(eta.getPontuacaoMedia());
-                    CalculaMediaEtapa(((RatingBar) view.findViewById(R.id.etapaProjetoEscopoRatingBar)), eta.get_id());
-                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoEscopobtn)), eta.get_id());
+                    CalculaMediaEtapa(((RatingBar) view.findViewById(R.id.etapaProjetoPlanejamentoRatingBar)), eta.get_id());
+                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoPlanejamentobtn)), eta.get_id());
                 } else if (eta.getEtapa() == EtapaProjeto.Requisitos) {
                     //    ((RatingBar) getActivity().findViewById(R.id.etapaProjetoRequisitosRatingBar)).setRating(eta.getPontuacaoMedia());
                     CalculaMediaEtapa(((RatingBar) view.findViewById(R.id.etapaProjetoRequisitosRatingBar)), eta.get_id());

@@ -37,11 +37,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-//import android.support.v4.app.Fragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static MenuItem refreshItem;
+    public static getAssync atualizaApp = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +130,7 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
 
+
     }
 
     @Override
@@ -154,10 +156,16 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        // refreshItem = menu.findItem(R.id.action_refresh);
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        refreshItem = menu.findItem(R.id.action_refresh);
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -165,17 +173,15 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-
             // MetodosPublicos.SalvaSessao(this, null, null, null, 0);
-
-            new getAssync().execute();
-
+            if (atualizaApp == null) {
+                atualizaApp = new getAssync();
+                atualizaApp.execute();
+            }
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -237,6 +243,15 @@ public class MainActivity extends AppCompatActivity
 
 
     public class getAssync extends AsyncTask<String, Integer, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            if (refreshItem != null) {
+                refreshItem.setVisible(true);
+            }
+
+        }
 
         @Override
         protected Boolean doInBackground(String... strings) {
@@ -306,6 +321,14 @@ public class MainActivity extends AppCompatActivity
                         .make(findViewById(R.id.ConstraintLayoutMAIN), getString(R.string.synchronization), Snackbar.LENGTH_SHORT); //(context, "Welcome to AndroidHive", Snackbar.LENGTH_LONG);
                 snackbar.show();
             }
+            if (refreshItem != null) refreshItem.setVisible(false);
+
+            atualizaApp = null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            atualizaApp = null;
         }
     }
 
@@ -324,9 +347,12 @@ public class MainActivity extends AppCompatActivity
             if (pessoa != null) {
                 MetodosPublicos.CarregaimagemPerfil(this, ((ImageView) hView.findViewById(R.id.headerImage)), pessoa.get_id());
                 // String path = MetodosPublicos.SelecionaCaminhoImagem(this, pessoa.get_id());
+
             }
-            new getAssync().execute();
-            //  Sincronizacao.SincronizaAplicativoData(MainActivity.this);
+            if (atualizaApp == null) {
+                atualizaApp = new getAssync();
+                atualizaApp.execute();
+            }
         }
 
     }

@@ -24,6 +24,8 @@ public enum EtapaProjeto {
     Requisitos,
     Escopo,
     Eap,
-    Cronograma
+    Cronograma,
+    PlanoGerenciamentoProjeto,
+
 
 }

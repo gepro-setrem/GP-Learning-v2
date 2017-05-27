@@ -85,7 +85,9 @@ public class ProjetoFragment extends Fragment {
             }));
         }
 
-
+        if (MainActivity.atualizaApp == null && MainActivity.refreshItem != null) {
+            MainActivity.refreshItem.setVisible(false);
+        }
         return view;
     }
 
