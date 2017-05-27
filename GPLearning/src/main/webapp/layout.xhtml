@@ -11,9 +11,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet name="./css/bootstrap.min.css"/>
         <h:outputStylesheet name="./css/cssDefault.css"/>
-        <link href="../resources/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-        <link href="./resources/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+        <!--        <link href="../resources/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+                <link href="./resources/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>-->
         <!--<h:outputStylesheet name="./font-awesome-4.7.0/css/font-awesome.css"/>-->
+        <link href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
         <!--<h:outputStylesheet name="./data-tables/dataTables.min.css" />-->
         <h:outputScript name="./js/jquery-3.2.0.min.js"/>
         <h:outputScript name="./js/bootstrap.min.js"/>
@@ -35,10 +36,11 @@
                 <h:graphicImage library="img/" name="log_setrem-1 - SETREM.png" style="max-height: 60px;"/>
             </div>
             <div class="col-md-2 col-xs-5">
-                <h:link outcome="/user/perfil.xhtml">
-                    <h:graphicImage rendered="#{perfilBean.usuario.imagem == null}" library="img/" name="usuario.png" style="max-height: 60px;"/>
-                    <p:graphicImage rendered="#{perfilBean.usuario.imagem != null}" value="#{perfilBean.usuario.streamedImagem}" style="max-height: 60px" cache="false"/>
-                </h:link>
+                <!--                <h:link outcome="/user/perfil.xhtml">
+                                    <h:graphicImage rendered="{perfilBean.usuario.imagem == null}" library="img/" name="usuario.png" style="max-height: 60px;"/>
+                                    <p:graphicImage rendered="#perfilBean.usuario.imagem != null}" value="{perfilBean.usuario.streamedImagem}" style="max-height: 60px" cache="false"/>
+                                </h:link>-->
+                <h:graphicImage rendered="#{perfilBean.usuario.imagem == null}" library="img/" name="usuario.png" style="max-height: 60px;"/>
             </div>
         </div>
         <nav class="navbar navbar-default">
@@ -57,7 +59,7 @@
                     <ul class="nav navbar-nav navbar-right" style="display: #{perfilBean.hasSession ? 'block' : 'none'}; margin: 0;">
                         <li><h:link outcome="/user/projetolst.xhtml">Meus Projetos</h:link></li>
                         <li><p class="navbar-text">Olá, #{perfilBean.usuario.nome}</p></li>
-                        <li><h:outputLink value="./logout">Sair <i class="fa-sign-out"></i></h:outputLink></li>
+                        <li><h:outputLink value="/GPLearning/logout">Sair <i class="fa-sign-out"></i></h:outputLink></li>
                     </ul>
                 </div>
             </div>

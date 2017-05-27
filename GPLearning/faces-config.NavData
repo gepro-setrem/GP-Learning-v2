@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
-    <Scope Scope="Project"/>
+    <Scope Scope="Project">
+        <Node id="user/projetofrm.xhtml" x="1400" y="300" zoom="true"/>
+        <Node id="user/escopo.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="user/inicioprojeto.xhtml" x="1650" y="300" zoom="true"/>
+        <Node id="user/cronograma.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="admin/layout.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="admin/projetolst.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="user/perfilfrm.xhtml" x="1150" y="600" zoom="true"/>
+        <Node id="user/planoescopo.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="user/termoaberturarestricoes.xhtml" x="900" y="600" zoom="true"/>
+        <Node id="admin/turmalst.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="user/iniciacao.xhtml" x="900" y="750" zoom="true"/>
+        <Node id="user/stakeholders.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="user/requisitos.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="user/index.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="user/termoaberturapremissas.xhtml" x="650" y="750" zoom="true"/>
+        <Node id="user/termoaberturajustificativa.xhtml" x="1150" y="450" zoom="true"/>
+        <Node id="admin/usuariofrm.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="user/termoaberturadescricao.xhtml" x="1650" y="150" zoom="true"/>
+        <Node id="user/projetolst.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="errorpage_404.xhtml" x="150" y="1050" zoom="true"/>
+        <Node id="layout.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="user/plano.xhtml" x="1900" y="150" zoom="true"/>
+        <Node id="admin/avaliacao.xhtml" x="1900" y="300" zoom="true"/>
+        <Node id="admin/usuariodtl.xhtml" x="650" y="900" zoom="true"/>
+        <Node id="admin/usuariolst.xhtml" x="1400" y="450" zoom="true"/>
+        <Node id="user/planogerenciamentoprojeto.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="user/planejamento.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="admin/indicador.xhtml" x="2150" y="150" zoom="true"/>
+        <Node id="user/termoaberturamarcos.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="user/layout.xhtml" x="400" y="900" zoom="true"/>
+        <Node id="login.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="user/termoaberturarequisitos.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="user/avaliacao.xhtml" x="150" y="900" zoom="true"/>
+        <Node id="errorpage_403.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="about.xhtml" x="400" y="1050" zoom="true"/>
+        <Node id="user/perfil.xhtml" x="1150" y="300" zoom="true"/>
+        <Node id="user/eap.xhtml" x="150" y="1200" zoom="true"/>
+        <Node id="admin/turmafrm.xhtml" x="400" y="750" zoom="true"/>
+    </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>
