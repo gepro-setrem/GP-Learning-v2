@@ -18,20 +18,20 @@
                         <div class="col-lg-4 col-sm-6 col-xs-12">
                             <div class="form-group">
                                 <label>Nome:</label>
-                                <h:inputText class="form-control" pt:placeholder="Nome" value="#{perfilBean.user.nome}" required="true" />
+                                <h:inputText class="form-control" pt:placeholder="Nome" maxlength="200" value="#{perfilBean.user.nome}" required="true" />
                             </div>
                         </div>
 
                         <div class="col-lg-4 col-sm-6 col-xs-12">
                             <div class="form-group">
                                 <label>E-mail:</label>
-                                <h:inputText class="form-control" pt:placeholder="Email" value="#{perfilBean.user.email}" required="true" />
+                                <h:inputText class="form-control" pt:placeholder="Email" maxlength="200" value="#{perfilBean.user.email}" required="true" />
                             </div>
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xs-12">
                             <div class="form-group">
                                 <label>Senha:</label>
-                                <p:password class="form-control" value="#{perfilBean.login.senha}" />
+                                <p:password class="form-control" maxlength="200" value="#{perfilBean.login.senha}" />
                             </div>
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xs-12">

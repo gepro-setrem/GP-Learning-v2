@@ -42,7 +42,7 @@
                             </div>
                             <div class="comment_frame">
                                 <div class="comment_box" >
-                                    <h:inputTextarea value="#{comentarioBean.comentario.descricao}" pt:placeholder="Escreva seu comentário aqui!" class="comentario_descricao"/>
+                                    <h:inputTextarea value="#{comentarioBean.comentario.descricao}" pt:maxLength="2500" pt:placeholder="Escreva seu comentário aqui!" class="comentario_descricao"/>
                                     <div class="comment_box_options">
                                         <p:commandLink ajax="true" onstart="ShowLoader()" oncomplete="HideLoader()" class="btn btn-success btn-sm" action="#{comentarioBean.salvar}">
                                             <i class="fa-commenting-o"></i> Comentar

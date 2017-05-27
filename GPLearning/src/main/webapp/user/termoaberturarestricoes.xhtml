@@ -28,7 +28,7 @@
                             <div class="row form-group">
                                 <label class="col-lg-2 col-sm-3 col-xs-12">Descrição da Restrição*:</label>
                                 <div class="col-lg-9 col-sm-7 col-xs-8">
-                                    <h:inputText class="form-control" value="#{restricaoBean.restricao.descricao}" pt:placeholder="Descrição da Restrição"/>
+                                    <h:inputText class="form-control" maxlength="500" value="#{restricaoBean.restricao.descricao}" pt:placeholder="Descrição da Restrição"/>
                                 </div>
                                 <div class="col-lg-1 col-sm-2 col-xs-3">
                                     <h:commandLink action="#{restricaoBean.salvar()}" class="btn btn-success"><i class="fa-check"></i> Salvar</h:commandLink>

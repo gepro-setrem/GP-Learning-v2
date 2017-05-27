@@ -32,7 +32,7 @@
                         <div class="col-md-7 col-xs-12">
                             <div class="form-group">
                                 <label>Nome*:</label>
-                                <h:inputText class="form-control" pt:placeholder="Nome" value="#{projetoBean.projeto.nome}" required="true" requiredMessage="O 'Nome' é obrigatório!"/>
+                                <h:inputText class="form-control" maxlength="200" pt:placeholder="Nome" value="#{projetoBean.projeto.nome}" required="true" requiredMessage="O 'Nome' é obrigatório!"/>
                             </div>
                         </div>
                         <div class="col-md-5 col-xs-12">
@@ -49,7 +49,7 @@
                         <div class="col-md-7 col-xs-12">
                             <div class="form-group">
                                 <label>Empresa*:</label>
-                                <h:inputText class="form-control" pt:placeholder="Empresa" value="#{projetoBean.projeto.empresa}" required="true" requiredMessage="A 'Empresa' é obrigatória!"/>
+                                <h:inputText class="form-control" maxlength="200" pt:placeholder="Empresa" value="#{projetoBean.projeto.empresa}" required="true" requiredMessage="A 'Empresa' é obrigatória!"/>
                             </div>
                         </div>
                         <div class="col-md-5 col-xs-12">
@@ -66,7 +66,7 @@
                         <div class="col-xs-12">
                             <div class="form-group">
                                 <label>Descrição Geral*:</label>
-                                <h:inputTextarea class="form-control" pt:placeholder="Descrição Geral" required="true" rows="3" value="#{projetoBean.projeto.descricao}" requiredMessage="A 'Descrição' é obrigatória!"/>
+                                <h:inputTextarea class="form-control" pt:maxlength="2500" pt:placeholder="Descrição Geral" required="true" rows="3" value="#{projetoBean.projeto.descricao}" requiredMessage="A 'Descrição' é obrigatória!"/>
                             </div>
                         </div>
                     </div>

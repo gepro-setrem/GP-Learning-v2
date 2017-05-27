@@ -20,7 +20,7 @@
                     <div class="row">
                         <div class="col-xs-12"><div class="alert-warning"><h:messages /></div></div>
                         <div class="col-xs-12"><label class="etapa_desc">#{projetoBean.getDescricao('descricaoTelaCriarPlanoGerenciamentoEscopo')}</label></div>
-                        <div class="col-xs-12 form-group"><h:inputTextarea class="form-control" rows="3" value="#{projetoBean.projeto.planoEscopo}" pt:placeholder="Plano de Gerenciamento de Escopo"/></div>
+                        <div class="col-xs-12 form-group"><h:inputTextarea class="form-control" pt:maxLength="2500" rows="3" value="#{projetoBean.projeto.planoEscopo}" pt:placeholder="Plano de Gerenciamento de Escopo"/></div>
 <!--                        <div class="col-xs-12">
                             <p:commandButton value="Comentário" class="btn btn-primary" type="button" onclick="PF('dlg1').show();" />
                             <p:dialog header="Comentários sobre o Plano de Gerenciamento de Escopo" widgetVar="dlg1" minHeight="40">
