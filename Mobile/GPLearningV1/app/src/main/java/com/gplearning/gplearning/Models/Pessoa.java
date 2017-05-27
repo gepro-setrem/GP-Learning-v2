@@ -65,8 +65,9 @@ public class Pessoa {
         this._id = _id;
     }
 
-    public Pessoa(Long _id, String nome) {
+    public Pessoa(Long _id, int id, String nome) {
         this._id = _id;
+        this.id = id;
         this.nome = nome;
     }
 

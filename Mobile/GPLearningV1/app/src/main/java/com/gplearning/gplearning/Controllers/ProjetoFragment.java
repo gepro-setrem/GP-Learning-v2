@@ -65,7 +65,7 @@ public class ProjetoFragment extends Fragment {
 
             DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
             dao = daoSession.getProjetoDao();
-            new CarregaProjetos().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null);
+            new CarregaProjetos().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
 
             projetoAdapter = new ProjetoAdapter(lsProjetos, getActivity()); //new ProjetoRecyclerViewAdapter(lsProjetos, listenerClick, listenerLongClick);
             recyclerView.setAdapter(projetoAdapter);

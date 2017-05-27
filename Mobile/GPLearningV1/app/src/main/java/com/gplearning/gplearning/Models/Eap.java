@@ -3,6 +3,7 @@ package com.gplearning.gplearning.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -10,10 +11,10 @@ import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.OrderBy;
 import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.ToOne;
+import org.greenrobot.greendao.annotation.Transient;
 
 import java.util.Date;
 import java.util.List;
-import org.greenrobot.greendao.DaoException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(nameInDb = "eap")
@@ -23,6 +24,12 @@ public class Eap {
 
     private Long id;
     private String nome;
+    private String descricao;
+    @Transient
+    private String position;
+    @Transient
+    private Boolean eap;
+    private Date inicio;
     private Date entrega;
     private double valor;
 
@@ -31,11 +38,11 @@ public class Eap {
     private Eap EapPai;
 
     @ToMany(referencedJoinProperty = "idPai")
-    private List<Eap> lsEapSub;
+    private List<Eap> eaps;
 
     @ToMany(referencedJoinProperty = "idEap")
     @OrderBy("_id ASC")
-    private List<Tarefa> lsTarefas;
+    private List<Tarefa> tarefas;
 
     private long idProjeto;
     @ToOne(joinProperty = "idProjeto")
@@ -64,10 +71,37 @@ public class Eap {
     }
 
     @Keep
-    public Eap(Long _id, Long id, String nome, Date entrega, double valor, Long idPai, long idProjeto) {
+    public Eap(Long _id, Long id, String nome, String descricao, String position, Boolean eap, Date inicio, Date entrega, double valor, Long idPai, long idProjeto) {
         this._id = _id;
         this.id = id;
         this.nome = nome;
+        this.descricao = descricao;
+        this.position = position;
+        this.eap = eap;
+        this.inicio = inicio;
+        this.entrega = entrega;
+        this.valor = valor;
+        this.idPai = idPai;
+        this.idProjeto = idProjeto;
+    }
+
+    @Keep
+    public Eap(Long _id, Long id, String nome, String descricao, String position, Boolean eap) {
+        this._id = _id;
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.position = position;
+        this.eap = eap;
+    }
+
+    @Generated(hash = 1999836360)
+    public Eap(Long _id, Long id, String nome, String descricao, Date inicio, Date entrega, double valor, Long idPai, long idProjeto) {
+        this._id = _id;
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.inicio = inicio;
         this.entrega = entrega;
         this.valor = valor;
         this.idPai = idPai;
@@ -102,6 +136,38 @@ public class Eap {
         this.nome = nome;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public Boolean getEap() {
+        return eap;
+    }
+
+    public void setEap(Boolean eap) {
+        this.eap = eap;
+    }
+
+    public Date getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(Date inicio) {
+        this.inicio = inicio;
+    }
+
     public Date getEntrega() {
         return entrega;
     }
@@ -133,23 +199,23 @@ public class Eap {
     }
 
     @Keep
-    public List<Eap> getLsEapSub() {
-        return lsEapSub;
+    public List<Eap> getEaps() {
+        return eaps;
     }
 
     @Keep
-    public void setLsEapSub(List<Eap> lsEapSub) {
-        this.lsEapSub = lsEapSub;
+    public void setEaps(List<Eap> eaps) {
+        this.eaps = eaps;
     }
 
     @Keep
-    public List<Tarefa> getLsTarefas() {
-        return lsTarefas;
+    public List<Tarefa> getTarefas() {
+        return tarefas;
     }
 
     @Keep
-    public void setLsTarefas(List<Tarefa> lsTarefas) {
-        this.lsTarefas = lsTarefas;
+    public void setTarefas(List<Tarefa> tarefas) {
+        this.tarefas = tarefas;
     }
 
     public long getIdProjeto() {
@@ -170,16 +236,25 @@ public class Eap {
         this.projeto = projeto;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    @Generated(hash = 2081873823)
-    public synchronized void resetLsEapSub() {
-        lsEapSub = null;
+    @Override
+    public String toString() {
+        return nome;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    @Generated(hash = 997083221)
-    public synchronized void resetLsTarefas() {
-        lsTarefas = null;
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 667306427)
+    public synchronized void resetEaps() {
+        eaps = null;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 1806373937)
+    public synchronized void resetTarefas() {
+        tarefas = null;
     }
 
     /**
@@ -224,4 +299,6 @@ public class Eap {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getEapDao() : null;
     }
+
+
 }

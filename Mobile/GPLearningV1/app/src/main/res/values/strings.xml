@@ -31,6 +31,8 @@
     <string name="scope_planing">Planejamento do Escopo</string>
     <string name="requirements">Requisitos</string>
     <string name="scope">Escopo do Projeto</string>
+    <string name="schedule">Cronograma</string>
+    <string name="eap">EAP</string>
 
 
     <string name="no_project">Você ainda não tem nenhum projeto criado. Não perca tempo, acesse a ferramenta GP Learning 2.0 e crie os seus projetos!</string>

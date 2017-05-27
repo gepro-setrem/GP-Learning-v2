@@ -25,19 +25,22 @@ public class Tarefa {
 
     private Long id;
     private String nome;
+    private Date inicio;
     private Date termino;
+    private Date conclusao;
+    private Boolean marco;
 
     private Long idEap;
     @ToOne(joinProperty = "idEap")
     private Eap eap;
 
-    private Long idTarefa;
-    @ToOne(joinProperty = "idTarefa")
-    private Tarefa TarefaPai;
+    private Long idPai;
+    @ToOne(joinProperty = "idPai")
+    private Tarefa pai;
 
-    @ToMany(referencedJoinProperty = "idTarefa")
+    @ToMany(referencedJoinProperty = "idPai")
     @OrderBy("_id ASC")
-    private List<Tarefa> lsTarefas;
+    private List<Tarefa> tarefas;
 
     /**
      * Used to resolve relations
@@ -54,8 +57,8 @@ public class Tarefa {
     @Generated(hash = 626929379)
     private transient Long eap__resolvedKey;
 
-    @Generated(hash = 1823071567)
-    private transient Long TarefaPai__resolvedKey;
+    @Generated(hash = 1083567250)
+    private transient Long pai__resolvedKey;
 
 
     public Tarefa() {
@@ -65,17 +68,31 @@ public class Tarefa {
         this.nome = nome;
     }
 
-    // @Transient = notMappep
-
-    @Generated(hash = 350609841)
-    public Tarefa(Long _id, Long id, String nome, Date termino, Long idEap, Long idTarefa) {
+    @Keep
+    public Tarefa(Long _id, Long id, String nome, Date inicio, Date termino, Date conclusao, Boolean marco) {
         this._id = _id;
         this.id = id;
         this.nome = nome;
+        this.inicio = inicio;
         this.termino = termino;
-        this.idEap = idEap;
-        this.idTarefa = idTarefa;
+        this.conclusao = conclusao;
+        this.marco = marco;
     }
+
+    @Generated(hash = 2132067516)
+    public Tarefa(Long _id, Long id, String nome, Date inicio, Date termino, Date conclusao, Boolean marco,
+            Long idEap, Long idPai) {
+        this._id = _id;
+        this.id = id;
+        this.nome = nome;
+        this.inicio = inicio;
+        this.termino = termino;
+        this.conclusao = conclusao;
+        this.marco = marco;
+        this.idEap = idEap;
+        this.idPai = idPai;
+    }
+
 
     public Long get_id() {
         return _id;
@@ -127,38 +144,69 @@ public class Tarefa {
         this.eap = eap;
     }
 
-    public Long getIdTarefa() {
-        return idTarefa;
+    public Long getIdPai() {
+        return idPai;
     }
 
-    public void setIdTarefa(Long idTarefa) {
-        this.idTarefa = idTarefa;
-    }
-
-    @Keep
-    public Tarefa getTarefaPai() {
-        return TarefaPai;
+    public void setIdPai(Long idPai) {
+        this.idPai = idPai;
     }
 
     @Keep
-    public void setTarefaPai(Tarefa tarefaPai) {
-        TarefaPai = tarefaPai;
+    public Tarefa getPai() {
+        return pai;
     }
 
     @Keep
-    public List<Tarefa> getLsTarefas() {
-        return lsTarefas;
+    public void setPai(Tarefa pai) {
+        this.pai = pai;
     }
 
     @Keep
-    public void setLsTarefas(List<Tarefa> lsTarefas) {
-        this.lsTarefas = lsTarefas;
+    public List<Tarefa> getTarefas() {
+        return tarefas;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    @Generated(hash = 997083221)
-    public synchronized void resetLsTarefas() {
-        lsTarefas = null;
+    @Keep
+    public void setTarefas(List<Tarefa> tarefas) {
+        this.tarefas = tarefas;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
+
+    public Date getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(Date inicio) {
+        this.inicio = inicio;
+    }
+
+    public Date getConclusao() {
+        return conclusao;
+    }
+
+    public void setConclusao(Date conclusao) {
+        this.conclusao = conclusao;
+    }
+
+    public Boolean getMarco() {
+        return marco;
+    }
+
+    public void setMarco(Boolean marco) {
+        this.marco = marco;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 1806373937)
+    public synchronized void resetTarefas() {
+        tarefas = null;
     }
 
     /**
@@ -203,6 +251,4 @@ public class Tarefa {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getTarefaDao() : null;
     }
-
-
 }

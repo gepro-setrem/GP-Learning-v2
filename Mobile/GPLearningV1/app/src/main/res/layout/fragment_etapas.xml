@@ -400,78 +400,92 @@
 
 
 
-        <!--Requisitos -->
-        <!--<ImageButton-->
-        <!--android:id="@+id/etapaProjetoRequisitosbtn"-->
-        <!--style="@style/imageEtapaProjeto"-->
-        <!--android:background="@drawable/ic_clipboard"-->
-        <!--app:layout_constraintRight_toLeftOf="@id/etapaProjetoEscopobtn"-->
-        <!--app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/etapaProjetoPlanejamentobtn" />-->
-
-        <!--<TextView-->
-        <!--android:id="@+id/etapaProjetoRequisitostxt"-->
-        <!--style="@style/txtEtapaProjeto"-->
-        <!--android:text="@string/requirements"-->
-        <!--app:layout_constraintRight_toLeftOf="@id/etapaProjetoEscopotxt"-->
-        <!--app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRequisitosbtn" />-->
-
-        <!--<RatingBar-->
-        <!--android:id="@+id/etapaProjetoRequisitosRatingBar"-->
-        <!--style="@style/ratingBarEtapaProjeto"-->
-        <!--android:numStars="5"-->
-        <!--android:rating="4"-->
-        <!--app:layout_constraintRight_toLeftOf="@id/etapaProjetoEscopoRatingBar"-->
-        <!--app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRequisitostxt" />-->
-        <!---->
-        <!--Fim Requisitos-->
 
 
-        <!--Escopo -->
-        <!--<ImageButton-->
-        <!--android:id="@+id/etapaProjetoEscopobtn"-->
-        <!--style="@style/imageEtapaProjeto"-->
-        <!--android:background="@drawable/ic_stakeholders"-->
-        <!--android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--app:layout_constraintLeft_toRightOf="@id/etapaProjetoRequisitosbtn"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/etapaProjetoPlanejamentobtn" />-->
 
-        <!--<TextView-->
-        <!--android:id="@+id/etapaProjetoEscopotxt"-->
-        <!--style="@style/txtEtapaProjeto"-->
-        <!--android:text="@string/scope"-->
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--app:layout_constraintLeft_toRightOf="@id/etapaProjetoRequisitostxt"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/etapaProjetoEscopobtn" />-->
-
-        <!--<RatingBar-->
-        <!--android:id="@+id/etapaProjetoEscopoRatingBar"-->
-        <!--style="@style/ratingBarEtapaProjeto"-->
-        <!--android:numStars="5"-->
-        <!--android:rating="4"-->
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--app:layout_constraintLeft_toRightOf="@id/etapaProjetoRequisitosRatingBar"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/etapaProjetoEscopotxt" />-->
-        <!--Fim Escopo-->
-
+        <!--EAP-->
+        <ImageButton
+            android:id="@+id/etapaProjetoEapbtn"
+            style="@style/imageEtapaProjeto"
+            android:background="@drawable/ic_diagram"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/etapaProjetoCronogramabtn"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoRequisitosbtn" />
 
         <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="1800dp"
-            android:text="TextView"
-            app:layout_constraintHorizontal_bias="0.972"
+            android:id="@+id/etapaProjetoEaptxt"
+            style="@style/txtEtapaProjeto"
+            android:text="@string/eap"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/etapaProjetoCronogramatxt"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoEapbtn" />
+
+        <RatingBar
+            android:id="@+id/etapaProjetoEapRatingBar"
+            style="@style/ratingBarEtapaProjeto"
+            android:numStars="5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/etapaProjetoCronogramaRatingBar"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoEaptxt" />
+        <!--Fim EAP-->
+
+
+        <!--Cronograma-->
+        <ImageButton
+            android:id="@+id/etapaProjetoCronogramabtn"
+            style="@style/imageEtapaProjeto"
+            android:background="@drawable/ic_calendar"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintLeft_toRightOf="@+id/etapaProjetoEapbtn"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/etapaProjetoNomeTxt" />
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoEscopobtn" />
+
+        <TextView
+            android:id="@+id/etapaProjetoCronogramatxt"
+            style="@style/txtEtapaProjeto"
+            android:text="@string/schedule"
+            app:layout_constraintLeft_toRightOf="@+id/etapaProjetoEaptxt"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoCronogramabtn" />
+
+        <RatingBar
+            android:id="@+id/etapaProjetoCronogramaRatingBar"
+            style="@style/ratingBarEtapaProjeto"
+            android:numStars="5"
+            app:layout_constraintLeft_toRightOf="@+id/etapaProjetoEapRatingBar"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etapaProjetoCronogramatxt" />
+
+        <!--Fim Cronograma-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!--<TextView-->
+            <!--android:id="@+id/textView7"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:layout_marginLeft="8dp"-->
+            <!--android:layout_marginRight="8dp"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginTop="1300dp"-->
+            <!--android:text="TextView"-->
+            <!--app:layout_constraintHorizontal_bias="0.972"-->
+            <!--app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--app:layout_constraintRight_toRightOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="@+id/etapaProjetoNomeTxt" />-->
 
 
     </android.support.constraint.ConstraintLayout>

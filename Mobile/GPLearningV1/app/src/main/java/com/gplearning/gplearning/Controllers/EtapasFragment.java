@@ -220,6 +220,7 @@ public class EtapasFragment extends Fragment {
                     AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoStakeholdersTAbtn)), eta.get_id());
 
                 } else if (eta.getEtapa() == EtapaProjeto.PlanoGerenciamentoEscopo) {
+                    MetodosPublicos.Log("Event","PlanoGerenciamentoEscopo - clickou");
                     // ((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)).setRating(eta.getPontuacaoMedia());
                     CalculaMediaEtapa(((RatingBar) view.findViewById(R.id.etapaProjetoEscopoRatingBar)), eta.get_id());
                     AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoEscopobtn)), eta.get_id());
@@ -231,21 +232,16 @@ public class EtapasFragment extends Fragment {
                     //   ((RatingBar) getActivity().findViewById(R.id.etapaProjetoEscopoRatingBar)).setRating(eta.getPontuacaoMedia());
                     CalculaMediaEtapa(((RatingBar) view.findViewById(R.id.etapaProjetoEscopoRatingBar)), eta.get_id());
                     AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoEscopobtn)), eta.get_id());
-
-                    // ((ImageButton) getActivity().findViewById(R.id.etapaProjetoEscopobtn)).setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            Intent intent = new Intent(getActivity(), EtapaActivity.class);
-//                            intent.putExtra("ID", eta.get_id());
-//                            startActivity(intent);
-//                        }
-//                    });
+                } else if (eta.getEtapa() == EtapaProjeto.Eap) {
+                    CalculaMediaEtapa(((RatingBar) view.findViewById(R.id.etapaProjetoEapRatingBar)), eta.get_id());
+                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoEapbtn)), eta.get_id());
+                } else if (eta.getEtapa() == EtapaProjeto.Cronograma) {
+                    CalculaMediaEtapa(((RatingBar) view.findViewById(R.id.etapaProjetoCronogramaRatingBar)), eta.get_id());
+                    AtribuiEventoClick(((ImageButton) view.findViewById(R.id.etapaProjetoCronogramabtn)), eta.get_id());
                 }
             }
             //fim
-
         }
-
     }
 
     private void AtribuiEventoClick(ImageButton imageButton, final Long idEtapa) {

@@ -19,6 +19,8 @@ import com.gplearning.gplearning.Enums.EtapaProjeto;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.Eap;
+import com.gplearning.gplearning.Models.EapDao;
 import com.gplearning.gplearning.Models.Etapa;
 import com.gplearning.gplearning.Models.EtapaDao;
 import com.gplearning.gplearning.Models.Marco;
@@ -37,12 +39,15 @@ import com.gplearning.gplearning.Models.Restricoes;
 import com.gplearning.gplearning.Models.RestricoesDao;
 import com.gplearning.gplearning.Models.Stakeholder;
 import com.gplearning.gplearning.Models.StakeholderDao;
+import com.gplearning.gplearning.Models.Tarefa;
+import com.gplearning.gplearning.Models.TarefaDao;
 import com.gplearning.gplearning.Models.TermoAbertura;
 import com.gplearning.gplearning.Models.TermoAberturaDao;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EtapaActivity extends AppCompatActivity {
@@ -209,7 +214,7 @@ public class EtapaActivity extends AppCompatActivity {
                 } else {
                     NenhumItem();
                 }
-            } else if (atv.getEtapa() == EtapaProjeto.Requisitos) {//IMPLEMENTAR ESTES METODOS AINDA!!!
+            } else if (atv.getEtapa() == EtapaProjeto.Requisitos) {
                 RequisitoDao requisitoDao = daoSession.getRequisitoDao();
                 final List<Requisito> lsRequisitos = requisitoDao.queryBuilder().where(RequisitoDao.Properties.IdProjeto.eq(idProjeto)).list();
                 if (lsRequisitos != null && lsRequisitos.size() > 0) {
@@ -221,6 +226,38 @@ public class EtapaActivity extends AppCompatActivity {
                             ShowDescription(lsRequisitos.get(position).getNome(), lsRequisitos.get(position).getDescricao());
                         }
                     });
+                } else {
+                    NenhumItem();
+                }
+
+            } else if (atv.getEtapa() == EtapaProjeto.Eap) {
+                EapDao eapDao = daoSession.getEapDao();
+                final List<Eap> lsEap = eapDao.queryBuilder().where(EapDao.Properties.IdProjeto.eq(idProjeto)).list();
+                if (lsEap != null && lsEap.size() > 0) {
+                    ArrayAdapter<Eap> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lsEap);
+                    listview.setAdapter(adapter);
+                    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            ShowDescription(lsEap.get(position).getNome(), lsEap.get(position).getDescricao());
+                        }
+                    });
+                } else {
+                    NenhumItem();
+                }
+            } else if (atv.getEtapa() == EtapaProjeto.Cronograma) {
+                EapDao eapDao = daoSession.getEapDao();
+                List<Eap> Eaps = eapDao.queryBuilder().where(EapDao.Properties.IdProjeto.eq(idProjeto)).orderAsc(EapDao.Properties.Id).limit(1).list();
+                if (Eaps != null && Eaps.size() > 0) {
+                    MetodosPublicos.Log("Event", "retornou com :" + Eaps.size());
+                    //  TarefaDao tarefaDao = daoSession.getTarefaDao();
+                    final List<Eap> lsItens = SelecionaEapTarefasProjeto(daoSession, Eaps.get(0), "1", true);
+                    if (lsItens.size() > 0) {
+                        MetodosPublicos.Log("Event", "total de itens tarefas/eaps com :" + lsItens.size());
+                        //tarefaDao.queryBuilder().where(TarefaDao.Properties.IdProjeto.eq(idProjeto)).list();
+                        ArrayAdapter<Eap> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lsItens);
+                        listview.setAdapter(adapter);
+                    }
                 } else {
                     NenhumItem();
                 }
@@ -305,6 +342,7 @@ public class EtapaActivity extends AppCompatActivity {
      *
      * @param etapa tipo de atividade
      */
+
     private void GetTitle(EtapaProjeto etapa) {
 
         switch (etapa) {
@@ -338,6 +376,12 @@ public class EtapaActivity extends AppCompatActivity {
                 break;
             case Escopo:
                 setTitle(R.string.scope);
+                break;
+            case Eap:
+                setTitle(R.string.eap);
+                break;
+            case Cronograma:
+                setTitle(R.string.schedule);
                 break;
 
 //            DescricaoProjeto,
@@ -374,5 +418,62 @@ public class EtapaActivity extends AppCompatActivity {
 //        dialog.setc
 
     }
+
+
+    private List<Eap> SelecionaEapTarefasProjeto(DaoSession daoSession, Eap eapParent, String position, boolean tarefas) {
+        MetodosPublicos.Log("Event", "BuscaEap position" + position);
+        List<Eap> listEaps = new ArrayList<>();
+        if (eapParent != null && eapParent.get_id() > 0) {
+            EapDao eapDao = daoSession.getEapDao();
+            List<Eap> Eaps = eapDao.queryBuilder().where(EapDao.Properties.IdPai.eq(eapParent.get_id())).orderAsc(EapDao.Properties.Id).list();
+            if (Eaps != null && Eaps.size() > 0) {
+                for (int i = 0; i < Eaps.size(); i++) {
+                    position += "." + (i + 1);
+                    Eaps.get(i).setPosition(position);
+                    listEaps.add(Eaps.get(i));
+                    if (tarefas) {
+
+                        TarefaDao tarefaDao = daoSession.getTarefaDao();
+                        List<Tarefa> lsTarefas = tarefaDao.queryBuilder().where(TarefaDao.Properties.IdEap.eq(Eaps.get(i).get_id())).orderAsc(TarefaDao.Properties.Id).list();
+                        if (lsTarefas != null && lsTarefas.size() > 0) {
+                            for (Tarefa tar : lsTarefas) {
+                                String positionTar = position + "." + (i + 1);
+                                Eap eapt = new Eap(tar.get_id(), tar.getId(), tar.getNome(), "", positionTar, false);
+                                listEaps.add(eapt);
+                                listEaps.addAll(SelecionaTarefas(daoSession, tar, positionTar));
+                                // List<Tarefa> tarefasEap = SelecionaTarefas(daoSession, tar, position);
+//                                if (tarefasEap != null) {
+//                                    for (Tarefa tarefa : tarefasEap) {
+//                                        Eap eap = new Eap(tarefa.get_id(), tarefa.getId(), tarefa.getNome(), "", position, false);
+//                                        listEaps.add(eap);
+//                                    }
+//                                }
+                            }
+                        }
+                    }
+                    listEaps.addAll(SelecionaEapTarefasProjeto(daoSession, Eaps.get(i), position, tarefas));
+                }
+            }
+        }
+        return listEaps;
+    }
+
+    private List<Eap> SelecionaTarefas(DaoSession daoSession, Tarefa tarefa, String position) {
+        MetodosPublicos.Log("Event", "BuscaTarefa position" + position);
+        List<Eap> listItens = new ArrayList<>();
+        TarefaDao tarefaDao = daoSession.getTarefaDao();
+        List<Tarefa> lsTarefas = tarefaDao.queryBuilder().where(TarefaDao.Properties.Id.eq(tarefa.getIdEap())).orderAsc(TarefaDao.Properties.Id).list();
+        if (lsTarefas != null && lsTarefas.size() > 0) {
+            // for (Tarefa tar : lsTarefas) {
+            for (int i = 0; i < lsTarefas.size(); i++) {
+                position += "." + (lsTarefas.size() + 1);
+                Eap eap = new Eap(lsTarefas.get(i).get_id(), lsTarefas.get(i).getId(), lsTarefas.get(i).getNome(), "", position, false);
+                listItens.add(eap);
+                listItens.addAll(SelecionaTarefas(daoSession, lsTarefas.get(i), position));
+            }
+        }
+        return listItens;
+    }
+
 
 }

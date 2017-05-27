@@ -6,6 +6,7 @@ import android.content.Context;
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.DAO.AvaliacaoDAO;
 import com.gplearning.gplearning.DAO.ComentarioDAO;
+import com.gplearning.gplearning.DAO.EapDAO;
 import com.gplearning.gplearning.DAO.ProjetoDAO;
 import com.gplearning.gplearning.DAO.RequisitoDAO;
 import com.gplearning.gplearning.DAO.StakeholderDAO;
@@ -16,6 +17,8 @@ import com.gplearning.gplearning.Models.AvaliacaoDao;
 import com.gplearning.gplearning.Models.Comentario;
 import com.gplearning.gplearning.Models.ComentarioDao;
 import com.gplearning.gplearning.Models.DaoSession;
+import com.gplearning.gplearning.Models.Eap;
+import com.gplearning.gplearning.Models.EapDao;
 import com.gplearning.gplearning.Models.Etapa;
 import com.gplearning.gplearning.Models.EtapaDao;
 import com.gplearning.gplearning.Models.Indicador;
@@ -38,6 +41,8 @@ import com.gplearning.gplearning.Models.Restricoes;
 import com.gplearning.gplearning.Models.RestricoesDao;
 import com.gplearning.gplearning.Models.Stakeholder;
 import com.gplearning.gplearning.Models.StakeholderDao;
+import com.gplearning.gplearning.Models.Tarefa;
+import com.gplearning.gplearning.Models.TarefaDao;
 import com.gplearning.gplearning.Models.TermoAbertura;
 import com.gplearning.gplearning.Models.TermoAberturaDao;
 import com.gplearning.gplearning.Models.Turma;
@@ -477,7 +482,7 @@ public class Sincronizacao {
                     lsProjetoLite.get(0).setAlteracao(projeto.getAlteracao());
                     lsProjetoLite.get(0).setDescricao(projeto.getDescricao());
                     lsProjetoLite.get(0).setEscopo(projeto.getEscopo());
-                    lsProjetoLite.get(0).setEstado(projeto.getEscopo());
+                    lsProjetoLite.get(0).setEstado(projeto.getEstado());
                     lsProjetoLite.get(0).setPlanoProjeto(projeto.getPlanoProjeto());
                     if (projeto.getGerente() != null) {
                         Long idGerente = InsereSeNaoEncontraPessoa(daoSession, projeto.getGerente());
@@ -551,6 +556,105 @@ public class Sincronizacao {
 //            MetodosPublicos.Log("ERRO ATUALIZAÇÃO", e.toString());
 //        }
     }
+
+    public static void AtualizaEap(DaoSession daoSession, Context context, int id) {
+        EapDAO eapDAO = new EapDAO();
+        EapDao daoEap = daoSession.getEapDao();
+        TarefaDao daoTarefa = daoSession.getTarefaDao();
+        ProjetoDao daoProjeto = daoSession.getProjetoDao();
+
+        List<Eap> eapServidor = eapDAO.SelecionaEaps(id);
+        // List<Eap> eapLite = daoEap.loadAll();
+
+        if (eapServidor != null) {
+            for (Eap eap : eapServidor) {
+                Eap eapLite = daoEap.queryBuilder().where(EapDao.Properties.Id.eq(eap.getId())).limit(1).unique();
+                Long idEap;
+                if (eapLite == null) {
+                    if (eap.getProjeto() != null) {
+                        Projeto projeto = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(eap.getProjeto().getId())).limit(1).unique();
+                        if (projeto != null)
+                            eap.setIdProjeto(projeto.get_id());
+                    }
+
+                    idEap = daoEap.insert(eap);
+                } else {
+                    idEap = eapLite.get_id();
+                    eapLite.setNome(eap.getNome());
+                    eapLite.setDescricao(eap.getDescricao());
+                    eapLite.setEntrega(eap.getEntrega());
+                    eapLite.setInicio(eap.getInicio());
+                    daoEap.update(eapLite);
+                }
+                if (eap.getTarefas() != null) {
+                    InsereTarefa(daoTarefa, eap.getIdProjeto(), idEap, eap.getTarefas());
+                }
+
+                if (eap.getEaps() != null) {
+                    InsereEap(daoEap, daoTarefa, eap.getIdProjeto(), idEap, eap.getEaps());
+                }
+
+            }
+        }
+    }
+
+    private static void InsereEap(EapDao daoEap, TarefaDao daoTarefa, Long idProjeto, Long idParent, List<Eap> lsEap) {
+        if (lsEap != null) {
+            MetodosPublicos.Log("Event", "inserre eaps:" + lsEap.size());
+            for (Eap eap : lsEap) {
+                Eap eapLite = daoEap.queryBuilder().where(EapDao.Properties.Id.eq(eap.getId())).limit(1).unique();
+                Long idEap;
+                if (eapLite == null) {
+                    eap.setIdProjeto(idProjeto);
+                    eap.setIdPai(idParent);
+                    idEap = daoEap.insert(eap);
+                } else {
+                    idEap = eapLite.get_id();
+                    eapLite.setNome(eap.getNome());
+                    eapLite.setDescricao(eap.getDescricao());
+                    eapLite.setEntrega(eap.getEntrega());
+                    eapLite.setInicio(eap.getInicio());
+                    daoEap.update(eapLite);
+                }
+
+                if (eap.getTarefas() != null) {
+                    InsereTarefa(daoTarefa, eap.getIdProjeto(), idEap, eap.getTarefas());
+                }
+
+                if (eap.getEaps() != null)
+                    InsereEap(daoEap, daoTarefa, idProjeto, idEap, eap.getEaps());
+            }
+        }
+    }
+
+
+    private static void InsereTarefa(TarefaDao daoTarefa, Long idParent, Long idEap, List<Tarefa> lsTarefas) {
+        if (lsTarefas != null) {
+            MetodosPublicos.Log("Event", "inserre Tarefas:" + lsTarefas.size());
+            for (Tarefa tarefa : lsTarefas) {
+                Long idTarefa;
+                Tarefa tarefaLite = daoTarefa.queryBuilder().where(TarefaDao.Properties.Id.eq(tarefa.getId())).limit(1).unique();
+                if (tarefaLite == null) {
+                    tarefa.setIdEap(idEap);
+                    tarefa.setIdPai(idParent);
+                    idTarefa = daoTarefa.insert(tarefa);
+                } else {
+                    idTarefa = tarefa.get_id();
+                    tarefaLite.setNome(tarefa.getNome());
+                    tarefaLite.setTermino(tarefa.getTermino());
+                    tarefaLite.setConclusao(tarefa.getConclusao());
+                    tarefaLite.setMarco(tarefa.getMarco());
+                    tarefaLite.setInicio(tarefa.getInicio());
+                    daoTarefa.update(tarefaLite);
+                }
+
+                if (tarefa.getTarefas() != null) {
+                    InsereTarefa(daoTarefa, idTarefa, idEap, tarefa.getTarefas());
+                }
+            }
+        }
+    }
+
 
     private static boolean EstaNaListaAvaliacao(Avaliacao avaliacao, List<Avaliacao> lsAvaliacao) {
         if (lsAvaliacao != null) {

@@ -260,13 +260,22 @@ public class MainActivity extends AppCompatActivity
                     MetodosPublicos.Log("Event", "VAI STAKEHOLDERS MAIN");
                     sc.AtualizaStakeholders(daoSession, context, id);
                     try {
+                        MetodosPublicos.Log("Event", "VAI EAPs MAIN");
+                        sc.AtualizaEap(daoSession, context, id);
+                    } catch (HttpClientErrorException e) {
+                        MetodosPublicos.Log("Event", "VAI EAPs MAIN denovo");
+                        sc.AtualizaEap(daoSession, context, id);
+                    }
+                    try {
                         MetodosPublicos.Log("Event", "VAI COMENTARIOS MAIN");
                         sc.AtualizaComentarios(daoSession, MainActivity.this, id);
-                    }catch (HttpClientErrorException e){
+                    } catch (HttpClientErrorException e) {
                         sc.AtualizaComentarios(daoSession, MainActivity.this, id);
                     }
                     MetodosPublicos.Log("Event", "VAI AVALIAÇÕES MAIN");
                     sc.AtualizaAvaliacoes(daoSession, context, id);
+
+
                     MetodosPublicos.SalvaUltimaSincronizacao(context, new Date());
 
                     return true;

@@ -133,11 +133,8 @@ public class ComentarioActivity extends AppCompatActivity {
                 etapa.setId(idEtapaExterno);
                 COM.setEtapa(etapa);
 
-                Pessoa pessoa = new Pessoa(MetodosPublicos.SelecionaSessaoId(this));
-                pessoa.setId(MetodosPublicos.SelecionaSessaoidExterno(this));
-                COM.setRemetente(pessoa);
-                // Pessoa remetente = new Pessoa(MetodosPublicos.SelecionaSessaoId(this), MetodosPublicos.SelecionaSessaoNome(this));
-                // COM.setRemetente(remetente);
+                Pessoa remetente = new Pessoa(MetodosPublicos.SelecionaSessaoId(this), MetodosPublicos.SelecionaSessaoidExterno(this), MetodosPublicos.SelecionaSessaoNome(this));
+                COM.setRemetente(remetente);
 
                 long id = dao.insert(COM);
                 MetodosPublicos.Log("Event", "id:" + COM.get_id() + " idRemetente:" + COM.getIdRemetente());
@@ -198,14 +195,14 @@ public class ComentarioActivity extends AppCompatActivity {
             try {
                 if (MetodosPublicos.IsConnected(ComentarioActivity.this)) { //se estiver conectado na internet envia
                     //comentarios[0].setRemetente(null);
-                    MetodosPublicos.Log("Event","Vai salvar o COMent");
+                    MetodosPublicos.Log("Event", "Vai salvar o COMent");
                     int id = comentarioDAO.SalvarComentario(comentarios[0], ComentarioActivity.this);
                     if (id > 0) {
                         comentarios[0].setId(id);
                         return comentarios[0];
                     }
-                }else{
-                    MetodosPublicos.Log("Event","Vai salvar o COMent");
+                } else {
+                    MetodosPublicos.Log("Event", "Vai salvar o COMent");
                 }
             } catch (Exception e) {
                 MetodosPublicos.Log("Error", " error :" + e.toString());
