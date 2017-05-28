@@ -22,6 +22,7 @@ $(document).on('click', '.marco [type=checkbox]', function () {
     var isCheck = $(this).prop('checked');
     tarefa.find('[name=marco]').val(isCheck);
     if (id > 0) {
+        ShowLoader();
         $.ajax({
             type: 'POST',
             url: '/GPLearning/api/tarefa/marcar',

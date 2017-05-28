@@ -87,14 +87,14 @@
                 <td>
                     <input class="form-control" type="text" placeholder="Nome" name="recurso"/>
                 </td>
-                <td>
+                <td style="text-align: center;">
                     <a class="btn btn-danger btn-xs deletaRecurso"><i class="fa-remove"></i></a>
                 </td>
             </tr>
         </table>
 
         <div class="modal fade" id="tarefaModal" role="dialog" aria-labelledby="tarefaModal" aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog modal-sm">
+            <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -106,25 +106,27 @@
                         <input type="hidden" name="eap.id"/>
                         <input type="hidden" name="marco"/>
                         <input type="hidden" name="conclusao"/>
-                        <div class="form-group">
-                            <label>Nome*:</label>
-                            <input class="form-control" type="text" placeholder="Nome" name="nome"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Início:</label>
-                            <input class="form-control" type="text" name="inicio"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Término:</label>
-                            <input class="form-control" type="text" name="termino"/>
-                        </div>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <label>Nome*:</label>
+                                <input class="form-control" type="text" placeholder="Nome" name="nome"/>
+                            </div>
+                            <div class="form-group col-sm-6 col-xs-12">
+                                <label>Início:</label>
+                                <input class="form-control" type="text" name="inicio"/>
+                            </div>
+                            <div class="form-group col-sm-6 col-xs-12">
+                                <label>Término:</label>
+                                <input class="form-control" type="text" name="termino"/>
+                            </div>
 
-                        <div class="form-group">
-                            <label>Recursos:</label>
-                            <table class="recursos">
-                                <tbody></tbody>
-                            </table>
-                            <a class="btn btn-primary btn-xs btn-block addRecurso"><i class="fa-plus"></i> Adicionar Recurso</a>
+                            <div class="form-group col-xs-12">
+                                <label>Recursos:</label>
+                                <table class="recursos">
+                                    <tbody></tbody>
+                                </table>
+                                <a class="btn btn-primary btn-xs btn-block addRecurso"><i class="fa-plus"></i> Adicionar Recurso</a>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">

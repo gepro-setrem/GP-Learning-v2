@@ -70,7 +70,7 @@ public class UsuarioBean {
     private Role[] roles;
     private Role role;
     private UploadedFile userImage;
-
+    private double mediausuario;
     public UsuarioBean() {
     }
 
@@ -328,6 +328,28 @@ public class UsuarioBean {
 
     public void setProjetos(List<Projeto> projetos) {
         this.projetos = projetos;
+    }
+    public double getMediausuario() {
+        projetos = projetoBLL.findbyAluno(pessoa);
+        mediausuario = 0;
+        int count = 0;
+        for (Projeto projeto : projetos) {
+            List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyProjeto(projeto);
+            for (Avaliacao avaliacao : lsAvaliacao) {
+                mediausuario += avaliacao.getValor();
+                count++;
+            }
+        }
+        if (count > 0) {
+            mediausuario = (mediausuario / count) * 100;
+            mediausuario = Double.parseDouble("" + Math.round(mediausuario)) / 100;
+        }
+
+        return mediausuario;
+    }
+
+    public void setMediausuario(double mediausuario) {
+        this.mediausuario = mediausuario;
     }
 
 }
