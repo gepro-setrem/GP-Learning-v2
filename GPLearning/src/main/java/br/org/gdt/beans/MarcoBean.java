@@ -41,7 +41,7 @@ public class MarcoBean {
 
     public String salvar() {
         if (projeto != null && projeto.getTermoabertura() != null) {
-            if (!marco.getObjetivo().isEmpty()) {
+            if (!marco.getObjetivo().isEmpty() && marco.getPrevisao() != null) {
                 marco.setTermoabertura(projeto.getTermoabertura());
                 if (marco.getId() > 0) {
                     marcoBLL.update(marco);
@@ -51,7 +51,7 @@ public class MarcoBean {
                 marco = new Marco();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Marco salvo com sucesso!"));
             } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para salvar, você deve preencher o objetivo do Marco!"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para salvar, você deve preencher todos os campos do Marco!"));
             }
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Não existe nenhum Projeto selecionado ou Termo de Abertura criado!"));

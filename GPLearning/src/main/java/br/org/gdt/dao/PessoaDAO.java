@@ -22,7 +22,7 @@ public class PessoaDAO extends DAO<Pessoa> {
     public List<Pessoa> findbyTurmaUsers(Turma turma, Role role, String search) {
         String sqlPessoa = "";
         if (role != null) {
-            sqlPessoa += " and r.role = " + role.toString();
+            sqlPessoa += " and r.role = '" + role.toString() + "'";
         }
         if (search != null && !search.isEmpty()) {
             sqlPessoa = " and upper (translate(p.nome, 'ÁÇÉÍÓÚÀÈÌÒÙÂÊÎÔÛÃÕËÜáçéíóúàèìòùâêîôûãõëü', 'ACEIOUAEIOUAEIOUAOEUaceiouaeiouaeiouaoeu'))"

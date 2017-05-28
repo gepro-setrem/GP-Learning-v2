@@ -38,12 +38,15 @@
                         <div class="col-md-5 col-xs-12">
                             <div class="form-group autocomplete">
                                 <label>Gerente*:</label>
-                                <p:autoComplete multiple="false" completeMethod="#{projetoBean.completePessoa}" value="#{projetoBean.projeto.gerente}"
-                                                var="pessoa" itemLabel="#{pessoa.nome}" itemValue="#{pessoa}" converter="#{pessoaConverter}" forceSelection="true" style="width: 100%;" placeholder="Pesquisar" required="true" requiredMessage="O 'Gerente' é obrigatório!">
-                                    <p:column>
-                                        <h:outputText value="#{pessoa.nome}"/>
-                                    </p:column>
-                                </p:autoComplete>
+                                <h:selectOneMenu class="form-control" converter="#{pessoaConverter}" value="#{projetoBean.projeto.gerente}" required="true" requiredMessage="O 'Gerente' é obrigatório!">
+                                    <f:selectItems var="user" value="#{projetoBean.usuarios}" itemLabel="#{user.nome}"/>
+                                </h:selectOneMenu>
+                                <!--                                <p:autoComplete multiple="false" completeMethod="{projetoBean.completePessoa}" value="{projetoBean.projeto.gerente}"
+                                                                                var="pessoa" itemLabel="{pessoa.nome}" itemValue="{pessoa}" converter="{pessoaConverter}" forceSelection="true" style="width: 100%;" placeholder="Pesquisar" required="true" requiredMessage="O 'Gerente' é obrigatório!">
+                                                                    <p:column>
+                                                                        <h:outputText value="{pessoa.nome}"/>
+                                                                    </p:column>
+                                                                </p:autoComplete>-->
                             </div>
                         </div>
                         <div class="col-md-7 col-xs-12">
@@ -57,6 +60,8 @@
                                 <label>Componentes*:</label>
                                 <p:autoComplete multiple="true" completeMethod="#{projetoBean.completePessoa}" value="#{projetoBean.projeto.componentes}"
                                                 var="pessoa" itemLabel="#{pessoa.nome}" itemValue="#{pessoa}" converter="#{pessoaConverter}" forceSelection="true" style="width: 100%;" placeholder="Pesquisar" required="true" requiredMessage="Os 'Componentes' são obrigatórios!">
+                                    <p:ajax event="itemSelect" />
+                                    <p:ajax event="itemUnselect" />
                                     <p:column>
                                         <h:outputText value="#{pessoa.nome}" />
                                     </p:column>

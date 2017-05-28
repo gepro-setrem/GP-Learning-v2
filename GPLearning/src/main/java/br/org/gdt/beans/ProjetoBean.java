@@ -181,8 +181,14 @@ public class ProjetoBean {
 
     public List<Pessoa> completePessoa(String query) {
         Turma turma = usuario.getTurma();
-        usuarios = pessoaBLL.findbyTurmaUsers(turma, Role.user, query);
-        return usuarios;
+        List<Pessoa> pessoas = pessoaBLL.findbyTurmaUsers(turma, Role.user, query);
+        List<Pessoa> pessoas2 = new ArrayList<>();
+        for (Pessoa pessoa : pessoas) {
+            if (!projeto.getComponentes().contains(pessoa)) {
+                pessoas2.add(pessoa);
+            }
+        }
+        return pessoas2;
     }
 
     public DataModel getProjetos() {
@@ -227,10 +233,10 @@ public class ProjetoBean {
     }
 
     public List<Pessoa> getUsuarios() {
-        if (usuarios == null) {
-            Turma turma = usuario.getTurma();
-            usuarios = pessoaBLL.findbyTurmaUsers(turma, Role.user, "");
-        }
+//        if (usuarios == null) {
+        Turma turma = usuario.getTurma();
+        usuarios = pessoaBLL.findbyTurmaUsers(turma, Role.user, "");
+//        }
         return usuarios;
     }
 

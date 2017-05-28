@@ -62,7 +62,7 @@
                                                         <h:outputText value="{projetoBean.projeto.comentarioRestricoes}" />
                                                     </p:dialog>
                                                 </div>-->
-                        <div class="col-md-9 col-xs-7">
+                        <div class="col-md-7 col-xs-6">
                             <ul class="pagination">
                                 <li><h:link outcome="termoaberturadescricao">Descrição</h:link></li>
                                 <li><h:link outcome="termoaberturajustificativa">Justificativa</h:link></li>
@@ -72,10 +72,11 @@
                                 <li class="active"><h:link outcome="termoaberturarequisitos">Requisitos</h:link></li>
                             </ul>
                         </div>
-                        <div class="col-md-3 col-xs-5" style="text-align: right;">
+                        <div class="col-md-5 col-xs-6" style="text-align: right;">
                             <div class="pagination">
                                 <h:link class="btn btn-default" outcome="termoaberturamarcos" style="margin-right: 5px;"><i class="fa-chevron-left"></i> Anterior</h:link>
-                                <h:link class="btn btn-primary" outcome="iniciacao">Próximo <i class="fa-chevron-right"></i></h:link>
+                                <h:link class="btn btn-danger" outcome="termoaberturaplano" target="_blank" style="margin-right: 5px;"><i class="fa-file-pdf-o"></i> Gerar PDF</h:link>
+                                <h:link class="btn btn-primary" outcome="iniciacao"><i class="fa-check"></i> Concluir Termo de Abertura</h:link>
                             </div>
                         </div>
                     </div>
