@@ -8,19 +8,25 @@
 
         <ui:composition template="/user/layout.xhtml">
 
-<!--            <ui:define name="menuhorizontal">
-                <li><a>Iniciação</a></li>
-                <li><a>Planejamento</a></li>
-            </ui:define>-->
+            <!--            <ui:define name="menuhorizontal">
+                            <li><a>Iniciação</a></li>
+                            <li><a>Planejamento</a></li>
+                        </ui:define>-->
 
             <ui:define name="content">
-                <div class="panel panel-default" style="width: 30%; margin: auto;">
-                    <div class="panel-heading"><h4>Escolha a sua área</h4></div>
-                    <div class="panel-body">
-                        <h:link class="btn btn-primary btn-lg btn-block" outcome="/user/projetolst.xhtml"><i class="fa-graduation-cap"></i> Área do Estudante</h:link>
-                        <h:link class="btn btn-default btn-lg btn-block" outcome="/admin/projetolst.xhtml"><i class="fa-book"></i> Área do Professor</h:link>
+                <dv class="row">
+                    <div class="col-md-4 col-sm-2 col-xs-0"></div>
+                    <div class="col-md-4 col-sm-8 col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><h4>Escolha a sua área</h4></div>
+                            <div class="panel-body">
+                                <h:link class="btn btn-primary btn-lg btn-block" outcome="/user/projetolst.xhtml"><i class="fa-graduation-cap"></i> Área do Estudante</h:link>
+                                <h:link class="btn btn-default btn-lg btn-block" outcome="/admin/projetolst.xhtml"><i class="fa-book"></i> Área do Professor</h:link>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="col-md-4 col-sm-2 col-xs-0"></div>
+                </dv>
             </ui:define>
 
         </ui:composition>

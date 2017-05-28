@@ -15,6 +15,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-3 col-sm-4 col-xs-5" style="text-align: right;">
+                            <h:graphicImage library="img/niveis/" name="nivel#{perfilBean.nivel}.png" style="max-height: 60px; position: absolute; left: 0;"/>
                             <h:graphicImage rendered="#{perfilBean.usuario.imagem == null}" library="img/" name="usuario.png" style="width: 100%; height: 100%; max-width: 150px;"/>
                             <p:graphicImage rendered="#{perfilBean.usuario.imagem != null}" value="#{perfilBean.usuario.streamedImagem}" style="width: 100%; height: 100%; max-width: 150px;" cache="false"/>
                         </div>
@@ -42,6 +43,10 @@
                             <div class="row">
                                 <label class="col-sm-2 col-xs-4 text-right">Média:</label>
                                 <div class="col-sm-10 col-xs-8">#{perfilBean.media}</div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 col-xs-4 text-right">Nível:</label>
+                                <div class="col-sm-10 col-xs-8">#{perfilBean.nivel}</div>
                             </div>
                         </div>
                     </div>

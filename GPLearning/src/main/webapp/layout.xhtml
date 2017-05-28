@@ -27,6 +27,7 @@
     </h:head>
 
     <h:body>
+        <p:button style="display: none;"/>
         <div class="row" style="padding: 10px; text-align: center; max-width: 100%; margin: 0">
             <div class="col-md-7 col-xs-12">
                 <h:link outcome="/user/index.xhtml">
@@ -37,19 +38,24 @@
                 <h:graphicImage library="img/" name="log_setrem-1 - SETREM.png" style="max-height: 60px;"/>
             </div>
             <div class="col-md-2 col-xs-5">
-                <!--                <h:link outcome="/user/perfil.xhtml">
-                                    <h:graphicImage rendered="{perfilBean.usuario.imagem == null}" library="img/" name="usuario.png" style="max-height: 60px;"/>
-                                    <p:graphicImage rendered="#perfilBean.usuario.imagem != null}" value="{perfilBean.usuario.streamedImagem}" style="max-height: 60px" cache="false"/>
-                                </h:link>-->
-                <h:graphicImage rendered="#{perfilBean.usuario.imagem == null}" library="img/" name="usuario.png" style="max-height: 60px;"/>
+                <h:link outcome="/user/perfil.xhtml" rendered="#{perfilBean.usuario != null}">
+                    <h:graphicImage rendered="#{perfilBean.usuario.imagem == null}" library="img/" name="usuario.png" style="max-height: 60px; border-radius: 50%;"/>
+                    <p:graphicImage rendered="#{perfilBean.usuario.imagem != null}" value="#{perfilBean.usuario.streamedImagem}" style="max-height: 60px; border-radius: 50%;" cache="false"/>
+                </h:link>
+                <h:graphicImage rendered="#{perfilBean.usuario == null}" library="img/" name="usuario.png" style="max-height: 60px;"/>
             </div>
         </div>
         <nav class="navbar navbar-default">
             <div class="container" style="">
                 <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar_header">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                    </button>
                     <a class="navbar-brand">Grupos de Processos</a>
                 </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-collapse" id="navbar_header">
                     <ul class="nav navbar-nav">
                         <li><a>Iniciação</a></li>
                         <li><a>Planejamento</a></li>
@@ -57,9 +63,9 @@
                         <li><a>Monitoramento</a></li>
                         <li><a>Encerramento</a></li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right" style="display: #{perfilBean.hasSession ? 'block' : 'none'}; margin: 0;">
+                    <ul class="nav navbar-nav navbar-right" style="display: #{perfilBean.hasSession ? 'block' : 'none'};">
                         <li><h:link outcome="/user/projetolst.xhtml">Meus Projetos</h:link></li>
-                        <li><p class="navbar-text">Olá, #{perfilBean.usuario.nome}</p></li>
+                        <li><a>Olá, #{perfilBean.usuario.nome}</a></li>
                         <li><h:outputLink value="/GPLearning/logout">Sair <i class="fa-sign-out"></i></h:outputLink></li>
                     </ul>
                 </div>

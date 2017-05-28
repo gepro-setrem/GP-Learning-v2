@@ -71,6 +71,11 @@ public class UsuarioBean {
     private Role role;
     private UploadedFile userImage;
     private double mediausuario;
+
+    private int total_pontos;
+    private int total_avaliacoes;
+    private int nivel;
+
     public UsuarioBean() {
     }
 
@@ -329,27 +334,58 @@ public class UsuarioBean {
     public void setProjetos(List<Projeto> projetos) {
         this.projetos = projetos;
     }
-    public double getMediausuario() {
-        projetos = projetoBLL.findbyAluno(pessoa);
-        mediausuario = 0;
-        int count = 0;
-        for (Projeto projeto : projetos) {
-            List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyProjeto(projeto);
-            for (Avaliacao avaliacao : lsAvaliacao) {
-                mediausuario += avaliacao.getValor();
-                count++;
-            }
-        }
-        if (count > 0) {
-            mediausuario = (mediausuario / count) * 100;
-            mediausuario = Double.parseDouble("" + Math.round(mediausuario)) / 100;
-        }
 
+    public double getMediausuario() {
+        calculaPontos();
         return mediausuario;
     }
 
     public void setMediausuario(double mediausuario) {
         this.mediausuario = mediausuario;
+    }
+
+    public int getTotal_pontos() {
+        return total_pontos;
+    }
+
+    public void setTotal_pontos(int total_pontos) {
+        this.total_pontos = total_pontos;
+    }
+
+    public int getTotal_avaliacoes() {
+        return total_avaliacoes;
+    }
+
+    public void setTotal_avaliacoes(int total_avaliacoes) {
+        this.total_avaliacoes = total_avaliacoes;
+    }
+
+    private void calculaPontos() {
+        projetos = projetoBLL.findbyAluno(pessoa);
+        mediausuario = 0;
+        total_pontos = 0;
+        total_avaliacoes = 0;
+        for (Projeto projeto : projetos) {
+            List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyProjeto(projeto);
+            for (Avaliacao avaliacao : lsAvaliacao) {
+                total_pontos += avaliacao.getValor();
+                total_avaliacoes++;
+            }
+        }
+        if (total_pontos > 0) {
+            mediausuario = (total_pontos / total_avaliacoes) * 100;
+            mediausuario = Double.parseDouble("" + Math.round(mediausuario)) / 100;
+        }
+    }
+
+    public int getNivel() {
+        calculaPontos();
+        nivel = pessoaBLL.findNivel(total_pontos);
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
     }
 
 }

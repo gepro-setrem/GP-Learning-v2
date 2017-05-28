@@ -51,7 +51,7 @@
                             <ui:repeat var="item" value="#{turmaBean.turma.turmaParametros}" varStatus="status">
                                 <c:set var="label" value="#{turmaBean.getTurmaParametroType(item.chave)}"/>
                                 <div class="col-xs-12 text-left form-group">
-                                    <a class="btn btn-link">#{label}</a>
+                                    <a class="btn btn-link" data-toggle="collapse" href="##{item.chave}">#{label}</a>
                                     <div id="#{item.chave}" class="collapse in">
                                         <h:inputHidden value="#{turmaBean.turma.turmaParametros[status.index].chave}"/>
                                         <h:inputHidden value="#{turmaBean.turma.turmaParametros[status.index].id}"/>
@@ -65,14 +65,14 @@
                                 <h:panelGroup rendered="#{item.etapa != 'PlanoGerenciamentoProjeto'}">
                                     <div class="col-md-4 col-sm-6 col-xs-12 text-left form-group">
                                         <c:set var="label" value="#{turmaBean.getEtapaProjeto(item.etapa)}"/>
-                                        <a class="btn btn-link">#{label}</a>
+                                        <a class="btn-link">#{label}</a>
                                         <div id="#{item.etapa}" class="collapse in">
                                             <h:inputHidden value="#{turmaBean.turma.etapas[status.index].etapa}"/>
                                             <h:inputHidden value="#{turmaBean.turma.etapas[status.index].id}"/>
                                             <!--<h:inputText class="form-control" value="{turmaBean.turma.etapas[status.index].nome}" pt:placeholder="{label}"/>-->
 
                                             <div class="form-group autocomplete">
-                                                <label>Indicadores:</label>
+                                                <!--<label>Indicadores:</label>-->
                                                 <p:selectCheckboxMenu class="form-control" label="Indicadores" converter="#{indicadorConverter}" value="#{turmaBean.turma.etapas[status.index].indicadores}" style="width: 100%">
                                                     <f:selectItems var="item"  value="#{turmaBean.indicadores}" itemLabel="#{item}" itemValue="#{item}"/>
                                                 </p:selectCheckboxMenu>
