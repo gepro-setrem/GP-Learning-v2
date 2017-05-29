@@ -2,6 +2,8 @@ package br.org.gdt.bll;
 
 import br.org.gdt.dao.PessoaDAO;
 import br.org.gdt.enumerated.Role;
+import br.org.gdt.model.Avaliacao;
+import br.org.gdt.model.Etapa;
 import br.org.gdt.model.Login;
 import br.org.gdt.model.Turma;
 import br.org.gdt.model.Pessoa;
@@ -18,6 +20,10 @@ public class PessoaBLL extends BLL<Pessoa> {
     private PessoaDAO dao;
     @Autowired
     private LoginBLL loginBLL;
+    @Autowired
+    private AvaliacaoBLL avaliacaoBLL;
+    @Autowired
+    private EtapaBLL etapaBLL;
 
     public List<Pessoa> findbyProjeto(Projeto projeto) {
         List<Pessoa> lsPessoa = new ArrayList<>();
@@ -95,4 +101,25 @@ public class PessoaBLL extends BLL<Pessoa> {
         }
         return nivel;
     }
+
+    public int findPontuacao(Pessoa pessoa) {
+        int Pontuacao = 0;
+        if (pessoa != null && pessoa.getTurma() != null) {
+            List<Etapa> lsEtapa = etapaBLL.findbyTurma(pessoa.getTurma());
+            if (lsEtapa != null && lsEtapa.size() > 0) {
+                for (Etapa etapa : lsEtapa) {
+                    int valor = 0;
+                    List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyEtapa(etapa);
+                    if (lsAvaliacao != null && lsAvaliacao.size() > 0) {
+                        for (Avaliacao avaliacao : lsAvaliacao) {
+                            valor += avaliacao.getValor();
+                        }
+                        Pontuacao += (valor / lsAvaliacao.size());
+                    }
+                }
+            }
+        }
+        return Pontuacao;
+    }
+
 }

@@ -363,19 +363,19 @@ public class UsuarioBean {
     private void calculaPontos() {
         projetos = projetoBLL.findbyAluno(pessoa);
         mediausuario = 0;
-        total_pontos = 0;
+        total_pontos = pessoaBLL.findPontuacao(pessoa);
         total_avaliacoes = 0;
-        for (Projeto projeto : projetos) {
-            List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyProjeto(projeto);
-            for (Avaliacao avaliacao : lsAvaliacao) {
-                total_pontos += avaliacao.getValor();
-                total_avaliacoes++;
-            }
-        }
-        if (total_pontos > 0) {
-            mediausuario = (total_pontos / total_avaliacoes) * 100;
-            mediausuario = Double.parseDouble("" + Math.round(mediausuario)) / 100;
-        }
+//        for (Projeto projeto : projetos) {
+//            List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyProjeto(projeto);
+//            for (Avaliacao avaliacao : lsAvaliacao) {
+//                total_pontos += avaliacao.getValor();
+//                total_avaliacoes++;
+//            }
+//        }
+//        if (total_pontos > 0) {
+//            mediausuario = (total_pontos / total_avaliacoes) * 100;
+//            mediausuario = Double.parseDouble("" + Math.round(mediausuario)) / 100;
+//        }
     }
 
     public int getNivel() {
