@@ -2,6 +2,7 @@ package com.gplearning.gplearning.Utils;
 
 
 import android.content.Context;
+import android.os.AsyncTask;
 
 import com.gplearning.gplearning.DAO.App;
 import com.gplearning.gplearning.DAO.AvaliacaoDAO;
@@ -555,6 +556,7 @@ public class Sincronizacao {
 //        } catch (Exception e) {
 //            MetodosPublicos.Log("ERRO ATUALIZAÇÃO", e.toString());
 //        }
+        new AtualizaPuntuacaoTotal().execute(context);
     }
 
     public static void AtualizaEap(DaoSession daoSession, Context context, int id) {
@@ -771,5 +773,47 @@ public class Sincronizacao {
     }
 
     //
+
+    private static class AtualizaPuntuacaoTotal extends AsyncTask<Context, String, Integer> {
+        private Context context;
+
+        @Override
+        protected Integer doInBackground(Context... params) {
+            DaoSession daoSession = ((App) params[0].getApplicationContext()).getDaoSession();
+            context = params[0];
+
+            MetodosPublicos.Log("Event", " VAI ATUALIZAR PONTUAÇÃO-------------");
+
+            AvaliacaoDao daoAvaliacao = daoSession.getAvaliacaoDao();
+            EtapaDao daoEtapa = daoSession.getEtapaDao();
+            PessoaDao daoPessoa = daoSession.getPessoaDao();
+            Pessoa usuario = daoPessoa.load(MetodosPublicos.SelecionaSessaoId(params[0]));
+            List<Etapa> lsEtapa = daoEtapa.queryBuilder().where(PessoaDao.Properties.IdTurma.eq(usuario.getIdTurma())).list();
+
+            int pontuacaoTotal = 0;
+            if (lsEtapa != null && lsEtapa.size() > 0) {
+                for (Etapa etapa : lsEtapa) {
+                    int valor = 0;
+                    List<Avaliacao> lsAvaliacao = daoAvaliacao.queryBuilder().where(AvaliacaoDao.Properties.IdEtapa.eq(etapa.get_id())).list();
+                    if (lsAvaliacao != null) {
+                        for (Avaliacao ava : lsAvaliacao) {
+                            valor += ava.getValor();
+                        }
+                        pontuacaoTotal += valor;
+                    }
+                }
+                return pontuacaoTotal;
+            }
+
+            return 0;
+        }
+
+        @Override
+        protected void onPostExecute(Integer pontuacao) {
+            MetodosPublicos.Log("Event", " VAI SALVA PONTUAÇÃO-------:" + pontuacao);
+            MetodosPublicos.SalvaPontuacao(context, pontuacao);
+            super.onPostExecute(pontuacao);
+        }
+    }
 
 }

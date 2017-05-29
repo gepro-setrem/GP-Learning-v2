@@ -113,10 +113,30 @@
                     android:text="@string/pontuation" />
 
                 <TextView
-                    android:id="@+id/perfilPontuacao"
+                    android:id="@+id/perfilPontuacaoTotal"
                     style="@style/perfilTextValor"
                     android:text="26 Pontos" />
             </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:text="Nível de Habilidade no GP Learning 2.0"/>
+
+            <ImageView
+                android:id="@+id/perfilImagemNivel"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:src="@drawable/nivel_1"/>
 
         </LinearLayout>
 
@@ -126,42 +146,41 @@
             android:layout_height="match_parent"
             android:layout_marginTop="6dp"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="18dp"
-                android:text="@string/averageScoreIndicator"/>
+                android:text="@string/averageScoreIndicator"
+                android:textSize="18dp" />
 
             <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:orientation="vertical"-->
-                <!--android:paddingLeft="15dp"-->
-                <!--android:layout_marginBottom="20dp">-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="vertical"-->
+            <!--android:paddingLeft="15dp"-->
+            <!--android:layout_marginBottom="20dp">-->
 
-                <!--<TextView-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--style="@style/perfilTextValor"-->
-                    <!--android:layout_marginBottom="0dp"-->
-                    <!--android:text="Indicador"/>-->
+            <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--style="@style/perfilTextValor"-->
+            <!--android:layout_marginBottom="0dp"-->
+            <!--android:text="Indicador"/>-->
 
-                <!--<RatingBar-->
-                    <!--android:id="@+id/ratingBar"-->
-                    <!--style="@style/Widget.AppCompat.RatingBar.Small"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:numStars="5"-->
-                    <!--android:rating="3" />-->
+            <!--<RatingBar-->
+            <!--android:id="@+id/ratingBar"-->
+            <!--style="@style/Widget.AppCompat.RatingBar.Small"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:numStars="5"-->
+            <!--android:rating="3" />-->
 
             <!--</LinearLayout>-->
 
         </LinearLayout>
 
     </LinearLayout>
-
-
 
 
     <!--<android.support.constraint.ConstraintLayout-->

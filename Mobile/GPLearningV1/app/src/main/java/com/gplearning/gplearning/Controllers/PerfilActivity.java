@@ -70,6 +70,11 @@ public class PerfilActivity extends AppCompatActivity {
                     ((TextView) findViewById(R.id.perfilEmail)).setText(pessoa.getEmail());
                     ((TextView) findViewById(R.id.perfilTelefone)).setText(pessoa.getTelefone());
 
+                    int pontuacao = MetodosPublicos.SelecionaPontuacao(this);
+                    TextView textView = ((TextView) findViewById(R.id.perfilPontuacaoTotal));
+                    textView.setText(pontuacao + "");
+                    SelecionaImagemNivel(((ImageView) findViewById(R.id.perfilImagemNivel)));
+
                     if (pessoa.getIdTurma() > 0) {
                         TurmaDao turmaDao = daoSession.getTurmaDao();
                         Turma turma = turmaDao.load(pessoa.get_id());
@@ -80,9 +85,6 @@ public class PerfilActivity extends AppCompatActivity {
                 }
             }
         }
-
-
-
     }
 
     private class CarregaIndicadores extends AsyncTask<String, Integer, List<Indicador>> {
@@ -125,15 +127,32 @@ public class PerfilActivity extends AppCompatActivity {
                     ((TextView) com.findViewById(R.id.itemIndicadorPerfilNome)).setText(indicador.getNome());
                     RatingBar ratingBar = ((RatingBar) com.findViewById(R.id.itemIndicadorPerfilRattingbar));
                     ratingBar.setRating(indicador.getValor());
-                   // ratingBar.setNumStars(indicador.getValor());
-                    ratingBar.setStepSize((float)0.5);
+                    // ratingBar.setNumStars(indicador.getValor());
+                    ratingBar.setStepSize((float) 0.5);
                     LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
-                   stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+                    stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
 
-                    MetodosPublicos.Log("event", "ratting nome:"+indicador.getNome() +" valor:" + indicador.getValor());
+                    MetodosPublicos.Log("event", "ratting nome:" + indicador.getNome() + " valor:" + indicador.getValor());
                 }
             }
         }
+    }
+
+    private void SelecionaImagemNivel(ImageView view) {
+        int nivel = MetodosPublicos.SelecionaNível(this);
+        MetodosPublicos.Log("Evetn", " NIVEL:" + nivel);
+        if (nivel == 1) {
+            ((ImageView) view).setImageResource(R.drawable.nivel_1);
+        } else if (nivel == 2) {
+            ((ImageView) view).setImageResource(R.drawable.nivel_2);
+        } else if (nivel == 3) {
+            ((ImageView) view).setImageResource(R.drawable.nivel_3);
+        } else if (nivel == 4) {
+            ((ImageView) view).setImageResource(R.drawable.nivel_4);
+        } else if (nivel == 5) {
+            ((ImageView) view).setImageResource(R.drawable.nivel_5);
+        }
+
     }
 
 

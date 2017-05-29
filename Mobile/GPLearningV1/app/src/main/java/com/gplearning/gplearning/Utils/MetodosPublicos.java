@@ -39,6 +39,7 @@ public class MetodosPublicos {
     private static String key_acessoAluno = "user_acesso_aluno";
     private static String key_acessoProfessor = "user_acesso_professor";
     private static String key_Admin = "user_admin";
+    private static String key_pontuacao = "user_pontuation";
 
     public static String key_imagemUser = "imagem_user_";
 
@@ -197,6 +198,42 @@ public class MetodosPublicos {
         return shared.getBoolean(key_Admin, false);
     }
 
+    public static void SalvaPontuacao(Context context, int pontuacao) {
+        SharedPreferences pref = context.getSharedPreferences(key_login, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt(key_pontuacao, pontuacao);
+        editor.commit();
+    }
+
+    public static int SelecionaPontuacao(Context context) {
+        SharedPreferences shared = context.getSharedPreferences(key_login, MODE_PRIVATE);
+        return shared.getInt(key_pontuacao, 0);
+    }
+
+    public static int SelecionaNível(Context context) {
+        int pontuacao = SelecionaPontuacao(context);
+
+        if (pontuacao < 15)
+            return 1;
+        else if (pontuacao < 30)
+            return 2;
+        else if (pontuacao < 50)
+            return 3;
+        else if (pontuacao < 75)
+            return 4;
+        else if (pontuacao < 100)
+            return 5;
+        else if (pontuacao < 150)
+            return 6;
+        else if (pontuacao < 250)
+            return 7;
+        else if (pontuacao < 350)
+            return 8;
+        else if (pontuacao < 500)
+            return 9;
+        else
+            return 10;//parabéns pra ti :)
+    }
 
     public static void SalvaUltimaSincronizacao(Context context, Date date) {
         java.text.DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
