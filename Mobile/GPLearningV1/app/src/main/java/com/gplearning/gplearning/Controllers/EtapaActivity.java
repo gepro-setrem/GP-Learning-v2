@@ -249,7 +249,7 @@ public class EtapaActivity extends AppCompatActivity {
                 EapDao eapDao = daoSession.getEapDao();
                 List<Eap> Eaps = eapDao.queryBuilder().where(EapDao.Properties.IdProjeto.eq(idProjeto)).orderAsc(EapDao.Properties.Id).limit(1).list();
                 if (Eaps != null && Eaps.size() > 0) {
-                    MetodosPublicos.Log("Event", "retornou com :" + Eaps.size());
+                  //  MetodosPublicos.Log("Event", "retornou com :" + Eaps.size());
                     //  TarefaDao tarefaDao = daoSession.getTarefaDao();
                     final List<Eap> lsItens = SelecionaEapTarefasProjeto(daoSession, Eaps.get(0), "1", true);
                     if (lsItens.size() > 0) {

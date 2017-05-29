@@ -520,8 +520,8 @@ public class Sincronizacao {
         List<Avaliacao> lsAvaliacaoLite = daoAvaliacao.queryBuilder().list();
         if (lsAvaliacao != null) {
             for (Avaliacao avaliacao : lsAvaliacao) {
-                // Avaliacao avaliacaoLite = daoAvaliacao.queryBuilder().where(AvaliacaoDao.Properties.Id.eq(avaliacao.getId())).limit(1).unique();
-                if (!EstaNaListaAvaliacao(avaliacao, lsAvaliacaoLite)) {
+                Avaliacao avaliacaoLite = daoAvaliacao.queryBuilder().where(AvaliacaoDao.Properties.Id.eq(avaliacao.getId())).limit(1).unique();
+                if (avaliacaoLite == null) {//EstaNaListaAvaliacao(avaliacao, lsAvaliacaoLite)) {
                     if (avaliacao.getProjeto() != null) {
                         Projeto projeto = daoProjeto.queryBuilder().where(ProjetoDao.Properties.Id.eq(avaliacao.getProjeto().getId())).limit(1).unique();
                         if (projeto != null) {
@@ -541,8 +541,13 @@ public class Sincronizacao {
                             avaliacao.setIdIndicador(indicador.get_id());
                         }
                     }
-
                     daoAvaliacao.insert(avaliacao);
+                    MetodosPublicos.Log("Event AVA", "Inseriu");
+                } else if (avaliacaoLite.getValor() != avaliacao.getValor()) {
+                    avaliacaoLite.setValor(avaliacao.getValor());
+                    daoAvaliacao.update(avaliacaoLite);
+                    MetodosPublicos.Log("Event AVA", "Update");
+
                 }
             }
         }
@@ -550,6 +555,7 @@ public class Sincronizacao {
             for (Avaliacao avaliacao : lsAvaliacaoLite) {
                 if (!EstaNaListaAvaliacao(avaliacao, lsAvaliacao)) {
                     daoAvaliacao.deleteByKey(avaliacao.get_id());
+                    MetodosPublicos.Log("Event AVA", "Deletou");
                 }
             }
         }
@@ -788,19 +794,20 @@ public class Sincronizacao {
             EtapaDao daoEtapa = daoSession.getEtapaDao();
             PessoaDao daoPessoa = daoSession.getPessoaDao();
             Pessoa usuario = daoPessoa.load(MetodosPublicos.SelecionaSessaoId(params[0]));
-            List<Etapa> lsEtapa = daoEtapa.queryBuilder().where(PessoaDao.Properties.IdTurma.eq(usuario.getIdTurma())).list();
+            List<Etapa> lsEtapa = daoEtapa.loadAll(); //.IdTurma.eq(usuario.getIdTurma())).list();
 
             int pontuacaoTotal = 0;
             if (lsEtapa != null && lsEtapa.size() > 0) {
                 for (Etapa etapa : lsEtapa) {
                     int valor = 0;
                     List<Avaliacao> lsAvaliacao = daoAvaliacao.queryBuilder().where(AvaliacaoDao.Properties.IdEtapa.eq(etapa.get_id())).list();
-                    if (lsAvaliacao != null) {
+                    if (lsAvaliacao != null && lsAvaliacao.size() > 0) {
                         for (Avaliacao ava : lsAvaliacao) {
                             valor += ava.getValor();
                         }
-                        pontuacaoTotal += valor;
+                        pontuacaoTotal += (valor / lsAvaliacao.size());
                     }
+                    MetodosPublicos.Log("EvenB", "etapa valor:" + valor + " list:" + lsAvaliacao.size() + " idTurma:" + etapa.getIdTurma());
                 }
                 return pontuacaoTotal;
             }

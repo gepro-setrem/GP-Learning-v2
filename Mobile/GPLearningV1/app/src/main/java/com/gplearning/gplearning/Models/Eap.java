@@ -238,7 +238,7 @@ public class Eap {
 
     @Override
     public String toString() {
-        return nome;
+        return position+"-"+ nome;
     }
 
     /**

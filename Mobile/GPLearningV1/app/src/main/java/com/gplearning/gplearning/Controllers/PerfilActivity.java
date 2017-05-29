@@ -118,8 +118,8 @@ public class PerfilActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Indicador> lsIndicadores) {
             super.onPostExecute(lsIndicadores);
+            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.layoutIndicadores);
             if (lsIndicadores != null && lsIndicadores.size() > 0) {
-                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.layoutIndicadores);
                 for (Indicador indicador : lsIndicadores) {
                     LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     View com = vi.inflate(R.layout.item_indicador_perfil, null);
@@ -131,9 +131,13 @@ public class PerfilActivity extends AppCompatActivity {
                     ratingBar.setStepSize((float) 0.5);
                     LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
                     stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
-
-                    MetodosPublicos.Log("event", "ratting nome:" + indicador.getNome() + " valor:" + indicador.getValor());
+                    //  MetodosPublicos.Log("event", "ratting nome:" + indicador.getNome() + " valor:" + indicador.getValor());
                 }
+            } else {
+                TextView textView = new TextView(PerfilActivity.this);
+                textView.setText("Você ainda não contém avaliações");
+                textView.setGravity(View.TEXT_ALIGNMENT_CENTER);
+                linearLayout.addView(textView);
             }
         }
     }
