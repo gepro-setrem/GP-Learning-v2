@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
 
     public static MenuItem refreshItem;
     public static getAssync atualizaApp = null;
+    public MenuItem menu_nav_syn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +73,12 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         Menu menu = navigationView.getMenu();
-        MenuItem nav_sync = menu.findItem(R.id.nav_last_sync);
+        menu_nav_syn = menu.findItem(R.id.nav_last_sync);
         try {
             Date data = MetodosPublicos.SelecionaUltimaSincronizacao(this);
             if (data != null) {
                 DateFormat df = new SimpleDateFormat("dd/MM HH:mm");
-                nav_sync.setTitle(getString(R.string.synchronized_in) + " " + df.format(data));
+                menu_nav_syn.setTitle(getString(R.string.synchronized_in) + " " + df.format(data));
                 // nav_sync.getTitle()
             }
         } catch (ParseException e) {
@@ -92,6 +93,10 @@ public class MainActivity extends AppCompatActivity
 
         try {
             AtualizaHeaderMain();
+            if (atualizaApp == null) {
+                atualizaApp = new getAssync();
+                atualizaApp.execute();
+            }
         } catch (ParseException e) {
             MetodosPublicos.Log("ERRO", "erro atualiza perfil:" + e.toString());
         }
@@ -124,6 +129,7 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
+
     }
 
     @Override
@@ -146,11 +152,11 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-//        if (getFragmentManager().getBackStackEntryCount() > 0) {
-//            getFragmentManager().popBackStack();
-//        } else {
-//            super.onBackPressed();
-//        }
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -250,7 +256,8 @@ public class MainActivity extends AppCompatActivity
             if (refreshItem != null) {
                 refreshItem.setVisible(true);
             }
-
+            // menu_nav_syn
+            menu_nav_syn.setTitle(getString(R.string.syncing));
         }
 
         @Override
@@ -290,7 +297,6 @@ public class MainActivity extends AppCompatActivity
                     MetodosPublicos.Log("Event", "VAI AVALIAÇÕES MAIN");
                     sc.AtualizaAvaliacoes(daoSession, context, id);
 
-
                     MetodosPublicos.SalvaUltimaSincronizacao(context, new Date());
 
                     return true;
@@ -320,6 +326,8 @@ public class MainActivity extends AppCompatActivity
                 Snackbar snackbar = Snackbar
                         .make(findViewById(R.id.ConstraintLayoutMAIN), getString(R.string.synchronization), Snackbar.LENGTH_SHORT); //(context, "Welcome to AndroidHive", Snackbar.LENGTH_LONG);
                 snackbar.show();
+                DateFormat df = new SimpleDateFormat("dd/MM HH:mm");
+                menu_nav_syn.setTitle(getString(R.string.synchronized_in) + " " + df.format(new Date()));
             }
             if (refreshItem != null) refreshItem.setVisible(false);
 
@@ -349,10 +357,7 @@ public class MainActivity extends AppCompatActivity
                 // String path = MetodosPublicos.SelecionaCaminhoImagem(this, pessoa.get_id());
 
             }
-            if (atualizaApp == null) {
-                atualizaApp = new getAssync();
-                atualizaApp.execute();
-            }
+
         }
 
     }

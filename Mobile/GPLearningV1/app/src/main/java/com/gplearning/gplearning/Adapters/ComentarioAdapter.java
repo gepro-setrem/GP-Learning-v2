@@ -56,9 +56,9 @@ public class ComentarioAdapter extends RecyclerView.Adapter {
             holder.usuario.setText(comentario.getRemetente().getNome());
             String path = MetodosPublicos.SelecionaCaminhoImagem(context, comentario.getRemetente().get_id());
             if (path != null) {
-                Picasso.with(context).load(new File(path)).transform(new CircleTransform()).into(holder.imagem);
+                Picasso.with(context).load(new File(path)).transform(new CircleTransform()).fit().into(holder.imagem);
             } else {
-                Picasso.with(context).load(R.drawable.user_default).transform(new CircleTransform()).into(holder.imagem);
+                Picasso.with(context).load(R.drawable.user_default).transform(new CircleTransform()).fit().into(holder.imagem);
             }
         }
     }

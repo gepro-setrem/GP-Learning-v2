@@ -115,9 +115,9 @@ public class MetodosPublicos {
         File file = new File(path, key_imagemUser + idPessoa + ".jpg");
         if (file != null && file.exists()) {
             MetodosPublicos.Log("IMage", "image :" + file.getAbsolutePath());
-            Picasso.with(context).load(file).transform(new CircleTransform()).into(imageView);
+            Picasso.with(context).load(file).transform(new CircleTransform()).fit().into(imageView);
         } else {
-            Picasso.with(context).load(R.drawable.avatar_default).transform(new CircleTransform()).into(imageView);
+            Picasso.with(context).load(R.drawable.avatar_default).transform(new CircleTransform()).fit().into(imageView);
         }
     }
 
