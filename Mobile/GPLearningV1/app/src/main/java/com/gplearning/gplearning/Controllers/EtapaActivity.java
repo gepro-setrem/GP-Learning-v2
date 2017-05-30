@@ -106,7 +106,10 @@ public class EtapaActivity extends AppCompatActivity {
 
             PessoaDao pessoaDao = daoSession.getPessoaDao();
             java.text.DateFormat dateFormatnew = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            ((TextView) findViewById(R.id.itemListviewComentTexto)).setText(comentarios.get(0).getDescricao());
+            TextView comentarioTxt = ((TextView) findViewById(R.id.itemListviewComentTexto));
+            comentarioTxt.setText(comentarios.get(0).getDescricao());
+            comentarioTxt.setMaxLines(5);
+
             ((TextView) findViewById(R.id.itemListviewComentData)).setText(dateFormatnew.format(comentarios.get(0).getCriacao()));
             try {
                 List<Pessoa> lsPessoa = pessoaDao.queryBuilder().where(PessoaDao.Properties._id.eq(comentarios.get(0).getIdRemetente())).list();
