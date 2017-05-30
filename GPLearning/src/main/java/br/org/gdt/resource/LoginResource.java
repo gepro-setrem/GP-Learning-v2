@@ -1,6 +1,7 @@
 package br.org.gdt.resource;
 
 import br.org.gdt.bll.LoginBLL;
+import br.org.gdt.bll.PessoaBLL;
 import br.org.gdt.model.Login;
 import br.org.gdt.model.Pessoa;
 import javax.ws.rs.FormParam;
@@ -17,6 +18,8 @@ public class LoginResource {
 
     @Autowired
     private LoginBLL loginBLL;
+    @Autowired
+    private PessoaBLL pessoaBLL;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -40,6 +43,14 @@ public class LoginResource {
             token = loginBLL.newToken();
             log.setToken(token);
             loginBLL.update(log);
+        }
+        try {
+            int pontuacao = pessoaBLL.findPontuacao(user);
+            Pessoa pessoa = pessoaBLL.findById(user.getId());
+            pessoa.setKarma(pontuacao);
+            pessoaBLL.update(pessoa);
+            user.setKarma(pontuacao);
+        } catch (Exception ex) {
         }
         return user;
     }

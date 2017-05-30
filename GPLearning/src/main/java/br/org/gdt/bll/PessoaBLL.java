@@ -104,9 +104,10 @@ public class PessoaBLL extends BLL<Pessoa> {
         return nivel;
     }
 
-    public double findPontuacao(Pessoa pessoa) {
-        double pontuacao = 0;
+    public int findPontuacao(Pessoa pessoa) {
+        int pontuacao = 0;
         if (pessoa != null && pessoa.getTurma() != null) {
+            double media = 0;
             List<Projeto> projetos = projetoBLL.findbyAluno(pessoa);
             List<Etapa> lsEtapa = etapaBLL.findbyTurma(pessoa.getTurma());
             for (Projeto projeto : projetos) {
@@ -117,12 +118,11 @@ public class PessoaBLL extends BLL<Pessoa> {
                         valor += avaliacao.getValor();
                     }
                     if (valor > 0) {
-                        pontuacao += valor / lsAvaliacao.size();
+                        media += valor / lsAvaliacao.size();
                     }
                 }
             }
-            pontuacao = pontuacao * 100;
-            pontuacao = Double.parseDouble("" + Math.round(pontuacao)) / 100;
+            pontuacao = (int) Math.round(media);
         }
         return pontuacao;
     }

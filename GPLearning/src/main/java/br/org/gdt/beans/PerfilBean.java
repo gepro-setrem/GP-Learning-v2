@@ -48,8 +48,7 @@ public class PerfilBean {
     private LoginRoleBLL loginRoleBLL;
     private String token;
 
-    private double pontuacao;
-    private int nivel;
+    private int nivel = 0;
 
     @ManagedProperty("#{projetoBLL}")
     public ProjetoBLL projetoBLL;
@@ -186,6 +185,7 @@ public class PerfilBean {
             HttpServletRequest request = (HttpServletRequest) external.getRequest();
             String email = request.getRemoteUser();
             usuario = pessoaBLL.findbyEmail(email);
+            getNivel();
         }
         return usuario;
     }
@@ -307,21 +307,17 @@ public class PerfilBean {
     }
 
     public int getNivel() {
-        pontuacao = pessoaBLL.findPontuacao(getUsuario());
-        nivel = pessoaBLL.findNivel(pontuacao);
+        if (nivel == 0) {
+            int pontuacao = pessoaBLL.findPontuacao(usuario);
+            nivel = pessoaBLL.findNivel(pontuacao);
+            Pessoa pessoa = pessoaBLL.findById(user.getId());
+            pessoa.setKarma(pontuacao);
+            pessoaBLL.update(pessoa);
+        }
         return nivel;
     }
 
     public void setNivel(int nivel) {
         this.nivel = nivel;
-    }
-
-    public double getPontuacao() {
-        pontuacao = pessoaBLL.findPontuacao(getUsuario());
-        return pontuacao;
-    }
-
-    public void setPontuacao(double pontuacao) {
-        this.pontuacao = pontuacao;
     }
 }

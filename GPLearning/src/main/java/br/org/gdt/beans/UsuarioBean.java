@@ -71,8 +71,7 @@ public class UsuarioBean {
     private Role role;
     private UploadedFile userImage;
 
-    private double pontuacao;
-    private int nivel;
+    private int nivel = 0;
 
     public UsuarioBean() {
     }
@@ -159,7 +158,11 @@ public class UsuarioBean {
 
     public String perfil() {
         pessoa = (Pessoa) usuarios.getRowData();
+        int pontuacao = pessoaBLL.findPontuacao(pessoa);
+        nivel = pessoaBLL.findNivel(pontuacao);
         pessoa = pessoaBLL.findById(pessoa.getId());
+        pessoa.setKarma(pontuacao);
+        pessoaBLL.update(pessoa);
         return "usuariodtl";
     }
 
@@ -334,21 +337,10 @@ public class UsuarioBean {
     }
 
     public int getNivel() {
-        pontuacao = pessoaBLL.findPontuacao(pessoa);
-        nivel = pessoaBLL.findNivel(pontuacao);
         return nivel;
     }
 
     public void setNivel(int nivel) {
         this.nivel = nivel;
-    }
-
-    public double getPontuacao() {
-        pontuacao = pessoaBLL.findPontuacao(pessoa);
-        return pontuacao;
-    }
-
-    public void setPontuacao(double pontuacao) {
-        this.pontuacao = pontuacao;
     }
 }
