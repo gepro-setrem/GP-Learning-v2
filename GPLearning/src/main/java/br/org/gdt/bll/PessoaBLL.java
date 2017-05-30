@@ -24,6 +24,8 @@ public class PessoaBLL extends BLL<Pessoa> {
     private AvaliacaoBLL avaliacaoBLL;
     @Autowired
     private EtapaBLL etapaBLL;
+    @Autowired
+    private ProjetoBLL projetoBLL;
 
     public List<Pessoa> findbyProjeto(Projeto projeto) {
         List<Pessoa> lsPessoa = new ArrayList<>();
@@ -76,7 +78,7 @@ public class PessoaBLL extends BLL<Pessoa> {
         return imagem;
     }
 
-    public int findNivel(int total) {
+    public int findNivel(double total) {
         int nivel;
         if (total < 15) {
             nivel = 1;
@@ -102,24 +104,27 @@ public class PessoaBLL extends BLL<Pessoa> {
         return nivel;
     }
 
-    public int findPontuacao(Pessoa pessoa) {
-        int Pontuacao = 0;
+    public double findPontuacao(Pessoa pessoa) {
+        double pontuacao = 0;
         if (pessoa != null && pessoa.getTurma() != null) {
+            List<Projeto> projetos = projetoBLL.findbyAluno(pessoa);
             List<Etapa> lsEtapa = etapaBLL.findbyTurma(pessoa.getTurma());
-            if (lsEtapa != null && lsEtapa.size() > 0) {
+            for (Projeto projeto : projetos) {
                 for (Etapa etapa : lsEtapa) {
-                    int valor = 0;
-                    List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyEtapa(etapa);
-                    if (lsAvaliacao != null && lsAvaliacao.size() > 0) {
-                        for (Avaliacao avaliacao : lsAvaliacao) {
-                            valor += avaliacao.getValor();
-                        }
-                        Pontuacao += (valor / lsAvaliacao.size());
+                    double valor = 0;
+                    List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyProjetoEtapa(projeto, etapa);
+                    for (Avaliacao avaliacao : lsAvaliacao) {
+                        valor += avaliacao.getValor();
+                    }
+                    if (valor > 0) {
+                        pontuacao += valor / lsAvaliacao.size();
                     }
                 }
             }
+            pontuacao = pontuacao * 100;
+            pontuacao = Double.parseDouble("" + Math.round(pontuacao)) / 100;
         }
-        return Pontuacao;
+        return pontuacao;
     }
 
 }

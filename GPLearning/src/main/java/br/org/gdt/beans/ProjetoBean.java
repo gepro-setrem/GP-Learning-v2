@@ -181,7 +181,7 @@ public class ProjetoBean {
 
     public List<Pessoa> completePessoa(String query) {
         Turma turma = usuario.getTurma();
-        List<Pessoa> pessoas = pessoaBLL.findbyTurmaUsers(turma, Role.user, query);
+        List<Pessoa> pessoas = pessoaBLL.findbyTurmaUsers(turma, null, query);
         List<Pessoa> pessoas2 = new ArrayList<>();
         for (Pessoa pessoa : pessoas) {
             if (!projeto.getComponentes().contains(pessoa)) {
@@ -235,7 +235,7 @@ public class ProjetoBean {
     public List<Pessoa> getUsuarios() {
 //        if (usuarios == null) {
         Turma turma = usuario.getTurma();
-        usuarios = pessoaBLL.findbyTurmaUsers(turma, Role.user, "");
+        usuarios = pessoaBLL.findbyTurmaUsers(turma, null, "");
 //        }
         return usuarios;
     }

@@ -48,9 +48,7 @@ public class PerfilBean {
     private LoginRoleBLL loginRoleBLL;
     private String token;
 
-    private double media;
-    private int total_pontos;
-    private int total_avaliacoes;
+    private double pontuacao;
     private int nivel;
 
     @ManagedProperty("#{projetoBLL}")
@@ -282,15 +280,6 @@ public class PerfilBean {
         this.turmaBLL = turmaBLL;
     }
 
-    public double getMedia() {
-        calculaPontos();
-        return media;
-    }
-
-    public void setMedia(double media) {
-        this.media = media;
-    }
-
     public String getToken() {
         getUsuario();
         if (usuario != null) {
@@ -317,47 +306,22 @@ public class PerfilBean {
         this.loginRoleBLL = loginRoleBLL;
     }
 
-    public int getTotal_pontos() {
-        return total_pontos;
-    }
-
-    public void setTotal_pontos(int total_pontos) {
-        this.total_pontos = total_pontos;
-    }
-
-    public int getTotal_avaliacoes() {
-        return total_avaliacoes;
-    }
-
-    public void setTotal_avaliacoes(int total_avaliacoes) {
-        this.total_avaliacoes = total_avaliacoes;
-    }
-
-    private void calculaPontos() {
-        projetos = projetoBLL.findbyAluno(getUsuario());
-        media = 0;
-        total_pontos = pessoaBLL.findPontuacao(user);
-        total_avaliacoes = 0;
-//        for (Projeto projeto : projetos) {
-//            List<Avaliacao> lsAvaliacao = avaliacaoBLL.findbyProjeto(projeto);
-//            for (Avaliacao avaliacao : lsAvaliacao) {
-//                total_pontos += avaliacao.getValor();
-//                total_avaliacoes++;
-//            }
-//        }
-//        if (total_pontos > 0) {
-//            media = (total_pontos / total_avaliacoes) * 100;
-//            media = Double.parseDouble("" + Math.round(media)) / 100;
-//        }
-    }
-
     public int getNivel() {
-        calculaPontos();
-        nivel = pessoaBLL.findNivel(total_pontos);
+        pontuacao = pessoaBLL.findPontuacao(getUsuario());
+        nivel = pessoaBLL.findNivel(pontuacao);
         return nivel;
     }
 
     public void setNivel(int nivel) {
         this.nivel = nivel;
+    }
+
+    public double getPontuacao() {
+        pontuacao = pessoaBLL.findPontuacao(getUsuario());
+        return pontuacao;
+    }
+
+    public void setPontuacao(double pontuacao) {
+        this.pontuacao = pontuacao;
     }
 }
