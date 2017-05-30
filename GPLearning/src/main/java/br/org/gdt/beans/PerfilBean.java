@@ -307,10 +307,10 @@ public class PerfilBean {
     }
 
     public int getNivel() {
-        if (nivel == 0) {
+        if (nivel == 0 && usuario != null) {
             int pontuacao = pessoaBLL.findPontuacao(usuario);
             nivel = pessoaBLL.findNivel(pontuacao);
-            Pessoa pessoa = pessoaBLL.findById(user.getId());
+            Pessoa pessoa = pessoaBLL.findById(usuario.getId());
             pessoa.setKarma(pontuacao);
             pessoaBLL.update(pessoa);
         }
