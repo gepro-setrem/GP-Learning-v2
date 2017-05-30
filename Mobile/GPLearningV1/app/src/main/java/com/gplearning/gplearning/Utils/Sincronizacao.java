@@ -12,6 +12,7 @@ import com.gplearning.gplearning.DAO.ProjetoDAO;
 import com.gplearning.gplearning.DAO.RequisitoDAO;
 import com.gplearning.gplearning.DAO.StakeholderDAO;
 import com.gplearning.gplearning.DAO.TermoAberturaDAO;
+import com.gplearning.gplearning.DAO.TurmaDAO;
 import com.gplearning.gplearning.Enums.PapelUsuario;
 import com.gplearning.gplearning.Models.Avaliacao;
 import com.gplearning.gplearning.Models.AvaliacaoDao;
@@ -67,11 +68,13 @@ public class Sincronizacao {
         ProjetoDao daoProjeto = daoSession.getProjetoDao();
         PessoaDao daoPessoa = daoSession.getPessoaDao();
         TurmaDao daoTurma = daoSession.getTurmaDao();
+        TurmaDAO turmaDAO = new TurmaDAO();
+        EtapaDao daoEtapa = daoSession.getEtapaDao();
         TermoAberturaDao daoTermoAbertura = daoSession.getTermoAberturaDao();
-        MarcoDao daoMarco = daoSession.getMarcoDao();
-        PremissasDao daoPremissas = daoSession.getPremissasDao();
-        RequisitoTermoAberturaDao daoRTA = daoSession.getRequisitoTermoAberturaDao();
-        RestricoesDao daoRestricoes = daoSession.getRestricoesDao();
+        // MarcoDao daoMarco = daoSession.getMarcoDao();
+        // PremissasDao daoPremissas = daoSession.getPremissasDao();
+        //RequisitoTermoAberturaDao daoRTA = daoSession.getRequisitoTermoAberturaDao();
+        //  RestricoesDao daoRestricoes = daoSession.getRestricoesDao();
         RequisitoDao daoRequisito = daoSession.getRequisitoDao();
         StakeholderDao daoStakeholder = daoSession.getStakeholderDao();
         ProjetoComponentesDao componentesDao = daoSession.getProjetoComponentesDao();
@@ -109,17 +112,24 @@ public class Sincronizacao {
                             Turma turma = daoTurma.queryBuilder().where(TurmaDao.Properties.Id.eq(pCompleto.getTurma().getId())).limit(1).unique();
                             if (turma == null) {
                                 Long idProfessor;
-                                if (turma.getProfessor() != null && turma.getProfessor().getId() > 0) {
-                                    Pessoa professor = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(turma.getProfessor().getId())).limit(1).unique();
+                                if (pCompleto.getTurma().getProfessor() != null && pCompleto.getTurma().getProfessor().getId() > 0) {
+                                    Pessoa professor = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(pCompleto.getTurma().getProfessor().getId())).limit(1).unique();
                                     if (professor == null) {
-                                        idProfessor = daoPessoa.insert(turma.getProfessor());
+                                        idProfessor = daoPessoa.insert(pCompleto.getTurma().getProfessor());
                                     } else {
                                         idProfessor = professor.get_id();
                                     }
-                                    turma.setPro_id(idProfessor);
+                                    pCompleto.getTurma().setPro_id(idProfessor);
                                 }
                                 long idTurma = daoTurma.insert(pCompleto.getTurma());
                                 PRJ.setIdTurma(idTurma);
+
+
+                                Turma turmaApi = turmaDAO.SelecionaTurma(pCompleto.getTurma().getId());
+                                turmaApi.set_id(idTurma);
+                                InsereEtapasTurma(daoSession, turmaApi);
+                                InsereAcademicosTurma(daoSession,turmaApi);
+
                             } else {
                                 PRJ.setIdTurma(turma.get_id());
                             }
@@ -129,7 +139,7 @@ public class Sincronizacao {
                             TermoAbertura termoAbertura = daoTermoAbertura.queryBuilder().where(TermoAberturaDao.Properties.Id.eq(pCompleto.getTermoabertura().getId())).limit(1).unique();
                             if (termoAbertura == null) {
                                 pCompleto.getTermoabertura().setIdProjeto(PRJ.get_id());
-                                long idTermoAbertura = InsereTermoAbertura(daoSession, pCompleto.getTermoabertura());
+                                InsereTermoAbertura(daoSession, pCompleto.getTermoabertura());
                             }
 //                            if (termoAbertura == null) {
 //                                pCompleto.getTermoabertura().setIdProjeto(PRJ.get_id());
@@ -472,6 +482,8 @@ public class Sincronizacao {
 
         ProjetoDAO projetoDAO = new ProjetoDAO(context);
         ProjetoDao daoProjeto = daoSession.getProjetoDao();
+        ProjetoComponentesDao daoComponente = daoSession.getProjetoComponentesDao();
+
         List<Projeto> lsProjetos = projetoDAO.SelecionaProjetosAluno(id); //SelecionaProjetosData(data, id); //ProjetosAluno(MetodosPublicos.SelecionaSessaoidExterno(context)); //Data(data);
         if (lsProjetos != null) {
             for (Projeto projeto : lsProjetos) {
@@ -493,6 +505,12 @@ public class Sincronizacao {
                     }
                     daoProjeto.update(lsProjetoLite.get(0));
                 } else {
+
+                    ProjetoComponentes componente = new ProjetoComponentes();
+                    componente.setIdProjeto(projeto.get_id());
+                    componente.setIdPessoa(MetodosPublicos.SelecionaSessaoId(context));
+                    daoComponente.insert(componente);
+
                     if (projeto.getGerente() != null) {
                         Long idGerente = InsereSeNaoEncontraPessoa(daoSession, projeto.getGerente());
                         if (idGerente > 0) {
@@ -778,6 +796,39 @@ public class Sincronizacao {
         //   return Long.valueOf(0);
     }
 
+    private static void InsereEtapasTurma(DaoSession daoSession, Turma turma) {
+        EtapaDao daoEtapa = daoSession.getEtapaDao();
+        if (turma.getEtapas() != null) {
+            for (Etapa etapa : turma.getEtapas()) {
+                etapa.setIdTurma(turma.get_id());
+                daoEtapa.insert(etapa);
+                MetodosPublicos.Log("turma", "salvo etapa:" + etapa.get_id());
+                if (etapa.getIndicadores() != null) {
+                    IndicadorDao daoIndicador = daoSession.getIndicadorDao();
+                    for (Indicador indicador : etapa.getIndicadores()) {
+                        if (daoIndicador.queryBuilder().where(IndicadorDao.Properties.Id.eq(indicador.getId())).list().size() == 0) {
+                            daoIndicador.insert(indicador);
+                            MetodosPublicos.Log("turma", "salvo indicador:" + indicador.get_id());
+                        }
+                    }
+                }
+                MetodosPublicos.Log("turma", "salvo etapa:" + etapa.get_id());
+            }
+        }
+    }
+
+    private static void InsereAcademicosTurma(DaoSession daoSession, Turma turma) {
+        PessoaDao daoPessoa = daoSession.getPessoaDao();
+        if (turma.getAcademicos() != null) {
+            for (Pessoa pessoa : turma.getAcademicos()) {
+                Pessoa pesBD = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(pessoa.getId())).limit(1).unique();
+                if (pesBD == null) {
+                    pessoa.setIdTurma(turma.get_id());
+                    daoPessoa.insert(pessoa);
+                }
+            }
+        }
+    }
     //
 
     private static class AtualizaPuntuacaoTotal extends AsyncTask<Context, String, Integer> {

@@ -28,7 +28,7 @@ public class ProjetoDAO extends DefaultDAO {
         MetodosPublicos.Log("projetoCompleto", " vai selecionar projetoCompleto :" + url);
         RestTemplate restTemplate = getResTemplateDefault();
 
-        HttpEntity<String> entity = new HttpEntity<>("", getHttpHeaderDefault(context));
+       // HttpEntity<String> entity = new HttpEntity<>("", getHttpHeaderDefault(context));
         // ResponseEntity<Projeto> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, Projeto.class, pro_id);
         ResponseEntity<Projeto> responseEntity = restTemplate.getForEntity(url, Projeto.class);
         return responseEntity.getBody();

@@ -38,6 +38,10 @@ public class Turma {
     @OrderBy("_id ASC")
     private List<Etapa> etapas;
 
+    @ToMany(referencedJoinProperty = "idTurma")
+    @OrderBy("_id ASC")
+    private List<Pessoa> academicos;
+
     /**
      * Used to resolve relations
      */
@@ -139,10 +143,20 @@ public class Turma {
     public List<Etapa> getEtapas() {
         return etapas;
     }
-    
+
     @Keep
     public void setEtapas(List<Etapa> etapas) {
         this.etapas = etapas;
+    }
+
+    @Keep
+    public List<Pessoa> getAcademicos() {
+        return academicos;
+    }
+
+    @Keep
+    public void setAcademicos(List<Pessoa> academicos) {
+        this.academicos = academicos;
     }
 
     /**
@@ -181,10 +195,18 @@ public class Turma {
         myDao.update(this);
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 1925714574)
     public synchronized void resetEtapas() {
         etapas = null;
+    }
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 186867630)
+    public synchronized void resetAcademicos() {
+        academicos = null;
     }
 
     /** called by internal mechanisms, do not call yourself. */

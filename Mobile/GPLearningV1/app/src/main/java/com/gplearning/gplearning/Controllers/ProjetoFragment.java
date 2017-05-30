@@ -23,6 +23,8 @@ import com.gplearning.gplearning.Models.Projeto;
 import com.gplearning.gplearning.Models.ProjetoComponentes;
 import com.gplearning.gplearning.Models.ProjetoComponentesDao;
 import com.gplearning.gplearning.Models.ProjetoDao;
+import com.gplearning.gplearning.Models.Turma;
+import com.gplearning.gplearning.Models.TurmaDao;
 import com.gplearning.gplearning.R;
 import com.gplearning.gplearning.Utils.MetodosPublicos;
 
@@ -138,6 +140,7 @@ public class ProjetoFragment extends Fragment {
             DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
             PessoaDao pessoaDao = daoSession.getPessoaDao();
             ProjetoDao projetoDao = daoSession.getProjetoDao();
+            TurmaDao daoTurma = daoSession.getTurmaDao();
             Pessoa user = pessoaDao.load(MetodosPublicos.SelecionaSessaoId(getActivity()));
             Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 
@@ -151,7 +154,10 @@ public class ProjetoFragment extends Fragment {
                     }
                 }
             } else {
-                lsProjetos.addAll(projetoDao.queryBuilder().where(ProjetoDao.Properties.IdTurma.eq(user.getIdTurma())).list());
+                Turma turma = daoTurma.queryBuilder().where(TurmaDao.Properties.Pro_id.eq(user.get_id())).limit(1).unique();
+                if (turma != null) {
+                    lsProjetos.addAll(projetoDao.queryBuilder().where(ProjetoDao.Properties.IdTurma.eq(turma.get_id())).list());
+                }
             }
             for (Projeto prj : lsProjetos) {
                 prj.setGerente(pessoaDao.queryBuilder().where(PessoaDao.Properties._id.eq(prj.getIdGerente())).unique());

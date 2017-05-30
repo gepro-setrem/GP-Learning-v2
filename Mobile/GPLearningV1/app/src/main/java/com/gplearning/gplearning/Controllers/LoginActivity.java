@@ -290,33 +290,33 @@ public class LoginActivity extends AppCompatActivity {
             // Thread.sleep(2000);
             DaoSession session = ((App) LoginActivity.this.getApplication()).getDaoSession();
             userDAO = new UsuarioDAO();
-            try {
-                Pessoa pessoa = userDAO.Login(session, email, password);
-                if (pessoa != null) {
-                    String token = pessoa.getLogin() != null ? pessoa.getLogin().getToken() : "";
-                    MetodosPublicos.SalvaSessao(LoginActivity.this, pessoa.get_id(), pessoa.getNome(), email, pessoa.getId(), token);
-                    if (pessoa.getImagem() != null && pessoa.getImagem().length > 0) {
-                        MetodosPublicos.SaveImageUser(LoginActivity.this, pessoa.get_id(), pessoa.getImagem());
-                    }
+            //   try {
+            Pessoa pessoa = userDAO.Login(session, email, password);
+            if (pessoa != null) {
+                String token = pessoa.getLogin() != null ? pessoa.getLogin().getToken() : "";
+                MetodosPublicos.SalvaSessao(LoginActivity.this, pessoa.get_id(), pessoa.getNome(), email, pessoa.getId(), token);
+                if (pessoa.getImagem() != null && pessoa.getImagem().length > 0) {
+                    MetodosPublicos.SaveImageUser(LoginActivity.this, pessoa.get_id(), pessoa.getImagem());
+                }
 
-                    //sincroniza APP
-                    Sincronizacao.SincronizaApp(LoginActivity.this, PapelUsuario.user);
-                    List<LoginRole> lsLoginRoles = pessoa.getLogin() != null ? pessoa.getLogin().getLoginRoles() : null;
-                    if (lsLoginRoles != null) {
-                        for (LoginRole lg : lsLoginRoles) {
-                            if (lg.getRole() == PapelUsuario.admin) {
-                                admim = true;
-                                Sincronizacao.SincronizaApp(LoginActivity.this, PapelUsuario.admin);
-                                break;
-                            }
+                //sincroniza APP
+                Sincronizacao.SincronizaApp(LoginActivity.this, PapelUsuario.user);
+                List<LoginRole> lsLoginRoles = pessoa.getLogin() != null ? pessoa.getLogin().getLoginRoles() : null;
+                if (lsLoginRoles != null) {
+                    for (LoginRole lg : lsLoginRoles) {
+                        if (lg.getRole() == PapelUsuario.admin) {
+                            admim = true;
+                            Sincronizacao.SincronizaApp(LoginActivity.this, PapelUsuario.admin);
+                            break;
                         }
                     }
-                    return pessoa;
                 }
-                //  return new Pessoa();
-            } catch (Exception e) {
-                MetodosPublicos.Log("ERROR LOGIN", e.toString());
+                return pessoa;
             }
+            //  return new Pessoa();
+//            } catch (Exception e) {
+//                MetodosPublicos.Log("ERROR LOGIN", e.toString());
+//            }
             return null;
         }
 
