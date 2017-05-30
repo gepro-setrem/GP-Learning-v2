@@ -40,6 +40,7 @@ public class AvaliacaoResource {
                 Pessoa aluno = pessoaBLL.findById(pes_id);
                 if (aluno != null) {
                     List<Projeto> lsProjetos = projetoBLL.findbyAluno(aluno);
+                    lsProjetos.addAll(projetoBLL.findbyProfessor(aluno, true));
                     if (lsProjetos != null) {
                         for (Projeto prj : lsProjetos) {
                             lsAvaliacao.addAll(avaliacaoBLL.findbyProjeto(prj));
