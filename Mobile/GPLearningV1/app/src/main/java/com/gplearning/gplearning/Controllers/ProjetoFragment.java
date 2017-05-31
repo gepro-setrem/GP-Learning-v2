@@ -40,7 +40,7 @@ public class ProjetoFragment extends Fragment {
     private RecyclerView recyclerView;
     public List<Projeto> lsProjetos = new ArrayList<>();
     private ProjetoDao dao;
-
+    private DaoSession daoSession;
 
     public ProjetoFragment() {
     }
@@ -49,7 +49,6 @@ public class ProjetoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
     }
 
     @Override
@@ -65,7 +64,7 @@ public class ProjetoFragment extends Fragment {
             //((LinearLayoutManager) layoutManager).setStackFromEnd(true);
             recyclerView.setLayoutManager(layoutManager);
 
-            DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
+            daoSession = ((App) getActivity().getApplication()).getDaoSession();
             dao = daoSession.getProjetoDao();
             new CarregaProjetos().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
 
@@ -136,56 +135,60 @@ public class ProjetoFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            MetodosPublicos.Log("projetos", "VAI PROJETOSSS");
-            DaoSession daoSession = ((App) getActivity().getApplication()).getDaoSession();
-            PessoaDao pessoaDao = daoSession.getPessoaDao();
-            ProjetoDao projetoDao = daoSession.getProjetoDao();
-            TurmaDao daoTurma = daoSession.getTurmaDao();
-            Pessoa user = pessoaDao.load(MetodosPublicos.SelecionaSessaoId(getActivity()));
-            Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+            try {
+                MetodosPublicos.Log("projetos", "VAI PROJETOSSS");
+                PessoaDao pessoaDao = daoSession.getPessoaDao();
+                ProjetoDao projetoDao = daoSession.getProjetoDao();
+                TurmaDao daoTurma = daoSession.getTurmaDao();
+                Pessoa user = pessoaDao.load(MetodosPublicos.SelecionaSessaoId(getActivity()));
+                Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 
-            if (MetodosPublicos.ModoAcessoAluno(getActivity())) {
-                MetodosPublicos.Log("projetos", " Turmar do user:" + user.getId() + " da turma:" + user.getIdTurma());
-                ProjetoComponentesDao componentesDao = daoSession.getProjetoComponentesDao();
-                List<ProjetoComponentes> lsComponentes = componentesDao.queryBuilder().where(ProjetoComponentesDao.Properties.IdPessoa.eq(user.get_id())).list();
-                if (lsComponentes != null) {
-                    for (ProjetoComponentes c : lsComponentes) {
-                        lsProjetos.add(projetoDao.load(c.getIdProjeto()));
+                if (MetodosPublicos.ModoAcessoAluno(getActivity())) {
+                    MetodosPublicos.Log("projetos", " Turmar do user:" + user.getId() + " da turma:" + user.getIdTurma());
+                    ProjetoComponentesDao componentesDao = daoSession.getProjetoComponentesDao();
+                    List<ProjetoComponentes> lsComponentes = componentesDao.queryBuilder().where(ProjetoComponentesDao.Properties.IdPessoa.eq(user.get_id())).list();
+                    if (lsComponentes != null) {
+                        for (ProjetoComponentes c : lsComponentes) {
+                            lsProjetos.add(projetoDao.load(c.getIdProjeto()));
+                        }
+                    }
+                } else {
+                    Turma turma = daoTurma.queryBuilder().where(TurmaDao.Properties.Pro_id.eq(user.get_id())).limit(1).unique();
+                    if (turma != null) {
+                        lsProjetos.addAll(projetoDao.queryBuilder().where(ProjetoDao.Properties.IdTurma.eq(turma.get_id())).list());
                     }
                 }
-            } else {
-                Turma turma = daoTurma.queryBuilder().where(TurmaDao.Properties.Pro_id.eq(user.get_id())).limit(1).unique();
-                if (turma != null) {
-                    lsProjetos.addAll(projetoDao.queryBuilder().where(ProjetoDao.Properties.IdTurma.eq(turma.get_id())).list());
+                for (Projeto prj : lsProjetos) {
+                    prj.setGerente(pessoaDao.queryBuilder().where(PessoaDao.Properties._id.eq(prj.getIdGerente())).unique());
                 }
+                MetodosPublicos.Log("projetos", " retorno com:" + lsProjetos.size());
+                return true;
+            } catch (Exception e) {
+                MetodosPublicos.Log("ERROR", " Erro:" + e.toString());
             }
-            for (Projeto prj : lsProjetos) {
-                prj.setGerente(pessoaDao.queryBuilder().where(PessoaDao.Properties._id.eq(prj.getIdGerente())).unique());
-            }
-
-            MetodosPublicos.Log("projetos", " retorno com:" + lsProjetos.size());
-            return true;
+            return false;
         }
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
-            try {
-                ProgressBar pg = ((ProgressBar) getActivity().findViewById(R.id.projetoProgressbar));
-                if (pg != null)
-                    pg.setVisibility(View.GONE);
-            } catch (Exception e) {
-            }
-            MetodosPublicos.Log("projetos", " PostExecuted");
+            if (aBoolean) {
+                try {
+                    ProgressBar pg = ((ProgressBar) getActivity().findViewById(R.id.projetoProgressbar));
+                    if (pg != null)
+                        pg.setVisibility(View.GONE);
+                } catch (Exception e) {
+                }
+                MetodosPublicos.Log("projetos", " PostExecuted");
 
-            if (lsProjetos.size() == 0)
-                ((TextView) getActivity().findViewById(R.id.TxtNenhumRegistro)).setVisibility(View.VISIBLE);
-            else {
-                ((RecyclerView) view.findViewById(R.id.projetoListview)).setVisibility(View.VISIBLE);
-                projetoAdapter.notifyDataSetChanged();
-                projetoAdapter.notifyItemInserted(1);
+                if (lsProjetos.size() == 0)
+                    ((TextView) getActivity().findViewById(R.id.TxtNenhumRegistro)).setVisibility(View.VISIBLE);
+                else {
+                    ((RecyclerView) view.findViewById(R.id.projetoListview)).setVisibility(View.VISIBLE);
+                    projetoAdapter.notifyDataSetChanged();
+                    projetoAdapter.notifyItemInserted(1);
+                }
             }
-
 
         }
     }

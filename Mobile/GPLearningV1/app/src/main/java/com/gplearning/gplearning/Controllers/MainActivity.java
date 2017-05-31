@@ -128,15 +128,11 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         }
-
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-
     }
 
     @Override
@@ -199,8 +195,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.nav_project) {
             changefragment(Fragments.projetos.toString());
-//        } else if (item.getItemId() == R.id.nav_comments) {
-//            changefragment(Fragments.comentarios.toString());
         } else if (item.getItemId() == R.id.nav_area) {
             changefragment(Fragments.nivelAcesso.toString());
         } else if (item.getItemId() == R.id.nav_profile) {
@@ -213,7 +207,6 @@ public class MainActivity extends AppCompatActivity
     public void changefragment(String fragments) {
         Fragment fragment = null;
         Bundle args = new Bundle();
-
         if (fragments.equals(Fragments.projetos.toString())) {
             // Handle the camera action
             fragment = new ProjetoFragment();
@@ -235,11 +228,6 @@ public class MainActivity extends AppCompatActivity
 
         if (fragment != null) {
             fragment.setArguments(args);
-//            FragmentTransaction transaction = getSupportFragmentManager(); //getFragmentManager().beginTransaction();
-//            transaction.add(R.id.content_frame, fragment);
-//           // transaction.addToBackStack(null);
-//            // Commit the transaction
-//            transaction.commit();
             FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         }
