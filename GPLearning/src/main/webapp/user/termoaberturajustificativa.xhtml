@@ -15,41 +15,41 @@
     <ui:define name="content">
         <h:form>
             #{termoAberturaBean.setProjeto(projetoBean.projeto)}
-            <div class="panel panel-default">
-                <div class="panel-heading"><h4>#{turmaBean.getEtapaProjeto('JustificativaProjeto')}</h4></div>
-                <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-xs-12"><label class="etapa_desc">#{projetoBean.getDescricao('descricaoTelaTermoAberturaJustificativa')}</label></div>
-                        <div class="col-xs-12"><div class="alert-warning"><h:messages /></div></div>
-                        <div class="col-xs-12 form-group">
-                            <h:inputTextarea class="form-control" pt:maxlength="2500" rows="3" value="#{termoAberturaBean.termoabertura.justificativa}" pt:placeholder="Justificativa do Projeto"/>
-                        </div>
-                        <!--                        <div class="col-xs-12">
-                                                    <p:commandButton value="Comentário" class="btn btn-primary" type="button" onclick="PF('dlg1').show();" />
-                                                    <p:dialog header="Comentário sobre o Termo de Abertura Geral" widgetVar="dlg1" minHeight="40">
-                                                        <h:outputText value="{projetoBean.projeto.comentarioInfoBasicasTA}" />
-                                                    </p:dialog>
-                                                </div>-->
-                        <div class="col-md-9 col-xs-7">
-                            <ul class="pagination">
-                                <li><h:link outcome="termoaberturadescricao">Descrição</h:link></li>
-                                <li class="active"><h:link outcome="termoaberturajustificativa">Justificativa</h:link></li>
-                                <li><h:link outcome="termoaberturapremissas">Premissas</h:link></li>
-                                <li><h:link outcome="termoaberturarestricoes">Restrições</h:link></li>
-                                <li><h:link outcome="termoaberturamarcos">Marcos</h:link></li>
-                                <li><h:link outcome="termoaberturarequisitos">Requisitos</h:link></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-3 col-xs-5" style="text-align: right;">
-                            <div class="pagination">
-                                <h:link class="btn btn-default" outcome="termoaberturadescricao" style="margin-right: 5px;"><i class="fa-chevron-left"></i> Anterior</h:link>
-                                <h:commandLink class="btn btn-primary" action="#{termoAberturaBean.salvarJustificativa()}">Próximo <i class="fa-chevron-right"></i></h:commandLink>
+            <p:fragment autoUpdate="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h4>#{turmaBean.getEtapaProjeto('JustificativaProjeto')}</h4></div>
+                    <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-12"><label class="etapa_desc">#{projetoBean.getDescricao('descricaoTelaTermoAberturaJustificativa')}</label></div>
+                            <div class="col-xs-12"><div class="alert-warning"><h:messages /></div></div>
+                            <div class="col-xs-12 form-group">
+                                <h:inputTextarea class="form-control" pt:maxlength="2500" rows="7" value="#{termoAberturaBean.termoabertura.justificativa}" pt:placeholder="Justificativa do Projeto"/>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <h:commandLink class="btn btn-success" action="#{termoAberturaBean.salvarJustificativa()}"><i class="fa-check"></i> Salvar Justificativa<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/></h:commandLink>
+                            </div>
+                            <div class="col-md-9 col-xs-7">
+                                <ul class="pagination">
+                                    <li><h:link outcome="termoaberturadescricao">Descrição</h:link></li>
+                                    <li class="active"><h:link outcome="termoaberturajustificativa">Justificativa</h:link></li>
+                                    <li><h:link outcome="termoaberturapremissas">Premissas</h:link></li>
+                                    <li><h:link outcome="termoaberturarestricoes">Restrições</h:link></li>
+                                    <li><h:link outcome="termoaberturamarcos">Marcos</h:link></li>
+                                    <li><h:link outcome="termoaberturarequisitos">Requisitos</h:link></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-3 col-xs-5" style="text-align: right;">
+                                <div class="pagination">
+                                    <h:link class="btn btn-default" outcome="termoaberturadescricao" style="margin-right: 5px;"><i class="fa-chevron-left"></i> Anterior</h:link>
+                                    <h:link class="btn btn-primary" outcome="termoaberturapremissas">Próximo <i class="fa-chevron-right"></i></h:link>
+                                    <!--<h:commandLink class="btn btn-primary" action="{termoAberturaBean.salvarJustificativa()}">Próximo <i class="fa-chevron-right"></i></h:commandLink>-->
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </p:fragment>
             <ui:include src="avaliacao.xhtml"><ui:param name="etapa" value="JustificativaProjeto" /></ui:include>
         </h:form>
     </ui:define>

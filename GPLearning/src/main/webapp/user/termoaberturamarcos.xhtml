@@ -34,84 +34,80 @@
         </style>
         <h:form>
             #{marcoBean.setProjeto(projetoBean.projeto)}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h:commandLink action="#{marcoBean.novo()}" class="btn btn-success"><i class="fa-plus"></i> Novo</h:commandLink>
-                    <h4>#{turmaBean.getEtapaProjeto('Marcos')}</h4></div>
-                <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-xs-12"><label class="etapa_desc">#{projetoBean.getDescricao('descricaoTelaTermoAberturaCronogramaMarcos')}</label></div>
-                        <div class="col-xs-12"><div class="alert-warning"><h:messages /></div></div>
-                        <div class="col-xs-12">
-                            <div class="row">
-                                <h:inputHidden value="#{marcoBean.marco.id}"/>
-                                <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12">
-                                    <div class="row form-group">
-                                        <label class="col-xs-2 text-right">Objetivo*:</label>
-                                        <div class="col-xs-10">
-                                            <h:inputText class="form-control" maxlength="2500" pt:placeholder="Objetivo" value="#{marcoBean.marco.objetivo}"/>
+            <p:fragment autoUpdate="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h:commandLink action="#{marcoBean.novo()}" class="btn btn-success"><i class="fa-plus"></i> Novo<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/></h:commandLink>
+                        <h4>#{turmaBean.getEtapaProjeto('Marcos')}</h4></div>
+                    <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-12"><label class="etapa_desc">#{projetoBean.getDescricao('descricaoTelaTermoAberturaCronogramaMarcos')}</label></div>
+                            <div class="col-xs-12"><div class="alert-warning"><h:messages /></div></div>
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <h:inputHidden value="#{marcoBean.marco.id}"/>
+                                    <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12">
+                                        <div class="row form-group">
+                                            <label class="col-xs-2 text-right">Objetivo*:</label>
+                                            <div class="col-xs-10">
+                                                <h:inputText class="form-control" maxlength="2500" pt:placeholder="Objetivo" value="#{marcoBean.marco.objetivo}"/>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-9">
-                                    <div class="row form-group">
-                                        <label class="col-sm-5 col-xs-3 text-right">Previsão:</label>
-                                        <div class="col-sm-7 col-xs-9">
-                                            <!--                                            <h:inputText pt:type="date" class="form-control" value="{marcoBean.marco.previsao}">
-                                                                                            <f:convertDateTime pattern="yyyy-MM-dd" timeZone="{marcoBean.timeZone}"/>
-                                                                                        </h:inputText>-->
-                                            <p:calendar class="form-control2" value="#{marcoBean.marco.previsao}" pattern="dd/MM/yyyy" mask="true" />
+                                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-9">
+                                        <div class="row form-group">
+                                            <label class="col-sm-5 col-xs-3 text-right">Previsão:</label>
+                                            <div class="col-sm-7 col-xs-9">
+                                                <!--                                            <h:inputText pt:type="date" class="form-control" value="{marcoBean.marco.previsao}">
+                                                                                                <f:convertDateTime pattern="yyyy-MM-dd" timeZone="{marcoBean.timeZone}"/>
+                                                                                            </h:inputText>-->
+                                                <p:calendar class="form-control2" value="#{marcoBean.marco.previsao}" pattern="dd/MM/yyyy" mask="true" />
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-1 col-sm-2 col-xs-3">
-                                    <h:commandLink action="#{marcoBean.salvar()}" class="btn btn-success"><i class="fa-check"></i> Salvar</h:commandLink>
+                                    <div class="col-lg-1 col-sm-2 col-xs-3">
+                                        <h:commandLink action="#{marcoBean.salvar()}" class="btn btn-success"><i class="fa-check"></i> Salvar<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/></h:commandLink>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-xs-12">
-                            <p:dataTable class="table table-hover" var="item" value="#{marcoBean.marcos}" emptyMessage="Nenhum registro encontrado.">
-                                <p:column headerText="Objetivo">
-                                    <h:outputText value="#{item.objetivo}"/>
-                                </p:column>
+                            <div class="col-xs-12">
+                                <p:dataTable class="table table-hover" var="item" value="#{marcoBean.marcos}" emptyMessage="Nenhum registro encontrado.">
+                                    <p:column headerText="Objetivo">
+                                        <h:outputText value="#{item.objetivo}"/>
+                                    </p:column>
 
-                                <p:column headerText="Previsão" style="width: 150px;">
-                                    <h:outputText value="#{item.previsao}"> <f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>
-                                </p:column>
+                                    <p:column headerText="Previsão" style="width: 150px;">
+                                        <h:outputText value="#{item.previsao}"> <f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>
+                                    </p:column>
 
-                                <p:column headerText="Opções" style="width: 150px">
-                                    <h:commandLink action="#{marcoBean.editar()}" class="btn btn-success btn-xs" style="color: #fff; margin-right: 5px;"><i class="fa-pencil"></i> Editar</h:commandLink>
-                                    <h:commandLink action="#{marcoBean.excluir()}" class="btn btn-danger btn-xs" style="color: #fff;" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fa-trash"></i> Excluir</h:commandLink>
-                                </p:column>
-                            </p:dataTable>
-                        </div>
-                        <!--                        <div class="col-xs-12">
-                                                    <p:commandButton value="Comentário" class="btn btn-primary"  type="button" onclick="PF('dlg1').show();" />
-                                                    <p:dialog header="Comentários sobre as Restrições" widgetVar="dlg1" minHeight="40">
-                                                        <h:outputText value="{projetoBean.projeto.comentarioRestricoes}" />
-                                                    </p:dialog>
-                                                </div>-->
-                        <div class="col-md-9 col-xs-7">
-                            <ul class="pagination">
-                                <li><h:link outcome="termoaberturadescricao">Descrição</h:link></li>
-                                <li><h:link outcome="termoaberturajustificativa">Justificativa</h:link></li>
-                                <li><h:link outcome="termoaberturapremissas">Premissas</h:link></li>
-                                <li><h:link outcome="termoaberturarestricoes">Restrições</h:link></li>
-                                <li class="active"><h:link outcome="termoaberturamarcos">Marcos</h:link></li>
-                                <li><h:link outcome="termoaberturarequisitos">Requisitos</h:link></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-3 col-xs-5" style="text-align: right;">
-                            <div class="pagination">
-                                <h:link class="btn btn-default" outcome="termoaberturarestricoes" style="margin-right: 5px;"><i class="fa-chevron-left"></i> Anterior</h:link>
-                                <h:link class="btn btn-primary" outcome="termoaberturarequisitos">Próximo <i class="fa-chevron-right"></i></h:link>
+                                    <p:column headerText="Opções" style="width: 150px">
+                                        <h:commandLink action="#{marcoBean.editar()}" class="btn btn-success btn-xs" style="color: #fff; margin-right: 5px;"><i class="fa-pencil"></i> Editar<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/></h:commandLink>
+                                        <h:commandLink action="#{marcoBean.excluir()}" class="btn btn-danger btn-xs" style="color: #fff;" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fa-trash"></i> Excluir<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/></h:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                            <div class="col-md-9 col-xs-7">
+                                <ul class="pagination">
+                                    <li><h:link outcome="termoaberturadescricao">Descrição</h:link></li>
+                                    <li><h:link outcome="termoaberturajustificativa">Justificativa</h:link></li>
+                                    <li><h:link outcome="termoaberturapremissas">Premissas</h:link></li>
+                                    <li><h:link outcome="termoaberturarestricoes">Restrições</h:link></li>
+                                    <li class="active"><h:link outcome="termoaberturamarcos">Marcos</h:link></li>
+                                    <li><h:link outcome="termoaberturarequisitos">Requisitos</h:link></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-3 col-xs-5" style="text-align: right;">
+                                <div class="pagination">
+                                    <h:link class="btn btn-default" outcome="termoaberturarestricoes" style="margin-right: 5px;"><i class="fa-chevron-left"></i> Anterior</h:link>
+                                    <h:link class="btn btn-primary" outcome="termoaberturarequisitos">Próximo <i class="fa-chevron-right"></i></h:link>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </p:fragment>
             <ui:include src="avaliacao.xhtml"><ui:param name="etapa" value="Marcos" /></ui:include>
         </h:form>
     </ui:define>

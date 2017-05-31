@@ -320,4 +320,9 @@ public class PerfilBean {
     public void setNivel(int nivel) {
         this.nivel = nivel;
     }
+
+    public void refreshNivel() {
+        nivel = 0;
+        getNivel();
+    }
 }

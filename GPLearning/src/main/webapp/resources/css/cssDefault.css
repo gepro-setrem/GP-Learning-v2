@@ -30,7 +30,7 @@ textarea{
     height: 70px;
     margin-top: -35px;
     width: 80px;
-    margin-left: -100px;
+    /*margin-left: -100px;*/
     background: url("#{resource['img/loading.gif']}") no-repeat center center;
     background-size: 100%;
     border-radius: 6px;

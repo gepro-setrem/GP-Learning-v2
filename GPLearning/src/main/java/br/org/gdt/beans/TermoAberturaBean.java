@@ -44,7 +44,8 @@ public class TermoAberturaBean {
                 termoabertura.setAlteracao(new Date());
                 termoabertura.setProjeto(projeto);
                 termoAberturaBLL.update(termoabertura);
-                return viewJustificativa;
+                //return viewJustificativa;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Descrição salva com sucesso!"));
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para Seguir, você deve preencher a descrição do projeto!"));
             }
@@ -60,7 +61,8 @@ public class TermoAberturaBean {
                 termoabertura.setAlteracao(new Date());
                 termoabertura.setProjeto(projeto);
                 termoAberturaBLL.update(termoabertura);
-                return viewPremissas;
+                //return viewPremissas;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Justificativa salva com sucesso!"));
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para Seguir, você deve preencher a justificativa do projeto!"));
             }

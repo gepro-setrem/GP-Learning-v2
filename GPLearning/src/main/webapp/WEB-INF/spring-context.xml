@@ -60,6 +60,7 @@
             <bean class="br.org.gdt.resource.RequisitoResource" />
             <bean class="br.org.gdt.resource.StakeholderResource" />
             <bean class="br.org.gdt.resource.TermoAberturaResource" />
+            <bean class="br.org.gdt.resource.TurmaResource" />
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />

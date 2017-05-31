@@ -14,74 +14,70 @@
     <ui:define name="content">
         <h:form>
             #{requisitoTermoAberturaBean.setProjeto(projetoBean.projeto)}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h:commandLink action="#{requisitoTermoAberturaBean.novo()}" class="btn btn-success"><i class="fa-plus"></i> Novo</h:commandLink>
-                    <h4>#{turmaBean.getEtapaProjeto('RequisitosTermoAbertura')}</h4></div>
-                <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-xs-12"><label class="etapa_desc">#{projetoBean.getDescricao('descricaoTelaTermoAberturaRequisitos')}</label></div>
-                        <div class="col-xs-12"><div class="alert-warning"><h:messages /></div></div>
-                        <div class="col-xs-12">
-                            <h:inputHidden value="#{requisitoTermoAberturaBean.requisito.id}"/>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-xs-3 text-right">Requisito*:</label>
-                                <div class="col-sm-10 col-xs-9">
-                                    <h:inputText class="form-control" maxlength="200" pt:placeholder="Nome do Requisito" value="#{requisitoTermoAberturaBean.requisito.nome}"/>
+            <p:fragment autoUpdate="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h:commandLink action="#{requisitoTermoAberturaBean.novo()}" class="btn btn-success"><i class="fa-plus"></i> Novo<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/></h:commandLink>
+                        <h4>#{turmaBean.getEtapaProjeto('RequisitosTermoAbertura')}</h4></div>
+                    <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-12"><label class="etapa_desc">#{projetoBean.getDescricao('descricaoTelaTermoAberturaRequisitos')}</label></div>
+                            <div class="col-xs-12"><div class="alert-warning"><h:messages /></div></div>
+                            <div class="col-xs-12">
+                                <h:inputHidden value="#{requisitoTermoAberturaBean.requisito.id}"/>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-xs-3 text-right">Requisito*:</label>
+                                    <div class="col-sm-10 col-xs-9">
+                                        <h:inputText class="form-control" maxlength="200" pt:placeholder="Nome do Requisito" value="#{requisitoTermoAberturaBean.requisito.nome}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-xs-3 text-right">Descrição*:</label>
+                                    <div class="col-sm-10 col-xs-9">
+                                        <h:inputTextarea class="form-control" pt:maxlength="500" rows="3" pt:placeholder="Descrição do Requisito" value="#{requisitoTermoAberturaBean.requisito.descricao}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group text-right">
+                                    <h:commandLink action="#{requisitoTermoAberturaBean.salvar()}" class="btn btn-success"><i class="fa-check"></i> Salvar<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/></h:commandLink>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-xs-3 text-right">Descrição*:</label>
-                                <div class="col-sm-10 col-xs-9">
-                                    <h:inputTextarea class="form-control" pt:maxlength="500" rows="3" pt:placeholder="Descrição do Requisito" value="#{requisitoTermoAberturaBean.requisito.descricao}"/>
-                                </div>
-                            </div>
-                            <div class="form-group text-right">
-                                <h:commandLink action="#{requisitoTermoAberturaBean.salvar()}" class="btn btn-success"><i class="fa-check"></i> Salvar</h:commandLink>
-                            </div>
-                        </div>
-                        <div class="col-xs-12">
-                            <p:dataTable class="table table-hover" var="item" value="#{requisitoTermoAberturaBean.requisitos}" emptyMessage="Nenhum registro encontrado.">
-                                <p:column headerText="Requisito">
-                                    <h:outputText value="#{item.nome}"/>
-                                </p:column>
-                                <p:column headerText="Descrição">
-                                    <h:outputText value="#{item.descricao}"/>
-                                </p:column>
+                            <div class="col-xs-12">
+                                <p:dataTable class="table table-hover" var="item" value="#{requisitoTermoAberturaBean.requisitos}" emptyMessage="Nenhum registro encontrado.">
+                                    <p:column headerText="Requisito">
+                                        <h:outputText value="#{item.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="Descrição">
+                                        <h:outputText value="#{item.descricao}"/>
+                                    </p:column>
 
-                                <p:column headerText="Opções" style="width: 150px">
-                                    <h:commandLink action="#{requisitoTermoAberturaBean.editar()}" class="btn btn-success btn-xs" style="color: #fff; margin-right: 5px;"><i class="fa-pencil"></i> Editar</h:commandLink>
-                                    <h:commandLink action="#{requisitoTermoAberturaBean.excluir()}" class="btn btn-danger btn-xs" style="color: #fff; margin-right: 5px;" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fa-trash"></i> Excluir</h:commandLink>
-                                </p:column>
-                            </p:dataTable>
-                        </div>
-                        <!--                        <div class="col-xs-12">
-                                                    <p:commandButton value="Comentário" class="btn btn-primary"  type="button" onclick="PF('dlg1').show();" />
-                                                    <p:dialog header="Comentários sobre as Restrições" widgetVar="dlg1" minHeight="40">
-                                                        <h:outputText value="{projetoBean.projeto.comentarioRestricoes}" />
-                                                    </p:dialog>
-                                                </div>-->
-                        <div class="col-md-7 col-xs-6">
-                            <ul class="pagination">
-                                <li><h:link outcome="termoaberturadescricao">Descrição</h:link></li>
-                                <li><h:link outcome="termoaberturajustificativa">Justificativa</h:link></li>
-                                <li><h:link outcome="termoaberturapremissas">Premissas</h:link></li>
-                                <li><h:link outcome="termoaberturarestricoes">Restrições</h:link></li>
-                                <li><h:link outcome="termoaberturamarcos">Marcos</h:link></li>
-                                <li class="active"><h:link outcome="termoaberturarequisitos">Requisitos</h:link></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-5 col-xs-6" style="text-align: right;">
-                            <div class="pagination">
-                                <h:link class="btn btn-default" outcome="termoaberturamarcos" style="margin-right: 5px;"><i class="fa-chevron-left"></i> Anterior</h:link>
-                                <h:link class="btn btn-danger" outcome="termoaberturaplano" target="_blank" style="margin-right: 5px;"><i class="fa-file-pdf-o"></i> Gerar PDF</h:link>
-                                <h:link class="btn btn-primary" outcome="iniciacao"><i class="fa-check"></i> Concluir Termo de Abertura</h:link>
+                                    <p:column headerText="Opções" style="width: 150px">
+                                        <h:commandLink action="#{requisitoTermoAberturaBean.editar()}" class="btn btn-success btn-xs" style="color: #fff; margin-right: 5px;"><i class="fa-pencil"></i> Editar<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/></h:commandLink>
+                                        <h:commandLink action="#{requisitoTermoAberturaBean.excluir()}" class="btn btn-danger btn-xs" style="color: #fff; margin-right: 5px;" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fa-trash"></i> Excluir<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/></h:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                            <div class="col-md-7 col-xs-6">
+                                <ul class="pagination">
+                                    <li><h:link outcome="termoaberturadescricao">Descrição</h:link></li>
+                                    <li><h:link outcome="termoaberturajustificativa">Justificativa</h:link></li>
+                                    <li><h:link outcome="termoaberturapremissas">Premissas</h:link></li>
+                                    <li><h:link outcome="termoaberturarestricoes">Restrições</h:link></li>
+                                    <li><h:link outcome="termoaberturamarcos">Marcos</h:link></li>
+                                    <li class="active"><h:link outcome="termoaberturarequisitos">Requisitos</h:link></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-5 col-xs-6" style="text-align: right;">
+                                <div class="pagination">
+                                    <h:link class="btn btn-default" outcome="termoaberturamarcos" style="margin-right: 5px;"><i class="fa-chevron-left"></i> Anterior</h:link>
+                                    <h:link class="btn btn-danger" outcome="termoaberturaplano" target="_blank" style="margin-right: 5px;"><i class="fa-file-pdf-o"></i> Gerar PDF</h:link>
+                                    <h:link class="btn btn-primary" outcome="iniciacao"><i class="fa-check"></i> Concluir Termo de Abertura</h:link>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </p:fragment>
             <ui:include src="avaliacao.xhtml"><ui:param name="etapa" value="RequisitosTermoAbertura" /></ui:include>
         </h:form>
     </ui:define>

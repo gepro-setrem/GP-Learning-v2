@@ -14,64 +14,66 @@
     <ui:define name="content">
         <h:form>
             #{premissaBean.setProjeto(projetoBean.projeto)}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                     <h:commandLink action="#{premissaBean.novo()}" class="btn btn-success"><i class="fa-plus"></i> Novo</h:commandLink>
-                    <h4>#{turmaBean.getEtapaProjeto('Premissas')}</h4></div>
-                <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-xs-12"><label class="etapa_desc">#{projetoBean.getDescricao('descricaoTelaTermoAberturaPremissas')}</label></div>
-                        <div class="col-xs-12"><div class="alert-warning"><h:messages /></div></div>
-                        <div class="col-xs-12">
-                            <h:inputHidden value="#{premissaBean.premissa.id}"/>
-                            <div class="row form-group">
-                                <label class="col-lg-2 col-sm-3 col-xs-12">Descrição da Premissa*:</label>
-                                <div class="col-lg-9 col-sm-7 col-xs-8">
-                                    <h:inputText class="form-control" maxlength="500" value="#{premissaBean.premissa.descricao}" pt:placeholder="Descrição da Premissa"/>
-                                </div>
-                                <div class="col-lg-1 col-sm-2 col-xs-3">
-                                    <h:commandLink action="#{premissaBean.salvar()}" class="btn btn-success"><i class="fa-check"></i> Salvar</h:commandLink>
+            <p:fragment autoUpdate="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h:commandLink action="#{premissaBean.novo()}" class="btn btn-success"><i class="fa-plus"></i> Novo<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/></h:commandLink>
+                        <h4>#{turmaBean.getEtapaProjeto('Premissas')}</h4></div>
+                    <label class="breadcrumb">#{projetoBean.projeto.nome}</label>
+                    <div class="panel-body">
+                        <div class="row">
+
+                            <div class="col-xs-12"><label class="etapa_desc">#{projetoBean.getDescricao('descricaoTelaTermoAberturaPremissas')}</label></div>
+                            <div class="col-xs-12"><div class="alert-warning"><h:messages /></div></div>
+                            <div class="col-xs-12">
+                                <h:inputHidden value="#{premissaBean.premissa.id}"/>
+                                <div class="row form-group">
+                                    <label class="col-lg-2 col-sm-3 col-xs-12">Descrição da Premissa*:</label>
+                                    <div class="col-lg-9 col-sm-7 col-xs-8">
+                                        <h:inputText class="form-control" maxlength="500" value="#{premissaBean.premissa.descricao}" pt:placeholder="Descrição da Premissa"/>
+                                    </div>
+                                    <div class="col-lg-1 col-sm-2 col-xs-3">
+                                        <h:commandLink action="#{premissaBean.salvar()}" class="btn btn-success"><i class="fa-check"></i> Salvar<p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/></h:commandLink>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-xs-12">
-                            <p:dataTable class="table table-hover" var="item" value="#{premissaBean.premissas}" emptyMessage="Nenhum registro encontrado.">
-                                <p:column headerText="Descrição da Premissa">
-                                    <h:outputText value="#{item.descricao}"/>
-                                </p:column>
+                            <div class="col-xs-12">
+                                <p:dataTable class="table table-hover" var="item" value="#{premissaBean.premissas}" emptyMessage="Nenhum registro encontrado.">
+                                    <p:column headerText="Descrição da Premissa">
+                                        <h:outputText value="#{item.descricao}"/>
+                                    </p:column>
 
-                                <p:column headerText="Opções" style="width: 150px">
-                                    <h:commandLink action="#{premissaBean.editar()}" class="btn btn-success btn-xs" style="color: #fff; margin-right: 5px;"><i class="fa-pencil"></i> Editar</h:commandLink>
-                                    <h:commandLink action="#{premissaBean.excluir()}" class="btn btn-danger btn-xs" style="color: #fff; margin-right: 5px;" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fa-trash"></i> Excluir</h:commandLink>
-                                </p:column>
-                            </p:dataTable>
-                        </div>
-                        <!--                        <div class="col-xs-12">
-                                                    <p:commandButton value="Comentário" class="btn btn-primary"  type="button" onclick="PF('dlg1').show();" />
-                                                    <p:dialog header="Comentários sobre as Restrições" widgetVar="dlg1" minHeight="40">
-                                                        <h:outputText value="{projetoBean.projeto.comentarioRestricoes}" />
-                                                    </p:dialog>
-                                                </div>-->
-                        <div class="col-md-9 col-xs-7">
-                            <ul class="pagination">
-                                <li><h:link outcome="termoaberturadescricao">Descrição</h:link></li>
-                                <li><h:link outcome="termoaberturajustificativa">Justificativa</h:link></li>
-                                <li class="active"><h:link outcome="termoaberturapremissas">Premissas</h:link></li>
-                                <li><h:link outcome="termoaberturarestricoes">Restrições</h:link></li>
-                                <li><h:link outcome="termoaberturamarcos">Marcos</h:link></li>
-                                <li><h:link outcome="termoaberturarequisitos">Requisitos</h:link></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-3 col-xs-5" style="text-align: right;">
-                            <div class="pagination">
-                                <h:link class="btn btn-default" outcome="termoaberturajustificativa" style="margin-right: 5px;"><i class="fa-chevron-left"></i> Anterior</h:link>
-                                <h:link class="btn btn-primary" outcome="termoaberturarestricoes">Próximo <i class="fa-chevron-right"></i></h:link>
+                                    <p:column headerText="Opções" style="width: 150px">
+                                        <h:commandLink action="#{premissaBean.editar()}" class="btn btn-success btn-xs" style="color: #fff; margin-right: 5px;"><i class="fa-pencil"></i> Editar
+                                            <p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>
+                                        </h:commandLink>
+                                        <h:commandLink action="#{premissaBean.excluir()}" class="btn btn-danger btn-xs" style="color: #fff; margin-right: 5px;" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fa-trash"></i> Excluir
+                                            <p:ajax onstart="ShowLoader()" oncomplete="HideLoader()"/>
+                                        </h:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+
+                            <div class="col-md-9 col-xs-7">
+                                <ul class="pagination">
+                                    <li><h:link outcome="termoaberturadescricao">Descrição</h:link></li>
+                                    <li><h:link outcome="termoaberturajustificativa">Justificativa</h:link></li>
+                                    <li class="active"><h:link outcome="termoaberturapremissas">Premissas</h:link></li>
+                                    <li><h:link outcome="termoaberturarestricoes">Restrições</h:link></li>
+                                    <li><h:link outcome="termoaberturamarcos">Marcos</h:link></li>
+                                    <li><h:link outcome="termoaberturarequisitos">Requisitos</h:link></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-3 col-xs-5" style="text-align: right;">
+                                <div class="pagination">
+                                    <h:link class="btn btn-default" outcome="termoaberturajustificativa" style="margin-right: 5px;"><i class="fa-chevron-left"></i> Anterior</h:link>
+                                    <h:link class="btn btn-primary" outcome="termoaberturarestricoes">Próximo <i class="fa-chevron-right"></i></h:link>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </p:fragment>
             <ui:include src="avaliacao.xhtml"><ui:param name="etapa" value="Premissas" /></ui:include>
         </h:form>
     </ui:define>
