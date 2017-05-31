@@ -75,7 +75,8 @@ public class ProjetoFragment extends Fragment {
                 public void onItemClick(View view, int position) {
                     Fragment fragment = EtapasFragment.newInstance(lsProjetos.get(position).get_id());
                     FragmentManager manager = getActivity().getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                    //  manager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                    manager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack("EtapasFragment").commit();
                     Log.i("Event", "Clicou");
                 }
 
@@ -95,7 +96,33 @@ public class ProjetoFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        MetodosPublicos.Log("Event", "projetoFrament start");
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MetodosPublicos.Log("Event", "projetoFrament onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MetodosPublicos.Log("Event", "projetoFrament pause");
+    }
+
+    @Override
+    public void onStop() {
+        lsProjetos.clear();
+        MetodosPublicos.Log("Event", "projetoFrament onStop");
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        MetodosPublicos.Log("Event", "projetoFrament onDestroy");
     }
 
     @Override
