@@ -57,15 +57,15 @@
                 </div>
                 <div class="collapse navbar-collapse" id="navbar_header">
                     <ul class="nav navbar-nav">
-                        <li><a>Iniciação</a></li>
-                        <li><a>Planejamento</a></li>
-                        <li><a>Execuçao</a></li>
-                        <li><a>Monitoramento</a></li>
-                        <li><a>Encerramento</a></li>
+                        <li class="disabled"><a>Iniciação</a></li>
+                        <li class="disabled"><a>Planejamento</a></li>
+                        <li class="disabled"><a>Execuçao</a></li>
+                        <li class="disabled"><a>Monitoramento</a></li>
+                        <li class="disabled"><a>Encerramento</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right" style="display: #{perfilBean.hasSession ? 'block' : 'none'};">
                         <li><h:link outcome="/user/projetolst.xhtml">Meus Projetos</h:link></li>
-                        <li><a>Olá, #{perfilBean.usuario.nome}</a></li>
+                        <li><h:link outcome="/user/perfil.xhtml">#{perfilBean.usuario.nome}</h:link></li>
                         <li><h:outputLink value="/GPLearning/logout">Sair <i class="fa-sign-out"></i></h:outputLink></li>
                     </ul>
                 </div>

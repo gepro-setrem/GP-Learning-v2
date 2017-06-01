@@ -34,7 +34,7 @@ import org.primefaces.model.UploadedFile;
 @ManagedBean
 @SessionScoped
 public class PerfilBean {
-
+    
     private Pessoa usuario = new Pessoa();
     private Pessoa user = new Pessoa();
     @ManagedProperty("#{pessoaBLL}")
@@ -47,39 +47,39 @@ public class PerfilBean {
     @ManagedProperty("#{loginRoleBLL}")
     private LoginRoleBLL loginRoleBLL;
     private String token;
-
+    
     private int nivel = 0;
-
+    
     @ManagedProperty("#{projetoBLL}")
     public ProjetoBLL projetoBLL;
     public List<Projeto> projetos;
-
+    
     @ManagedProperty("#{avaliacaoBLL}")
     public AvaliacaoBLL avaliacaoBLL;
-
+    
     @ManagedProperty("#{etapaBLL}")
     public EtapaBLL etapaBLL;
-
+    
     @ManagedProperty("#{indicadorBLL}")
     public IndicadorBLL indicadorBLL;
-
+    
     @ManagedProperty("#{turmaBLL}")
     public TurmaBLL turmaBLL;
-
+    
     public PerfilBean() {
     }
-
+    
     public String detalhe() {
         return "perfil";
     }
-
+    
     public String editar() {
         //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Para salvar, é necessário preencher todos os campos!"));
         user = getUsuario();
         login = user.getLogin();
         return "perfilfrm";
     }
-
+    
     public String salvar() {
         getUsuario();
         int user_id = usuario.getId();
@@ -109,7 +109,7 @@ public class PerfilBean {
             pessoaBLL.update(user);
             if (!login.getSenha().isEmpty() || changeEmail) {
                 Login oldLogin = loginBLL.findbyPessoa(oldUser);
-
+                
                 if (!login.getSenha().isEmpty()) {
                     oldLogin.setSenha(login.getSenha());
                 }
@@ -138,47 +138,47 @@ public class PerfilBean {
             return "perfilfrm";
         }
     }
-
+    
     public PessoaBLL getPessoaBLL() {
         return pessoaBLL;
     }
-
+    
     public void setPessoaBLL(PessoaBLL pessoaBLL) {
         this.pessoaBLL = pessoaBLL;
     }
-
+    
     public UploadedFile getUserImage() {
         return userImage;
     }
-
+    
     public void setUserImage(UploadedFile userImage) {
         this.userImage = userImage;
     }
-
+    
     public Pessoa getUser() {
         return this.user;
     }
-
+    
     public void setUser(Pessoa user) {
         this.user = user;
     }
-
+    
     public Login getLogin() {
         return login;
     }
-
+    
     public void setLogin(Login login) {
         this.login = login;
     }
-
+    
     public LoginBLL getLoginBLL() {
         return loginBLL;
     }
-
+    
     public void setLoginBLL(LoginBLL loginBLL) {
         this.loginBLL = loginBLL;
     }
-
+    
     public Pessoa getUsuario() {
         if (usuario == null || usuario.getId() == 0) {
             ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
@@ -189,11 +189,11 @@ public class PerfilBean {
         }
         return usuario;
     }
-
+    
     public void setUsuario(Pessoa usuario) {
         this.usuario = usuario;
     }
-
+    
     public boolean isHasSession() {
         ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
         HttpServletRequest request = (HttpServletRequest) external.getRequest();
@@ -201,19 +201,19 @@ public class PerfilBean {
         hasSession = email != null && !email.isEmpty();
         return hasSession;
     }
-
+    
     public void setHasSession(boolean hasSession) {
         this.hasSession = hasSession;
     }
-
+    
     public ProjetoBLL getProjetoBLL() {
         return projetoBLL;
     }
-
+    
     public void setProjetoBLL(ProjetoBLL projetoBLL) {
         this.projetoBLL = projetoBLL;
     }
-
+    
     public List<Projeto> getProjetos() {
         projetos = projetoBLL.findbyAluno(getUsuario());
         List<Projeto> lsProjeto = new ArrayList<>();
@@ -243,43 +243,43 @@ public class PerfilBean {
         projetos = lsProjeto;
         return projetos;
     }
-
+    
     public void setProjetos(List<Projeto> projetos) {
         this.projetos = projetos;
     }
-
+    
     public AvaliacaoBLL getAvaliacaoBLL() {
         return avaliacaoBLL;
     }
-
+    
     public void setAvaliacaoBLL(AvaliacaoBLL avaliacaoBLL) {
         this.avaliacaoBLL = avaliacaoBLL;
     }
-
+    
     public EtapaBLL getEtapaBLL() {
         return etapaBLL;
     }
-
+    
     public void setEtapaBLL(EtapaBLL etapaBLL) {
         this.etapaBLL = etapaBLL;
     }
-
+    
     public IndicadorBLL getIndicadorBLL() {
         return indicadorBLL;
     }
-
+    
     public void setIndicadorBLL(IndicadorBLL indicadorBLL) {
         this.indicadorBLL = indicadorBLL;
     }
-
+    
     public TurmaBLL getTurmaBLL() {
         return turmaBLL;
     }
-
+    
     public void setTurmaBLL(TurmaBLL turmaBLL) {
         this.turmaBLL = turmaBLL;
     }
-
+    
     public String getToken() {
         getUsuario();
         if (usuario != null) {
@@ -293,19 +293,19 @@ public class PerfilBean {
         }
         return token;
     }
-
+    
     public void setToken(String token) {
         this.token = token;
     }
-
+    
     public LoginRoleBLL getLoginRoleBLL() {
         return loginRoleBLL;
     }
-
+    
     public void setLoginRoleBLL(LoginRoleBLL loginRoleBLL) {
         this.loginRoleBLL = loginRoleBLL;
     }
-
+    
     public int getNivel() {
         if (nivel == 0 && usuario != null) {
             int pontuacao = pessoaBLL.findPontuacao(usuario);
@@ -313,14 +313,15 @@ public class PerfilBean {
             Pessoa pessoa = pessoaBLL.findById(usuario.getId());
             pessoa.setKarma(pontuacao);
             pessoaBLL.update(pessoa);
+            usuario.setKarma(pontuacao);
         }
         return nivel;
     }
-
+    
     public void setNivel(int nivel) {
         this.nivel = nivel;
     }
-
+    
     public void refreshNivel() {
         nivel = 0;
         getNivel();

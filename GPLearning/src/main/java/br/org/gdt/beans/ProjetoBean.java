@@ -103,6 +103,7 @@ public class ProjetoBean {
     }
 
     public String iniciarprojeto() {
+        projeto = projetoBLL.findById(projeto.getId());
         if (projeto.getTermoabertura() == null) {
             TermoAbertura termoAbertura = new TermoAbertura();
             termoAbertura.setProjeto(projeto);
