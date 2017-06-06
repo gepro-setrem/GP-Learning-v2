@@ -70,6 +70,14 @@ public class PessoaBLL extends BLL<Pessoa> {
         return lsPessoa;
     }
 
+    public List<Pessoa> findbyProfessorForRanking(Pessoa professor) {
+        List<Pessoa> lsPessoa = new ArrayList<>();
+        if (professor != null && professor.getId() > 0) {
+            lsPessoa = dao.findbyProfessorForRanking(professor);
+        }
+        return lsPessoa;
+    }
+
     public byte[] findbyImagem(int id) {
         byte[] imagem = new byte[0];
         if (id > 0) {

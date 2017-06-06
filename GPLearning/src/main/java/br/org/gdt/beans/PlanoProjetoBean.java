@@ -152,7 +152,7 @@ public class PlanoProjetoBean {
         String html = "";
         if (eap != null) {
             html += "<li class=\"eap_item " + (vez == 2 ? "eap_column" : "") + "\"><div class=\"eap\">";
-            html += "<div class=\"eap_header\"><a class=\"btn btn-xs eapIcon eap_number\">" + number + "</a><a class=\"btn btn-xs eapIcon eapDetail\"><i class=\"fa-list-ul\"></i></a></div>";
+            html += "<div class=\"eap_header\"><a class=\"btn btn-xs eapIcon eap_number\">" + number + "</a></div>";//<a class=\"btn btn-xs eapIcon eapDetail\"><i class=\"fa-list-ul\"></i></a>
             html += "<div class=\"eap_nome\">" + eap.getNome() + "</div>";
             html += "<div style=\"display: none;\">"
                     + "<input type=\"hidden\" name=\"pai.id\" value=\"" + (eap.getPai() != null ? eap.getPai().getId() : 0) + "\"/>"

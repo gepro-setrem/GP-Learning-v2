@@ -220,8 +220,8 @@
                                                 <ui:repeat var="indicador" value="#{item.indicadores}">
                                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                                         <div class="row form-group">
-                                                            <label class="col-xs-6 text-right">#{indicador.nome}:</label>
-                                                            <div class="col-xs-6">
+                                                            <label class="col-xs-8 text-right">#{indicador.nome}:</label>
+                                                            <div class="col-xs-4" style="padding: 0;">
                                                                 <c:set var="avaliacao" value="#{projetoProfessorBean.getAvaliacao(item, indicador)}"/>
                                                                 <p:rating value="#{avaliacao.valor}" stars="5">
                                                                     <p:ajax event="rate" listener="#{projetoProfessorBean.onrate(avaliacao)}" onstart="ShowLoader()" oncomplete="HideLoader()"/>

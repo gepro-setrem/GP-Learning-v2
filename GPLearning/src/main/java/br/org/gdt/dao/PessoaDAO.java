@@ -52,6 +52,11 @@ public class PessoaDAO extends DAO<Pessoa> {
                 .setParameter("p", pessoa).getResultList();
     }
 
+    public List<Pessoa> findbyProfessorForRanking(Pessoa pessoa) {
+        return entityManager.createQuery("from Pessoa where turma.professor = :p order by karma desc")
+                .setParameter("p", pessoa).getResultList();
+    }
+
     public byte[] findbyImagem(int id) {
         List<byte[]> lsImagem = entityManager.createQuery("select imagem from Pessoa where id = :id").setParameter("id", id).getResultList();
         if (lsImagem.size() > 0) {

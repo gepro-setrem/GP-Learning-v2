@@ -44,6 +44,7 @@ public class UsuarioBean {
     @ManagedProperty("#{pessoaBLL}")
     private PessoaBLL pessoaBLL;
     private DataModel usuarios;
+    private List<Pessoa> estudantes;
 
     @ManagedProperty("#{turmaBLL}")
     private TurmaBLL turmaBLL;
@@ -198,6 +199,17 @@ public class UsuarioBean {
         return "usuariofrm";
     }
 
+    public String ranking() {
+        List<Pessoa> lsPessoas = pessoaBLL.findbyProfessor(usuario);
+        for (Pessoa user : lsPessoas) {
+            int pontuacao = pessoaBLL.findPontuacao(user);
+            user.setKarma(pontuacao);
+            pessoaBLL.update(user);
+        }
+        estudantes = null;
+        return "ranking";
+    }
+
     public PessoaBLL getPessoaBLL() {
         return pessoaBLL;
     }
@@ -343,4 +355,20 @@ public class UsuarioBean {
     public void setNivel(int nivel) {
         this.nivel = nivel;
     }
+
+    public int getNivel(int pontuacao) {
+        return pessoaBLL.findNivel(pontuacao);
+    }
+
+    public List<Pessoa> getEstudantes() {
+        if (estudantes == null) {
+            estudantes = pessoaBLL.findbyProfessorForRanking(usuario);
+        }
+        return estudantes;
+    }
+
+    public void setEstudantes(List<Pessoa> estudantes) {
+        this.estudantes = estudantes;
+    }
+
 }

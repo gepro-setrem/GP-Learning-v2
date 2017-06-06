@@ -10,6 +10,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h:commandLink action="#{usuarioBean.novo()}" class="btn btn-success"><i class="fa-plus"></i> Novo Usuário</h:commandLink>
+                    <h:commandLink action="#{usuarioBean.ranking()}" class="btn btn-primary" style="margin-right: 5px;"><i class="fa-trophy"></i> Ranking</h:commandLink>
                     <h4>Listagem de Usuários</h4>
                 </div>
                 <div class="panel-body">
@@ -40,7 +41,7 @@
 
                         <p:column headerText="Opções" style="width: 240px;" class="text-center">
                             <h:commandLink action="#{usuarioBean.editar()}" class="btn btn-success btn-xs" style="color: #fff; margin-right: 5px;"><i class="fa-pencil"></i> Editar</h:commandLink>
-                             <h:commandLink action="#{usuarioBean.perfil()}" class="btn btn-primary btn-xs" style="color: #fff; margin-right: 5px;"><i class="fa-list-alt"></i> Detalhes</h:commandLink>
+                            <h:commandLink action="#{usuarioBean.perfil()}" class="btn btn-primary btn-xs" style="color: #fff; margin-right: 5px;"><i class="fa-list-alt"></i> Detalhes</h:commandLink>
                             <h:commandLink action="#{usuarioBean.inativar()}" class="btn btn-warning btn-xs" style="color: #fff" onclick="return confirm('Ao torná-lo inativo, este usuário não poderá incluir novos projetos!')"><i class="fa-ban"></i> Inativar</h:commandLink>
                         </p:column>
                     </p:dataTable>

@@ -1,0 +1,71 @@
+<ui:composition template="/admin/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <style>
+            ul.ranking{
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+            .ranking .user{
+                border-bottom: 1px solid #ddd;
+                padding: 5px 0;
+            }
+            .ranking .user:last-child{
+                border: 0;
+            }
+            .ranking .padding_text{
+                padding-top: 20px;
+                text-align: center;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+            .ranking .indice{
+                background-color: #ddd;
+                padding: 1px 5px 1px 4px;
+                border-radius: 3px;
+                float: left;
+                margin: 20px;
+                width: 23px;
+                text-align: center;
+            }
+        </style>
+        <h:form>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Ranking dos Usuários</h4>
+                </div>
+                <div class="panel-body">
+                    <ul class="ranking">
+                        <ui:repeat var="user" value="#{usuarioBean.estudantes}" varStatus="status">
+                            <li class="row user"> 
+                                <div class="indice">#{(status.index + 1)}</div>
+                                <div class="col-md-1 col-sm-2 col-xs-3" style="padding-right: 0;">
+                                    <h:graphicImage library="img/niveis/" name="nivel#{usuarioBean.getNivel(user.karma)}.png" style="max-height: 60px;"/>
+                                </div>
+                                <div class="col-xs-1 padding_text">#{user.karma}</div>
+                                <div class="col-xs-7">
+                                    <div style="float: left; margin-right: 10px;">
+                                        <h:graphicImage rendered="#{user.imagem == null}" library="img/" name="usuario.png" style="height: 60px; border-radius: 50%;"/>
+                                        <p:graphicImage rendered="#{user.imagem != null}" value="#{comentarioBean.imagem}" cache="false" style="height: 60px; border-radius: 50%;">
+                                            <f:param name="id" value="#{user.id}" />
+                                        </p:graphicImage>
+                                    </div>
+                                    <div>#{user.nome}</div>
+                                    <div>#{user.email}</div>
+                                    <div>#{user.turma.nome}</div>
+                                </div>
+                            </li>
+                        </ui:repeat>
+                    </ul>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

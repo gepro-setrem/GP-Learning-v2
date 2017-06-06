@@ -49,7 +49,7 @@ $(document).on('click', '.tarefaEdit', function () {
         $('#tarefaModal [name="' + name + '"]').val(value);
     });
     //$('#tarefaModal .modal-title').html('EAP - ' + ordem);
-    $('#tarefaModal .deletaEAP').show();
+    $('#tarefaModal .deletaTarefa').show();
     $('#tarefaModal .recursos > tbody').html('');
     tarefa.find('.lsRecursos [name=recurso]').each(function (index, item) {
         var html = $('.HtmlExample .recurso').clone();
