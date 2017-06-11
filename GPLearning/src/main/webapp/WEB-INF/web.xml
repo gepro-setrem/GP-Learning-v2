@@ -73,7 +73,7 @@
         <display-name>user_acess</display-name>
         <web-resource-collection>
             <web-resource-name>user_pages</web-resource-name>
-            <description>Telas do aluno</description>
+            <description>Telas do estudante</description>
             <url-pattern>/user/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>

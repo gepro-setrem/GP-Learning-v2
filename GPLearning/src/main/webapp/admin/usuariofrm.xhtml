@@ -62,7 +62,7 @@
                                 <div class="form-group">
                                     <label>Papel*:</label>
                                     <h:selectOneMenu class="form-control" converter="#{roleConverter}" value="#{usuarioBean.role}" required="true" requiredMessage="O 'Papel' é obrigatório!"> 
-                                        <f:selectItems  value="#{usuarioBean.roles}" var="role" itemLabel="#{role == 'admin' ? 'Professor' : 'Aluno'}"/>
+                                        <f:selectItems  value="#{usuarioBean.roles}" var="role" itemLabel="#{role == 'admin' ? 'Professor' : 'Estudante'}"/>
                                     </h:selectOneMenu>
                                 </div>
                             </div>

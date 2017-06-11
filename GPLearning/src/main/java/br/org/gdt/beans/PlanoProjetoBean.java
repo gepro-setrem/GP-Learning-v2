@@ -49,6 +49,7 @@ public class PlanoProjetoBean {
     private List<Etapa> etapas;
 
     private String htmlEAP;
+    private String dicionarioEAP;
     private String htmlCronograma;
 
     public PlanoProjetoBean() {
@@ -99,6 +100,7 @@ public class PlanoProjetoBean {
 
     public String criarPlano() {
         htmlEAP = null;
+        dicionarioEAP = null;
         htmlCronograma = null;
         projeto = projetoBLL.findProjetoCompleto(projeto.getId());
         termoabertura = termoAberturaBLL.findByProjetoCompleto(projeto);
@@ -111,6 +113,7 @@ public class PlanoProjetoBean {
 
     public void setProjeto(Projeto projeto) {
         htmlEAP = null;
+        dicionarioEAP = null;
         htmlCronograma = null;
         this.projeto = projetoBLL.findProjetoCompleto(projeto.getId());
         termoabertura = termoAberturaBLL.findByProjetoCompleto(this.projeto);
@@ -283,6 +286,46 @@ public class PlanoProjetoBean {
 
     public void setEtapaBLL(EtapaBLL etapaBLL) {
         this.etapaBLL = etapaBLL;
+    }
+
+    public String getDicionarioEAP() {
+        if (dicionarioEAP == null || dicionarioEAP.isEmpty()) {
+            if (projeto != null && projeto.getEaps() != null && projeto.getEaps().size() > 0) {
+                EAP eap = projeto.getEaps().get(0);
+                String html = getDicionarioNode(eap, "1", "");
+                if (html == null || html.isEmpty()) {
+                    html = "<tr><td colspan=\"5\">Nenhum registro encontrado!</td></tr>";
+                }
+                dicionarioEAP = html;
+            }
+        }
+        return dicionarioEAP;
+    }
+
+    public void setDicionarioEAP(String dicionarioEAP) {
+        this.dicionarioEAP = dicionarioEAP;
+    }
+
+    private String getDicionarioNode(EAP eap, String number, String html) {
+        if (eap != null) {
+            if (eap.getDescricao() == null) {
+                eap.setDescricao("");
+            }
+            html += "<tr class=\"tarefa eap\"><td><span class=\"indice\">" + number + "</span><span class=\"nome\">" + eap.getNome() + "</span></td>";
+            html += "<td class=\"descricao\">" + eap.getDescricao() + "</td>";
+            html += "<td class=\"inicio text-center\">" + FormatDate(eap.getInicio()) + "</td>";
+            html += "<td class=\"termino text-center\">" + FormatDate(eap.getTermino()) + "</td>";
+            html += "<td class=\"custo text-right\">" + eap.getValor() + "</td>";
+            html += "</tr>";
+            if (eap.getEaps() != null) {
+                int i = 1;
+                for (EAP ea : eap.getEaps()) {
+                    html = getDicionarioNode(ea, number + "." + i, html);
+                    i++;
+                }
+            }
+        }
+        return html;
     }
 
 }

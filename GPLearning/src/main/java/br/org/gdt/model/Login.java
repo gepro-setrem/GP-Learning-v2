@@ -126,7 +126,7 @@ public class Login implements Serializable {
                 if (role == Role.admin) {
                     return "Professor";
                 } else {
-                    return "Aluno";
+                    return "Estudante";
                 }
             }
         } catch (Exception e) {

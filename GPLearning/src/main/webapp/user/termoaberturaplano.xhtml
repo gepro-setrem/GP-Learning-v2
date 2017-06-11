@@ -129,6 +129,25 @@
                     </p:dataTable>
                 </div>
             </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" style="border: 0;">#{turmaBean.getEtapaProjeto('Stakeholders')}</div>
+                <div class="panel-body">
+                    <p:dataTable var="stakeholder" value="#{planoProjetoBean.projeto.stakeholders}" emptyMessage="Nenhum registro encontrado.">
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{stakeholder.nome}"/>
+                        </p:column>
+
+                        <p:column headerText="Papel">
+                            <h:outputText value="#{stakeholder.papel}"/>
+                        </p:column>
+
+                        <p:column headerText="Contribuição">
+                            <h:outputText value="#{stakeholder.contribuicao}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
         </div>
     </h:body>
 </html>
