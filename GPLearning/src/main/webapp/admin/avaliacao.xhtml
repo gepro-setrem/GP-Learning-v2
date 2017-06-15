@@ -19,6 +19,15 @@
                 color: #fff;
             }
         </style>
+        <script>
+            $(function () {
+                var pacotes = $('.eap_list .eap_column');
+                pacotes.each(function (index, item) {
+                    var pais = $(item).find('.eap_pai:not(:empty)').length;
+                    $(item).children('.eap').css('marginRight', (pais * 25) + 'px');
+                });
+            });
+        </script>
         <h:form>
             <p:inputText type="hidden" value="#{projetoProfessorBean.projeto.id}"/><!--Não apagar esta tag, pq senão não carrega o primefaces, e nem o jquery, gambia do java-->
             <div class="panel panel-default">
