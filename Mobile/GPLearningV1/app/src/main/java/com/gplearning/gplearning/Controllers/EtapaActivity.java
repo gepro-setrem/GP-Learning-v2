@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.gplearning.gplearning.DAO.App;
@@ -153,7 +154,8 @@ public class EtapaActivity extends AppCompatActivity {
             //texto corrido
             ((ListView) findViewById(R.id.EtapaListview)).setVisibility(View.GONE);
             TextView etapaTextView = ((TextView) findViewById(R.id.EtapaTxtTexto));
-            etapaTextView.setVisibility(View.VISIBLE);
+            // etapaTextView.setVisibility(View.VISIBLE);
+            ((ScrollView) findViewById(R.id.EtapaScrollviewTxt)).setVisibility(View.VISIBLE);
 
             if (atv.getEtapa() == EtapaProjeto.DescricaoProjeto ||
                     atv.getEtapa() == EtapaProjeto.JustificativaProjeto) {
@@ -200,7 +202,8 @@ public class EtapaActivity extends AppCompatActivity {
         } else {
             ListView listview = ((ListView) findViewById(R.id.EtapaListview));
             listview.setVisibility(View.VISIBLE);
-            ((TextView) findViewById(R.id.EtapaTxtTexto)).setVisibility(View.GONE);
+            //  ((TextView) findViewById(R.id.EtapaTxtTexto)).setVisibility(View.GONE);
+            ((ScrollView) findViewById(R.id.EtapaScrollviewTxt)).setVisibility(View.GONE);
 
             if (atv.getEtapa() == EtapaProjeto.Stakeholders) {
                 StakeholderDao stakeholderDao = daoSession.getStakeholderDao();
@@ -235,16 +238,21 @@ public class EtapaActivity extends AppCompatActivity {
 
             } else if (atv.getEtapa() == EtapaProjeto.Eap) {
                 EapDao eapDao = daoSession.getEapDao();
-                final List<Eap> lsEap = eapDao.queryBuilder().where(EapDao.Properties.IdProjeto.eq(idProjeto)).list();
+                //   final List<Eap> lsEap = eapDao.queryBuilder().where(EapDao.Properties.IdProjeto.eq(idProjeto)).list();
+                List<Eap> lsEap = eapDao.queryBuilder().where(EapDao.Properties.IdProjeto.eq(idProjeto)).orderAsc(EapDao.Properties.Id).limit(1).list();
                 if (lsEap != null && lsEap.size() > 0) {
-                    ArrayAdapter<Eap> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lsEap);
-                    listview.setAdapter(adapter);
-                    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            ShowDescription(lsEap.get(position).getNome(), lsEap.get(position).getDescricao());
-                        }
-                    });
+                    final List<Eap> lsItens = SelecionaEapTarefasProjeto(daoSession, lsEap.get(0), "1", false);
+                    if (lsItens.size() > 0) {
+                        ArrayAdapter<Eap> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lsItens);
+                        listview.setAdapter(adapter);
+                        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                ShowDescription(lsItens.get(position).getNome(), lsItens.get(position).getDescricao());
+                            }
+                        });
+
+                    }
                 } else {
                     NenhumItem();
                 }
@@ -252,14 +260,17 @@ public class EtapaActivity extends AppCompatActivity {
                 EapDao eapDao = daoSession.getEapDao();
                 List<Eap> Eaps = eapDao.queryBuilder().where(EapDao.Properties.IdProjeto.eq(idProjeto)).orderAsc(EapDao.Properties.Id).limit(1).list();
                 if (Eaps != null && Eaps.size() > 0) {
-                  //  MetodosPublicos.Log("Event", "retornou com :" + Eaps.size());
-                    //  TarefaDao tarefaDao = daoSession.getTarefaDao();
                     final List<Eap> lsItens = SelecionaEapTarefasProjeto(daoSession, Eaps.get(0), "1", true);
                     if (lsItens.size() > 0) {
                         MetodosPublicos.Log("Event", "total de itens tarefas/eaps com :" + lsItens.size());
-                        //tarefaDao.queryBuilder().where(TarefaDao.Properties.IdProjeto.eq(idProjeto)).list();
                         ArrayAdapter<Eap> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lsItens);
                         listview.setAdapter(adapter);
+                        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                ShowDescription(lsItens.get(position).getNome(), lsItens.get(position).getDescricao());
+                            }
+                        });
                     }
                 } else {
                     NenhumItem();
@@ -407,6 +418,7 @@ public class EtapaActivity extends AppCompatActivity {
         ((ListView) findViewById(R.id.EtapaListview)).setVisibility(View.GONE);
         TextView txt = ((TextView) findViewById(R.id.EtapaTxtTexto));
         txt.setVisibility(View.VISIBLE);
+        ((ScrollView) findViewById(R.id.EtapaScrollviewTxt)).setVisibility(View.VISIBLE);
         txt.setGravity(View.TEXT_ALIGNMENT_CENTER);
         txt.setText(R.string.item_not_developed);
     }

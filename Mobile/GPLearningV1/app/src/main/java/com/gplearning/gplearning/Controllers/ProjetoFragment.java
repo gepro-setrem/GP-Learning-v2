@@ -61,23 +61,24 @@ public class ProjetoFragment extends Fragment {
             Log.i("Event", "Chegou na ProjetoFragment");
             recyclerView = (RecyclerView) view.findViewById(R.id.projetoListview);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-            //((LinearLayoutManager) layoutManager).setStackFromEnd(true);
             recyclerView.setLayoutManager(layoutManager);
 
             daoSession = ((App) getActivity().getApplication()).getDaoSession();
             dao = daoSession.getProjetoDao();
             new CarregaProjetos().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
 
-            projetoAdapter = new ProjetoAdapter(lsProjetos, getActivity()); //new ProjetoRecyclerViewAdapter(lsProjetos, listenerClick, listenerLongClick);
+            projetoAdapter = new ProjetoAdapter(lsProjetos, getActivity());
             recyclerView.setAdapter(projetoAdapter);
             recyclerView.addOnItemTouchListener(new MetodosPublicos.RecyclerItemClickListener(getActivity(), recyclerView, new MetodosPublicos.RecyclerItemClickListener.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    Fragment fragment = EtapasFragment.newInstance(lsProjetos.get(position).get_id());
-                    FragmentManager manager = getActivity().getSupportFragmentManager();
-                    //  manager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-                    manager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack("EtapasFragment").commit();
-                    Log.i("Event", "Clicou");
+                    Log.i("Event", "Clicou:" + lsProjetos.size());
+                    if (lsProjetos.size() > 0) {
+                        Fragment fragment = EtapasFragment.newInstance(lsProjetos.get(position).get_id());
+                        FragmentManager manager = getActivity().getSupportFragmentManager();
+                        //  manager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                        manager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack("EtapasFragment").commit();
+                    }
                 }
 
                 @Override
@@ -113,7 +114,7 @@ public class ProjetoFragment extends Fragment {
 
     @Override
     public void onStop() {
-        lsProjetos.clear();
+        //lsProjetos.clear();
         MetodosPublicos.Log("Event", "projetoFrament onStop");
         super.onStop();
     }
@@ -169,6 +170,7 @@ public class ProjetoFragment extends Fragment {
                 TurmaDao daoTurma = daoSession.getTurmaDao();
                 Pessoa user = pessoaDao.load(MetodosPublicos.SelecionaSessaoId(getActivity()));
                 Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+                lsProjetos.clear();
 
                 if (MetodosPublicos.ModoAcessoAluno(getActivity())) {
                     MetodosPublicos.Log("projetos", " Turmar do user:" + user.getId() + " da turma:" + user.getIdTurma());
@@ -181,7 +183,9 @@ public class ProjetoFragment extends Fragment {
                     }
                 } else {
                     Turma turma = daoTurma.queryBuilder().where(TurmaDao.Properties.Pro_id.eq(user.get_id())).limit(1).unique();
+                    MetodosPublicos.Log("prj", "turma null:" + (turma == null));
                     if (turma != null) {
+                        MetodosPublicos.Log("prj", "Projetos com turma:" + turma.get_id());
                         lsProjetos.addAll(projetoDao.queryBuilder().where(ProjetoDao.Properties.IdTurma.eq(turma.get_id())).list());
                     }
                 }

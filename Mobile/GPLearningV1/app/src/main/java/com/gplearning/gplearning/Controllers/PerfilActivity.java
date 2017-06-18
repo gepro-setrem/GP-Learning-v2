@@ -25,6 +25,10 @@ import com.gplearning.gplearning.Models.Indicador;
 import com.gplearning.gplearning.Models.IndicadorDao;
 import com.gplearning.gplearning.Models.Pessoa;
 import com.gplearning.gplearning.Models.PessoaDao;
+import com.gplearning.gplearning.Models.Projeto;
+import com.gplearning.gplearning.Models.ProjetoComponentes;
+import com.gplearning.gplearning.Models.ProjetoComponentesDao;
+import com.gplearning.gplearning.Models.ProjetoDao;
 import com.gplearning.gplearning.Models.Turma;
 import com.gplearning.gplearning.Models.TurmaDao;
 import com.gplearning.gplearning.R;
@@ -32,6 +36,7 @@ import com.gplearning.gplearning.Utils.MetodosPublicos;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PerfilActivity extends AppCompatActivity {
@@ -54,6 +59,8 @@ public class PerfilActivity extends AppCompatActivity {
                 //   MetodosPublicos.CarregaimagemPerfil(this, ((ImageView) findViewById(R.id.perfilImagem)), idPessoa);
 
                 daoSession = ((App) getApplication()).getDaoSession();
+                PessoaDao pessoaDao = daoSession.getPessoaDao();
+                Pessoa pessoa = pessoaDao.load(idPessoa);
                 new CarregaIndicadores().execute();
 
                 File path = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
@@ -62,10 +69,8 @@ public class PerfilActivity extends AppCompatActivity {
                     Picasso.with(this).load(file).into(((ImageView) findViewById(R.id.perfilImagem)));
                 }
 
-                PessoaDao pessoaDao = daoSession.getPessoaDao();
-                Pessoa pessoa = pessoaDao.load(idPessoa);
-                if (pessoa != null) {
 
+                if (pessoa != null) {
                     ((android.support.design.widget.CollapsingToolbarLayout) findViewById(R.id.perfilToolbar_layout)).setTitle(pessoa.getNome());
                     ((TextView) findViewById(R.id.perfilEmail)).setText(pessoa.getEmail());
                     ((TextView) findViewById(R.id.perfilTelefone)).setText(pessoa.getTelefone());
@@ -77,7 +82,7 @@ public class PerfilActivity extends AppCompatActivity {
 
                     if (pessoa.getIdTurma() > 0) {
                         TurmaDao turmaDao = daoSession.getTurmaDao();
-                        Turma turma = turmaDao.load(pessoa.get_id());
+                        Turma turma = turmaDao.load(pessoa.getIdTurma());
                         if (turma != null)
                             ((TextView) findViewById(R.id.perfilTurma)).setText(turma.getNome() + " - " + turma.getAno() + " " + getString(R.string.year));
                     }
@@ -93,22 +98,37 @@ public class PerfilActivity extends AppCompatActivity {
         protected List<Indicador> doInBackground(String... params) {
             IndicadorDao indicadorDao = daoSession.getIndicadorDao();
             AvaliacaoDao avaliacaoDao = daoSession.getAvaliacaoDao();
-            MetodosPublicos.Log("event", "Vai indicadores!!!!");
+            ProjetoDao projetoDao = daoSession.getProjetoDao();
+            PessoaDao pessoaDao = daoSession.getPessoaDao();
+            Pessoa pessoa = pessoaDao.load(idPessoa);
 
-            List<Indicador> lsIndicadores = indicadorDao.loadAll();
-            MetodosPublicos.Log("event", "taotal de indicadores:" + lsIndicadores.size());
+            MetodosPublicos.Log("event", "Vai indicadores!!!!" + " turmaId:" + pessoa.getIdTurma());
+
+            List<Indicador> lsIndicadores = indicadorDao.queryBuilder().where(IndicadorDao.Properties.IdTurma.eq(pessoa.getIdTurma())).list();
+            MetodosPublicos.Log("event", "taotal de indicadores:" + lsIndicadores.size() + " turmaId:" + pessoa.getIdTurma());
+            List<Projeto> lsProjetos = new ArrayList<>();
+
+            ProjetoComponentesDao componentesDao = daoSession.getProjetoComponentesDao();
+            List<ProjetoComponentes> lsComponentes = componentesDao.queryBuilder().where(ProjetoComponentesDao.Properties.IdPessoa.eq(MetodosPublicos.SelecionaSessaoId(PerfilActivity.this))).list();
+            if (lsComponentes != null) {
+                for (ProjetoComponentes c : lsComponentes) {
+                    lsProjetos.add(projetoDao.load(c.getIdProjeto()));
+                }
+            }
 
             if (lsIndicadores != null && lsIndicadores.size() > 0) {
                 for (Indicador ind : lsIndicadores) {
-                    List<Avaliacao> lsAvaliacoes = avaliacaoDao.queryBuilder().where(AvaliacaoDao.Properties.IdIndicador.eq(ind.get_id())).list();
-                    if (lsAvaliacoes != null && lsAvaliacoes.size() > 0) {
-                        MetodosPublicos.Log("event", "total de avaliações:" + lsAvaliacoes.size());
-                        int media = 0;
-                        for (Avaliacao ava : lsAvaliacoes) {
-                            media += ava.getValor();
+                    for (Projeto prj : lsProjetos) {
+                        List<Avaliacao> lsAvaliacoes = avaliacaoDao.queryBuilder().where(AvaliacaoDao.Properties.IdIndicador.eq(ind.get_id()), AvaliacaoDao.Properties.IdProjeto.eq(prj.get_id())).list();
+                        if (lsAvaliacoes != null && lsAvaliacoes.size() > 0) {
+                            MetodosPublicos.Log("event", "total de avaliações:" + lsAvaliacoes.size());
+                            int media = 0;
+                            for (Avaliacao ava : lsAvaliacoes) {
+                                media += ava.getValor();
+                            }
+                            ind.setValor(media / lsAvaliacoes.size());
+                            MetodosPublicos.Log("event", "Media:" + media / lsAvaliacoes.size());
                         }
-                        ind.setValor(media / lsAvaliacoes.size());
-                        MetodosPublicos.Log("event", "Media:" + media / lsAvaliacoes.size());
                     }
                 }
             }

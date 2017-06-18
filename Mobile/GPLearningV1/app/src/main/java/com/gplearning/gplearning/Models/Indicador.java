@@ -3,15 +3,16 @@ package com.gplearning.gplearning.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.OrderBy;
 import org.greenrobot.greendao.annotation.ToMany;
+import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.List;
-import org.greenrobot.greendao.DaoException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(nameInDb = "indicador")
@@ -26,6 +27,9 @@ public class Indicador {
     private int valor;
     private int tipo;
 
+    private Long idTurma;
+    @ToOne(joinProperty = "idTurma")
+    private Turma turma;
 
     @ToMany(referencedJoinProperty = "idIndicador")
     @OrderBy("_id ASC")
@@ -41,6 +45,9 @@ public class Indicador {
     @Generated(hash = 818989729)
     private transient IndicadorDao myDao;
 
+    @Generated(hash = 1191549063)
+    private transient Long turma__resolvedKey;
+
     public Indicador(String nome) {
         this.nome = nome;
     }
@@ -55,6 +62,16 @@ public class Indicador {
     }
 
     public Indicador() {
+    }
+
+    @Generated(hash = 2046173908)
+    public Indicador(Long _id, int id, String nome, int valor, int tipo, Long idTurma) {
+        this._id = _id;
+        this.id = id;
+        this.nome = nome;
+        this.valor = valor;
+        this.tipo = tipo;
+        this.idTurma = idTurma;
     }
 
     public Long get_id() {
@@ -97,6 +114,24 @@ public class Indicador {
         this.tipo = tipo;
     }
 
+    public Long getIdTurma() {
+        return idTurma;
+    }
+
+    public void setIdTurma(Long idTurma) {
+        this.idTurma = idTurma;
+    }
+
+    @Keep
+    public Turma getTurma() {
+        return turma;
+    }
+
+    @Keep
+    public void setTurma(Turma turma) {
+        this.turma = turma;
+    }
+
     @Keep
     public List<IndicadoresAtividades> getLsIndicadoresAtividades() {
         return lsIndicadoresAtividades;
@@ -107,7 +142,9 @@ public class Indicador {
         this.lsIndicadoresAtividades = lsIndicadoresAtividades;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 129847840)
     public synchronized void resetLsIndicadoresAtividades() {
         lsIndicadoresAtividades = null;

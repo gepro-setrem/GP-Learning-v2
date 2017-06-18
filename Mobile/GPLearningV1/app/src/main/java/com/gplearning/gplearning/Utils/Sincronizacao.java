@@ -51,6 +51,7 @@ import com.gplearning.gplearning.Models.Turma;
 import com.gplearning.gplearning.Models.TurmaDao;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -111,6 +112,7 @@ public class Sincronizacao {
                         if (pCompleto.getTurma() != null && pCompleto.getTurma().getId() > 0) {
                             Turma turma = daoTurma.queryBuilder().where(TurmaDao.Properties.Id.eq(pCompleto.getTurma().getId())).limit(1).unique();
                             if (turma == null) {
+                                MetodosPublicos.Log("Sinc", "turma null");
                                 Long idProfessor;
                                 if (pCompleto.getTurma().getProfessor() != null && pCompleto.getTurma().getProfessor().getId() > 0) {
                                     Pessoa professor = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(pCompleto.getTurma().getProfessor().getId())).limit(1).unique();
@@ -119,6 +121,7 @@ public class Sincronizacao {
                                     } else {
                                         idProfessor = professor.get_id();
                                     }
+                                    MetodosPublicos.Log("Sinc", "ID PROFESS:" + idProfessor);
                                     pCompleto.getTurma().setPro_id(idProfessor);
                                 }
                                 long idTurma = daoTurma.insert(pCompleto.getTurma());
@@ -128,11 +131,28 @@ public class Sincronizacao {
                                 Turma turmaApi = turmaDAO.SelecionaTurma(pCompleto.getTurma().getId());
                                 turmaApi.set_id(idTurma);
                                 InsereEtapasTurma(daoSession, turmaApi);
-                                InsereAcademicosTurma(daoSession,turmaApi);
+                                InsereAcademicosTurma(daoSession, turmaApi);
 
                             } else {
+                                // if(papel==PapelUsuario.admin){
+                                Long idProfessor;
+                                if (pCompleto.getTurma().getProfessor() != null && pCompleto.getTurma().getProfessor().getId() > 0) {
+                                    Pessoa professor = daoPessoa.queryBuilder().where(PessoaDao.Properties.Id.eq(pCompleto.getTurma().getProfessor().getId())).limit(1).unique();
+                                    if (professor == null) {
+                                        idProfessor = daoPessoa.insert(pCompleto.getTurma().getProfessor());
+                                    } else {
+                                        idProfessor = professor.get_id();
+                                    }
+                                    MetodosPublicos.Log("Sinc", "ID PROFESS:" + idProfessor);
+                                    turma.setPro_id(idProfessor);
+                                    daoTurma.update(turma);
+                                }
+
+                                // }
+
                                 PRJ.setIdTurma(turma.get_id());
                             }
+                            MetodosPublicos.Log("sinc", "ID TURMA:" + PRJ.getIdTurma());
                         }
 
                         if (pCompleto.getTermoabertura() != null && pCompleto.getTermoabertura().getId() > 0) {
@@ -844,23 +864,59 @@ public class Sincronizacao {
             AvaliacaoDao daoAvaliacao = daoSession.getAvaliacaoDao();
             EtapaDao daoEtapa = daoSession.getEtapaDao();
             PessoaDao daoPessoa = daoSession.getPessoaDao();
+            ProjetoDao daoProjeto = daoSession.getProjetoDao();
             Pessoa usuario = daoPessoa.load(MetodosPublicos.SelecionaSessaoId(params[0]));
-            List<Etapa> lsEtapa = daoEtapa.loadAll(); //.IdTurma.eq(usuario.getIdTurma())).list();
+//            if ( usuario.getIdTurma() > 0) {
+//                List<Etapa> lsEtapa = daoEtapa.queryBuilder().where(EtapaDao.Properties.IdTurma.eq(usuario.getIdTurma())).list(); //.IdTurma.eq(usuario.getIdTurma())).list();
+//                int pontuacaoTotal = 0;
+//                if (lsEtapa != null && lsEtapa.size() > 0) {
+//                    for (Etapa etapa : lsEtapa) {
+//                        int valor = 0;
+//                        List<Avaliacao> lsAvaliacao = daoAvaliacao.queryBuilder().where(AvaliacaoDao.Properties.IdEtapa.eq(etapa.get_id())).list();
+//                        if (lsAvaliacao != null && lsAvaliacao.size() > 0) {
+//                            for (Avaliacao ava : lsAvaliacao) {
+//                                valor += ava.getValor();
+//                            }
+//                            pontuacaoTotal += (valor / lsAvaliacao.size());
+//                        }
+//                        MetodosPublicos.Log("EvenB", "etapa valor:" + valor + " list:" + lsAvaliacao.size() + " idTurma:" + etapa.getIdTurma());
+//                    }
+//                    return pontuacaoTotal;
+//                }
+//            }
 
-            int pontuacaoTotal = 0;
-            if (lsEtapa != null && lsEtapa.size() > 0) {
-                for (Etapa etapa : lsEtapa) {
-                    int valor = 0;
-                    List<Avaliacao> lsAvaliacao = daoAvaliacao.queryBuilder().where(AvaliacaoDao.Properties.IdEtapa.eq(etapa.get_id())).list();
-                    if (lsAvaliacao != null && lsAvaliacao.size() > 0) {
-                        for (Avaliacao ava : lsAvaliacao) {
-                            valor += ava.getValor();
-                        }
-                        pontuacaoTotal += (valor / lsAvaliacao.size());
-                    }
-                    MetodosPublicos.Log("EvenB", "etapa valor:" + valor + " list:" + lsAvaliacao.size() + " idTurma:" + etapa.getIdTurma());
+            List<Projeto> lsProjetos = new ArrayList<>();
+            ProjetoComponentesDao componentesDao = daoSession.getProjetoComponentesDao();
+            List<ProjetoComponentes> lsComponentes = componentesDao.queryBuilder().where(ProjetoComponentesDao.Properties.IdPessoa.eq(usuario.get_id())).list();
+            if (lsComponentes != null) {
+                for (ProjetoComponentes c : lsComponentes) {
+                    lsProjetos.add(daoProjeto.load(c.getIdProjeto()));
                 }
-                return pontuacaoTotal;
+            }
+
+            if (lsProjetos.size() > 0) {
+                int pontuacaoTotal = 0;
+                List<Etapa> lsEtapa = daoEtapa.queryBuilder().where(EtapaDao.Properties.IdTurma.eq(usuario.getIdTurma())).list();
+                if (lsProjetos != null && lsProjetos.size() > 0) {
+                    for (Projeto prj : lsProjetos) {
+                        if (lsEtapa != null && lsEtapa.size() > 0) {
+                            for (Etapa etapa : lsEtapa) {
+                                int media = 0;
+                                int valor = 0;
+                                List<Avaliacao> lsAvaliacao = daoAvaliacao.queryBuilder().where(AvaliacaoDao.Properties.IdProjeto.eq(prj.get_id()), AvaliacaoDao.Properties.IdEtapa.eq(etapa.get_id())).list();
+                                if (lsAvaliacao != null && lsAvaliacao.size() > 0) {
+                                    for (Avaliacao ava : lsAvaliacao) {
+                                        valor += ava.getValor();
+                                    }
+                                    media = (int) Math.ceil(((double) valor / lsAvaliacao.size()));
+                                    pontuacaoTotal += media;
+                                }
+                              //  MetodosPublicos.Log("EvenB", "---------etapa valor:" + valor + " list:" + lsAvaliacao.size() + " media:" + media + " idEtapa:" + etapa.getEtapa() + " idTurma:" + prj.getIdTurma());
+                            }
+                        }
+                        return pontuacaoTotal;
+                    }
+                }
             }
 
             return 0;

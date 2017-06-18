@@ -70,6 +70,7 @@ public class UsuarioDAO extends DefaultDAO {
                     if (etapa.getIndicadores() != null) {
                         for (Indicador indicador : etapa.getIndicadores()) {
                             if (daoIndicador.queryBuilder().where(IndicadorDao.Properties.Id.eq(indicador.getId())).list().size() == 0) {
+                                indicador.setIdTurma(idTurma);
                                 daoIndicador.insert(indicador);
                                 MetodosPublicos.Log("turma", "salvo indicador:" + indicador.get_id());
                             }
